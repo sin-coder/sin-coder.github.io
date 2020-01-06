@@ -6,10 +6,19 @@
     <description>Recent content on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Jan 2020 16:14:30 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 06 Jan 2020 18:19:17 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Google 三大论文 之 MapReduce</title>
+      <link>https://sin-coder.github.io/post/google/</link>
+      <pubDate>Mon, 06 Jan 2020 18:19:17 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/google/</guid>
+      <description> MapReuce 概述 分类 详解 </description>
+    </item>
     
     <item>
       <title>Hugo</title>
