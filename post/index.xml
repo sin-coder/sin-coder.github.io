@@ -20,14 +20,5 @@
       <description>基于Hugo框架搭建个人博客系统 Hugo Go GIT GITHUB</description>
     </item>
     
-    <item>
-      <title>基于Hugo</title>
-      <link>https://sin-coder.github.io/post/blog/</link>
-      <pubDate>Mon, 06 Jan 2020 16:07:10 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/blog/</guid>
-      <description>中国梦 #基于Hugo搭建个人博客 Hugo Git GitHub Go</description>
-    </item>
-    
   </channel>
 </rss>
