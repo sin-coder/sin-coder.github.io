@@ -1,0 +1,15 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "sin-coder"
+
+theme = "m10c"
+paginate = 10
+
+[params]
+	author = "csuyzz"
+	description = "I always remember that 'Talk is cheap,show me the code'"
+	avatar = "cat.jpg"
+
+[[params.social]]
+	name = "github"
+	url = "https://github.com/sin-coder"
