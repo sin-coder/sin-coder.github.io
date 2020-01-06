@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sin-coder</title>
+    <link>https://sin-coder.github.io/</link>
+    <description>Recent content on sin-coder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Jan 2020 16:14:30 +0800</lastBuildDate>
+    
+	<atom:link href="https://sin-coder.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hugo</title>
+      <link>https://sin-coder.github.io/post/hugo/</link>
+      <pubDate>Mon, 06 Jan 2020 16:14:30 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/hugo/</guid>
+      <description>基于Hugo框架搭建个人博客系统 Hugo Go GIT GITHUB</description>
+    </item>
+    
+    <item>
+      <title>基于Hugo</title>
+      <link>https://sin-coder.github.io/post/blog/</link>
+      <pubDate>Mon, 06 Jan 2020 16:07:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/blog/</guid>
+      <description>中国梦 #基于Hugo搭建个人博客 Hugo Git GitHub Go</description>
+    </item>
+    
+  </channel>
+</rss>
