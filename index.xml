@@ -6,19 +6,9 @@
     <description>Recent content on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Jan 2020 16:14:30 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Hugo</title>
-      <link>https://sin-coder.github.io/post/hugo/</link>
-      <pubDate>Mon, 06 Jan 2020 16:14:30 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/hugo/</guid>
-      <description>基于Hugo框架搭建个人博客系统 Hugo Go GIT GITHUB</description>
-    </item>
     
   </channel>
 </rss>
