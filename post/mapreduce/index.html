@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Mapreduce // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mapreduce"/>
+<meta name="twitter:description" content="1.什么是Map? 什么是Reduce?
+Map是拆解 Reduce是组装 本治就是分治法
+Input &ndash;&gt; Split&ndash;&gt;Map&mdash;&gt;Shuffle（组装）&mdash;&gt;Reduce &mdash;-&gt;Finalize（高度并行的）
+实现代码：
+MapReduce如何实现统计单词出现的次数的
+Map（string key, string value） #key : the id of a line #value: the content of the line for each word in value: OutputTemp(word,1) # Reduce 的过程 Reduce(string key,list valueList) #key : the name of a word #valueList: the appearance of this world int sum = 0 for value in valueList: sum&#43;=value OutputFinal(key,sum)  MapReduce 如何实现倒排索引的？
+MapReduce的整体结构？
+总结：Map就是一个disassemble Reduce 就是一个assemble"/>
+
+    <meta property="og:title" content="Mapreduce" />
+<meta property="og:description" content="1.什么是Map? 什么是Reduce?
+Map是拆解 Reduce是组装 本治就是分治法
+Input &ndash;&gt; Split&ndash;&gt;Map&mdash;&gt;Shuffle（组装）&mdash;&gt;Reduce &mdash;-&gt;Finalize（高度并行的）
+实现代码：
+MapReduce如何实现统计单词出现的次数的
+Map（string key, string value） #key : the id of a line #value: the content of the line for each word in value: OutputTemp(word,1) # Reduce 的过程 Reduce(string key,list valueList) #key : the name of a word #valueList: the appearance of this world int sum = 0 for value in valueList: sum&#43;=value OutputFinal(key,sum)  MapReduce 如何实现倒排索引的？
+MapReduce的整体结构？
+总结：Map就是一个disassemble Reduce 就是一个assemble" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/mapreduce/" />
+<meta property="article:published_time" content="2020-01-27T00:54:15+08:00" />
+<meta property="article:modified_time" content="2020-01-27T00:54:15+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Mapreduce</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 27, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      <p>1.什么是Map?   什么是Reduce?</p>
+
+<p>Map是拆解   Reduce是组装    本治就是分治法</p>
+
+<p>Input  &ndash;&gt;  Split&ndash;&gt;Map&mdash;&gt;Shuffle（组装）&mdash;&gt;Reduce  &mdash;-&gt;Finalize（高度并行的）</p>
+
+<p>实现代码：</p>
+
+<p>MapReduce如何实现统计单词出现的次数的</p>
+
+<pre><code class="language-python">Map（string key,  string value）
+   #key  :   the  id  of  a  line 
+   #value:   the content  of  the  line
+   for   each   word  in value:
+      OutputTemp(word,1)
+        
+# Reduce 的过程
+
+Reduce(string key,list valueList)
+	#key  :  the  name  of  a  word
+    #valueList:  the  appearance of  this  world
+    int sum = 0 
+    for value in  valueList:
+        sum+=value
+    OutputFinal(key,sum)
+</code></pre>
+
+<p>MapReduce 如何实现倒排索引的？</p>
+
+<p>MapReduce的整体结构？</p>
+
+<p><img src="C:%5CUsers%5CAdministrator%5CDesktop%5CGFS%5CMapReduce%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84.png" alt="MapReduce整体架构" style="zoom:80%;" /></p>
+
+<p>总结：Map就是一个disassemble   Reduce 就是一个assemble</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

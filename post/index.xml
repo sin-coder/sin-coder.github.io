@@ -6,10 +6,136 @@
     <description>Recent content in Posts on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Jan 2020 00:44:13 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 27 Jan 2020 00:54:15 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Mapreduce</title>
+      <link>https://sin-coder.github.io/post/mapreduce/</link>
+      <pubDate>Mon, 27 Jan 2020 00:54:15 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/mapreduce/</guid>
+      <description>1.什么是Map? 什么是Reduce?
+Map是拆解 Reduce是组装 本治就是分治法
+Input &amp;ndash;&amp;gt; Split&amp;ndash;&amp;gt;Map&amp;mdash;&amp;gt;Shuffle（组装）&amp;mdash;&amp;gt;Reduce &amp;mdash;-&amp;gt;Finalize（高度并行的）
+实现代码：
+MapReduce如何实现统计单词出现的次数的
+Map（string key, string value） #key : the id of a line #value: the content of the line for each word in value: OutputTemp(word,1) # Reduce 的过程 Reduce(string key,list valueList) #key : the name of a word #valueList: the appearance of this world int sum = 0 for value in valueList: sum+=value OutputFinal(key,sum)  MapReduce 如何实现倒排索引的？
+MapReduce的整体结构？
+总结：Map就是一个disassemble Reduce 就是一个assemble</description>
+    </item>
+    
+    <item>
+      <title>Bigtable</title>
+      <link>https://sin-coder.github.io/post/bigtable/</link>
+      <pubDate>Mon, 27 Jan 2020 00:53:53 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/bigtable/</guid>
+      <description>1.如何在文件内进行快速查询？
+关键点： 从File 到 Table Table = a list of sorted 
+2.如何保存一个很大的表？
+关键点： A table = a list of tables (小表)
+A tablet = a list of sorted 
+使用MetaData的形式保存每一个小表的位置
+3.如何保存一个超大的表？
+关键点：A table = a list of tablets （小表）
+​ A tablet = a list of SSTables （小小表）
+​ A SSTables = a list of sorted 
+4.如何向表中写数据？
+关键点：通过写入memTable（内存表）来加速
+A tablet = memTable + a list of SSTables
+5.内存表过大怎么办？如何避免内存丢失数据？</description>
+    </item>
+    
+    <item>
+      <title>Google File System</title>
+      <link>https://sin-coder.github.io/post/gfs/</link>
+      <pubDate>Mon, 27 Jan 2020 00:53:42 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/gfs/</guid>
+      <description>Google File System 一、概述 Google的三篇论文：Google File System 、BigTable 、MapReduce的发表彻底拉开了云计算时代的序幕，同时这三篇论文也是想要入门云计算的学习人员必读的。最近读了这三篇论文，再参考了一些资料后写下自己的总结
+HDFS 、HBase 、MapReduce
+ GFS BigTable MapReducd  Google系统整体的架构图如下
+GFS系统的优点：高可用性、自动负载均衡
+系统的结构：文件系统（GFS）、数据模型（Bigtable）、算法（MapReduce）、应用
+在本篇文章中我们着重去描述GFS
+二、GFS系统的设计 1.设计思路
+​ （1）组件失效是一种常态，而不是意外；因此持续的监控、错误的侦测、灾难冗余等机制必须集成在GFS
+​ （2）存储的文件非常巨大，基本上为TB级的，I/O操作和Block、Chunk的尺寸都需要规划
+​ （3）对文件的修改以在文件尾部追加数据为主，数据的追加对系统性能有重要的影响
+​ （4）应用程序和文件系统的API协同设计可以大幅度提高系统的灵活性
+2.系统的工作负载分析
+3.GFS系统架构
+三、系统工作原理 设计原则：最小化所有的操作和Master节点的交互
+系统具体的工作过程：
+3.文件系统的操作
+4.Master节点的操作
+名称空间管理和锁
+副本的位置
+创建、重新复制、重新负载均衡、垃圾回收、过期失效的副本检测
+5.容错和诊断
+高可用性、数据完整性、诊断工具
+四、总结 3.Linux文件系统工作原理：
+​ 保存一个小文件
+​ 保存的每一个文件都有一个元数据Metadata，其中包括filename文件信息 文件名 创建时间 文件大小 index组成文件的每一个Block的索引 关键点为1block = 1024 Byte
+​ 保存一个大文件：
+​ 关键点为chunk : 1chunk = 64MB =64*1024 =65536 blocks
+​ 优点：减少元数据 减少流量 缺点：小文件会浪费较多空间</description>
+    </item>
+    
+    <item>
+      <title>Go语言学习总结（一）</title>
+      <link>https://sin-coder.github.io/post/go/</link>
+      <pubDate>Mon, 27 Jan 2020 00:53:21 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/go/</guid>
+      <description>Go语言学习总结（一） 一、Go语言简介 1. Go语言用途 ​ 搭载Web服务器，存储集群或类似用途的巨型中央服务器的系统编程语言
+​ 在高性能的分布式系统领域，Go语言比其他语言有着更高的开发效率
+2. Go语言特点 ​ 自动垃圾回收、丰富的内置类型、函数多返回值、错误处理、数组安全
+​ 匿名函数和闭包、类型和接口、并发编程、反射、语言交互性等
+3. 设计思想 ​ 目前主流的编程思想主要有面向对象编程、面向过程编程，但是Go语言在设计的过程中吸收了一些
+​ 小众的编程哲学思想，比如函数式编程思想（支持匿名函数与闭包）， 面向消息编程思想（支持 goroutine
+​ 和通道），因此Go推荐使用消息而不是共享内存来进行并发编程
+二、Go语言基础语法 1. 程序组成元素 （1）包声明 ​ 源文件中非注释的第一行指明这个文件属于哪个包，如package main, package main表示一个可独立执行的
+​ 程序，Go程序是通过package来进行组织的，只有package名称为main的源码文件可以包含main函数
+（2）引入包 ​ 导入程序所要使用的包 fmt包格式化的输入输出
+​ 导入包时可以通过import关键字来单个导入，也可以同时导入多个，如：
+//单个导入 import &amp;quot;fmt&amp;quot; import &amp;quot;io&amp;quot; //同时导入多个 import ( &amp;quot;fmt&amp;quot; &amp;quot;math&amp;quot; )  ​ 文件名与包名没有直接关系、同一个文件夹下只能有一个包名，否则编译报错
+​ 导入包时一般为 import &amp;ldquo;项目名/包名&amp;rdquo;
+​ 调用函数时则是通过PackageName.FunctionName() 来进行调用
+（3）函数 ​ fun main()是程序开始执行的函数，该函数也是每一个可执行程序所必须的，每个函数后都会有{}，但是 &amp;ldquo; { &amp;ldquo;</description>
+    </item>
+    
+    <item>
+      <title>Java的异常机制</title>
+      <link>https://sin-coder.github.io/post/java/</link>
+      <pubDate>Mon, 27 Jan 2020 00:53:12 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/java/</guid>
+      <description>Java中 输入输出流的继承关系总结
+OutputStream &amp;mdash;》FilterOutputStream&amp;mdash;-》DataOutputStream
+DataOutputStream : 将基本的Java的数据类型写入到输出流中 应用程序可以使用输入流将数据读入</description>
+    </item>
+    
+    <item>
+      <title>Github 简介</title>
+      <link>https://sin-coder.github.io/post/github/</link>
+      <pubDate>Mon, 27 Jan 2020 00:52:49 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/github/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Git学习总结</title>
+      <link>https://sin-coder.github.io/post/git/</link>
+      <pubDate>Mon, 27 Jan 2020 00:52:28 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/git/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>分布式系统学习笔记</title>

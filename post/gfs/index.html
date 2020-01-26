@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Google File System // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Google File System"/>
+<meta name="twitter:description" content="Google File System 一、概述 Google的三篇论文：Google File System 、BigTable 、MapReduce的发表彻底拉开了云计算时代的序幕，同时这三篇论文也是想要入门云计算的学习人员必读的。最近读了这三篇论文，再参考了一些资料后写下自己的总结
+HDFS 、HBase 、MapReduce
+ GFS BigTable MapReducd  Google系统整体的架构图如下
+GFS系统的优点：高可用性、自动负载均衡
+系统的结构：文件系统（GFS）、数据模型（Bigtable）、算法（MapReduce）、应用
+在本篇文章中我们着重去描述GFS
+二、GFS系统的设计 1.设计思路
+​ （1）组件失效是一种常态，而不是意外；因此持续的监控、错误的侦测、灾难冗余等机制必须集成在GFS
+​ （2）存储的文件非常巨大，基本上为TB级的，I/O操作和Block、Chunk的尺寸都需要规划
+​ （3）对文件的修改以在文件尾部追加数据为主，数据的追加对系统性能有重要的影响
+​ （4）应用程序和文件系统的API协同设计可以大幅度提高系统的灵活性
+2.系统的工作负载分析
+3.GFS系统架构
+三、系统工作原理 设计原则：最小化所有的操作和Master节点的交互
+系统具体的工作过程：
+3.文件系统的操作
+4.Master节点的操作
+名称空间管理和锁
+副本的位置
+创建、重新复制、重新负载均衡、垃圾回收、过期失效的副本检测
+5.容错和诊断
+高可用性、数据完整性、诊断工具
+四、总结 3.Linux文件系统工作原理：
+​ 保存一个小文件
+​ 保存的每一个文件都有一个元数据Metadata，其中包括filename文件信息 文件名 创建时间 文件大小 index组成文件的每一个Block的索引 关键点为1block = 1024 Byte
+​ 保存一个大文件：
+​ 关键点为chunk : 1chunk = 64MB =64*1024 =65536 blocks
+​ 优点：减少元数据 减少流量 缺点：小文件会浪费较多空间"/>
+
+    <meta property="og:title" content="Google File System" />
+<meta property="og:description" content="Google File System 一、概述 Google的三篇论文：Google File System 、BigTable 、MapReduce的发表彻底拉开了云计算时代的序幕，同时这三篇论文也是想要入门云计算的学习人员必读的。最近读了这三篇论文，再参考了一些资料后写下自己的总结
+HDFS 、HBase 、MapReduce
+ GFS BigTable MapReducd  Google系统整体的架构图如下
+GFS系统的优点：高可用性、自动负载均衡
+系统的结构：文件系统（GFS）、数据模型（Bigtable）、算法（MapReduce）、应用
+在本篇文章中我们着重去描述GFS
+二、GFS系统的设计 1.设计思路
+​ （1）组件失效是一种常态，而不是意外；因此持续的监控、错误的侦测、灾难冗余等机制必须集成在GFS
+​ （2）存储的文件非常巨大，基本上为TB级的，I/O操作和Block、Chunk的尺寸都需要规划
+​ （3）对文件的修改以在文件尾部追加数据为主，数据的追加对系统性能有重要的影响
+​ （4）应用程序和文件系统的API协同设计可以大幅度提高系统的灵活性
+2.系统的工作负载分析
+3.GFS系统架构
+三、系统工作原理 设计原则：最小化所有的操作和Master节点的交互
+系统具体的工作过程：
+3.文件系统的操作
+4.Master节点的操作
+名称空间管理和锁
+副本的位置
+创建、重新复制、重新负载均衡、垃圾回收、过期失效的副本检测
+5.容错和诊断
+高可用性、数据完整性、诊断工具
+四、总结 3.Linux文件系统工作原理：
+​ 保存一个小文件
+​ 保存的每一个文件都有一个元数据Metadata，其中包括filename文件信息 文件名 创建时间 文件大小 index组成文件的每一个Block的索引 关键点为1block = 1024 Byte
+​ 保存一个大文件：
+​ 关键点为chunk : 1chunk = 64MB =64*1024 =65536 blocks
+​ 优点：减少元数据 减少流量 缺点：小文件会浪费较多空间" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/gfs/" />
+<meta property="article:published_time" content="2020-01-27T00:53:42+08:00" />
+<meta property="article:modified_time" content="2020-01-27T00:53:42+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Google File System</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 27, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h1 id="google-file-system">Google File System</h1>
+
+<h2 id="一-概述">一、概述</h2>
+
+<p>Google的三篇论文：Google File  System  、BigTable  、MapReduce的发表彻底拉开了云计算时代的序幕，同时这三篇论文也是想要入门云计算的学习人员必读的。最近读了这三篇论文，再参考了一些资料后写下自己的总结</p>
+
+<p>HDFS 、HBase 、MapReduce</p>
+
+<ol>
+<li>GFS</li>
+<li>BigTable</li>
+<li>MapReducd</li>
+</ol>
+
+<p>Google系统整体的架构图如下</p>
+
+<p>GFS系统的优点：高可用性、自动负载均衡</p>
+
+<p>系统的结构：文件系统（GFS）、数据模型（Bigtable）、算法（MapReduce）、应用</p>
+
+<p>在本篇文章中我们着重去描述GFS</p>
+
+<h2 id="二-gfs系统的设计">二、GFS系统的设计</h2>
+
+<p>1.设计思路</p>
+
+<p>​    （1）组件失效是一种常态，而不是意外；因此持续的监控、错误的侦测、灾难冗余等机制必须集成在GFS</p>
+
+<p>​    （2）存储的文件非常巨大，基本上为TB级的，I/O操作和Block、Chunk的尺寸都需要规划</p>
+
+<p>​    （3）对文件的修改以在文件尾部追加数据为主，数据的追加对系统性能有重要的影响</p>
+
+<p>​    （4）应用程序和文件系统的API协同设计可以大幅度提高系统的灵活性</p>
+
+<p>2.系统的工作负载分析</p>
+
+<p>3.GFS系统架构</p>
+
+<h2 id="三-系统工作原理">三、系统工作原理</h2>
+
+<p>设计原则：最小化所有的操作和Master节点的交互</p>
+
+<p>系统具体的工作过程：</p>
+
+<p>3.文件系统的操作</p>
+
+<p>4.Master节点的操作</p>
+
+<p>名称空间管理和锁</p>
+
+<p>副本的位置</p>
+
+<p>创建、重新复制、重新负载均衡、垃圾回收、过期失效的副本检测</p>
+
+<p>5.容错和诊断</p>
+
+<p>高可用性、数据完整性、诊断工具</p>
+
+<h2 id="四-总结">四、总结</h2>
+
+<p>3.Linux文件系统工作原理：</p>
+
+<p>​                    保存一个小文件</p>
+
+<p>​                         保存的每一个文件都有一个元数据Metadata，其中包括filename文件信息 文件名 创建时间 文件大小                                                        index组成文件的每一个Block的索引 关键点为1block = 1024 Byte</p>
+
+<p>​                    保存一个大文件：</p>
+
+<p>​                           关键点为chunk   : 1chunk = 64MB  =64*1024 =65536 blocks</p>
+
+<p>​                           优点：减少元数据  减少流量   缺点：小文件会浪费较多空间</p>
+
+<p>4.GFS的原理：</p>
+
+<p>​          将MetaData放入Master Server ,然后其他的Chunk都放在ChunkServer中</p>
+
+<p>​          关键点：Master+many ChunkServers</p>
+
+<p>​          缺点：ChunkServer中任何数据的改变都需要通知Master</p>
+
+<p>​          但是Master只保存了Chunk在各个服务器的地址，不记录每块数据的偏移量这样的优点是减少Master的元数据信息 减少Master和         ChunkServer之间的通信</p>
+
+<p>5.GFS的容错机制</p>
+
+<p>​       客户端在读数据时检查checksum,  每一个Block 保存校验和,  1个checksum  是32位的，</p>
+
+<p>​        如果数据损坏的话，Chunk Server就需要去找Master恢复数据   具体的过程为：</p>
+
+<p>​        （1） ChunkServer4  向Master服务器发送请求信息   &ldquo;我的Chunk坏了，谁还有数据的备份&rdquo;</p>
+
+<p>​        （2）Master服务器向ChunkServer4发送  “ChunkServer1  和ChunkServer3  这两台服务器还有你数据的备份”</p>
+
+<p>​        （3）ChunkServer4 向ChunkServer3(距离较近) 发送请求 &ldquo;我需要备份的数据&rdquo;</p>
+
+<p>​        （4）ChunkServer3 便向ChunkServer4发送它所需要的数据</p>
+
+<p>发送心跳检查ChunkServer是否运行正常    如果有服务器挂掉的话就向Master申请恢复 基于存活副本数的恢复策略</p>
+
+<p>6.GFS核心的读写操作</p>
+
+<p>读文件的过程</p>
+
+<p><img src="C:%5CUsers%5CAdministrator%5CDesktop%5CGFS%20%E8%AF%BB%E6%96%87%E4%BB%B6.png" alt="GFS 读文件" /></p>
+
+<p>写文件的过程</p>
+
+<p><img src="C:%5CUsers%5CAdministrator%5CDesktop%5CGFS%E5%86%99%E6%96%87%E4%BB%B6.png" alt="GFS写文件" /></p>
+
+<p>如果在写入文件的过程中出现错误，那么就直接返回给客户端一个错误，让客户端自行去处理，对于分布式系统处理错误的机制会带来更多的错误，底层只是实现基本的功能，不去管错误的处理；</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
