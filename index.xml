@@ -6,10 +6,50 @@
     <description>Recent content on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Jan 2020 21:35:45 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 27 Jan 2020 00:44:13 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>分布式系统学习笔记</title>
+      <link>https://sin-coder.github.io/post/distri/</link>
+      <pubDate>Mon, 27 Jan 2020 00:44:13 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/distri/</guid>
+      <description>一、分布式系统概述 1.什么是分布式系统？ ​ 分布式系统主要由网络、分布式存储与分布式计算等部分构成的，分布式存储侧重于数据的读写存取及一致性等方面，而分布式计算则侧重于资源、任务的编排和调度
+2.分布式系统的特点 ​ 没有强制性的中心控制、次级单位具有自治的特质、次级单位之间彼此高度链接、点对点之间的影响通过网络形成了非线性的因果关系
+3.传统架构面临的难题: 系统的扩展 ​ 高并发的访问要求我们的后端系统架构弹性且可扩展
+​ 三维扩展：
+​ X轴扩展：水平复制，即在负载均衡服务器后增加多个Web服务器，
+​ Y轴扩展：对数据库的扩展，即进行分库分表，分库是将关系紧密的表放在一台数据库服务器上，分表是因为一张表的数据太多，需要将一张表的数据通过hash放在不同的数据库服务器上
+​ Z轴扩展：业务方向的扩展，才能将巨型应用分解为一组不同的服务，将应用进一步分解为微服务
+​ 4.CAP定理
+​ 在分布式系统中，系统的一致性(Consistency)、可用性（Availability）、分区容忍性(Partion tolerance)。这三者不能同时保证，由于网络通信的不确定性，分区的容忍性是必须要保证的，而且互联网应用比企业级应用更加偏向于保持可用性，通常用最终一致性代替传统事务的ACID强一致性
+​
+二、分布式计算 1.概述 ​ 分布式计算核心的思路就是系统架构无单点，让整个系统可以扩展。分布式计算环境下的节点分为有状态存储节点和无状态存储节点。
+​ 无状态存储节点，不存储数据，请求分发可以采取很简单的随机算法或者是轮询的算法就可以了，如果需要增加机器，则只需要把对应的运算代码部署到一些机器上然后启动起来，引导流量到那些机器即可实现动态的扩展了。简单来说就是某台机器承担了某种角色后，能够快速的广播给需要这个角色提供服务的机器。
+​ 而针对有状态节点，扩容难度较大，因为每台Server中均有数据，所以请求分发的算法不能够随机或者轮询，一般来说常见算法就是哈希或者使用Tree来做一层映射，增加机器时需要经历一个复杂的数据迁移过程&amp;mdash;&amp;mdash;》自动化扩容和迁移的工具
+2.数据处理的发展过程
+GFS&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-》HDFS
+BigTable&amp;mdash;&amp;mdash;&amp;ndash;》HBase
+​ MapReduce&amp;mdash;-》MapReduce
+​ （Hadoop技术栈）
+MapReduce(离线处理)&amp;mdash;&amp;ndash;》Spark(高性能批处理技术)&amp;mdash;&amp;mdash;》Storm(流处理)&amp;mdash;-》Flink
+3.批处理（Batch Processing）与流处理（Stream Processing） 主要区别：每一条数据在到达时是被处理的（流处理），还是作为一组新数据的一部分稍后进行处理（批处理）
+批处理：在批处理中新到达的数据元素被收集到一个组中，整个组在未来的时间内进行处理。至于何时处理每个组可以选择多种方式来确定，可以基于预定的时间间隔（如每隔5分钟）、或者在某些触发的条件下（只要包含5个元素/拥有超过1MB的数据）。传统的数据仓库和Hadoop就是专注于批处理的。批处理示意图如下：
+缺点：具有延迟性、新数据的到达与该数据的处理之间的延迟将取决于直到下一批处理窗口的时间
+流处理：流处理设计的目的是为了在数据到达时对其进行响应，这就要求它们实现一个由事件驱动的体系架构，也可以说是在系统的内部工作流在接收到数据后立即连续监视新数据和调度处理。
+应用：Flink、Beam等都支持“流式处理优先，将批处理视为流式处理的特殊情况”，但是流式处理器的出现并没有让批处
+​ 理器变得过时。因为纯流式处理系统在批处理工作负载时其实是非常慢的。
+​ Apache Beam: 这样统一的API通常会根据数据是持续的（无界）、还是固定的（有界）将工作负载委托给不同的
+​ 运行机制
+​ Flink: 提供的流式API，可以处理有界或者无界的场景，同时任然提供了单独的DataSet API用于批处理
+​
+三、分布式调度 1.概述
+经典资源调度器（Yarn）&amp;mdash;&amp;ndash;》数据调度（Data Placement）、资源任务调度（Resource Management）、计算调度（Application Manager）、本地微（自治）调度
+2.资源调度</description>
+    </item>
     
     <item>
       <title>同步/异步、阻塞/非阻塞辨析</title>
