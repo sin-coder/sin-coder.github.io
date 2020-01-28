@@ -116,15 +116,6 @@ MapReduce(离线处理)&amp;mdash;&amp;ndash;》Spark(高性能批处理技术)&
     </item>
     
     <item>
-      <title>Go语言学习总结（二）</title>
-      <link>https://sin-coder.github.io/post/golang/</link>
-      <pubDate>Mon, 27 Jan 2020 01:01:45 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Mapreduce</title>
       <link>https://sin-coder.github.io/post/mapreduce/</link>
       <pubDate>Mon, 27 Jan 2020 00:54:15 +0800</pubDate>
@@ -219,17 +210,6 @@ GFS系统的优点：高可用性、自动负载均衡
 ​ 导入包时一般为 import &amp;ldquo;项目名/包名&amp;rdquo;
 ​ 调用函数时则是通过PackageName.FunctionName() 来进行调用
 （3）函数 ​ fun main()是程序开始执行的函数，该函数也是每一个可执行程序所必须的，每个函数后都会有{}，但是 &amp;ldquo; { &amp;ldquo;</description>
-    </item>
-    
-    <item>
-      <title>Java的异常机制</title>
-      <link>https://sin-coder.github.io/post/java/</link>
-      <pubDate>Mon, 27 Jan 2020 00:53:12 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/java/</guid>
-      <description>Java中 输入输出流的继承关系总结
-OutputStream &amp;mdash;》FilterOutputStream&amp;mdash;-》DataOutputStream
-DataOutputStream : 将基本的Java的数据类型写入到输出流中 应用程序可以使用输入流将数据读入</description>
     </item>
     
     <item>
