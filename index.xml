@@ -12,6 +12,24 @@
     
     
     <item>
+      <title>基于Hugo框架搭建个人博客</title>
+      <link>https://sin-coder.github.io/post/hugo/</link>
+      <pubDate>Tue, 07 Jan 2020 14:08:20 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/hugo/</guid>
+      <description>[TOC]
+关键词：Hugo 、Git、Github、域名解析 概述 1.Hugo简介 Hugo是基于Go语言开发的静态网站生成器，简单、易用、快速部署，主要用于构建个人博客
+2.Git简介 Git是目前主流的分布式版本控制工具，有关Git的使用请查看Git的来龙去脉这篇文章
+3.Github简介 Github是在外网环境下的一个代码托管库，有关Github的介绍请查看开始玩起Github这篇文章
+具体过程 1.准备工作  下载Git并安装、配置环境变量  完成后在终端执行&amp;rdquo;git&amp;rdquo;命令来测试是否安装成功，有关git的安装请看Git的来龙去脉
+ 下载Hugo并安装、配置环境变量  完成后在终端执行&amp;rdquo;hugo version&amp;rdquo;命令来测试是否安装成功，终端提示如下信息表示安装成功
+C:\Users\Administrator&amp;gt;hugo version Hugo Static Site Generator v0.59.1-D5DAB232 windows/amd64 BuildDate: 2019-10-31T15:22:43Z  Hugo最好安装在英文目录下
+下载时可能由于网络问题失败，附上Hugo、Git、主题m10c的下载包链接: 下载链接
+ 注册Github官网（已有账号请忽略）  2.生成个人站点 （1）在终端执行命令 C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog  出现以下提示信息表示创建成功：
+C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog Congratulations! Your new Hugo site is created in E:\hugo\Sites\myblog. Just a few more steps and you&#39;re ready to go: 1.</description>
+    </item>
+    
+    <item>
       <title>消息队列学习笔记</title>
       <link>https://sin-coder.github.io/post/messagequ/</link>
       <pubDate>Tue, 28 Jan 2020 01:22:22 +0800</pubDate>
@@ -246,24 +264,6 @@ MapReduce(离线处理)&amp;mdash;&amp;ndash;》Spark(高性能批处理技术)&
 2.阻塞和非阻塞 阻塞和非阻塞关注是调用者是否可以执行多个任务，描述的是调用者的多个线程是否可以同时执行。阻塞时，多个线程不能同时进行；非阻塞时，多个线程可以同时进行
 3.二者的区别与联系 同步和阻塞完全是在单线程和多线程这两个维度上的概念，它们之间并没有强制的联系。但是从实际的意义来看确实有一定的绑定关系，比如对于单线程来说，不管是同步还是异步，肯定是阻塞的，非阻塞只有多线程而且异步的时候才能发挥作用。
 回来继续看烧水的例子，老王在烧水的同时去隔壁，也即在烧水这个线程之中，又开启了去隔壁这个线程，所以使用异步非阻塞才更加有意义</description>
-    </item>
-    
-    <item>
-      <title>基于Hugo框架搭建个人博客</title>
-      <link>https://sin-coder.github.io/post/hugo/</link>
-      <pubDate>Tue, 07 Jan 2020 14:08:20 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/hugo/</guid>
-      <description>[TOC]
-关键词：Hugo 、Git、Github、域名解析 概述 1.Hugo简介 Hugo是基于Go语言开发的静态网站生成器，简单、易用、快速部署，主要用于构建个人博客
-2.Git简介 Git是目前主流的分布式版本控制工具，有关Git的使用请查看Git的来龙去脉这篇文章
-3.Github简介 Github是在外网环境下的一个代码托管库，有关Github的介绍请查看开始玩起Github这篇文章
-具体过程 1.准备工作  下载Git并安装、配置环境变量  完成后在终端执行&amp;rdquo;git&amp;rdquo;命令来测试是否安装成功，有关git的安装请看Git的来龙去脉
- 下载Hugo并安装、配置环境变量  完成后在终端执行&amp;rdquo;hugo version&amp;rdquo;命令来测试是否安装成功，终端提示如下信息表示安装成功
-C:\Users\Administrator&amp;gt;hugo version Hugo Static Site Generator v0.59.1-D5DAB232 windows/amd64 BuildDate: 2019-10-31T15:22:43Z  Hugo最好安装在英文目录下
-下载时可能由于网络问题失败，附上Hugo、Git、主题m10c的下载包链接: 下载链接
- 注册Github官网（已有账号请忽略）  2.生成个人站点 （1）在终端执行命令 C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog  出现以下提示信息表示创建成功：
-C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog Congratulations! Your new Hugo site is created in E:\hugo\Sites\myblog. Just a few more steps and you&#39;re ready to go: 1.</description>
     </item>
     
   </channel>
