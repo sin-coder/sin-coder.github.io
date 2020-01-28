@@ -103,7 +103,7 @@ MapReduce(离线处理)&amp;mdash;&amp;ndash;》Spark(高性能批处理技术)&
     </item>
     
     <item>
-      <title>unable to access ..: Failed to connect to github.com port 443: Timed out</title>
+      <title>Git向Github push时，连接超时</title>
       <link>https://sin-coder.github.io/post/git%E8%BF%9E%E6%8E%A5github%E5%A4%B1%E8%B4%A5/</link>
       <pubDate>Tue, 28 Jan 2020 17:10:44 +0800</pubDate>
       
