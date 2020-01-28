@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>随笔 on sin-coder</title>
+    <link>https://sin-coder.github.io/tags/%E9%9A%8F%E7%AC%94/</link>
+    <description>Recent content in 随笔 on sin-coder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 28 Jan 2020 17:10:44 +0800</lastBuildDate>
+    
+	<atom:link href="https://sin-coder.github.io/tags/%E9%9A%8F%E7%AC%94/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>unable to access ..: Failed to connect to github.com port 443: Timed out</title>
+      <link>https://sin-coder.github.io/post/git%E8%BF%9E%E6%8E%A5github%E5%A4%B1%E8%B4%A5/</link>
+      <pubDate>Tue, 28 Jan 2020 17:10:44 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/git%E8%BF%9E%E6%8E%A5github%E5%A4%B1%E8%B4%A5/</guid>
+      <description>Failed to connect to github.com port 443: Timed out 问题背景  最近在使用Git向Github提交时总是会出现以下报错：
+ E:\hugo\Sites\blog\public&amp;gt;git push -u origin master fatal: unable to access &#39;https://github.com/sin-coder/sin-coder.github.io.git/&#39;: Failed to connect to github.com port 443: Timed out   而且还是偶尔出现的，特别让人心烦，目测为网络问题，折腾了许久在StackOverflow找到了答案
+ 问题原因  为了访问Github更加流畅，本地使用了Shadowsocks进行代理，可是Git并没有走代理访问
+只需将Git配置为代理访问Github即可
+ 解决措施  打开Windows下的cmd命令行，在命令行中直接输入以下命令（已经配置Git的环境变量），或者
+切换到Git的安装目录下执行命令（未配置环境变量）即可解决该问题
+ E:\Program Files\Git\Git 的目录 2019/11/27 13:19 &amp;lt;DIR&amp;gt; . 2019/11/27 13:19 &amp;lt;DIR&amp;gt; .. 2019/11/27 13:18 &amp;lt;DIR&amp;gt; bin 2019/11/27 13:19 &amp;lt;DIR&amp;gt; cmd 2019/11/27 13:19 &amp;lt;DIR&amp;gt; dev 2019/11/27 13:19 &amp;lt;DIR&amp;gt; etc 2019/02/26 19:48 149,784 git-bash.</description>
+    </item>
+    
+  </channel>
+</rss>
