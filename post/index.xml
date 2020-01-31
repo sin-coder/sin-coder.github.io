@@ -6,7 +6,7 @@
     <description>Recent content in Posts on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Jan 2020 17:10:44 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 31 Jan 2020 12:00:31 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
@@ -81,6 +81,43 @@ MapReduce(离线处理)&amp;mdash;&amp;ndash;》Spark(高性能批处理技术)&
 三、分布式调度 1.概述
 经典资源调度器（Yarn）&amp;mdash;&amp;ndash;》数据调度（Data Placement）、资源任务调度（Resource Management）、计算调度（Application Manager）、本地微（自治）调度
 2.资源调度</description>
+    </item>
+    
+    <item>
+      <title>虚拟机的网络连接方式</title>
+      <link>https://sin-coder.github.io/post/virtualnetwork/</link>
+      <pubDate>Fri, 31 Jan 2020 12:00:31 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/virtualnetwork/</guid>
+      <description> 虚拟机和主机的网络连接方式  最近在使用VirtualBox安装虚拟机组建集群时，总是会遇到各种网络问题，具体包括虚拟机
+ 之间的访问、虚拟机和主机之间的访问、虚拟机访问外网等，搞得晕头转向的，所以在此总结
+一下虚拟机和主机之间的网络连接方式，以便更进一步的画出集群的网络拓扑图
+ 在VirtualBox的配置界面，可以看到虚拟机和主机间的网络连接方式有以下几种：网络地址
+ 转换（NAT）、NAT网络、桥接网卡、内部网络、仅主机（Host-only）网络、通用驱动等，下
+面便一一详解
+1. NAT模式  NAT方式借助网络地址转换的功能，通过宿主机所在的网络来访问互联网。此种方式下，虚拟
+ 机的网卡和物理网卡的网络不是在同一个网络中。虚拟机的网卡只是VirtualBox所提供的一个
+虚拟网络，并不真实存在于网络中，所以宿主机无法ping通虚拟机，虚拟机彼此间也不通，但
+是通过NAT虚拟机可以访问主机、和主机同网络的其他主机和互联网
+ 不过这里的网络连接方式中有网络地址转换（NAT）和NAT网络，这二者之间又有什么区别呢？
+ 其实这二者本质是相同的，不过后者是提前创建好的网络，在主界面的管理&amp;mdash;&amp;gt;全局设定&amp;ndash;&amp;gt;网络
+我们可以提前设置一个NAT网络供虚拟机来选用
+ 总结起来，NAT模式可以节省网段中的IP地址，适合仅需自己使用的虚拟机配置
+ 2.桥接模式  桥接方式下，虚拟机需要桥接到宿主机的一块网卡上（有线或者无线均可），虚拟机和宿主机
+ 处于同一网段，真实存在于网络中。虚拟机之间可以互通、虚拟机和网络中的主机也可以互通、
+只要主机能上网，虚拟机也可上网，但是这样占用网络中的IP地址
+3.host-only模式  host-only模式应该是最为复杂的网络连接模式了，其他几种网络的连接方式通过这种模式的合
+ 适配置均可实现。我们可以理解为VirtualBox在主机中模拟出一张专供虚拟机使用的网卡，所
+有的虚拟机都是连接到网卡上的，我们可以通过设置这张网卡来实现上网和其他功能。
+ 虚拟机和主机关系，默认不能相互访问，因为不属于同一个IP地址段。但是通过网卡共享、网卡
+ 桥接等，可以实现虚拟机和主机的相互访问
+ 虚拟机和虚拟机的关系，默认同一个网段中的虚拟机是可以相互访问的
+ 4.内部网络  内部网络模式，虚拟机与外网完全断开，虚拟机和主机之间无法相互访问只用于虚拟机
+ 与虚拟机之间的访问，但前提是在虚拟机在同一网络中，实际配置时两台虚拟机设置为
+同一网络名称即可，如下图的配置中使用intnet
+5.通用驱动  运行用于选择网卡驱动，实际上很少用到，可忽略
+ 6.未指定  相当于虚拟机有网卡，但是没有插线，只能ping自己才会通的
+ </description>
     </item>
     
     <item>
