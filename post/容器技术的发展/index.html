@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>容器技术的前世今生 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="容器技术的前世今生"/>
+<meta name="twitter:description" content="容器技术的前世今生 概述  什么是容器，在Docker官方网站中，特地地对这个名词进行了定义，容器是一个标准化的软件单元。
+ 进一步的解释为容器是打包代码及其所有依赖项的软件的标准单元，它将软件和其运行环境隔离开来，
+因此应用程序可以从一个计算环境快速可靠地运行到另一个计算环境。
+ 可以说Docker是当今最知名的容器平台之一，它于2013年开源，但是容器化和隔离的技术却有很长
+ 的历史，了解这部分的历史将有助于我们对容器技术的理解
+容器发展简史  1979年，Unix7在开发过程中引入了Chroot Jail和Chroot系统调用，它允许用户将进程及其子进程与操作   系统的其余部分隔离开来。但是这种隔离未考虑安全机制，根进程可以轻松地退出chroot
+那问题便来了，chroot jail是什么，jail为监狱的意思，似乎要把什么东西锁起来。在类UNIX的操作系统
+ 上，默认的根目录均为“ / ”，而chroot的作用就是改变正在运行的进程及它的子进程的根目录。例如，将某
+个程序的根目录从原先的默认的系统根目录更改为“ /home/ ”，则这个/home目录就变成了这个程序的逻辑
+根目录，与此同时，这个被修改了根目录环境的程序就不能再进入这个逻辑根目录之外的路径了。所以这就
+相当于限制某个程序能进入的目录树，称为监狱也是情有可原了
+ 2000年，FreeBSD Jail被引入到FreeBSD OS中，旨在为简单的Chroot文件隔离带来更多的安全性，此   外FreeBSD还实现了将进程及其活动隔离到文件系统的特定视图中（不懂，暂时略过）
+  2001年，Linux VServer被推出，它使用了类似chroot的机制与“安全上下文”及操作系统虚拟化来提供虚   拟化解决方案，相比于chroot进步了许多，允许在单个Linux发行版（VPS）上运行多个Linux的发行版
+VPS (Virtual Private Servers) ：虚拟专用服务器
+  2004年，Oracle推出了Solaris Containers，这是一个用于X86和SPARC处理器的Linux-VServer版本   Solaris Containers是由系统资源控制和“区域”提供的边界隔离组合而成
+SPARC是一套RISC（精简指令集）架构
+  2005年，OpenVZ推出，它和Linux-Server一样，使用操作系统级虚拟化，但是这样有一定的限制，容器   共享相同的体系结构和内核版本，当客户需要不同于主机的内核版本时就有点力不从心了；而且
+OpenVZ未将一些用于创建隔离的控制机制的补丁集成到内核中
+  2007年，Google发布了CGroups，这是一种机制，它能限制和隔离一系列进程的资源使用（如：CPU、   内存、磁盘I/O和网络等），而且被集成到了Linux内核中"/>
+
+    <meta property="og:title" content="容器技术的前世今生" />
+<meta property="og:description" content="容器技术的前世今生 概述  什么是容器，在Docker官方网站中，特地地对这个名词进行了定义，容器是一个标准化的软件单元。
+ 进一步的解释为容器是打包代码及其所有依赖项的软件的标准单元，它将软件和其运行环境隔离开来，
+因此应用程序可以从一个计算环境快速可靠地运行到另一个计算环境。
+ 可以说Docker是当今最知名的容器平台之一，它于2013年开源，但是容器化和隔离的技术却有很长
+ 的历史，了解这部分的历史将有助于我们对容器技术的理解
+容器发展简史  1979年，Unix7在开发过程中引入了Chroot Jail和Chroot系统调用，它允许用户将进程及其子进程与操作   系统的其余部分隔离开来。但是这种隔离未考虑安全机制，根进程可以轻松地退出chroot
+那问题便来了，chroot jail是什么，jail为监狱的意思，似乎要把什么东西锁起来。在类UNIX的操作系统
+ 上，默认的根目录均为“ / ”，而chroot的作用就是改变正在运行的进程及它的子进程的根目录。例如，将某
+个程序的根目录从原先的默认的系统根目录更改为“ /home/ ”，则这个/home目录就变成了这个程序的逻辑
+根目录，与此同时，这个被修改了根目录环境的程序就不能再进入这个逻辑根目录之外的路径了。所以这就
+相当于限制某个程序能进入的目录树，称为监狱也是情有可原了
+ 2000年，FreeBSD Jail被引入到FreeBSD OS中，旨在为简单的Chroot文件隔离带来更多的安全性，此   外FreeBSD还实现了将进程及其活动隔离到文件系统的特定视图中（不懂，暂时略过）
+  2001年，Linux VServer被推出，它使用了类似chroot的机制与“安全上下文”及操作系统虚拟化来提供虚   拟化解决方案，相比于chroot进步了许多，允许在单个Linux发行版（VPS）上运行多个Linux的发行版
+VPS (Virtual Private Servers) ：虚拟专用服务器
+  2004年，Oracle推出了Solaris Containers，这是一个用于X86和SPARC处理器的Linux-VServer版本   Solaris Containers是由系统资源控制和“区域”提供的边界隔离组合而成
+SPARC是一套RISC（精简指令集）架构
+  2005年，OpenVZ推出，它和Linux-Server一样，使用操作系统级虚拟化，但是这样有一定的限制，容器   共享相同的体系结构和内核版本，当客户需要不同于主机的内核版本时就有点力不从心了；而且
+OpenVZ未将一些用于创建隔离的控制机制的补丁集成到内核中
+  2007年，Google发布了CGroups，这是一种机制，它能限制和隔离一系列进程的资源使用（如：CPU、   内存、磁盘I/O和网络等），而且被集成到了Linux内核中" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF%E7%9A%84%E5%8F%91%E5%B1%95/" />
+<meta property="article:published_time" content="2020-02-01T03:23:01+08:00" />
+<meta property="article:modified_time" content="2020-02-01T03:23:01+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">容器技术的前世今生</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 1, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/">云计算</a><a class="tag" href="https://sin-coder.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/">虚拟化</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="容器技术的前世今生">容器技术的前世今生</h2>
+
+<hr />
+
+<h3 id="概述">概述</h3>
+
+<blockquote>
+<p>什么是容器，在<a href="https://www.docker.com/resources/what-container">Docker官方网站</a>中，特地地对这个名词进行了定义，容器是一个标准化的软件单元。</p>
+</blockquote>
+
+<p>进一步的解释为容器是打包代码及其所有依赖项的软件的标准单元，它将软件和其运行环境隔离开来，</p>
+
+<p>因此应用程序可以从一个计算环境快速可靠地运行到另一个计算环境。</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/01/1JV7wT.png" alt="1JV7wT.png" style="zoom:80%;" /></p>
+
+<blockquote>
+<p>可以说Docker是当今最知名的容器平台之一，它于2013年开源，但是容器化和隔离的技术却有很长</p>
+</blockquote>
+
+<p>的历史，了解这部分的历史将有助于我们对容器技术的理解</p>
+
+<h3 id="容器发展简史">容器发展简史</h3>
+
+<ul>
+<li>1979年，Unix7在开发过程中引入了Chroot  Jail和Chroot系统调用，它允许用户将进程及其子进程与操作</li>
+</ul>
+
+<blockquote>
+<p>系统的其余部分隔离开来。但是这种隔离未考虑安全机制，根进程可以轻松地退出chroot</p>
+
+<p>那问题便来了，chroot jail是什么，jail为监狱的意思，似乎要把什么东西锁起来。在类UNIX的操作系统</p>
+</blockquote>
+
+<p>上，默认的根目录均为“ / ”，而chroot的作用就是改变正在运行的进程及它的子进程的根目录。例如，将某</p>
+
+<p>个程序的根目录从原先的默认的系统根目录更改为“ /home/ ”，则这个/home目录就变成了这个程序的逻辑</p>
+
+<p>根目录，与此同时，这个被修改了根目录环境的程序就不能再进入这个逻辑根目录之外的路径了。所以这就</p>
+
+<p>相当于限制某个程序能进入的目录树，称为监狱也是情有可原了</p>
+
+<ul>
+<li>2000年，FreeBSD Jail被引入到FreeBSD OS中，旨在为简单的Chroot文件隔离带来更多的安全性，此</li>
+</ul>
+
+<blockquote>
+<p>外FreeBSD还实现了将进程及其活动隔离到文件系统的特定视图中（不懂，暂时略过）</p>
+</blockquote>
+
+<ul>
+<li>2001年，Linux VServer被推出，它使用了类似chroot的机制与“安全上下文”及操作系统虚拟化来提供虚</li>
+</ul>
+
+<blockquote>
+<p>拟化解决方案，相比于chroot进步了许多，允许在单个Linux发行版（VPS）上运行多个Linux的发行版</p>
+
+<p>VPS (Virtual Private Servers)  ：虚拟专用服务器</p>
+</blockquote>
+
+<ul>
+<li>2004年，Oracle推出了Solaris Containers，这是一个用于X86和SPARC处理器的Linux-VServer版本</li>
+</ul>
+
+<blockquote>
+<p>Solaris Containers是由系统资源控制和“区域”提供的边界隔离组合而成</p>
+
+<p>SPARC是一套RISC（精简指令集）架构</p>
+</blockquote>
+
+<ul>
+<li>2005年，OpenVZ推出，它和Linux-Server一样，使用操作系统级虚拟化，但是这样有一定的限制，容器</li>
+</ul>
+
+<blockquote>
+<p>共享相同的体系结构和内核版本，当客户需要不同于主机的内核版本时就有点力不从心了；而且</p>
+
+<p>OpenVZ未将一些用于创建隔离的控制机制的补丁集成到内核中</p>
+</blockquote>
+
+<ul>
+<li>2007年，Google发布了CGroups，这是一种机制，它能限制和隔离一系列进程的资源使用（如：CPU、</li>
+</ul>
+
+<blockquote>
+<p>内存、磁盘I/O和网络等），而且被集成到了Linux内核中</p>
+</blockquote>
+
+<ul>
+<li>2008年，LXC（Linux Containers）发布，它使用的已经是在Linux内核中实现的CGroups</li>
+</ul>
+
+<p><img src="https://s2.ax1x.com/2020/02/01/1JeeC4.png" alt="1JeeC4.png" /></p>
+
+<ul>
+<li>2013年，Cloud Foundry创建了Warden，它是一个只包含容器部分轻量级容器；同样也是这一年Docker</li>
+</ul>
+
+<blockquote>
+<p>横空出世</p>
+</blockquote>
+
+<ul>
+<li>2014年，Google推出了LMCTFY（Let me contain that for you）,这是谷歌容器栈的开源版本，它使用</li>
+</ul>
+
+<blockquote>
+<p>CGroup、命名空间和其他Linux内核功能来实现在同一内核上的隔离环境中运行应用程序的；</p>
+
+<p>同年，CoreOS推出RKT，这也是一款类似于Docker的容器引擎</p>
+</blockquote>
+
+<p><img src="https://s2.ax1x.com/2020/02/01/1JZ2B6.png" alt="1JZ2B6.png" /></p>
+
+<h3 id="总结">总结</h3>
+
+<blockquote>
+<p>Jails、Zones(Solaris容器简称)、VPS、VM和容器都是为了实现隔离和资源控制的技术，但是每种技术是通</p>
+</blockquote>
+
+<p>过不同的方式来实现，每种方式都有其局限性和优势。而Docker作为目前最广泛使用的容器技术，已成为行业</p>
+
+<p>的标准，它仍然建立在Linux内核上提供的CGroups和命名空间之上</p>
+
+<hr />
+
+<h2 id="参考文献">参考文献</h2>
+
+<p><a href="https://medium.com/faun/the-missing-introduction-to-containerization-de1fbb73efc5">https://medium.com/faun/the-missing-introduction-to-containerization-de1fbb73efc5</a>  缺少容器化简介</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
