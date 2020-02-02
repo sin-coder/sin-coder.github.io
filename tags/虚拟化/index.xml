@@ -33,27 +33,38 @@
 VPS (Virtual Private Servers) ：虚拟专用服务器
   2004年，Oracle推出了Solaris Containers，这是一个用于X86和SPARC处理器的Linux-VServer版本   Solaris Containers是由系统资源控制和“区域”提供的边界隔离组合而成
 SPARC是一套RISC（精简指令集）架构
-  2005年，OpenVZ推出，它和Linux-Server一样，使用操作系统级虚拟化，但是这样有一定的限制，容器   共享相同的体系结构和内核版本，当客户需要不同于主机的内核版本时就有点力不从心了；而且
+  2005年，OpenVZ推出，它和Linux-VServer一样，使用操作系统级虚拟化，但是这样有一定的限制，容器   共享相同的体系结构和内核版本，当客户需要不同于主机的内核版本时就有点力不从心了；而且
 OpenVZ未将一些用于创建隔离的控制机制的补丁集成到内核中
   2007年，Google发布了CGroups，这是一种机制，它能限制和隔离一系列进程的资源使用（如：CPU、   内存、磁盘I/O和网络等），而且被集成到了Linux内核中</description>
     </item>
     
     <item>
-      <title>Docker入门学习</title>
+      <title>Linux资源隔离</title>
+      <link>https://sin-coder.github.io/post/linux%E8%B5%84%E6%BA%90%E9%9A%94%E7%A6%BB/</link>
+      <pubDate>Sat, 01 Feb 2020 03:22:23 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/linux%E8%B5%84%E6%BA%90%E9%9A%94%E7%A6%BB/</guid>
+      <description>Docker依赖的技术LXC、namespace、cgroup、AUFS(联合挂载文件系统)
+镜像分层结构，位于下层的镜像称为父镜像，最底层的镜像称为基础镜像（Base Image）</description>
+    </item>
+    
+    <item>
+      <title>Learn Docker with a picture</title>
       <link>https://sin-coder.github.io/post/docker%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/</link>
       <pubDate>Sat, 01 Feb 2020 03:22:01 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/post/docker%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/</guid>
-      <description> Docker入门学习 </description>
+      <description>一张图入门Docker  关于Docker我们在云计算、虚拟化基础概念和容器技术的前世今生两篇文章中已经介绍过其应用的场景
+ 和优点，在本篇文章我们将学习Docker的一些基础概念和用法，话不多说，赶紧上图</description>
     </item>
     
     <item>
-      <title>云计算、虚拟化基础概念简介</title>
+      <title>云计算和虚拟化基础概念简介</title>
       <link>https://sin-coder.github.io/post/%E4%BA%91%E8%AE%A1%E7%AE%97%E5%92%8C%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF/</link>
       <pubDate>Fri, 31 Jan 2020 19:21:17 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/post/%E4%BA%91%E8%AE%A1%E7%AE%97%E5%92%8C%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF/</guid>
-      <description>云计算、虚拟化基础概念 一、虚拟化  虚拟化技术是一种资源管理优化技术，它是将计算机的各种物理资源（CPU、内存、磁盘、网卡）
+      <description>云计算和虚拟化基础概念 一、虚拟化  虚拟化技术是一种资源管理优化技术，它是将计算机的各种物理资源（CPU、内存、磁盘、网卡）
  等I/O设备予以抽象、转换，然后呈现出来一个可供分割并任意组合为一个或多个（虚拟）计算机的配置
 环境。虚拟化技术打破了计算机内部实体结构间不可切割的障碍，使得用户以比原来更好的方式来应用
 这些计算机的硬件资源。
@@ -81,10 +92,11 @@ OpenVZ未将一些用于创建隔离的控制机制的补丁集成到内核中
  每个容器都有一个固定的资源配置（CPU、内存、线程数），并且扩展应用程序只需要扩展
  容器的数量即可。容器也是实现微服务架构的一个很好的工具，每个微服务只是一组协作容器
 3.容器和虚拟机的区别  容器和虚拟机具有相似的资源隔离和分配优势，但具体功能不同，因为容器虚拟化了操作系统，
- 而不是硬件，容器相比虚拟机更加便捷而高效
- 具体性能的区别如下：
-  容器和虚拟机架构的区别：
- 四、集群编排  虚拟化技术的成熟和分布式架构的普及，使得部署、管理和运行应用的云平台越来越多地被提</description>
+ 而不是硬件；容器的创建和停止十分迅速，而且对自身资源的需求十分有限，远远低于虚拟机，很
+很多时候直接把容器当做应用本身也是没有任何问题的。传统意义上如果说在一台主机上运行一百
+个虚拟机那肯定是天方夜谭，可是一台主机运行上千个容器却已经成为了现实
+ 二者关键性能的区别如下表格：
+  容器和虚拟机架构的区别：</description>
     </item>
     
     <item>

@@ -12,12 +12,13 @@
     
     
     <item>
-      <title>Docker入门学习</title>
+      <title>Learn Docker with a picture</title>
       <link>https://sin-coder.github.io/post/docker%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/</link>
       <pubDate>Sat, 01 Feb 2020 03:22:01 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/post/docker%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/</guid>
-      <description> Docker入门学习 </description>
+      <description>一张图入门Docker  关于Docker我们在云计算、虚拟化基础概念和容器技术的前世今生两篇文章中已经介绍过其应用的场景
+ 和优点，在本篇文章我们将学习Docker的一些基础概念和用法，话不多说，赶紧上图</description>
     </item>
     
   </channel>

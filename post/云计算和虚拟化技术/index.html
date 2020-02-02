@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>云计算、虚拟化基础概念简介 // sin-coder</title>
+    <title>云计算和虚拟化基础概念简介 // sin-coder</title>
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.59.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,8 +11,8 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="云计算、虚拟化基础概念简介"/>
-<meta name="twitter:description" content="云计算、虚拟化基础概念 一、虚拟化  虚拟化技术是一种资源管理优化技术，它是将计算机的各种物理资源（CPU、内存、磁盘、网卡）
+<meta name="twitter:title" content="云计算和虚拟化基础概念简介"/>
+<meta name="twitter:description" content="云计算和虚拟化基础概念 一、虚拟化  虚拟化技术是一种资源管理优化技术，它是将计算机的各种物理资源（CPU、内存、磁盘、网卡）
  等I/O设备予以抽象、转换，然后呈现出来一个可供分割并任意组合为一个或多个（虚拟）计算机的配置
 环境。虚拟化技术打破了计算机内部实体结构间不可切割的障碍，使得用户以比原来更好的方式来应用
 这些计算机的硬件资源。
@@ -40,13 +40,14 @@
  每个容器都有一个固定的资源配置（CPU、内存、线程数），并且扩展应用程序只需要扩展
  容器的数量即可。容器也是实现微服务架构的一个很好的工具，每个微服务只是一组协作容器
 3.容器和虚拟机的区别  容器和虚拟机具有相似的资源隔离和分配优势，但具体功能不同，因为容器虚拟化了操作系统，
- 而不是硬件，容器相比虚拟机更加便捷而高效
- 具体性能的区别如下：
-  容器和虚拟机架构的区别：
- 四、集群编排  虚拟化技术的成熟和分布式架构的普及，使得部署、管理和运行应用的云平台越来越多地被提"/>
+ 而不是硬件；容器的创建和停止十分迅速，而且对自身资源的需求十分有限，远远低于虚拟机，很
+很多时候直接把容器当做应用本身也是没有任何问题的。传统意义上如果说在一台主机上运行一百
+个虚拟机那肯定是天方夜谭，可是一台主机运行上千个容器却已经成为了现实
+ 二者关键性能的区别如下表格：
+  容器和虚拟机架构的区别："/>
 
-    <meta property="og:title" content="云计算、虚拟化基础概念简介" />
-<meta property="og:description" content="云计算、虚拟化基础概念 一、虚拟化  虚拟化技术是一种资源管理优化技术，它是将计算机的各种物理资源（CPU、内存、磁盘、网卡）
+    <meta property="og:title" content="云计算和虚拟化基础概念简介" />
+<meta property="og:description" content="云计算和虚拟化基础概念 一、虚拟化  虚拟化技术是一种资源管理优化技术，它是将计算机的各种物理资源（CPU、内存、磁盘、网卡）
  等I/O设备予以抽象、转换，然后呈现出来一个可供分割并任意组合为一个或多个（虚拟）计算机的配置
 环境。虚拟化技术打破了计算机内部实体结构间不可切割的障碍，使得用户以比原来更好的方式来应用
 这些计算机的硬件资源。
@@ -74,10 +75,11 @@
  每个容器都有一个固定的资源配置（CPU、内存、线程数），并且扩展应用程序只需要扩展
  容器的数量即可。容器也是实现微服务架构的一个很好的工具，每个微服务只是一组协作容器
 3.容器和虚拟机的区别  容器和虚拟机具有相似的资源隔离和分配优势，但具体功能不同，因为容器虚拟化了操作系统，
- 而不是硬件，容器相比虚拟机更加便捷而高效
- 具体性能的区别如下：
-  容器和虚拟机架构的区别：
- 四、集群编排  虚拟化技术的成熟和分布式架构的普及，使得部署、管理和运行应用的云平台越来越多地被提" />
+ 而不是硬件；容器的创建和停止十分迅速，而且对自身资源的需求十分有限，远远低于虚拟机，很
+很多时候直接把容器当做应用本身也是没有任何问题的。传统意义上如果说在一台主机上运行一百
+个虚拟机那肯定是天方夜谭，可是一台主机运行上千个容器却已经成为了现实
+ 二者关键性能的区别如下表格：
+  容器和虚拟机架构的区别：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sin-coder.github.io/post/%E4%BA%91%E8%AE%A1%E7%AE%97%E5%92%8C%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF/" />
 <meta property="article:published_time" content="2020-01-31T19:21:17+08:00" />
@@ -103,7 +105,7 @@
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">云计算、虚拟化基础概念简介</h1>
+      <h1 class ="post-title">云计算和虚拟化基础概念简介</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
@@ -128,7 +130,7 @@
     <div class="post-content">
       
 
-<h2 id="云计算-虚拟化基础概念">云计算、虚拟化基础概念</h2>
+<h2 id="云计算和虚拟化基础概念">云计算和虚拟化基础概念</h2>
 
 <p><img src="https://s2.ax1x.com/2020/02/01/180Ku6.png" alt="180Ku6.png" /></p>
 
@@ -224,10 +226,14 @@
 <p>容器和虚拟机具有相似的资源隔离和分配优势，但具体功能不同，因为容器虚拟化了操作系统，</p>
 </blockquote>
 
-<p>而不是硬件，容器相比虚拟机更加便捷而高效</p>
+<p>而不是硬件；容器的创建和停止十分迅速，而且对自身资源的需求十分有限，远远低于虚拟机，很</p>
+
+<p>很多时候直接把容器当做应用本身也是没有任何问题的。传统意义上如果说在一台主机上运行一百</p>
+
+<p>个虚拟机那肯定是天方夜谭，可是一台主机运行上千个容器却已经成为了现实</p>
 
 <blockquote>
-<p>具体性能的区别如下：</p>
+<p>二者关键性能的区别如下表格：</p>
 </blockquote>
 
 <p><img src="https://s2.ax1x.com/2020/02/01/1GLolj.jpg" alt="1GLolj.jpg" /></p>
@@ -238,7 +244,31 @@
 
 <p><img src="https://s2.ax1x.com/2020/02/01/180e3R.png" alt="180e3R.png" /></p>
 
-<h3 id="四-集群编排">四、集群编排</h3>
+<h4 id="4-docker-典型容器的代表">4.Docker：典型容器的代表</h4>
+
+<blockquote>
+<p>容器化技术的发展有很长的历史了，Docker站在巨人的肩膀上进一步优化了容器的使用体验，</p>
+</blockquote>
+
+<p>提供了各种容器的管理工具让用户无需再关注底层的操作，可以简单明了地管理和使用容器。这</p>
+
+<p>就使得它众多容器中脱颖而出</p>
+
+<blockquote>
+<p>我们可以将Docker容器理解为一种沙盒（Sandbox）吗，每个容器内运行一个应用，不同的</p>
+</blockquote>
+
+<p>之间相互隔离，容器之间也可以建立快速通信的机制。Docker的主要目标是&rdquo;Build，Ship and</p>
+
+<p>Run Any，Anywhere&rdquo;，即通过对应用组件的封装（Packaging）、分发（Distribution）、部署</p>
+
+<p>（Deployment）和运行（Runtime）等生命周期的管理，达到应用组件级别的“一次封装，到处运</p>
+
+<p>行”，这里的应用组件，既可以是一个Web应用，也可以是一整套数据库服务，甚至是一个操作系</p>
+
+<p>统或编译器</p>
+
+<h3 id="四-容器编排">四、容器编排</h3>
 
 <blockquote>
 <p>虚拟化技术的成熟和分布式架构的普及，使得部署、管理和运行应用的云平台越来越多地被提</p>

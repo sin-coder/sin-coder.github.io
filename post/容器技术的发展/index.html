@@ -28,7 +28,7 @@
 VPS (Virtual Private Servers) ：虚拟专用服务器
   2004年，Oracle推出了Solaris Containers，这是一个用于X86和SPARC处理器的Linux-VServer版本   Solaris Containers是由系统资源控制和“区域”提供的边界隔离组合而成
 SPARC是一套RISC（精简指令集）架构
-  2005年，OpenVZ推出，它和Linux-Server一样，使用操作系统级虚拟化，但是这样有一定的限制，容器   共享相同的体系结构和内核版本，当客户需要不同于主机的内核版本时就有点力不从心了；而且
+  2005年，OpenVZ推出，它和Linux-VServer一样，使用操作系统级虚拟化，但是这样有一定的限制，容器   共享相同的体系结构和内核版本，当客户需要不同于主机的内核版本时就有点力不从心了；而且
 OpenVZ未将一些用于创建隔离的控制机制的补丁集成到内核中
   2007年，Google发布了CGroups，这是一种机制，它能限制和隔离一系列进程的资源使用（如：CPU、   内存、磁盘I/O和网络等），而且被集成到了Linux内核中"/>
 
@@ -49,7 +49,7 @@ OpenVZ未将一些用于创建隔离的控制机制的补丁集成到内核中
 VPS (Virtual Private Servers) ：虚拟专用服务器
   2004年，Oracle推出了Solaris Containers，这是一个用于X86和SPARC处理器的Linux-VServer版本   Solaris Containers是由系统资源控制和“区域”提供的边界隔离组合而成
 SPARC是一套RISC（精简指令集）架构
-  2005年，OpenVZ推出，它和Linux-Server一样，使用操作系统级虚拟化，但是这样有一定的限制，容器   共享相同的体系结构和内核版本，当客户需要不同于主机的内核版本时就有点力不从心了；而且
+  2005年，OpenVZ推出，它和Linux-VServer一样，使用操作系统级虚拟化，但是这样有一定的限制，容器   共享相同的体系结构和内核版本，当客户需要不同于主机的内核版本时就有点力不从心了；而且
 OpenVZ未将一些用于创建隔离的控制机制的补丁集成到内核中
   2007年，Google发布了CGroups，这是一种机制，它能限制和隔离一系列进程的资源使用（如：CPU、   内存、磁盘I/O和网络等），而且被集成到了Linux内核中" />
 <meta property="og:type" content="article" />
@@ -173,7 +173,7 @@ OpenVZ未将一些用于创建隔离的控制机制的补丁集成到内核中
 </blockquote>
 
 <ul>
-<li>2005年，OpenVZ推出，它和Linux-Server一样，使用操作系统级虚拟化，但是这样有一定的限制，容器</li>
+<li>2005年，OpenVZ推出，它和Linux-VServer一样，使用操作系统级虚拟化，但是这样有一定的限制，容器</li>
 </ul>
 
 <blockquote>
@@ -191,21 +191,21 @@ OpenVZ未将一些用于创建隔离的控制机制的补丁集成到内核中
 </blockquote>
 
 <ul>
-<li>2008年，LXC（Linux Containers）发布，它使用的已经是在Linux内核中实现的CGroups</li>
+<li>2008年，LXC（Linux Containers）发布，该项目借鉴前人成熟的容器设计理念，并基于一系列新的</li>
 </ul>
+
+<blockquote>
+<p>内核特性实现了更具扩展性的虚拟化容器方案，而且它被集成到了主流的Linux内核中，进而成为</p>
+
+<p>Linux系统轻量级容器技术的标准</p>
+</blockquote>
 
 <p><img src="https://s2.ax1x.com/2020/02/01/1JeeC4.png" alt="1JeeC4.png" /></p>
 
 <ul>
-<li>2013年，Cloud Foundry创建了Warden，它是一个只包含容器部分轻量级容器；同样也是这一年Docker</li>
-</ul>
+<li><p>2013年，Cloud Foundry创建了Warden，它是一个只包含容器部分轻量级容器；同年，Docker诞生</p></li>
 
-<blockquote>
-<p>横空出世</p>
-</blockquote>
-
-<ul>
-<li>2014年，Google推出了LMCTFY（Let me contain that for you）,这是谷歌容器栈的开源版本，它使用</li>
+<li><p>2014年，Google推出了LMCTFY（Let me contain that for you）,这是谷歌容器栈的开源版本，它使用</p></li>
 </ul>
 
 <blockquote>
@@ -219,18 +219,20 @@ OpenVZ未将一些用于创建隔离的控制机制的补丁集成到内核中
 <h3 id="总结">总结</h3>
 
 <blockquote>
-<p>Jails、Zones(Solaris容器简称)、VPS、VM和容器都是为了实现隔离和资源控制的技术，但是每种技术是通</p>
+<p>Jails、Zones(Solaris容器简称)、VPS、VM和容器都是为了实现隔离和资源控制的技术，但是每种技</p>
 </blockquote>
 
-<p>过不同的方式来实现，每种方式都有其局限性和优势。而Docker作为目前最广泛使用的容器技术，已成为行业</p>
+<p>术是通过不同的方式来实现，每种方式都有其局限性和优势。而Docker作为目前最广泛使用的容器技术，</p>
 
-<p>的标准，它仍然建立在Linux内核上提供的CGroups和命名空间之上</p>
+<p>已成为行业的标准，但它也是基于以往的这些技术不断改进的</p>
 
 <hr />
 
 <h2 id="参考文献">参考文献</h2>
 
-<p><a href="https://medium.com/faun/the-missing-introduction-to-containerization-de1fbb73efc5">https://medium.com/faun/the-missing-introduction-to-containerization-de1fbb73efc5</a>  缺少容器化简介</p>
+<p><a href="https://medium.com/faun/the-missing-introduction-to-containerization-de1fbb73efc5">https://medium.com/faun/the-missing-introduction-to-containerization-de1fbb73efc5</a></p>
+
+<p>Docker技术入门与实战-杨保华  戴王剑  曹亚伦</p>
 
     </div>
     <div class="post-footer">
