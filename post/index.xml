@@ -6,10 +6,29 @@
     <description>Recent content in Posts on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Feb 2020 03:23:01 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 02 Feb 2020 22:17:53 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Docker Image</title>
+      <link>https://sin-coder.github.io/post/docker-image/</link>
+      <pubDate>Sun, 02 Feb 2020 22:17:53 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/docker-image/</guid>
+      <description>Docker 镜像详解  镜像是Docker三大核心概念中最为重要的。Docker运行容器前需要本地存在对应的镜像，如果镜像不
+ 存在，Docker会从Docker Hub中下载，当然用户也可以配置自定义的镜像仓库
+关键问题  使用pull命令从Docker Hub中下载镜像到本地 查看本地已有的镜像信息、管理镜像标签 使用search命令在远端仓库进行搜索和过滤 删除镜像标签和镜像文件 创建用户定制的镜像并保存为外部文件 向Docker Hub仓库中推送自己的镜像s  一、获取镜像  docker [image] pull NAME[:TAG] #直接从Docker Hub镜像源来下载镜像  其中 [] 中的内容为可选项，NAME为镜像仓库名称（用来区分镜像），TAG为镜像的标签，一般用来
+ 表示版本信息，描述一个镜像需要“名称+标签”；如果不显式地指定TAG，则默认会选择latest标签，会下
+载仓库中的最新镜像。不过，镜像的仓库名称中还应该添加仓库地址（即注册服务器）作为前缀，默认情
+况下使用官方的Docker Hub服务（前缀可以忽略的），如果从非官方的仓库下载，则必须指定完整的仓库
+地址
+ 从下载镜像的过程中，可以看到镜像文件一般是由若干层组成的，Docker下载中会获取并输出镜像
+ 的各层信息，每一层都有一个简写的唯一id。当不同的镜像包括相同的层时，本地仅存储了层的一份内
+容，这样可以减少存储空间
+ $ docker pull ubuntu Using default tag: latest latest: Pulling from library/ubuntu 5c939e3a4d10: Pull complete c63719cdbe7a: Pull complete 19a861ea6baf: Pull complete 651c9d2d6c4f: Pull complete Digest: sha256:8d31dad0c58f552e890d68bbfb735588b6b820a46e459672d96e585871acc110 Status: Downloaded newer image for ubuntu:latest docker.</description>
+    </item>
     
     <item>
       <title>容器技术的前世今生</title>
@@ -36,16 +55,6 @@ SPARC是一套RISC（精简指令集）架构
   2005年，OpenVZ推出，它和Linux-VServer一样，使用操作系统级虚拟化，但是这样有一定的限制，容器   共享相同的体系结构和内核版本，当客户需要不同于主机的内核版本时就有点力不从心了；而且
 OpenVZ未将一些用于创建隔离的控制机制的补丁集成到内核中
   2007年，Google发布了CGroups，这是一种机制，它能限制和隔离一系列进程的资源使用（如：CPU、   内存、磁盘I/O和网络等），而且被集成到了Linux内核中</description>
-    </item>
-    
-    <item>
-      <title>Linux资源隔离</title>
-      <link>https://sin-coder.github.io/post/linux%E8%B5%84%E6%BA%90%E9%9A%94%E7%A6%BB/</link>
-      <pubDate>Sat, 01 Feb 2020 03:22:23 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/linux%E8%B5%84%E6%BA%90%E9%9A%94%E7%A6%BB/</guid>
-      <description>Docker依赖的技术LXC、namespace、cgroup、AUFS(联合挂载文件系统)
-镜像分层结构，位于下层的镜像称为父镜像，最底层的镜像称为基础镜像（Base Image）</description>
     </item>
     
     <item>
