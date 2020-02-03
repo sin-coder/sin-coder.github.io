@@ -6,10 +6,28 @@
     <description>Recent content in Posts on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Feb 2020 22:17:53 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 03 Feb 2020 23:10:50 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Docker Container</title>
+      <link>https://sin-coder.github.io/post/docker-container/</link>
+      <pubDate>Mon, 03 Feb 2020 21:52:04 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/docker-container/</guid>
+      <description> Docker 容器详解   </description>
+    </item>
+    
+    <item>
+      <title>基于Ubuntu系统安装Docker</title>
+      <link>https://sin-coder.github.io/post/ubuntu-docker/</link>
+      <pubDate>Mon, 03 Feb 2020 21:50:14 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/ubuntu-docker/</guid>
+      <description> Docker的安装   </description>
+    </item>
     
     <item>
       <title>Docker 镜像详解</title>
@@ -257,6 +275,15 @@ MapReduce(离线处理)&amp;mdash;&amp;ndash;》Spark(高性能批处理技术)&
 下载时可能由于网络问题失败，附上Hugo、Git、主题m10c的下载包链接: 下载链接
   注册Github官网（已有账号请忽略）  2.生成个人站点 （1）在终端执行命令 C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog   出现以下提示信息表示创建成功：
  C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog Congratulations! Your new Hugo site is created in E:\hugo\Sites\myblog.</description>
+    </item>
+    
+    <item>
+      <title>Docker Repo</title>
+      <link>https://sin-coder.github.io/post/docker-repo/</link>
+      <pubDate>Mon, 03 Feb 2020 23:10:50 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/docker-repo/</guid>
+      <description></description>
     </item>
     
     <item>

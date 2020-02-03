@@ -6,10 +6,28 @@
     <description>Recent content in 虚拟化 on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Feb 2020 22:17:53 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 03 Feb 2020 21:52:04 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Docker Container</title>
+      <link>https://sin-coder.github.io/post/docker-container/</link>
+      <pubDate>Mon, 03 Feb 2020 21:52:04 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/docker-container/</guid>
+      <description> Docker 容器详解   </description>
+    </item>
+    
+    <item>
+      <title>基于Ubuntu系统安装Docker</title>
+      <link>https://sin-coder.github.io/post/ubuntu-docker/</link>
+      <pubDate>Mon, 03 Feb 2020 21:50:14 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/ubuntu-docker/</guid>
+      <description> Docker的安装   </description>
+    </item>
     
     <item>
       <title>Docker 镜像详解</title>
