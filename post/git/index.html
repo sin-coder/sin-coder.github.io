@@ -12,7 +12,7 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Git&amp;Github 学习笔记"/>
-<meta name="twitter:description" content="Git&amp;Github 学习笔记 一、版本控制 1.版本控制工具的功能  协同修改：多人互不影响地修改服务器端的同一个文件
+<meta name="twitter:description" content="一、版本控制 1.版本控制工具的功能  协同修改：多人互不影响地修改服务器端的同一个文件
  数据备份：不仅要保存文件的当前状态，还能够保存每一个提交过的历史状态
  版本管理：在保存每一个版本的文件信息时，能够做到不保存重复的数据，节省存储空间，提高运行效率;
     SVN采取的是增量式管理的方式，Git采取了文件系统快照的方式
@@ -29,10 +29,11 @@
 &ldquo;Talk is cheap, Show me the Code&rdquo;，少废话我只看代码。
 2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
   大部分操作在本地完成版本控制，不需要联网 对数据进行完整性保证，基于Hash算法 尽可能添加数据而不是删除或者修改数据 与Linux命令全面兼容，这个当然了，都是由Linus开发的  3.Git 的结构  Git的本地结构图
- 4.代码托管中心  代码托管中心就是维护远程库的，在局域网环境下使用GitLab服务器，在外网环境下使用Github和码云"/>
+ 4.代码托管中心  代码托管中心就是维护远程库的，在局域网环境下使用GitLab服务器，在外网环境下使用Github和码云
+ 码云是位于国内的网站，访问速度相对较快些，而Github位于国外，访问的相对较慢"/>
 
     <meta property="og:title" content="Git&amp;Github 学习笔记" />
-<meta property="og:description" content="Git&amp;Github 学习笔记 一、版本控制 1.版本控制工具的功能  协同修改：多人互不影响地修改服务器端的同一个文件
+<meta property="og:description" content="一、版本控制 1.版本控制工具的功能  协同修改：多人互不影响地修改服务器端的同一个文件
  数据备份：不仅要保存文件的当前状态，还能够保存每一个提交过的历史状态
  版本管理：在保存每一个版本的文件信息时，能够做到不保存重复的数据，节省存储空间，提高运行效率;
     SVN采取的是增量式管理的方式，Git采取了文件系统快照的方式
@@ -49,7 +50,8 @@
 &ldquo;Talk is cheap, Show me the Code&rdquo;，少废话我只看代码。
 2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
   大部分操作在本地完成版本控制，不需要联网 对数据进行完整性保证，基于Hash算法 尽可能添加数据而不是删除或者修改数据 与Linux命令全面兼容，这个当然了，都是由Linus开发的  3.Git 的结构  Git的本地结构图
- 4.代码托管中心  代码托管中心就是维护远程库的，在局域网环境下使用GitLab服务器，在外网环境下使用Github和码云" />
+ 4.代码托管中心  代码托管中心就是维护远程库的，在局域网环境下使用GitLab服务器，在外网环境下使用Github和码云
+ 码云是位于国内的网站，访问速度相对较快些，而Github位于国外，访问的相对较慢" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sin-coder.github.io/post/git/" />
 <meta property="article:published_time" content="2020-01-27T00:52:28+08:00" />
@@ -95,12 +97,10 @@
   <title>tag</title>
   <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
 </svg>
-          <a class="tag" href="https://sin-coder.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a></div></div>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><a class="tag" href="https://sin-coder.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a></div></div>
     </header>
     <div class="post-content">
       
-
-<h2 id="git-github-学习笔记">Git&amp;Github 学习笔记</h2>
 
 <h3 id="一-版本控制">一、版本控制</h3>
 
@@ -139,7 +139,7 @@
 
 <p>服务器进行交互，集中式的版本控制具有单点故障的问题</p>
 
-<p><img src="https://s2.ax1x.com/2020/02/04/1BDhTg.png" alt="1BDhTg.png"  /></p>
+<p><img src="https://s2.ax1x.com/2020/02/04/1BDhTg.png" alt="1BDhTg.png" style="zoom: 33%;" /></p>
 
 <p><strong>（2）分布式版本控制工具</strong>：Git、Mercurial、Bazaar等</p>
 
@@ -147,7 +147,7 @@
 <p>分布式版本控制相比于集中式最大的优点就是能够避免单点故障的问题</p>
 </blockquote>
 
-<p><img src="https://s2.ax1x.com/2020/02/04/1BD5kQ.png" alt="1BD5kQ.png" /></p>
+<p><img src="https://s2.ax1x.com/2020/02/04/1BD5kQ.png" alt="1BD5kQ.png" style="zoom: 60%;" /></p>
 </blockquote>
 
 <h3 id="二-git-简介">二、Git 简介</h3>
@@ -198,7 +198,7 @@
 <blockquote>
 <p>（1） 团队内部协作</p>
 
-<p><img src="https://s2.ax1x.com/2020/02/04/1BIVMD.png" alt="1BIVMD.png" /></p>
+<p><img src="https://s2.ax1x.com/2020/02/04/1BIVMD.png" alt="1BIVMD.png" style="zoom:80%;" /></p>
 
 <p>（2）跨团队进行协作</p>
 
