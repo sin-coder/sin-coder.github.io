@@ -65,11 +65,8 @@
  管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭
 &amp;ldquo;Talk is cheap, Show me the Code&amp;rdquo;，少废话我只看代码。
 2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
-  大部分操作在本地完成版本控制，不需要联网
- 对数据进行完整性保证，基于Hash算法
- 尽可能添加数据而不是删除或者修改数据
- 与Linux命令全面兼容，这个当然了，都是由Linus开发的
-  3.Git 的结构  Git的本地结构图</description>
+  大部分操作在本地完成版本控制，不需要联网 对数据进行完整性保证，基于Hash算法 尽可能添加数据而不是删除或者修改数据 与Linux命令全面兼容，这个当然了，都是由Linus开发的    3.Git 的结构  Git的本地结构图
+ 4.</description>
     </item>
     
     <item>

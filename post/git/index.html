@@ -28,11 +28,8 @@
  管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭
 &ldquo;Talk is cheap, Show me the Code&rdquo;，少废话我只看代码。
 2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
-  大部分操作在本地完成版本控制，不需要联网
- 对数据进行完整性保证，基于Hash算法
- 尽可能添加数据而不是删除或者修改数据
- 与Linux命令全面兼容，这个当然了，都是由Linus开发的
-  3.Git 的结构  Git的本地结构图"/>
+  大部分操作在本地完成版本控制，不需要联网 对数据进行完整性保证，基于Hash算法 尽可能添加数据而不是删除或者修改数据 与Linux命令全面兼容，这个当然了，都是由Linus开发的    3.Git 的结构  Git的本地结构图
+ 4."/>
 
     <meta property="og:title" content="Git&amp;Github 学习笔记" />
 <meta property="og:description" content="一、版本控制 1.版本控制工具的功能  协同修改：多人互不影响地修改服务器端的同一个文件
@@ -51,11 +48,8 @@
  管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭
 &ldquo;Talk is cheap, Show me the Code&rdquo;，少废话我只看代码。
 2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
-  大部分操作在本地完成版本控制，不需要联网
- 对数据进行完整性保证，基于Hash算法
- 尽可能添加数据而不是删除或者修改数据
- 与Linux命令全面兼容，这个当然了，都是由Linus开发的
-  3.Git 的结构  Git的本地结构图" />
+  大部分操作在本地完成版本控制，不需要联网 对数据进行完整性保证，基于Hash算法 尽可能添加数据而不是删除或者修改数据 与Linux命令全面兼容，这个当然了，都是由Linus开发的    3.Git 的结构  Git的本地结构图
+ 4." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sin-coder.github.io/post/git/" />
 <meta property="article:published_time" content="2020-01-27T00:52:28+08:00" />
@@ -175,16 +169,15 @@
 </blockquote>
 
 <ul>
-<li><p>大部分操作在本地完成版本控制，不需要联网</p></li>
-
-<li><p>对数据进行完整性保证，基于Hash算法</p></li>
-
-<li><p>尽可能添加数据而不是删除或者修改数据</p></li>
-
-<li><p>与Linux命令全面兼容，这个当然了，都是由Linus开发的</p></li>
+<li>大部分操作在本地完成版本控制，不需要联网</li>
+<li>对数据进行完整性保证，基于Hash算法</li>
+<li>尽可能添加数据而不是删除或者修改数据</li>
+<li>与Linux命令全面兼容，这个当然了，都是由Linus开发的</li>
 </ul>
 
+<blockquote>
 <p><img src="https://s2.ax1x.com/2020/02/04/1B66US.jpg" alt="1B66US.jpg" /></p>
+</blockquote>
 
 <h4 id="3-git-的结构">3.Git 的结构</h4>
 
@@ -211,7 +204,7 @@
 
 <p>（2）跨团队进行协作</p>
 
-<p><img src="https://s2.ax1x.com/2020/02/04/1BIAxO.png" alt="1BIAxO.png" style="zoom: 67%;" /></p>
+<p><img src="https://s2.ax1x.com/2020/02/04/1BIAxO.png" alt="1BIAxO.png" style="zoom: 50%;" /></p>
 </blockquote>
 
 <h3 id="三-git-基本操作">三、Git 基本操作</h3>
@@ -293,9 +286,11 @@ $ cat .gitconfig
 </blockquote>
 
 <ul>
-<li>状态查看：git status:  查看工作去、暂存区的状态</li>
-<li>添加文件：git add [filename]  将工作区中的&rdquo;新建/修改&rdquo; 添加到暂存区</li>
-<li>提交文件：git commit -m &ldquo;commit message&rdquo; [filename]  将暂存区的内容提交到本地库</li>
+<li><p>状态查看：git status:  查看工作去、暂存区的状态</p></li>
+
+<li><p>添加文件：git add [filename]  将工作区中的&rdquo;新建/修改&rdquo; 添加到暂存区</p></li>
+
+<li><p>提交文件：git commit -m &ldquo;commit message&rdquo; [filename]  将暂存区的内容提交到本地库</p></li>
 </ul>
 
 <blockquote>
@@ -350,6 +345,8 @@ $ cat .gitconfig
 &gt; no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;) #使用git add添加到缓存区即可
 &gt; ```
 
+
+
 + 查看历史记录：git log
 
 &gt; ```bash
@@ -379,6 +376,8 @@ $ cat .gitconfig
 &gt; e372724 (HEAD -&gt; master) HEAD@{0}: commit: CSUYZZ second commit
 &gt; 9b96e59 HEAD@{1}: commit (initial): CSUYZZ first commit Creat a file
 &gt; ```
+
+
 
 &gt; 基于历史记录前进或者回退版本，Git在管理版本时实际上使用了HEAD指针，用户可以使用HEAD
 
@@ -444,17 +443,21 @@ git diff [本地库历史版本] [文件名] ：将工作区中的文件和本�
 <p><strong>（2）分支管理优点</strong></p>
 
 <ul>
-<li>同时并行推进多个功能的开发，提高开发效率</li>
-<li>分支开发失败不会对其他分支造成任何应影响</li>
+<li><p>同时并行推进多个功能的开发，提高开发效率</p></li>
+
+<li><p>分支开发失败不会对其他分支造成任何应影响</p></li>
 </ul>
 
 <p>（3）分支操作</p>
 
 <ul>
-<li>创建分支：git branch [分支名]</li>
-<li>查看分支：git branch -v</li>
-<li>切换分支：git checkout [分支名]</li>
-<li>合并分支：git checkout [分支名] （切换分支）、合并分支（git merge [有新内容分支名]）</li>
+<li><p>创建分支：git branch [分支名]</p></li>
+
+<li><p>查看分支：git branch -v</p></li>
+
+<li><p>切换分支：git checkout [分支名]</p></li>
+
+<li><p>合并分支：git checkout [分支名] （切换分支）、合并分支（git merge [有新内容分支名]）</p></li>
 </ul>
 
 <blockquote>
