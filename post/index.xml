@@ -6,18 +6,23 @@
     <description>Recent content in Posts on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Feb 2020 23:10:50 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 04 Feb 2020 00:35:00 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Docker Container</title>
+      <title>Docker 容器基础命令详解</title>
       <link>https://sin-coder.github.io/post/docker-container/</link>
       <pubDate>Mon, 03 Feb 2020 21:52:04 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/post/docker-container/</guid>
-      <description> Docker 容器详解   </description>
+      <description> Docker 容器基础命令详解  容器是整个Docker技术栈中最为核心的概念，它是镜像的一个运行实例，但是镜像是只读文件，而容器
+ 在运行时带有需要的可写文件层，容器中的应用进程处于运行状态。虚拟机运行的是整套操作系统及跑在上
+面的应用，而Docker 容器就只是独立运行一个应用以及必需的应用环境，身材更加纤瘦
+ Docker 容器相关的操作命令主要是用来管理它的整个生命周期的，从创建、运行、停止到暂停、删除等
+ 状态，状态之间的转换关系如下图，这篇文章也是围绕着此图来讲解
+一、创建容器 二、停止容器 三、进入容器 四、删除容器 五、迁移容器 六、查看容器 </description>
     </item>
     
     <item>
@@ -27,6 +32,21 @@
       
       <guid>https://sin-coder.github.io/post/ubuntu-docker/</guid>
       <description> Docker的安装   </description>
+    </item>
+    
+    <item>
+      <title>基于Ubuntu系统安装Docker</title>
+      <link>https://sin-coder.github.io/post/%E5%9F%BA%E4%BA%8Eubuntu%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85docker/</link>
+      <pubDate>Mon, 03 Feb 2020 21:50:14 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/%E5%9F%BA%E4%BA%8Eubuntu%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85docker/</guid>
+      <description> Docker的安装  Docker的兼容性是比较好的，在主流的操作系统Windows、Linux和Mac上都能运行，但是也有一些不尽
+ 如人意的地方，比如只支持Windows 10的专业版和企业版安装，可怜我的家庭版只能默默哭泣；只能在Linux
+内核版本3.10及以上且为64位操作系统才能安装。
+ 为了追求最佳的原生体验，我选择了使用Linux来安装Docker，但是Linux的发行版本众多，我便又有了
+ 选择恐惧症。平时使用CentOS比较多一些，Docker目前支持CentOS7以后的版本，但是看官方推荐说对
+Ubuntu的支持更好一些，我还是脱离自己的舒适区去用Ubuntu吧
+一、准备工作 二、安装过程 </description>
     </item>
     
     <item>
@@ -184,6 +204,32 @@ Docker三大基础概念：镜像、容器和仓库 一、镜像（Image）  镜
     </item>
     
     <item>
+      <title>Git&amp;Github 学习笔记</title>
+      <link>https://sin-coder.github.io/post/git/</link>
+      <pubDate>Mon, 27 Jan 2020 00:52:28 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/git/</guid>
+      <description>Git&amp;amp;Github 学习笔记 一、版本控制 1.版本控制工具的功能  协同修改：多人互不影响地修改服务器端的同一个文件
+ 数据备份：不仅要保存文件的当前状态，还能够保存每一个提交过的历史状态
+ 版本管理：在保存每一个版本的文件信息时，能够做到不保存重复的数据，节省存储空间，提高运行效率;
+    SVN采取的是增量式管理的方式，Git采取了文件系统快照的方式
+   权限控制：对团队中参与开发的人员进行权限控制，Git还可以对团队外开发者贡献的代码进行审核
+ 历史记录：查看修改人、修改时间、修改内容、日志信息；将本地文件恢复至某一个历史状态
+ 分支管理：允许开发团队在工作过程中多条生产线同时推进任务，提高效率
+  2.常见版本控制工具  （1）集中式版本控制工具：CVS、SVN、VSS等
+ 集中式的版本控制中每个开发者是一个客户端，文件和版本信息存储在服务端，开发者们都直接与
+ 服务器进行交互，集中式的版本控制具有单点故障的问题
+（2）分布式版本控制工具：Git、Mercurial、Bazaar等
+ 分布式版本控制相比于集中式最大的优点就是能够避免单点故障的问题
+  二、Git 简介 1.Git的发展历史  Git是一个免费、开源的分布式版本控制工具。在2005年，由Linus基于C语言开发完成，开发的初衷是
+ 管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭
+&amp;ldquo;Talk is cheap, Show me the Code&amp;rdquo;，少废话我只看代码。
+2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
+  大部分操作在本地完成版本控制，不需要联网 对数据进行完整性保证，基于Hash算法 尽可能添加数据而不是删除或者修改数据 与Linux命令全面兼容，这个当然了，都是由Linus开发的  3.Git 的结构  Git的本地结构图
+ 4.代码托管中心  代码托管中心就是维护远程库的，在局域网环境下使用GitLab服务器，在外网环境下使用Github和码云</description>
+    </item>
+    
+    <item>
       <title>分布式系统学习笔记</title>
       <link>https://sin-coder.github.io/post/distri/</link>
       <pubDate>Mon, 27 Jan 2020 00:44:13 +0800</pubDate>
@@ -275,6 +321,15 @@ MapReduce(离线处理)&amp;mdash;&amp;ndash;》Spark(高性能批处理技术)&
 下载时可能由于网络问题失败，附上Hugo、Git、主题m10c的下载包链接: 下载链接
   注册Github官网（已有账号请忽略）  2.生成个人站点 （1）在终端执行命令 C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog   出现以下提示信息表示创建成功：
  C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog Congratulations! Your new Hugo site is created in E:\hugo\Sites\myblog.</description>
+    </item>
+    
+    <item>
+      <title>Use Container</title>
+      <link>https://sin-coder.github.io/post/use-container/</link>
+      <pubDate>Tue, 04 Feb 2020 00:35:00 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/use-container/</guid>
+      <description></description>
     </item>
     
     <item>
@@ -396,24 +451,6 @@ GFS系统的优点：高可用性、自动负载均衡
 ​ 导入包时一般为 import &amp;ldquo;项目名/包名&amp;rdquo;
 ​ 调用函数时则是通过PackageName.FunctionName() 来进行调用
 （3）函数 ​ fun main()是程序开始执行的函数，该函数也是每一个可执行程序所必须的，每个函数后都会有{}，但是 &amp;ldquo; { &amp;ldquo;</description>
-    </item>
-    
-    <item>
-      <title>Github 简介</title>
-      <link>https://sin-coder.github.io/post/github/</link>
-      <pubDate>Mon, 27 Jan 2020 00:52:49 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/github/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Git学习总结</title>
-      <link>https://sin-coder.github.io/post/git/</link>
-      <pubDate>Mon, 27 Jan 2020 00:52:28 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/git/</guid>
-      <description></description>
     </item>
     
     <item>
