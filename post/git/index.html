@@ -28,8 +28,11 @@
  管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭
 &ldquo;Talk is cheap, Show me the Code&rdquo;，少废话我只看代码。
 2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
-  大部分操作在本地完成版本控制，不需要联网 对数据进行完整性保证，基于Hash算法 尽可能添加数据而不是删除或者修改数据 与Linux命令全面兼容，这个当然了，都是由Linus开发的    3.Git 的结构  Git的本地结构图
- 4."/>
+  大部分操作在本地完成版本控制，不需要联网
+ 对数据进行完整性保证，基于Hash算法
+ 尽可能添加数据而不是删除或者修改数据
+ 与Linux命令全面兼容，这个当然了，都是由Linus开发的
+    3.Git 的结构  Git的本地结构图"/>
 
     <meta property="og:title" content="Git&amp;Github 学习笔记" />
 <meta property="og:description" content="一、版本控制 1.版本控制工具的功能  协同修改：多人互不影响地修改服务器端的同一个文件
@@ -48,8 +51,11 @@
  管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭
 &ldquo;Talk is cheap, Show me the Code&rdquo;，少废话我只看代码。
 2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
-  大部分操作在本地完成版本控制，不需要联网 对数据进行完整性保证，基于Hash算法 尽可能添加数据而不是删除或者修改数据 与Linux命令全面兼容，这个当然了，都是由Linus开发的    3.Git 的结构  Git的本地结构图
- 4." />
+  大部分操作在本地完成版本控制，不需要联网
+ 对数据进行完整性保证，基于Hash算法
+ 尽可能添加数据而不是删除或者修改数据
+ 与Linux命令全面兼容，这个当然了，都是由Linus开发的
+    3.Git 的结构  Git的本地结构图" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sin-coder.github.io/post/git/" />
 <meta property="article:published_time" content="2020-01-27T00:52:28+08:00" />
@@ -89,7 +95,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          9 min read
+          8 min read
         </div><div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
   <title>tag</title>
@@ -169,10 +175,13 @@
 </blockquote>
 
 <ul>
-<li>大部分操作在本地完成版本控制，不需要联网</li>
-<li>对数据进行完整性保证，基于Hash算法</li>
-<li>尽可能添加数据而不是删除或者修改数据</li>
-<li>与Linux命令全面兼容，这个当然了，都是由Linus开发的</li>
+<li><p>大部分操作在本地完成版本控制，不需要联网</p></li>
+
+<li><p>对数据进行完整性保证，基于Hash算法</p></li>
+
+<li><p>尽可能添加数据而不是删除或者修改数据</p></li>
+
+<li><p>与Linux命令全面兼容，这个当然了，都是由Linus开发的</p></li>
 </ul>
 
 <blockquote>
@@ -204,7 +213,7 @@
 
 <p>（2）跨团队进行协作</p>
 
-<p><img src="https://s2.ax1x.com/2020/02/04/1BIAxO.png" alt="1BIAxO.png" style="zoom: 50%;" /></p>
+<p><img src="https://s2.ax1x.com/2020/02/04/1BIAxO.png" alt="1BIAxO.png" style="zoom: 80%;" /></p>
 </blockquote>
 
 <h3 id="三-git-基本操作">三、Git 基本操作</h3>
@@ -349,36 +358,39 @@ $ cat .gitconfig
 
 + 查看历史记录：git log
 
-&gt; ```bash
-&gt; $ git log  #打印出两次提交的信息
-&gt; commit e3727241725d628cd2251e10171c1878416a06e6 (HEAD -&gt; master)  
-&gt; #长字符串为索引，HEAD为指针，指向当前的版本
-&gt; Author: yzz &lt;yzz@pro&gt;
-&gt; Date:   Tue Feb 4 17:39:49 2020 +0800
-&gt;     CSUYZZ second commit
-&gt;     
-&gt; commit 9b96e598646f7c71d3a4a3269caebe041d9a5f8c  
-&gt; Author: yzz &lt;yzz@pro&gt;
-&gt; Date:   Tue Feb 4 17:28:05 2020 +0800
-&gt;     CSUYZZ first commit Creat a file   
-&gt; # git log 常用参数
-&gt; #--pretty=oneline  :  一行显示所有所有的版本信息
-&gt; $ git log --pretty=oneline
-&gt; e3727241725d628cd2251e10171c1878416a06e6 (HEAD -&gt; master) CSUYZZ second commit
-&gt; 9b96e598646f7c71d3a4a3269caebe041d9a5f8c CSUYZZ first commit Creat a file
-&gt; 
-&gt; #--oneline :一行显示，但是精简哈希值
-&gt; $ git log --oneline
-&gt; e372724 (HEAD -&gt; master) CSUYZZ second commit
-&gt; 9b96e59 CSUYZZ first commit Creat a file
-&gt; 
-&gt; $ git reflog  #多出来的HEAD@{1}表示历史版本和当前最新版本的迭代次数
-&gt; e372724 (HEAD -&gt; master) HEAD@{0}: commit: CSUYZZ second commit
-&gt; 9b96e59 HEAD@{1}: commit (initial): CSUYZZ first commit Creat a file
-&gt; ```
+</code></pre>
 
+<p>bash
+$ git log  #打印出两次提交的信息
+commit e3727241725d628cd2251e10171c1878416a06e6 (HEAD -&gt; master)<br />
+#长字符串为索引，HEAD为指针，指向当前的版本
+Author: yzz <a href="mailto:yzz@pro">yzz@pro</a>
+Date:   Tue Feb 4 17:39:49 2020 +0800
+ CSUYZZ second commit</p>
+</blockquote>
 
+<p>commit 9b96e598646f7c71d3a4a3269caebe041d9a5f8c<br />
+Author: yzz <a href="mailto:yzz@pro">yzz@pro</a>
+Date:   Tue Feb 4 17:28:05 2020 +0800
+ CSUYZZ first commit Creat a file</p>
 
+<h1 id="git-log-常用参数">git log 常用参数</h1>
+
+<p>#&ndash;pretty=oneline  :  一行显示所有所有的版本信息
+$ git log &ndash;pretty=oneline
+e3727241725d628cd2251e10171c1878416a06e6 (HEAD -&gt; master) CSUYZZ second commit
+9b96e598646f7c71d3a4a3269caebe041d9a5f8c CSUYZZ first commit Creat a file</p>
+
+<p>#&ndash;oneline :一行显示，但是精简哈希值
+$ git log &ndash;oneline
+e372724 (HEAD -&gt; master) CSUYZZ second commit
+9b96e59 CSUYZZ first commit Creat a file</p>
+
+<p>$ git reflog  #多出来的HEAD@{1}表示历史版本和当前最新版本的迭代次数
+e372724 (HEAD -&gt; master) HEAD@{0}: commit: CSUYZZ second commit
+9b96e59 HEAD@{1}: commit (initial): CSUYZZ first commit Creat a file</p>
+
+<pre><code>
 &gt; 基于历史记录前进或者回退版本，Git在管理版本时实际上使用了HEAD指针，用户可以使用HEAD
 
 指针实现版本的前进或回退。实现的方式主要有三种：
@@ -388,47 +400,43 @@ $ cat .gitconfig
 </code></pre>
 
 <p>bash
-  $ git reset &ndash;hard 9b96e59  #回退操作命令 &ndash;hard后面是版本索引值
-  HEAD is now at 9b96e59 CSUYZZ first commit Creat a file
-  ```</p>
-</blockquote>
+$ git reset &ndash;hard 9b96e59  #回退操作命令 &ndash;hard后面是版本索引值
+HEAD is now at 9b96e59 CSUYZZ first commit Creat a file</p>
 
-<ul>
-<li><p>使用^符号：只能回退版本，git reset &ndash;hard HEAD^^  n个^符号表示回退n个版本</p></li>
+<pre><code>
++ 使用^符号：只能回退版本，git reset --hard HEAD^^  n个^符号表示回退n个版本
 
-<li><p>使用~符号：只能回退版本，git reset &ndash;hard HEAD~n  回退n个版本</p></li>
-</ul>
++ 使用~符号：只能回退版本，git reset --hard HEAD~n  回退n个版本
 
-<blockquote>
-<pre><code class="language-bash">#reset命令三个参数的对比
---soft参数：仅仅在本地库移动HEAD指针
---mixed参数：在本地库移动HEAD指针、重置暂存区
---hard参数：在本地库移动HEAD指针、重置暂存区、重置工作区
 </code></pre>
-</blockquote>
 
-<ul>
-<li>删除文件的找回：删除前，文件存在的状态已提交到了本地库</li>
-</ul>
+<p>bash
+#reset命令三个参数的对比
+&ndash;soft参数：仅仅在本地库移动HEAD指针
+&ndash;mixed参数：在本地库移动HEAD指针、重置暂存区
+&ndash;hard参数：在本地库移动HEAD指针、重置暂存区、重置工作区</p>
 
-<blockquote>
-<pre><code class="language-bash">#操作命令
-git reset --hard [指针位置]
+<pre><code>
++ 删除文件的找回：删除前，文件存在的状态已提交到了本地库
+
+</code></pre>
+
+<p>bash
+#操作命令
+git reset &ndash;hard [指针位置]
 #当删除操作已提交到本地库时，指针位置指向历史记录即可
-#当删除操作没有提交到本地库时，指针位置指向HEAD（当前版本）
+#当删除操作没有提交到本地库时，指针位置指向HEAD（当前版本）</p>
+
+<pre><code>
++ 比较文件差异：
+
 </code></pre>
-</blockquote>
 
-<ul>
-<li>比较文件差异：</li>
-</ul>
-
-<blockquote>
-<pre><code class="language-bash">git diff [文件名] ： 将工作区中的文件和暂存区进行比较
+<p>bash
+git diff [文件名] ： 将工作区中的文件和暂存区进行比较
 git diff [本地库历史版本] [文件名] ：将工作区中的文件和本地库历史记录进行比较
 #不带文件名时表示比较多个文件
-</code></pre>
-</blockquote>
+```</p>
 
 <h4 id="2-git分支管理">2.Git分支管理</h4>
 
@@ -448,7 +456,7 @@ git diff [本地库历史版本] [文件名] ：将工作区中的文件和本�
 <li><p>分支开发失败不会对其他分支造成任何应影响</p></li>
 </ul>
 
-<p>（3）分支操作</p>
+<p><strong>（3）分支操作</strong></p>
 
 <ul>
 <li><p>创建分支：git branch [分支名]</p></li>
@@ -634,7 +642,7 @@ This is new content
 <p>进入冲突的状态，则按照 “分支冲突解决”的方式解决之后才能再次推送到远程库</p>
 
 <blockquote>
-<p><strong>(5)免密登录</strong></p>
+<p><strong>（5）免密登录</strong></p>
 
 <p>配置SSH方式登录可以避免每次登录时输入用户名和密码</p>
 
