@@ -299,144 +299,138 @@ $ cat .gitconfig
 
 <li><p>添加文件：git add [filename]  将工作区中的&rdquo;新建/修改&rdquo; 添加到暂存区</p></li>
 
-<li><p>提交文件：git commit -m &ldquo;commit message&rdquo; [filename]  将暂存区的内容提交到本地库</p></li>
+<li><p>提交文件：git commit -m &ldquo;commit message&rdquo; [filename]  将暂存区的内容提交到本地库</p>
+
+<pre><code class="language-bash">$ git status
+On branch master    #在master分支
+No commits yet      #在本地库中没有提交的文件
+nothing to commit   #暂存区中没有可提交的文件
+(create/copy files and use &quot;git add&quot; to track)   #track表示使用Git来管理文件
+
+$ vim first.txt      #创建一个新文件并进行编辑
+$ git status
+On branch master
+No commits yet
+Untracked files:
+(use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+ first.txt  #命令行下该文件显示为红色，表示该文件为使用Git进行管理
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+
+$ git add first.txt   #添加到暂存区中
+$ git status
+On branch master
+No commits yet
+Changes to be committed:
+(use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)   #已经添加到缓存区中，但未提交
+ new file:   first.txt   #命令行中显示绿色
+
+$ git rm --cached first.txt   #可以将缓存区中的内容进行删除
+rm 'first.txt'
+$ git status    #回到git add 之前的状态
+On branch master
+No commits yet
+Untracked files:
+(use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+ first.txt
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+
+$ git commit first.txt  -m &quot;CSUYZZ first commit Creat a file&quot; #提交到本地库，-m 后为描述信息
+[master (root-commit) 9b96e59] CSUYZZ first commit Creat a file  #9b96e59可视为版本号
+1 file changed, 4 insertions(+)       #在文件中插入四行
+create mode 100644 first.txt          
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+#修改first.txt文件后
+$ git status
+On branch master
+Changes not staged for commit:  #有没有进入缓存的修改
+(use &quot;git add &lt;file&gt;...&quot; to update what will be committed)    #update而不是include
+(use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+ modified:   first.txt
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;) #使用git add添加到缓存区即可
+</code></pre>
+
+<pre><code class="language-bash">git log  #打印出两次提交的信息
+commit e3727241725d628cd2251e10171c1878416a06e6 (HEAD -&gt; master)  
+#长字符串为索引，HEAD为指针，指向当前的版本
+Author: yzz &lt;yzz@pro&gt;
+Date:   Tue Feb 4 17:39:49 2020 +0800
+CSUYZZ second commit
+ 
+commit 9b96e598646f7c71d3a4a3269caebe041d9a5f8c  
+Author: yzz &lt;yzz@pro&gt;
+Date:   Tue Feb 4 17:28:05 2020 +0800
+CSUYZZ first commit Creat a file   
+# git log 常用参数
+# --pretty=oneline  :  一行显示所有所有的版本信息
+$ git log --pretty=oneline
+e3727241725d628cd2251e10171c1878416a06e6 (HEAD -&gt; master) CSUYZZ second commit
+9b96e598646f7c71d3a4a3269caebe041d9a5f8c CSUYZZ first commit Creat a file
+
+#--oneline :一行显示，但是精简哈希值
+git log --oneline
+e372724 (HEAD -&gt; master) CSUYZZ second commit
+9b96e59 CSUYZZ first commit Creat a file
+
+git reflog  #多出来的HEAD@{1}表示历史版本和当前最新版本的迭代次数
+e372724 (HEAD -&gt; master) HEAD@{0}: commit: CSUYZZ second commit
+9b96e59 HEAD@{1}: commit (initial): CSUYZZ first commit Creat a file
+</code></pre></li>
 </ul>
 
 <blockquote>
-<pre><code class="language-bash">&gt; $ git status
-&gt; On branch master    #在master分支
-&gt; No commits yet      #在本地库中没有提交的文件
-&gt; nothing to commit   #暂存区中没有可提交的文件
-&gt; (create/copy files and use &quot;git add&quot; to track)   #track表示使用Git来管理文件
-&gt; 
-&gt; $ vim first.txt      #创建一个新文件并进行编辑
-&gt; $ git status
-&gt; On branch master
-&gt; No commits yet
-&gt; Untracked files:
-&gt;   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
-&gt;         first.txt  #命令行下该文件显示为红色，表示该文件为使用Git进行管理
-&gt; nothing added to commit but untracked files present (use &quot;git add&quot; to track)
-&gt; 
-&gt; $ git add first.txt   #添加到暂存区中
-&gt; $ git status
-&gt; On branch master
-&gt; No commits yet
-&gt; Changes to be committed:
-&gt; (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)   #已经添加到缓存区中，但未提交
-&gt;         new file:   first.txt   #命令行中显示绿色
-&gt; 
-&gt; $ git rm --cached first.txt   #可以将缓存区中的内容进行删除
-&gt; rm 'first.txt'
-&gt; $ git status    #回到git add 之前的状态
-&gt; On branch master
-&gt; No commits yet
-&gt; Untracked files:
-&gt;   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
-&gt;         first.txt
-&gt; nothing added to commit but untracked files present (use &quot;git add&quot; to track)
-&gt; 
-&gt; $ git commit first.txt  -m &quot;CSUYZZ first commit Creat a file&quot; #提交到本地库，-m 后为描述信息
-&gt; [master (root-commit) 9b96e59] CSUYZZ first commit Creat a file  #9b96e59可视为版本号
-&gt;  1 file changed, 4 insertions(+)       #在文件中插入四行
-&gt;  create mode 100644 first.txt          
-&gt;  $ git status
-&gt; On branch master
-&gt; nothing to commit, working tree clean
-&gt; 
-&gt; #修改first.txt文件后
-&gt;  $ git status
-&gt; On branch master
-&gt; Changes not staged for commit:  #有没有进入缓存的修改
-&gt;   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)    #update而不是include
-&gt;   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
-&gt;         modified:   first.txt
-&gt; no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;) #使用git add添加到缓存区即可
-&gt; ```
-
-
-
-+ 查看历史记录：git log
-
-</code></pre>
-
-<p>bash
-$ git log  #打印出两次提交的信息
-commit e3727241725d628cd2251e10171c1878416a06e6 (HEAD -&gt; master)<br />
-#长字符串为索引，HEAD为指针，指向当前的版本
-Author: yzz <a href="mailto:yzz@pro">yzz@pro</a>
-Date:   Tue Feb 4 17:39:49 2020 +0800
- CSUYZZ second commit</p>
+<p>基于历史记录前进或者回退版本，Git在管理版本时实际上使用了HEAD指针，用户可以使用HEAD</p>
 </blockquote>
 
-<p>commit 9b96e598646f7c71d3a4a3269caebe041d9a5f8c<br />
-Author: yzz <a href="mailto:yzz@pro">yzz@pro</a>
-Date:   Tue Feb 4 17:28:05 2020 +0800
- CSUYZZ first commit Creat a file</p>
+<p>指针实现版本的前进或回退。实现的方式主要有三种：</p>
 
-<h1 id="git-log-常用参数">git log 常用参数</h1>
+<ul>
+<li><p>基于索引值操作（推荐）：</p>
 
-<p>#&ndash;pretty=oneline  :  一行显示所有所有的版本信息
-$ git log &ndash;pretty=oneline
-e3727241725d628cd2251e10171c1878416a06e6 (HEAD -&gt; master) CSUYZZ second commit
-9b96e598646f7c71d3a4a3269caebe041d9a5f8c CSUYZZ first commit Creat a file</p>
+<pre><code class="language-bash">git reset --hard 9b96e59  #回退操作命令 --hard后面是版本索引值
+HEAD is now at 9b96e59 CSUYZZ first commit Creat a file
+</code></pre></li>
 
-<p>#&ndash;oneline :一行显示，但是精简哈希值
-$ git log &ndash;oneline
-e372724 (HEAD -&gt; master) CSUYZZ second commit
-9b96e59 CSUYZZ first commit Creat a file</p>
+<li><p>使用^符号：只能回退版本，git reset &ndash;hard HEAD^^  n个^符号表示回退n个版本</p></li>
 
-<p>$ git reflog  #多出来的HEAD@{1}表示历史版本和当前最新版本的迭代次数
-e372724 (HEAD -&gt; master) HEAD@{0}: commit: CSUYZZ second commit
-9b96e59 HEAD@{1}: commit (initial): CSUYZZ first commit Creat a file</p>
+<li><p>使用~符号：只能回退版本，git reset &ndash;hard HEAD~n  回退n个版本</p></li>
+</ul>
 
-<pre><code>
-&gt; 基于历史记录前进或者回退版本，Git在管理版本时实际上使用了HEAD指针，用户可以使用HEAD
+<blockquote>
+<p>reset命令三个参数的对比</p>
 
-指针实现版本的前进或回退。实现的方式主要有三种：
+<p>&ndash;soft参数：仅仅在本地库移动HEAD指针</p>
 
-+ 基于索引值操作（推荐）：
+<p>&ndash;mixed参数：在本地库移动HEAD指针、重置暂存区</p>
 
-</code></pre>
+<p>&ndash;hard参数：在本地库移动HEAD指针、重置暂存区、重置工作区</p>
+</blockquote>
 
-<p>bash
-$ git reset &ndash;hard 9b96e59  #回退操作命令 &ndash;hard后面是版本索引值
-HEAD is now at 9b96e59 CSUYZZ first commit Creat a file</p>
+<ul>
+<li>删除文件的找回：删除前，文件存在的状态已提交到了本地库</li>
+</ul>
 
-<pre><code>
-+ 使用^符号：只能回退版本，git reset --hard HEAD^^  n个^符号表示回退n个版本
+<blockquote>
+<p>操作命令 :  git reset &ndash;hard [指针位置]</p>
 
-+ 使用~符号：只能回退版本，git reset --hard HEAD~n  回退n个版本
+<p>当删除操作已提交到本地库时，指针位置指向历史记录即可</p>
 
-</code></pre>
+<p>当删除操作没有提交到本地库时，指针位置指向HEAD（当前版本）</p>
+</blockquote>
 
-<p>bash
-#reset命令三个参数的对比
-&ndash;soft参数：仅仅在本地库移动HEAD指针
-&ndash;mixed参数：在本地库移动HEAD指针、重置暂存区
-&ndash;hard参数：在本地库移动HEAD指针、重置暂存区、重置工作区</p>
+<ul>
+<li>比较文件差异：</li>
+</ul>
 
-<pre><code>
-+ 删除文件的找回：删除前，文件存在的状态已提交到了本地库
+<blockquote>
+<p>git diff [文件名] ： 将工作区中的文件和暂存区进行比较</p>
 
-</code></pre>
+<p>git diff [本地库历史版本] [文件名] ：将工作区中的文件和本地库历史记录进行比较不带文件名时表示</p>
+</blockquote>
 
-<p>bash
-#操作命令
-git reset &ndash;hard [指针位置]
-#当删除操作已提交到本地库时，指针位置指向历史记录即可
-#当删除操作没有提交到本地库时，指针位置指向HEAD（当前版本）</p>
-
-<pre><code>
-+ 比较文件差异：
-
-</code></pre>
-
-<p>bash
-git diff [文件名] ： 将工作区中的文件和暂存区进行比较
-git diff [本地库历史版本] [文件名] ：将工作区中的文件和本地库历史记录进行比较
-#不带文件名时表示比较多个文件
-```</p>
+<p>比较多个文件</p>
 
 <h4 id="2-git分支管理">2.Git分支管理</h4>
 
