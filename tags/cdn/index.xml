@@ -6,7 +6,7 @@
     <description>Recent content in CDN on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 06 Feb 2020 12:05:48 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 10 Oct 2019 12:05:48 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/tags/cdn/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>CDN技术简介</title>
       <link>https://sin-coder.github.io/network/cdn/</link>
-      <pubDate>Thu, 06 Feb 2020 12:05:48 +0800</pubDate>
+      <pubDate>Thu, 10 Oct 2019 12:05:48 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/network/cdn/</guid>
       <description>CDN技术简介 一、概述 1.问题背景  不同地理区域的用户访问同一个网站时会产生高延迟，导致用户的访问速度较慢，对个别服务器造成的
