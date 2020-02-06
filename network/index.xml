@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Networks on sin-coder</title>
+    <link>https://sin-coder.github.io/network/</link>
+    <description>Recent content in Networks on sin-coder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 06 Feb 2020 12:05:48 +0800</lastBuildDate>
+    
+	<atom:link href="https://sin-coder.github.io/network/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CDN技术简介</title>
+      <link>https://sin-coder.github.io/network/cdn/</link>
+      <pubDate>Thu, 06 Feb 2020 12:05:48 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/network/cdn/</guid>
+      <description>CDN技术简介 一、概述 1.问题背景  不同地理区域的用户访问同一个网站时会产生高延迟，导致用户的访问速度较慢，对个别服务器造成的
+ 压力也比较大，网站的稳定性和安全性也不是很高，CDN的出现就是用来解决这一问题的
+2.什么是CDN  CDN即Content Delivery Network,内容分发网络，具体内容为将源站内容发布到最接近用户的边缘节点，
+ 使用户可就取得所需内容，提高用户访问的响应速度和成功率。解决了因分布、带宽、服务器能力带来的访
+问延迟高的问题，提供了一系列加速解决方案
+3.CDN的应用场景  网站服务的客户群体从独立的区域扩张到了全国范围，而自身服务器不足以覆盖全网用户，导致部分地区用   户访问网站速度变慢，到达率不高
+  网站已经实现了静动态资源分离，且静态资源服务器的能力已经达到极限，需要增加服务器硬件设才能够   解决问题的
+  网站频繁遭到DDOS攻击，CC攻击，DNS劫持，导致用户体验差，网络阻塞，无法提供正常服务 当用户   无访问某一个节点时，CDN会给用户提供更多的节点以供访问
+  当网站用户跨多个ISP（电信、联通、移动、铁通、长城），而自身的服务器只在其中一个机房的减少因   运营商通道阻塞而导致的访问失败
+ 二、CDN的工作原理 1.CDN的工作过程  步骤一：将内容推送到边缘的节点上，以此产生一个副本，（WEB原始服务器推送到各CDN镜像服务器）   原始服务器上的内容拷贝到其他镜像服务器上
+  步骤二：引导用户就近进行访问（DNS解析的原理）  2.CDN的加速过程(智能DNS解析)  用户在浏览器中输入域名后，请求DNS服务器解析该域名
+ DNS服务器并不能直接解析到该域名所对应的IP地址，而是将该请求发送给智能DNS服务器
+   （网站的服务商需要将原来的解析地址转换到智能DNS服务器的IP）
+  智能DNS服务器（GSLB调度系统）判断用户访问离某区域最近，就返回该区域服务器的IP地址   （智能DNS服务器是CDN加速服务商所提供的服务器）
+  用户拿到IP地址后即可访问该区域的服务器    3.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>CDN技术简介 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CDN技术简介"/>
+<meta name="twitter:description" content="CDN技术简介 一、概述 1.问题背景  不同地理区域的用户访问同一个网站时会产生高延迟，导致用户的访问速度较慢，对个别服务器造成的
+ 压力也比较大，网站的稳定性和安全性也不是很高，CDN的出现就是用来解决这一问题的
+2.什么是CDN  CDN即Content Delivery Network,内容分发网络，具体内容为将源站内容发布到最接近用户的边缘节点，
+ 使用户可就取得所需内容，提高用户访问的响应速度和成功率。解决了因分布、带宽、服务器能力带来的访
+问延迟高的问题，提供了一系列加速解决方案
+3.CDN的应用场景  网站服务的客户群体从独立的区域扩张到了全国范围，而自身服务器不足以覆盖全网用户，导致部分地区用   户访问网站速度变慢，到达率不高
+  网站已经实现了静动态资源分离，且静态资源服务器的能力已经达到极限，需要增加服务器硬件设才能够   解决问题的
+  网站频繁遭到DDOS攻击，CC攻击，DNS劫持，导致用户体验差，网络阻塞，无法提供正常服务 当用户   无访问某一个节点时，CDN会给用户提供更多的节点以供访问
+  当网站用户跨多个ISP（电信、联通、移动、铁通、长城），而自身的服务器只在其中一个机房的减少因   运营商通道阻塞而导致的访问失败
+ 二、CDN的工作原理 1.CDN的工作过程  步骤一：将内容推送到边缘的节点上，以此产生一个副本，（WEB原始服务器推送到各CDN镜像服务器）   原始服务器上的内容拷贝到其他镜像服务器上
+  步骤二：引导用户就近进行访问（DNS解析的原理）  2.CDN的加速过程(智能DNS解析)  用户在浏览器中输入域名后，请求DNS服务器解析该域名
+ DNS服务器并不能直接解析到该域名所对应的IP地址，而是将该请求发送给智能DNS服务器
+   （网站的服务商需要将原来的解析地址转换到智能DNS服务器的IP）
+  智能DNS服务器（GSLB调度系统）判断用户访问离某区域最近，就返回该区域服务器的IP地址   （智能DNS服务器是CDN加速服务商所提供的服务器）
+  用户拿到IP地址后即可访问该区域的服务器    3."/>
+
+    <meta property="og:title" content="CDN技术简介" />
+<meta property="og:description" content="CDN技术简介 一、概述 1.问题背景  不同地理区域的用户访问同一个网站时会产生高延迟，导致用户的访问速度较慢，对个别服务器造成的
+ 压力也比较大，网站的稳定性和安全性也不是很高，CDN的出现就是用来解决这一问题的
+2.什么是CDN  CDN即Content Delivery Network,内容分发网络，具体内容为将源站内容发布到最接近用户的边缘节点，
+ 使用户可就取得所需内容，提高用户访问的响应速度和成功率。解决了因分布、带宽、服务器能力带来的访
+问延迟高的问题，提供了一系列加速解决方案
+3.CDN的应用场景  网站服务的客户群体从独立的区域扩张到了全国范围，而自身服务器不足以覆盖全网用户，导致部分地区用   户访问网站速度变慢，到达率不高
+  网站已经实现了静动态资源分离，且静态资源服务器的能力已经达到极限，需要增加服务器硬件设才能够   解决问题的
+  网站频繁遭到DDOS攻击，CC攻击，DNS劫持，导致用户体验差，网络阻塞，无法提供正常服务 当用户   无访问某一个节点时，CDN会给用户提供更多的节点以供访问
+  当网站用户跨多个ISP（电信、联通、移动、铁通、长城），而自身的服务器只在其中一个机房的减少因   运营商通道阻塞而导致的访问失败
+ 二、CDN的工作原理 1.CDN的工作过程  步骤一：将内容推送到边缘的节点上，以此产生一个副本，（WEB原始服务器推送到各CDN镜像服务器）   原始服务器上的内容拷贝到其他镜像服务器上
+  步骤二：引导用户就近进行访问（DNS解析的原理）  2.CDN的加速过程(智能DNS解析)  用户在浏览器中输入域名后，请求DNS服务器解析该域名
+ DNS服务器并不能直接解析到该域名所对应的IP地址，而是将该请求发送给智能DNS服务器
+   （网站的服务商需要将原来的解析地址转换到智能DNS服务器的IP）
+  智能DNS服务器（GSLB调度系统）判断用户访问离某区域最近，就返回该区域服务器的IP地址   （智能DNS服务器是CDN加速服务商所提供的服务器）
+  用户拿到IP地址后即可访问该区域的服务器    3." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/network/cdn/" />
+<meta property="article:published_time" content="2020-02-06T12:05:48+08:00" />
+<meta property="article:modified_time" content="2020-02-06T12:05:48+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">CDN技术简介</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 6, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><a class="tag" href="https://sin-coder.github.io/tags/cdn/">CDN</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="cdn技术简介">CDN技术简介</h2>
+
+<h3 id="一-概述">一、概述</h3>
+
+<h4 id="1-问题背景">1.问题背景</h4>
+
+<blockquote>
+<p>不同地理区域的用户访问同一个网站时会产生高延迟，导致用户的访问速度较慢，对个别服务器造成的</p>
+</blockquote>
+
+<p>压力也比较大，网站的稳定性和安全性也不是很高，CDN的出现就是用来解决这一问题的</p>
+
+<h4 id="2-什么是cdn">2.什么是CDN</h4>
+
+<blockquote>
+<p>CDN即Content Delivery Network,内容分发网络，具体内容为将源站内容发布到最接近用户的边缘节点，</p>
+</blockquote>
+
+<p>使用户可就取得所需内容，提高用户访问的响应速度和成功率。解决了因分布、带宽、服务器能力带来的访</p>
+
+<p>问延迟高的问题，提供了一系列加速解决方案</p>
+
+<h4 id="3-cdn的应用场景">3.CDN的应用场景</h4>
+
+<ul>
+<li>网站服务的客户群体从独立的区域扩张到了全国范围，而自身服务器不足以覆盖全网用户，导致部分地区用</li>
+</ul>
+
+<blockquote>
+<p>户访问网站速度变慢，到达率不高</p>
+</blockquote>
+
+<ul>
+<li>网站已经实现了静动态资源分离，且静态资源服务器的能力已经达到极限，需要增加服务器硬件设才能够</li>
+</ul>
+
+<blockquote>
+<p>解决问题的</p>
+</blockquote>
+
+<ul>
+<li>网站频繁遭到DDOS攻击，CC攻击，DNS劫持，导致用户体验差，网络阻塞，无法提供正常服务   当用户</li>
+</ul>
+
+<blockquote>
+<p>无访问某一个节点时，CDN会给用户提供更多的节点以供访问</p>
+</blockquote>
+
+<ul>
+<li>当网站用户跨多个ISP（电信、联通、移动、铁通、长城），而自身的服务器只在其中一个机房的减少因</li>
+</ul>
+
+<blockquote>
+<p>运营商通道阻塞而导致的访问失败</p>
+</blockquote>
+
+<h3 id="二-cdn的工作原理">二、CDN的工作原理</h3>
+
+<h4 id="1-cdn的工作过程">1.CDN的工作过程</h4>
+
+<ul>
+<li>步骤一：将内容推送到边缘的节点上，以此产生一个副本，（WEB原始服务器推送到各CDN镜像服务器）</li>
+</ul>
+
+<blockquote>
+<p>原始服务器上的内容拷贝到其他镜像服务器上</p>
+</blockquote>
+
+<ul>
+<li>步骤二：引导用户就近进行访问（DNS解析的原理）</li>
+</ul>
+
+<h4 id="2-cdn的加速过程-智能dns解析">2.CDN的加速过程(智能DNS解析)</h4>
+
+<ol>
+<li><p>用户在浏览器中输入域名后，请求DNS服务器解析该域名</p></li>
+
+<li><p>DNS服务器并不能直接解析到该域名所对应的IP地址，而是将该请求发送给智能DNS服务器</p></li>
+</ol>
+
+<blockquote>
+<p>（网站的服务商需要将原来的解析地址转换到智能DNS服务器的IP）</p>
+</blockquote>
+
+<ol>
+<li>智能DNS服务器（GSLB调度系统）判断用户访问离某区域最近，就返回该区域服务器的IP地址</li>
+</ol>
+
+<blockquote>
+<p>（智能DNS服务器是CDN加速服务商所提供的服务器）</p>
+</blockquote>
+
+<ol>
+<li>用户拿到IP地址后即可访问该区域的服务器</li>
+</ol>
+
+<blockquote>
+<p><img src="https://s2.ax1x.com/2020/02/06/1yInij.png" alt="1yInij.png" style="zoom:80%;" /></p>
+</blockquote>
+
+<h4 id="3-cdn底层技术的实现">3.CDN底层技术的实现</h4>
+
+<blockquote>
+<p><strong>（1）路由转发技术</strong></p>
+
+<p>路由转发可以看做是负载均衡技术的一种</p>
+
+<p>本地负载均衡是指对本地的服务器群做负载均衡，具体实现上主要有两种方法，一个是通过ping来进</p>
+</blockquote>
+
+<p>行主动探测（简单粗暴）、二是通过协议的交互来进行检测（内容非常的具体）</p>
+
+<blockquote>
+<p>全局负载均衡设备：对分别放置在不同的地理位置，有不同网络结构的服务器集群间做负载均衡实现</p>
+</blockquote>
+
+<p>方式：一是根据IP地址库投票匹配、二，CDN主动探测目标的最近距离，智能DNS向各个节点发送探测</p>
+
+<p>指令，CDN就是负载均衡分类中的全局负载均衡</p>
+
+<blockquote>
+<p><img src="https://s2.ax1x.com/2020/02/06/1yTXLV.png" alt="1yTXLV.png" /></p>
+
+<p><strong>（2）内容分发技术</strong></p>
+
+<p>主动推送（PUSH）和被动获取（PULL）</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/06/1yIuJs.png" alt="1yIuJs.png" /></p>
+
+<p><strong>（3）内容存储技术</strong></p>
+
+<p>主流的存储结构主要有以下三种，其中最为常见使用的是NAS</p>
+</blockquote>
+
+<ul>
+<li><p>直连式存储（DAS，Direct Attached Storage）</p></li>
+
+<li><p>存储区域网络（SAN: Storage Area Network）</p></li>
+
+<li><p>网络接入存储（NAS: Network Attached Storage）</p></li>
+</ul>
+
+<blockquote>
+<p><img src="https://s2.ax1x.com/2020/02/06/1yT854.png" alt="1yT854.png" /></p>
+
+<p><strong>（4）内容管理技术</strong></p>
+
+<p>主要分为资源管理系统和安全管理系统的内容</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/06/1yIlQ0.png" alt="1yIlQ0.png" /></p>
+
+<p><img src="https://s2.ax1x.com/2020/02/06/1yIeoQ.png" alt="1yIeoQ.png" /></p>
+</blockquote>
+
+<h3 id="三-cdn的分类">三、CDN的分类</h3>
+
+<h4 id="1-按内容区分">1.按内容区分</h4>
+
+<ul>
+<li>网页加速</li>
+</ul>
+
+<p>CDN服务器主要是加速静态资源的内容，静态资源（HTML,CSS,图片，JS）与数据库是没有太大关系</p>
+
+<p>将静态资源拷贝到CDN边缘缓存服务器，用户即可在该服务器上获取静态资源，提高访问速度</p>
+
+<ul>
+<li>流媒体加速</li>
+</ul>
+
+<blockquote>
+<p>CDN对流媒体文件的加速恰恰是加速这些切片后的视频文件（这些文件经过切片后不会产生任何变化）</p>
+
+<p>分片处理的过程如下：</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/06/1yIVeS.png" alt="1yIVeS.png" /></p>
+</blockquote>
+
+<ul>
+<li>大文件加速</li>
+</ul>
+
+<blockquote>
+<p>这些文件通常是固定不变的，非常适合放在CDN的服务器上</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/06/1yIAL8.png" alt="1yIAL8.png" /></p>
+</blockquote>
+
+<ul>
+<li>应用协议加速（下载工具）</li>
+</ul>
+
+<blockquote>
+<p>用户直接从目标文件存储器下载数据时通常会受到目标服务器网络带宽的限制 而使用BT下载工具后，</p>
+</blockquote>
+
+<p>该工具可能已将待下载的文件下载到各地的代理服务器中，用户只需要直接从代理服务器下载即可，而</p>
+
+<p>代理服务器的带宽往往比原始服务器的带宽大很多；当代理服务器中找不到目标文件时，使用多台服务</p>
+
+<p>器会同时从文件存储服务器并同时传递给用户</p>
+
+<blockquote>
+<p><img src="https://s2.ax1x.com/2020/02/06/1yIKWn.png" alt="1yIKWn.png" /></p>
+</blockquote>
+
+<h4 id="2-按推送类型区分">2.按推送类型区分</h4>
+
+<ul>
+<li><p>主动获取： WEB原始服务器将内容分发到各服务器节点，然后智能DNS服务器引导至就近的节点</p></li>
+
+<li><p>被动获取：智能DNS服务器引导到就近节点后，节点发现本地没有对应的数据，则会向原站请求该数据原</p></li>
+</ul>
+
+<blockquote>
+<blockquote>
+<p>站将数据返回给镜像服务器，镜像服务器再讲数据返回给对应的用户第一个用户访问时是没有</p>
+
+<p>任何加速的效果的，但是后面的用户就可以感受到</p>
+</blockquote>
+
+<p><img src="https://s2.ax1x.com/2020/02/06/1yIZdg.png" alt="1yIZdg.png" /></p>
+</blockquote>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
