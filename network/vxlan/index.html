@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>Vxlan // sin-coder</title>
+    <title>Vxlan技术简介 // sin-coder</title>
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.59.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,7 +11,7 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Vxlan"/>
+<meta name="twitter:title" content="Vxlan技术简介"/>
 <meta name="twitter:description" content="Vxlan技术简介 一、Vxlan技术的产生背景  网络隔离的限制：802.1Q中标准中最多支持的4094个VLAN，数量已无法满足在二层网络中虚拟机数量增   长的需求
   虚拟机规模的限制：在大二层网络里，报文通过MAC地址进行转发，MAC地址表容量限制了虚拟机的数量
  虚拟机的迁移受到限制，虚拟机从一台主机上迁移到另一台主机时，也必须依靠二层网络来进行传输
@@ -27,7 +27,7 @@
   OUTER:SA为发送报文的虚拟机所属的VTEP MAC地址，DA为目的虚拟机所属的VTEP上路由表中的   下一跳MAC地址
   VXLAN header: 24位的VNI，一共可表示2^24个不同的局域网 16777216个不同的网络  参考文章：https://www.cnblogs.com/hbgzy/p/5279269.html"/>
 
-    <meta property="og:title" content="Vxlan" />
+    <meta property="og:title" content="Vxlan技术简介" />
 <meta property="og:description" content="Vxlan技术简介 一、Vxlan技术的产生背景  网络隔离的限制：802.1Q中标准中最多支持的4094个VLAN，数量已无法满足在二层网络中虚拟机数量增   长的需求
   虚拟机规模的限制：在大二层网络里，报文通过MAC地址进行转发，MAC地址表容量限制了虚拟机的数量
  虚拟机的迁移受到限制，虚拟机从一台主机上迁移到另一台主机时，也必须依靠二层网络来进行传输
@@ -67,7 +67,7 @@
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">Vxlan</h1>
+      <h1 class ="post-title">Vxlan技术简介</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
@@ -93,6 +93,8 @@
       
 
 <h2 id="vxlan技术简介">Vxlan技术简介</h2>
+
+<hr />
 
 <h3 id="一-vxlan技术的产生背景">一、Vxlan技术的产生背景</h3>
 
