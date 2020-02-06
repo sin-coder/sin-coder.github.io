@@ -6,10 +6,19 @@
     <description>Recent content on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Feb 2020 00:35:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 03 Feb 2020 23:10:50 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Docker 仓库详解</title>
+      <link>https://sin-coder.github.io/post/docker-repo/</link>
+      <pubDate>Mon, 03 Feb 2020 23:10:50 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/docker-repo/</guid>
+      <description> Docker 仓库详解 </description>
+    </item>
     
     <item>
       <title>Docker 容器基础命令详解</title>
@@ -315,24 +324,6 @@ MapReduce(离线处理)&amp;mdash;&amp;ndash;》Spark(高性能批处理技术)&
 下载时可能由于网络问题失败，附上Hugo、Git、主题m10c的下载包链接: 下载链接
   注册Github官网（已有账号请忽略）  2.生成个人站点 （1）在终端执行命令 C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog   出现以下提示信息表示创建成功：
  C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog Congratulations! Your new Hugo site is created in E:\hugo\Sites\myblog.</description>
-    </item>
-    
-    <item>
-      <title>Use Container</title>
-      <link>https://sin-coder.github.io/post/use-container/</link>
-      <pubDate>Tue, 04 Feb 2020 00:35:00 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/use-container/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Docker Repo</title>
-      <link>https://sin-coder.github.io/post/docker-repo/</link>
-      <pubDate>Mon, 03 Feb 2020 23:10:50 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/docker-repo/</guid>
-      <description></description>
     </item>
     
     <item>
