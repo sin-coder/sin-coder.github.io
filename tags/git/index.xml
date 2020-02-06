@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on sin-coder</title>
+    <link>https://sin-coder.github.io/tags/git/</link>
+    <description>Recent content in Git on sin-coder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 28 Jan 2020 17:10:44 +0800</lastBuildDate>
+    
+	<atom:link href="https://sin-coder.github.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Git&amp;Github 学习笔记</title>
+      <link>https://sin-coder.github.io/post/git/</link>
+      <pubDate>Mon, 27 Jan 2020 00:52:28 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/git/</guid>
+      <description>一、版本控制 1.版本控制工具的功能  协同修改：多人互不影响地修改服务器端的同一个文件
+ 数据备份：不仅要保存文件的当前状态，还能够保存每一个提交过的历史状态
+ 版本管理：在保存每一个版本的文件信息时，能够做到不保存重复的数据，节省存储空间，提高运行效率;
+     SVN采取的是增量式管理的方式，Git采取了文件系统快照的方式
+    权限控制：对团队中参与开发的人员进行权限控制，Git还可以对团队外开发者贡献的代码进行审核
+ 历史记录：查看修改人、修改时间、修改内容、日志信息；将本地文件恢复至某一个历史状态
+ 分支管理：允许开发团队在工作过程中多条生产线同时推进任务，提高效率
+  2.常见版本控制工具  （1）集中式版本控制工具：CVS、SVN、VSS等
+ 集中式的版本控制中每个开发者是一个客户端，文件和版本信息存储在服务端，开发者们都直接与
+ 服务器进行交互，集中式的版本控制具有单点故障的问题
+（2）分布式版本控制工具：Git、Mercurial、Bazaar等
+ 分布式版本控制相比于集中式最大的优点就是能够避免单点故障的问题
+  二、Git 简介 1.Git的发展历史  Git是一个免费、开源的分布式版本控制工具。在2005年，由Linus基于C语言开发完成，开发的初衷是
+ 管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭
+&amp;ldquo;Talk is cheap, Show me the Code&amp;rdquo;，少废话我只看代码。
+2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
+  大部分操作在本地完成版本控制，不需要联网
+ 对数据进行完整性保证，基于Hash算法
+ 尽可能添加数据而不是删除或者修改数据
+ 与Linux命令全面兼容，这个当然了，都是由Linus开发的
+    3.Git 的结构  Git的本地结构图</description>
+    </item>
+    
+    <item>
+      <title>Git向Github push时，连接超时</title>
+      <link>https://sin-coder.github.io/post/git%E8%BF%9E%E6%8E%A5github%E5%A4%B1%E8%B4%A5/</link>
+      <pubDate>Tue, 28 Jan 2020 17:10:44 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/git%E8%BF%9E%E6%8E%A5github%E5%A4%B1%E8%B4%A5/</guid>
+      <description>Failed to connect to github.com port 443: Timed out 问题背景  最近在使用Git向Github提交时总是会出现以下报错：
+ E:\hugo\Sites\blog\public&amp;gt;git push -u origin master fatal: unable to access &#39;https://github.com/sin-coder/sin-coder.github.io.git/&#39;: Failed to connect to github.com port 443: Timed out   而且还是偶尔出现的，特别让人心烦，目测为网络问题，折腾了许久在StackOverflow找到了答案
+ 问题原因  为了访问Github更加流畅，本地使用了Shadowsocks进行代理，可是Git并没有走代理访问
+只需将Git配置为代理访问Github即可
+ 解决措施  打开Windows下的cmd命令行，在命令行中直接输入以下命令（已经配置Git的环境变量），或者
+切换到Git的安装目录下执行命令（未配置环境变量）即可解决该问题
+ E:\Program Files\Git\Git 的目录 2019/11/27 13:19 &amp;lt;DIR&amp;gt; . 2019/11/27 13:19 &amp;lt;DIR&amp;gt; .. 2019/11/27 13:18 &amp;lt;DIR&amp;gt; bin 2019/11/27 13:19 &amp;lt;DIR&amp;gt; cmd 2019/11/27 13:19 &amp;lt;DIR&amp;gt; dev 2019/11/27 13:19 &amp;lt;DIR&amp;gt; etc 2019/02/26 19:48 149,784 git-bash.</description>
+    </item>
+    
+  </channel>
+</rss>
