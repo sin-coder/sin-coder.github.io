@@ -63,11 +63,6 @@
   </url>
   
   <url>
-    <loc>https://sin-coder.github.io/network/cdn/</loc>
-    <lastmod>2019-10-10T12:05:48+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://sin-coder.github.io/tags/docker/</loc>
     <lastmod>2020-02-03T23:10:50+08:00</lastmod>
   </url>
@@ -169,6 +164,11 @@
   
   <url>
     <loc>https://sin-coder.github.io/tags/cdn/</loc>
+    <lastmod>2019-10-10T12:05:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sin-coder.github.io/network/cdn/</loc>
     <lastmod>2019-10-10T12:05:48+08:00</lastmod>
   </url>
   
