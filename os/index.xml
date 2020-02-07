@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Os on sin-coder</title>
+    <link>https://sin-coder.github.io/os/</link>
+    <description>Recent content in Os on sin-coder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 02 Nov 2019 21:50:12 +0800</lastBuildDate>
+    
+	<atom:link href="https://sin-coder.github.io/os/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>什么是死锁？</title>
+      <link>https://sin-coder.github.io/os/deadlock/</link>
+      <pubDate>Sat, 02 Nov 2019 21:50:12 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/os/deadlock/</guid>
+      <description>什么是死锁？ 一、死锁概念的介绍  以两个进程为例，每个进程正在申请的资源恰好是其他进程正在占用的资源； 当然这里的进程数也有
+ 可能是多个。但最终都是形成一个资源的依赖环
+ 简述：多个进程由于互相等待对方持有的资源而造成的谁都无法执行的情况
+ 二、死锁的必要条件  互斥：系统资源之间是互斥使用的，一旦某个进程占用，其他进程便无法使用
+ 占有并等待：一个进程占有了一些资源，但是又不去释放，同时再去申请其他的资源
+ 非抢占：每个进程所拥有的资源必须不能被其他进程所抢占
+ 循环等待：进程之间各自占有的资源和互相申请的资源形成了环路的等待
+  三、死锁常用的处理方法 1、死锁预防  （1）简述：
+破坏死锁形成的必要条件之一，可以通过限制如何申请这些资源的方法来预防死锁
+（2）方法
+  基于互斥条件来预防死锁：资源可以进行共享
+ 基于抢占的解决方案：如果一个进程占有资源并申请另一个不能立即分配的资源，则该进程所占用的资源
+   即可被抢占
+  基于占有并等待的解决方案：一个进程在申请其他资源之前必须要释放掉自己已有的资源
+ 基于循环等待的解决方案：对所有的资源进行完全排序，且要求每个进程按递增的顺序来申请资源，这样
+   就不会出现环路的等待
+ 2、死锁避免  （1）简述
+检测每个资源的请求，如果造成死锁就立刻拒绝
+（2）银行家算法
+  安全状态：如果系统中的所有进程存在一个可完成的执行序列P1，P2，P3，………Pn，则称系统处于安   全状态
+  使用特定算法判断是否存在一个执行序列，当按照这种执行序列执行时，不会产生死锁
+ 银行家算法的执行方法：进程在执行的时候主要关注三种类型的资源：进程本身所占用的资源，进程需要
+   申请的资源，系统中剩余的资源申请一个work变量（表示系统剩余的资源），need变量（系统正在申请
+的资源），allocate(已经分配给进程的资源)按照特定的序列执行，在每个序列执行时，判断当前剩余资
+源是否能够满足申请资源，如果能，则将剩余资源减去申请资源在加上释放资源。但是时间复杂度：
+T（n）=O(mn^2),执行的代价非常大</description>
+    </item>
+    
+  </channel>
+</rss>

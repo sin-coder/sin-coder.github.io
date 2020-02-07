@@ -163,6 +163,21 @@
   </url>
   
   <url>
+    <loc>https://sin-coder.github.io/os/</loc>
+    <lastmod>2019-11-02T21:50:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sin-coder.github.io/os/deadlock/</loc>
+    <lastmod>2019-11-02T21:50:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sin-coder.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
+    <lastmod>2019-11-02T21:50:12+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://sin-coder.github.io/tags/cdn/</loc>
     <lastmod>2019-10-10T12:05:48+08:00</lastmod>
   </url>
@@ -178,12 +193,17 @@
   </url>
   
   <url>
-    <loc>https://sin-coder.github.io/network/stp/</loc>
-    <lastmod>2019-08-06T16:12:20+08:00</lastmod>
+    <loc>https://sin-coder.github.io/tags/%E4%BA%8C%E5%B1%82%E4%BA%A4%E6%8D%A2/</loc>
+    <lastmod>2019-08-07T21:26:25+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://sin-coder.github.io/tags/%E4%BA%8C%E5%B1%82%E4%BA%A4%E6%8D%A2/</loc>
+    <loc>https://sin-coder.github.io/network/portlink/</loc>
+    <lastmod>2019-08-07T21:26:25+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://sin-coder.github.io/network/stp/</loc>
     <lastmod>2019-08-06T16:12:20+08:00</lastmod>
   </url>
   
