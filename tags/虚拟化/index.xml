@@ -6,33 +6,10 @@
     <description>Recent content in 虚拟化 on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Feb 2020 23:10:50 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 03 Feb 2020 21:50:14 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Docker 仓库详解</title>
-      <link>https://sin-coder.github.io/post/docker-repo/</link>
-      <pubDate>Mon, 03 Feb 2020 23:10:50 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/docker-repo/</guid>
-      <description> Docker 仓库详解 </description>
-    </item>
-    
-    <item>
-      <title>Docker 容器基础命令详解</title>
-      <link>https://sin-coder.github.io/post/docker-container/</link>
-      <pubDate>Mon, 03 Feb 2020 21:52:04 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/docker-container/</guid>
-      <description> Docker 容器基础命令详解  容器是整个Docker技术栈中最为核心的概念，它是镜像的一个运行实例，但是镜像是只读文件，而容器
- 在运行时带有需要的可写文件层，容器中的应用进程处于运行状态。虚拟机运行的是整套操作系统及跑在上
-面的应用，而Docker 容器就只是独立运行一个应用以及必需的应用环境，身材更加纤瘦
- Docker 容器相关的操作命令主要是用来管理它的整个生命周期的，从创建、运行、停止到暂停、删除等
- 状态，状态之间的转换关系如下图，这篇文章也是围绕着此图来讲解
-一、创建容器 二、停止容器 三、进入容器 四、删除容器 五、迁移容器 六、查看容器 </description>
-    </item>
     
     <item>
       <title>基于Ubuntu系统安装Docker</title>
