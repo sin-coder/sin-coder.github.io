@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据结构 on sin-coder</title>
+    <link>https://sin-coder.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+    <description>Recent content in 数据结构 on sin-coder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 28 Nov 2019 17:01:10 +0800</lastBuildDate>
+    
+	<atom:link href="https://sin-coder.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>数据结构之容器</title>
+      <link>https://sin-coder.github.io/datastructure/container/</link>
+      <pubDate>Thu, 28 Nov 2019 17:01:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/datastructure/container/</guid>
+      <description>数据结构之容器 一、概述 1.什么是数据结构中的容器？  容器是一种把多个元素组织在s一起的数据结构，也可以理解为一种可以包含其他类型对象作为元素的
+ 的对象。容器是仅仅用来存放数据的，本身没有取出元素这种能力，大多数情况下是通过可迭代对象来
+操作容器
+ 容器这种数据结构在各种编程语言中都有相应的实现，比如我们经常会比较熟悉的C++的标准模板库
+ （Standard Template Library，STL）、Java的集合框架（Java Collections Framework，JCF）、而在
+Python中更是将容器类型的数据结构作为其基本数据类型、Go语言也有内建的容器和相应的标准库，
+本篇博客便是在总结各种容器使用及原理的基础上，对Java、Python中相同的类型的容器做一个横向的
+对比，以便于日后的总结和复习
+2.Java集合框架简介  （1）泛型的机制
+Java中的容器就是可以容纳其他Java对象的对象，且Java容器中只能存放对象，对于一些基本的数据
+ 类型（比如int、long、float、double等），需要将其包装成对象类型之后（Interger、Long、Float、Double
+等）才能放到容器里，很多时候拆包装和解包装使能够自动完成的
+ Java容器能够容纳任何类型的对象，表面上是通过泛型机制完成的。事实上，所有容器的内部存放的都
+ 是Object类的对象，所有的对象都是Object类型的子类。泛型机制只是简化了编程，由编译器自动帮助我们
+完成了强制类型的转换而已，示例代码如下
+ArrayList&amp;lt;String&amp;gt; list = new ArrayList&amp;lt;String&amp;gt;(); //参数化类型 list.add(new String(&amp;quot;csuyzz&amp;quot;)); String name = list,get(0); //容器中存放的Object类的对象隐式转换成为String类型的对象   此外，Java里的对象都在堆上，且对象只能通过引用（reference）来访问，容器里存放的其实是对
+ 象的引用而不是对象的本身
+ （2）接口和实现（Interfaces and Implementations）
+在Java 的集合框架中共定义了14种容器的接口，关系图如下所示，Map接口没有继承自Collection的
+ 接口，因为Map接口是关联式的容器而不是集合，但也可以从Map转换到Coolection；Stack已经被Deque
+所取代
+
+ 接口的实现如下表所示
+ ImplementationsHash TableResizable ArrayBalanced TreeLinked ListHash Table + Linked ListInterfacesSetHashSetTreeSetLinkedHashSetListArrayListLinkedListDequeArrayDequeLinkedListMapHashMapTreeMapLinkedHashMap  (3) 迭代器</description>
+    </item>
+    
+  </channel>
+</rss>
