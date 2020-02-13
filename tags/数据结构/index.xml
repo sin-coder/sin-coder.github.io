@@ -17,7 +17,7 @@
       <pubDate>Thu, 28 Nov 2019 17:01:10 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/datastructure/container/</guid>
-      <description>数据结构之容器 一、概述 1.什么是数据结构中的容器？  容器是一种把多个元素组织在s一起的数据结构，也可以理解为一种可以包含其他类型对象作为元素的
+      <description>数据结构之容器 一、概述 1.什么是数据结构中的容器？  容器是一种把多个元素组织在一起的数据结构，也可以理解为一种可以包含其他类型对象作为元素的
  的对象。容器是仅仅用来存放数据的，本身没有取出元素这种能力，大多数情况下是通过可迭代对象来
 操作容器
  容器这种数据结构在各种编程语言中都有相应的实现，比如我们经常会比较熟悉的C++的标准模板库
@@ -40,7 +40,7 @@ ArrayList&amp;lt;String&amp;gt; list = new ArrayList&amp;lt;String&amp;gt;(); //
 所取代
 
  接口的实现如下表所示
- ImplementationsHash TableResizable ArrayBalanced TreeLinked ListHash Table + Linked ListInterfacesSetHashSetTreeSetLinkedHashSetListArrayListLinkedListDequeArrayDequeLinkedListMapHashMapTreeMapLinkedHashMap  (3) 迭代器</description>
+ ImplementationsHash TableResizable ArrayBalanced TreeLinked ListHash Table + Linked ListInterfacesSetHashSetTreeSetLinkedHashSetListArrayListLinkedListDequeArrayDequeLinkedListMapHashMapTreeMapLinkedHashMap &amp;gt; (3) 迭代器</description>
     </item>
     
   </channel>
