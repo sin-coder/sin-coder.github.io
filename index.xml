@@ -451,6 +451,42 @@ GFS系统的优点：高可用性、自动负载均衡
     </item>
     
     <item>
+      <title>BFS &amp; DFS算法</title>
+      <link>https://sin-coder.github.io/datastructure/bfs-dfs/</link>
+      <pubDate>Thu, 28 Nov 2019 17:01:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/datastructure/bfs-dfs/</guid>
+      <description>深度优先和广度优先算法详解 一、DFS 和 BFS 算法概述 1.什么是DFS和BFS？  DFS （Depth-First-Search）,称为深度优先搜索；BFS（Breadth-First-Search），称为广度优先搜索。
+ 这二者都是在树和图的遍历中应用非常广泛的算法，那么再来看下遍历的定义：从初始点出发，按照某种
+搜索方法对树或图中的每个节点均做一次且仅做一次的访问，访问具体节点所做的操作依赖于具体的问题。
+ 在树的遍历算法中，我们经常会看到前序遍历、中序遍历、后续遍历、层序遍历等方法，其实前序遍历
+ 就是深度优先搜索的一种实现，层序遍历就是对广度优先搜索的一种实现。树也可以看做是一种特殊的图，
+树和图的遍历主要的区别就是树有根节点（指定的），而图需要我们自身指定开始遍历的节点。
+2.DFS和BFS算法的核心思想  BFS和DFS都是图的遍历方法。它们具有一些共性的问题，比如都要避免节点的重复访问，具体的实践
+ 中可以设置一个访问数组，数组中的每个元素代表一个节点，当节点被访问后数组中对应的元素赋一个特定
+的值进行标记即可
+ DFS的搜索过程是这样的：
+  先访问初始节点V
+ 从V未被访问的邻接点中选取一个W，从W出发进行DFS
+ 重复上述步骤即可
+   BFS的搜索过程是这样的：
+  先访问图的初始节点V
+ 依次访问V节点的所有邻接节点V1，V2，V3&amp;hellip;
+ 按照V1，V2，V3被访问的次序依次访问与它们相邻接的未被访问的节点
+ 重复上述过程
+  3.DFS和BFS算法效率分析  DFS和BFS的时间复杂度只与数据的底层存储结构相关，而与搜索的路径无关。当使用邻接矩阵存
+ 储时，对于每一个被访问的节点，都要循环检测矩阵中的整整一行（n个元素），时间复杂度为O（n^2）
+当使用邻接表来存储时，有2e个表节点，但只需要扫描e个节点即可完成遍历，加上访问n个头节点的
+时间，时间复杂度为O（n+e）
+ DFS和BFS算法的空间复杂度相同，都是借用了堆栈或队列，为O（n）。递归在本质上也属于栈
+ 二、DFS 和BFS 的算法实现  图在底层都是以邻接表或者邻接矩阵的方式来存储的，在Java、C++都可以使用表或者矩阵来进行定义
+ 的，Python中可以使用字典来进行定义。解决图的BFS问题就是利用队列的先进先出的思想，队列可以保存
+图中未遍历的节点；解决图的DFS问题是利用栈这种数据结构，递归和非递归的实现本质上都是先进后出。
+1.DFS的算法实现  假设有这样一张图：
+  （1）Python的实现</description>
+    </item>
+    
+    <item>
       <title>数据结构之容器</title>
       <link>https://sin-coder.github.io/datastructure/container/</link>
       <pubDate>Thu, 28 Nov 2019 17:01:10 +0800</pubDate>
@@ -480,6 +516,25 @@ ArrayList&amp;lt;String&amp;gt; list = new ArrayList&amp;lt;String&amp;gt;(); //
 
  接口的实现如下表所示
  ImplementationsHash TableResizable ArrayBalanced TreeLinked ListHash Table + Linked ListInterfacesSetHashSetTreeSetLinkedHashSetListArrayListLinkedListDequeArrayDequeLinkedListMapHashMapTreeMapLinkedHashMap &amp;gt; (3) 迭代器</description>
+    </item>
+    
+    <item>
+      <title>从尾到头打印链表</title>
+      <link>https://sin-coder.github.io/leetcode/printlistreverse/</link>
+      <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/leetcode/printlistreverse/</guid>
+      <description>从尾到头打印链表 问题描述  输入一个链表，从尾到头的顺序返回一个ArrayList
+ 解题思路 1.使用递归法 public ArrayList&amp;lt;Integer&amp;gt; printListReverse(ListNode listnode){ ArrayList&amp;lt;Integer&amp;gt; arrayList = new ArrayList&amp;lt;Integer&amp;gt;(); if(listnode != null){ arrayList.addAll(printListReverse(listnode.next)); arrayList.add(listnode.val); } return arrayList; } //分析：时间复杂度为O（n）,相当于将每个元素均遍历了一遍 //空间复杂度为O（n^2）,创建的列表的合计元素个数1+2+3+4+n-1 //拓展内容：ArrayList中的addAll(Collection&amp;lt;? extends E&amp;gt; c) 方法 按照指定collection容器返回元素的 //顺序将所有的元素添加到列表的尾部  2.使用栈（推荐解法） //Java实现 public ArrayList&amp;lt;Integer&amp;gt; printListReverse(ListNode listnode){ ArrayDeque&amp;lt;Integer&amp;gt; stack = ArrayDeque&amp;lt;Integer&amp;gt;(); while(listnode != null){ stack.addFirst(listnode.val); listnode = listnode.next; } ArrayList&amp;lt;Integer&amp;gt; arrayList = new ArrayList&amp;lt;Integer&amp;gt;(); while(stack.pollFirst()) arrayList.add(stack.pollFirst()) return arrayList; } //Java中推荐使用ArrayDeque来实现一个栈 //当压栈时，调用addFirst()方法; 出栈时调用pollFirst()方法 //分析：时间复杂度O(n)，空间复杂度也是O（n）  #基于Python的实现 class Solution: def printListReverse(self,listnode): if not listnode: return [] result = [] while listnode: result.</description>
+    </item>
+    
+    <item>
+      <title>常见数据结构的定义</title>
+      <link>https://sin-coder.github.io/datastructure/defindatastructure/</link>
+      <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/datastructure/defindatastructure/</guid>
+      <description> 常见数据结构的定义 一、单链表（singly-linked list） 1.Java public class ListNode{ int val; ListNode next; ListNode(int x) {val = x;} }  2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node  3.C struct ListNode{ int val; struct ListNode *next; };  4.Go type ListNode struct{ Val int Next *ListNode }  </description>
     </item>
     
     <item>

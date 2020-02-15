@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Leetcodes on sin-coder</title>
+    <link>https://sin-coder.github.io/leetcode/</link>
+    <description>Recent content in Leetcodes on sin-coder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 15 Nov 2019 14:01:10 +0800</lastBuildDate>
+    
+	<atom:link href="https://sin-coder.github.io/leetcode/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>从尾到头打印链表</title>
+      <link>https://sin-coder.github.io/leetcode/printlistreverse/</link>
+      <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/leetcode/printlistreverse/</guid>
+      <description>从尾到头打印链表 问题描述  输入一个链表，从尾到头的顺序返回一个ArrayList
+ 解题思路 1.使用递归法 public ArrayList&amp;lt;Integer&amp;gt; printListReverse(ListNode listnode){ ArrayList&amp;lt;Integer&amp;gt; arrayList = new ArrayList&amp;lt;Integer&amp;gt;(); if(listnode != null){ arrayList.addAll(printListReverse(listnode.next)); arrayList.add(listnode.val); } return arrayList; } //分析：时间复杂度为O（n）,相当于将每个元素均遍历了一遍 //空间复杂度为O（n^2）,创建的列表的合计元素个数1+2+3+4+n-1 //拓展内容：ArrayList中的addAll(Collection&amp;lt;? extends E&amp;gt; c) 方法 按照指定collection容器返回元素的 //顺序将所有的元素添加到列表的尾部  2.使用栈（推荐解法） //Java实现 public ArrayList&amp;lt;Integer&amp;gt; printListReverse(ListNode listnode){ ArrayDeque&amp;lt;Integer&amp;gt; stack = ArrayDeque&amp;lt;Integer&amp;gt;(); while(listnode != null){ stack.addFirst(listnode.val); listnode = listnode.next; } ArrayList&amp;lt;Integer&amp;gt; arrayList = new ArrayList&amp;lt;Integer&amp;gt;(); while(stack.pollFirst()) arrayList.add(stack.pollFirst()) return arrayList; } //Java中推荐使用ArrayDeque来实现一个栈 //当压栈时，调用addFirst()方法; 出栈时调用pollFirst()方法 //分析：时间复杂度O(n)，空间复杂度也是O（n）  #基于Python的实现 class Solution: def printListReverse(self,listnode): if not listnode: return [] result = [] while listnode: result.</description>
+    </item>
+    
+  </channel>
+</rss>
