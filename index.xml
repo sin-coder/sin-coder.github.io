@@ -524,8 +524,8 @@ ArrayList&amp;lt;String&amp;gt; list = new ArrayList&amp;lt;String&amp;gt;(); //
       <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/leetcode/printlistreverse/</guid>
-      <description>从尾到头打印链表 问题描述  输入一个链表，从尾到头的顺序返回一个ArrayList
- 解题思路 1.使用递归法 public ArrayList&amp;lt;Integer&amp;gt; printListReverse(ListNode listnode){ ArrayList&amp;lt;Integer&amp;gt; arrayList = new ArrayList&amp;lt;Integer&amp;gt;(); if(listnode != null){ arrayList.addAll(printListReverse(listnode.next)); arrayList.add(listnode.val); } return arrayList; } //分析：时间复杂度为O（n）,相当于将每个元素均遍历了一遍 //空间复杂度为O（n^2）,创建的列表的合计元素个数1+2+3+4+n-1 //拓展内容：ArrayList中的addAll(Collection&amp;lt;? extends E&amp;gt; c) 方法 按照指定collection容器返回元素的 //顺序将所有的元素添加到列表的尾部  2.使用栈（推荐解法） //Java实现 public ArrayList&amp;lt;Integer&amp;gt; printListReverse(ListNode listnode){ ArrayDeque&amp;lt;Integer&amp;gt; stack = ArrayDeque&amp;lt;Integer&amp;gt;(); while(listnode != null){ stack.addFirst(listnode.val); listnode = listnode.next; } ArrayList&amp;lt;Integer&amp;gt; arrayList = new ArrayList&amp;lt;Integer&amp;gt;(); while(stack.pollFirst()) arrayList.add(stack.pollFirst()) return arrayList; } //Java中推荐使用ArrayDeque来实现一个栈 //当压栈时，调用addFirst()方法; 出栈时调用pollFirst()方法 //分析：时间复杂度O(n)，空间复杂度也是O（n）  #基于Python的实现 class Solution: def printListReverse(self,listnode): if not listnode: return [] result = [] while listnode: result.</description>
+      <description>反转链表专题 No.1 问题描述  输入一个链表，从尾到头的顺序返回一个ArrayList
+ 解题思路 1.使用递归法 //1.解法一 public ArrayList&amp;lt;Integer&amp;gt; printListReverse(ListNode listnode){ ArrayList&amp;lt;Integer&amp;gt; arrayList = new ArrayList&amp;lt;Integer&amp;gt;(); if(listnode != null){ arrayList.addAll(printListReverse(listnode.next)); arrayList.add(listnode.val); } return arrayList; } //分析：时间复杂度为O（n）,相当于将每个元素均遍历了一遍 //空间复杂度为O（n^2）,创建的列表的合计元素个数1+2+3+4+n-1 //拓展内容：ArrayList中的addAll(Collection&amp;lt;? extends E&amp;gt; c) 方法 按照指定collection容器返回元素的 //顺序将所有的元素添加到列表的尾部  2.使用栈（推荐解法） //Java实现 public ArrayList&amp;lt;Integer&amp;gt; printListReverse(ListNode listnode){ ArrayDeque&amp;lt;Integer&amp;gt; stack = ArrayDeque&amp;lt;Integer&amp;gt;(); while(listnode != null){ stack.addFirst(listnode.val); listnode = listnode.next; } ArrayList&amp;lt;Integer&amp;gt; arrayList = new ArrayList&amp;lt;Integer&amp;gt;(); while(stack.pollFirst()) arrayList.add(stack.pollFirst()) return arrayList; } //Java中推荐使用ArrayDeque来实现一个栈 //当压栈时，调用addFirst()方法; 出栈时调用pollFirst()方法 //分析：时间复杂度O(n)，空间复杂度也是O（n）  #基于Python的实现 class Solution: def printListReverse(self,listnode): if not listnode: return [] result = [] while listnode: result.</description>
     </item>
     
     <item>
@@ -534,7 +534,22 @@ ArrayList&amp;lt;String&amp;gt; list = new ArrayList&amp;lt;String&amp;gt;(); //
       <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/datastructure/defindatastructure/</guid>
-      <description> 常见数据结构的定义 一、单链表（singly-linked list） 1.Java public class ListNode{ int val; ListNode next; ListNode(int x) {val = x;} }  2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node  3.C struct ListNode{ int val; struct ListNode *next; };  4.Go type ListNode struct{ Val int Next *ListNode }  </description>
+      <description> 常见数据结构的定义 一、单链表（singly-linked list） 1.Java public class ListNode{ int val; ListNode next; ListNode(int x) { val = x; next = null; } }  2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node  3.C struct ListNode{ int val; struct ListNode *next; };  4.Go type ListNode struct{ Val int Next *ListNode }  </description>
+    </item>
+    
+    <item>
+      <title>环形链表</title>
+      <link>https://sin-coder.github.io/leetcode/circlelist/</link>
+      <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/leetcode/circlelist/</guid>
+      <description>环形链表专题 一、问题1  给定一个链表，判断一个链表中是否有环
+ 1.算法思路  （1）判断是否存在重复节点
+通过检查一个节点此前是否被访问来判断是否为环形链表，可以使用哈希表来存储访问过的节点
+（2）快慢指针
+通过快慢指针遍历链表，慢指针每次移动一步，而快指针每次移动两步；如果链表中不存在环，最终快
+ 指针将会最先达到尾部，此时返回Fasle即可；如果链表中存在环，最终快慢指针一定会相遇
+2.代码实现 //元素判重法 public boolean hasCycle(ListNode head) { Set&amp;lt;ListNode&amp;gt; visited = new HashSet&amp;lt;ListNode&amp;gt;(); while (head != null) { if (visited.contains(head)) { return true; } else { visited.add(head); } head = head.next; } return false; } //分析，时间复杂度是O（n），对链表中的每个元素最多访问一次，向哈希表中添加一个元素为O(1) //空间复杂度为O（n）,最多将链表中的所有元素均添加到哈希表中  //快慢指针法 public boolean hasCycle(ListNode head) { if (head == null || head.next == null) { return false; } ListNode slow = head; ListNode fast = head.</description>
     </item>
     
     <item>

@@ -12,10 +12,10 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="常见数据结构的定义"/>
-<meta name="twitter:description" content=" 常见数据结构的定义 一、单链表（singly-linked list） 1.Java public class ListNode{ int val; ListNode next; ListNode(int x) {val = x;} }  2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node  3.C struct ListNode{ int val; struct ListNode *next; };  4.Go type ListNode struct{ Val int Next *ListNode }  "/>
+<meta name="twitter:description" content=" 常见数据结构的定义 一、单链表（singly-linked list） 1.Java public class ListNode{ int val; ListNode next; ListNode(int x) { val = x; next = null; } }  2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node  3.C struct ListNode{ int val; struct ListNode *next; };  4.Go type ListNode struct{ Val int Next *ListNode }  "/>
 
     <meta property="og:title" content="常见数据结构的定义" />
-<meta property="og:description" content=" 常见数据结构的定义 一、单链表（singly-linked list） 1.Java public class ListNode{ int val; ListNode next; ListNode(int x) {val = x;} }  2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node  3.C struct ListNode{ int val; struct ListNode *next; };  4.Go type ListNode struct{ Val int Next *ListNode }  " />
+<meta property="og:description" content=" 常见数据结构的定义 一、单链表（singly-linked list） 1.Java public class ListNode{ int val; ListNode next; ListNode(int x) { val = x; next = null; } }  2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node  3.C struct ListNode{ int val; struct ListNode *next; };  4.Go type ListNode struct{ Val int Next *ListNode }  " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sin-coder.github.io/datastructure/defindatastructure/" />
 <meta property="article:published_time" content="2019-11-15T14:01:10+08:00" />
@@ -75,7 +75,10 @@
 <pre><code class="language-java">public class ListNode{
     int val;
     ListNode next;
-    ListNode(int x) {val = x;}
+    ListNode(int x) {
+        val = x;
+        next = null;
+    }
 }
 </code></pre>
 
