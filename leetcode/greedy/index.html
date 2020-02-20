@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>贪心算法集锦 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="贪心算法集锦"/>
+<meta name="twitter:description" content="贪心算法解题总结 一、引例  某天你在超市购物后，总共消费了782元，这时假设你有1元、5元、10元、20元、100元和200元的钞票
+ 无穷多张，那么最少需要多少张钞票足够支付？
+ 直觉告诉我们：要尽可能多地使用面值较大的钞票，其实这就是一种贪心的思想
+ 二、贪心算法简介  由引例我们已经大概了解了什么是贪心，在这儿对它下个定义：贪心算法是指在对问题求解时，总是做
+ 出在当前看来是最好的选择；也就是说不从整体最优上加以考虑，它所做出的是在某种意义上的局部最优解
+ 贪心算法不是对所有的问题都能得到整体的最优解，关键是贪心策略的选择，具体的贪心策略中某个状
+ 态以前的过程不会影响以后的状态，只与当前的状态有关
+三、Leetcode典型例题 1.455分发饼干  (1) 题目描述
+假设你是一位很棒的家长，想要给你的孩子们一些小饼干。但是，每个孩子最多只能给一块饼干。对每
+ 个孩子 i ，都有一个胃口值 gi ，这是能让孩子们满足胃口的饼干的最小尺寸；并且每块饼干 j ，都有一个尺
+寸 sj 。如果 sj &gt;= gi ，我们可以将这个饼干 j 分配给孩子 i ，这个孩子会得到满足。你的目标是尽可能满足
+越多数量的孩子，并输出这个最大数值。一个小朋友最多能拥有一块饼干
+ (2)解题思想
+根据让更多的孩子得到满足这个目标，可以分析出如下贪心规律：
+  某块饼干不能满足某个孩子的胃口，则它也一定不能满足胃口更大的孩子
+ 某个孩子的胃口可以用更小的饼干来满足，则没有必要用更大的饼干满足，更大的饼干留给胃口更大的孩子
+ 孩子的胃口越小，则其更容易被满足，所以优先从胃口小的孩子尝试
+   (3)算法思路
+  按照胃口大小和饼干大小对两个数组进行从小到大的排序
+ 按照从小到大的顺序用饼干来尝试是否可以满足某个孩子的胃口，每个饼干只尝试一次，如能够满足，接着
+   用下一块饼干继续尝试能否满足下一个孩子的胃口；否则，抛弃该饼干，用下一块饼干继续尝试满足当前
+的孩子。直到没有更多的孩子或者没有更多的饼干，算法结束
+(4)代码实现"/>
+
+    <meta property="og:title" content="贪心算法集锦" />
+<meta property="og:description" content="贪心算法解题总结 一、引例  某天你在超市购物后，总共消费了782元，这时假设你有1元、5元、10元、20元、100元和200元的钞票
+ 无穷多张，那么最少需要多少张钞票足够支付？
+ 直觉告诉我们：要尽可能多地使用面值较大的钞票，其实这就是一种贪心的思想
+ 二、贪心算法简介  由引例我们已经大概了解了什么是贪心，在这儿对它下个定义：贪心算法是指在对问题求解时，总是做
+ 出在当前看来是最好的选择；也就是说不从整体最优上加以考虑，它所做出的是在某种意义上的局部最优解
+ 贪心算法不是对所有的问题都能得到整体的最优解，关键是贪心策略的选择，具体的贪心策略中某个状
+ 态以前的过程不会影响以后的状态，只与当前的状态有关
+三、Leetcode典型例题 1.455分发饼干  (1) 题目描述
+假设你是一位很棒的家长，想要给你的孩子们一些小饼干。但是，每个孩子最多只能给一块饼干。对每
+ 个孩子 i ，都有一个胃口值 gi ，这是能让孩子们满足胃口的饼干的最小尺寸；并且每块饼干 j ，都有一个尺
+寸 sj 。如果 sj &gt;= gi ，我们可以将这个饼干 j 分配给孩子 i ，这个孩子会得到满足。你的目标是尽可能满足
+越多数量的孩子，并输出这个最大数值。一个小朋友最多能拥有一块饼干
+ (2)解题思想
+根据让更多的孩子得到满足这个目标，可以分析出如下贪心规律：
+  某块饼干不能满足某个孩子的胃口，则它也一定不能满足胃口更大的孩子
+ 某个孩子的胃口可以用更小的饼干来满足，则没有必要用更大的饼干满足，更大的饼干留给胃口更大的孩子
+ 孩子的胃口越小，则其更容易被满足，所以优先从胃口小的孩子尝试
+   (3)算法思路
+  按照胃口大小和饼干大小对两个数组进行从小到大的排序
+ 按照从小到大的顺序用饼干来尝试是否可以满足某个孩子的胃口，每个饼干只尝试一次，如能够满足，接着
+   用下一块饼干继续尝试能否满足下一个孩子的胃口；否则，抛弃该饼干，用下一块饼干继续尝试满足当前
+的孩子。直到没有更多的孩子或者没有更多的饼干，算法结束
+(4)代码实现" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/leetcode/greedy/" />
+<meta property="article:published_time" content="2019-12-02T22:26:15+08:00" />
+<meta property="article:modified_time" content="2019-12-02T22:26:15+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">贪心算法集锦</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 2, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          3 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><a class="tag" href="https://sin-coder.github.io/tags/leetcode/">leetcode</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="贪心算法解题总结">贪心算法解题总结</h2>
+
+<h3 id="一-引例">一、引例</h3>
+
+<blockquote>
+<p>某天你在超市购物后，总共消费了782元，这时假设你有1元、5元、10元、20元、100元和200元的钞票</p>
+</blockquote>
+
+<p>无穷多张，那么最少需要多少张钞票足够支付？</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/19/3V7Sc8.jpg" alt="3V7Sc8.jpg" style="zoom: 50%;" /></p>
+
+<blockquote>
+<p>直觉告诉我们：要尽可能多地使用面值较大的钞票，其实这就是一种贪心的思想</p>
+</blockquote>
+
+<h3 id="二-贪心算法简介">二、贪心算法简介</h3>
+
+<blockquote>
+<p>由引例我们已经大概了解了什么是贪心，在这儿对它下个定义：贪心算法是指在对问题求解时，总是做</p>
+</blockquote>
+
+<p>出在当前看来是最好的选择；也就是说不从整体最优上加以考虑，它所做出的是在某种意义上的局部最优解</p>
+
+<blockquote>
+<p>贪心算法不是对所有的问题都能得到整体的最优解，关键是贪心策略的选择，具体的贪心策略中某个状</p>
+</blockquote>
+
+<p>态以前的过程不会影响以后的状态，只与当前的状态有关</p>
+
+<h3 id="三-leetcode典型例题">三、Leetcode典型例题</h3>
+
+<h4 id="1-455分发饼干">1.455分发饼干</h4>
+
+<blockquote>
+<p><strong>(1) 题目描述</strong></p>
+
+<p>假设你是一位很棒的家长，想要给你的孩子们一些小饼干。但是，每个孩子最多只能给一块饼干。对每</p>
+</blockquote>
+
+<p>个孩子 i ，都有一个胃口值 gi ，这是能让孩子们满足胃口的饼干的最小尺寸；并且每块饼干 j ，都有一个尺</p>
+
+<p>寸 sj 。如果 sj &gt;= gi ，我们可以将这个饼干 j 分配给孩子 i ，这个孩子会得到满足。你的目标是尽可能满足</p>
+
+<p>越多数量的孩子，并输出这个最大数值。一个小朋友最多能拥有一块饼干</p>
+
+<blockquote>
+<p><strong>(2)解题思想</strong></p>
+
+<p>根据让更多的孩子得到满足这个目标，可以分析出如下贪心规律：</p>
+</blockquote>
+
+<ul>
+<li><p>某块饼干不能满足某个孩子的胃口，则它也一定不能满足胃口更大的孩子</p></li>
+
+<li><p>某个孩子的胃口可以用更小的饼干来满足，则没有必要用更大的饼干满足，更大的饼干留给胃口更大的孩子</p></li>
+
+<li><p>孩子的胃口越小，则其更容易被满足，所以优先从胃口小的孩子尝试</p></li>
+</ul>
+
+<blockquote>
+<p><strong>(3)算法思路</strong></p>
+</blockquote>
+
+<ul>
+<li><p>按照胃口大小和饼干大小对两个数组进行从小到大的排序</p></li>
+
+<li><p>按照从小到大的顺序用饼干来尝试是否可以满足某个孩子的胃口，每个饼干只尝试一次，如能够满足，接着</p></li>
+</ul>
+
+<blockquote>
+<p>用下一块饼干继续尝试能否满足下一个孩子的胃口；否则，抛弃该饼干，用下一块饼干继续尝试满足当前</p>
+
+<p>的孩子。直到没有更多的孩子或者没有更多的饼干，算法结束</p>
+
+<p><strong>(4)代码实现</strong></p>
+</blockquote>
+
+<pre><code class="language-python">class Solution:
+    def findContentChildren(self, g: List[int], s: List[int]) -&gt; int:
+        if not g or not s:     #base case
+            return 0
+        g.sort()  #对孩子的胃口值和饼干大小进行从小到大排序
+        s.sort()  
+        gi,sj = 0,0   #gi表示当前孩子的下标  sj表示尝试的饼干下标
+        while gi &lt; len(g) and sj &lt; len(s):  #孩子和饼干同时未尝试完成时
+            if g[gi] &lt;= s[sj]:  #当饼干大于孩子的胃口时
+                gi+=1           #孩子的下标向后移动
+            sj+=1               #无论成功或者失败，每个饼干只尝试一次，饼干下标向后移动
+        return gi               #最后的gi为孩子下标加1，即为满足的孩子个数
+</code></pre>
+
+<blockquote>
+<p><strong>（5）算法分析</strong></p>
+
+<p>上述代码中,主要的操作步骤有两步，第一步是对两个数组进行排序，假设这里使用的快速排序的方法，</p>
+</blockquote>
+
+<p>时间复杂度为O（nlogn），第二步相当于对两个数组分别进行遍历，时间复杂度为O（n），所以整个算</p>
+
+<p>法的时间复杂度为O（nlogn+n）；这里只使用了常数级的空间，所以空间复杂度为O（1）</p>
+
+<h4 id="2-376-摆动序列">2.376 摆动序列</h4>
+
+<blockquote>
+<p><strong>(1)题目描述</strong></p>
+
+<p>给定一个整数序列，返回作为摆动序列的最长子序列的长度。通过从原始序列中删除一些（可选）元素</p>
+</blockquote>
+
+<p>来获得子序列，剩下的元素保持其原始顺序</p>
+
+<blockquote>
+<p><strong>(2)解题思想</strong></p>
+
+<p>想要获得最长的子序列，必须关注在整数序列中出现的局部递增或者局部递减时如何取舍元素这个问题，</p>
+</blockquote>
+
+<p>这里就体现出贪心的思想：在递增或者递减序列中选择最大或者最小的那个元素，可以让下一个元素成为摇</p>
+
+<p>摆子序列中元素的概率更大；比如这样一个序列：[1，17，5，10，13，15，10]，从第4个元素开始元素递增</p>
+
+<p>那么选取[10，13，15]中哪一个元素才会使得下一个元素进入最长子序列的概率更大呢，显然就是15了，这就</p>
+
+<p>是贪心的思想</p>
+
+<blockquote>
+<p>在整个算法的设计中，就遵循一个原则即可，遇到递增序列时，选取最大的那个元素进入最长子序列，</p>
+</blockquote>
+
+<p>遇到递减序列时，选取最小的那个元素进入最长子序列</p>
+
+<blockquote>
+<p><strong>(3)算法思路</strong></p>
+
+<p>在具体算法设计时，就需要考虑到所有可能的情况。最长子序列的长度至少为1；解决整个问题时，可</p>
+</blockquote>
+
+<p>以采用状态机的算法，对于整数序列中的每个元素，都可能处于begin、up、down的状态，根据当前元素与</p>
+
+<p>前一个元素的大小关系决定当前元素的状态是否改变以及是否将当前元素加入最长子序列，具体的状态转换</p>
+
+<p>图如下：</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/20/3ZDMy6.png" alt="3ZDMy6.png" /></p>
+
+<blockquote>
+<p><strong>(4)代码实现</strong></p>
+</blockquote>
+
+<pre><code class="language-python">	def wiggleMaxLength(self, nums: List[int]) -&gt; int:
+        if len(nums)&lt;2:
+            return len(nums)
+        begin,up,down = 0,1,2 #扫描序列时的三种状态
+        state = begin
+        max_length = 1        #摇摆序列的最大长度至少为1
+        for i in range(1,len(nums)):   #要从第二个元素开始扫描
+            if state == begin:
+                if nums[i-1] &lt; nums[i]:
+                    state = up
+                    max_length+=1
+                elif nums[i-1] &gt; nums[i]:
+                    state = down
+                    max_length+=1
+            elif state == up:
+                if nums[i-1] &gt; nums[i]:
+                    state = down
+                    max_length+=1
+            else:
+                if nums[i-1] &lt; nums[i]:
+                    state = up
+                    max_length+=1
+        return max_length    #遍历完后返回最大长度
+</code></pre>
+
+<blockquote>
+<p><strong>（5）算法分析</strong></p>
+
+<p>算法中主要就是进行状态转换的一些判断的if else语句，整个算法中对数组的所有元素都进行了扫描，所以</p>
+</blockquote>
+
+<p>时间复杂度为O（n）；只使用了常数级的空间，空间复杂度为O（1）,比较高效</p>
+
+<h4 id="3-402-移掉k位数字">3.402 移掉K位数字</h4>
+
+<blockquote>
+<p><strong>（1）问题描述</strong></p>
+
+<p>给定一个以字符串表示的非负整数num，移除这个数中的k位数字，使得剩下的数字最小</p>
+
+<p><strong>（2）解题思想</strong></p>
+
+<p>从数学知识来看，若要去掉某一位数字，为了使得到的新数字最小，需要尽可能让得到的新数字优先最高位</p>
+</blockquote>
+
+<p>最小、其次次高位最小，再其次第三位最小</p>
+
+<blockquote>
+<p>所以贪心的思想就是从高位向地位遍历，如果对应的数字大于下一位数字，则把该位数字去掉，这样得到的</p>
+</blockquote>
+
+<p>数字就是最小的；最极致的做法就是从高位到地位遍历k次，每次按照上述规律去掉一个数字，但是这样时间复杂</p>
+
+<p>度过高，而我们可以使用栈存储遍历过的元素，来达到线性的时间复杂度</p>
+
+<blockquote>
+<p><strong>（3）算法思路</strong></p>
+
+<p>使用栈存储最终的结果或者删除的工作，从高位向低位遍历数字，如果遍历的数字大于栈顶元素，则将该</p>
+</blockquote>
+
+<p>数字入栈，如果小于栈顶的元素则进行pop弹栈，直到栈为空或不能再删除数字或者栈顶小于当前元素为止</p>
+
+<blockquote>
+<p>当然也存在一些特殊的情况：</p>
+</blockquote>
+
+<ul>
+<li><p>当所有数字都扫描完成后，k&gt;0，此时就要从栈顶开始删除k个元素</p></li>
+
+<li><p>当遇到0元素时，要查看当前栈是否为空，为空就放弃，否则也要压入栈中</p></li>
+
+<li><p>字符串中的每个字符和数字之间的转换，最后返回的是字符串；若字符串为空，则返回0</p></li>
+</ul>
+
+<blockquote>
+<p><strong>（4）代码实现</strong></p>
+</blockquote>
+
+<pre><code class="language-python">def removeKdigits(self, num: str, k: int) -&gt; str:
+    stack = []    #用列表表示一个可以遍历的栈
+    result = &quot;&quot;   #存储最终返回的字符串
+    for c in num:
+        while len(stack) and k &gt; 0 and stack[-1] &gt; int(c):
+            stack.pop()
+            k -=1
+        if len(stack) or int(c) !=0:
+            stack.append(int(c))
+    while len(stack) and k &gt; 0:   #如果栈不空并且可以继续删除数字
+         stack.pop()
+         k-=1
+    for i in stack:    #将栈中的每一个元素转换成字符组成字符串
+         result+=str(i)
+    if result == &quot;&quot;:   #如果最后字符串为空则返回0
+         result = &quot;0&quot;
+    return result
+</code></pre>
+
+<blockquote>
+<p><strong>（5）算法分析</strong></p>
+
+<p>　本题中使用的算法时间复杂度不便于具体分析，但是总体上是线性的，空间上使用了栈，空间复杂度为</p>
+</blockquote>
+
+<p>Ｏ（ｎ），相较于暴力法已经优化了许多</p>
+
+<h4 id="４-55-跳跃游戏">４.55 跳跃游戏</h4>
+
+<blockquote>
+<p><strong>（1）问题描述</strong></p>
+
+<p>给定一个非负整数数组，你最初位于数组的第一个位置。数组中的每个元素代表你在该位置可以跳跃的最</p>
+</blockquote>
+
+<p>大长度。判断你是否能够到达最后一个位置</p>
+
+<blockquote>
+<p><strong>（2）解题思想</strong></p>
+
+<p>假设此时处在数组的第ｉ个位置上，该位置最远可以调到ｊ位置（ｊ位置可计算），则从ｉ位置一定还可以</p>
+</blockquote>
+
+<p>跳至ｉ＋１、i + 2、&hellip;..、j - 1和 j位置；那么从这些可选的位置中应该选择去调到哪一个位置才是最好的，这里</p>
+
+<p>就体现出了贪心的思想，从第i位置应该跳到可跳位置中可以跳得更远位置的位置（不要晕），看看下面算法的</p>
+
+<p>思路就知道了</p>
+
+<blockquote>
+<p><strong>（3）算法思路</strong></p>
+</blockquote>
+
+<ul>
+<li>先求出从第i个位置最远可以跳至的位置index[i]，index[i]数组和nums[i]数组是一一对应的，具体可使用以下</li>
+</ul>
+
+<blockquote>
+<p>公式：index[i] = i + nums[i]</p>
+</blockquote>
+
+<ul>
+<li>用jump表示当前所处的位置，max_index表示从第0位置到第jump位置中，最远可达到的位置</li>
+</ul>
+
+<blockquote>
+<p>jump 初始化为0，max_index初始化成index[0]</p>
+</blockquote>
+
+<ul>
+<li>利用jump扫描index数组，直到jump到达index数组尾部，此时返回True；若jump超过max_idnex，则返回</li>
+</ul>
+
+<blockquote>
+<p>False</p>
+
+<p><strong>（4）代码实现</strong></p>
+</blockquote>
+
+<pre><code class="language-python">    def canJump(self, nums: List[int]) -&gt; bool:
+        if not nums:    #base case
+            return False
+        index = []    
+        for i in range(len(nums)):
+            index.append(i+nums[i])    #计算index数组
+        jump = 0
+        max_index = index[0]          #初始化jump和index
+        while (jump &lt; len(index)) and (jump &lt;= max_index):  #两个条件要同时满足
+            if max_index &lt; index[jump]:
+                max_index = index[jump]
+            jump += 1
+        if jump == len(index):
+            return True
+        return False
+</code></pre>
+
+<blockquote>
+<p><strong>（5）算法分析</strong></p>
+
+<p>在该算法中，首先计算了idnex的数组，时间复杂度和空间复杂度即为O（n）,然后又使用jump去遍历一遍</p>
+</blockquote>
+
+<p>数组，时间复杂度为O（n）;所以总的时间复杂度就是O（n），空间复杂度也是O（n）,都是线性的</p>
+
+<h4 id="5-45-跳跃游戏2-0">5.45 跳跃游戏2.0</h4>
+
+<blockquote>
+<p><strong>（1）问题描述</strong></p>
+
+<p>使用最少的次数来跳到数组中的最后一个位置</p>
+
+<p><strong>（2）解题思想</strong></p>
+
+<p>这道题与之前那道最大的不同就是需要用最少的次数跳到数组的末尾，问题的关键就是确定最佳的跳跃位置</p>
+</blockquote>
+
+<p>具体的贪心思想是这样的，在到达某点之前若一直不跳跃，发现从该点已经不能跳到更远的地方了，则在这次</p>
+
+<p>之前肯定有次必要的跳跃；所以在无法到达更多地方的位置之前应该跳到一个可以到达的更远位置的位置</p>
+
+<blockquote>
+<p><strong>（3）算法思路</strong></p>
+</blockquote>
+
+<ul>
+<li>变量的设置，current_max_index为当前可到达的最远位置、pre_max_index为在遍历各个位置的过程中，</li>
+</ul>
+
+<blockquote>
+<p>各个位置可能达到的最远位置，jump_min为最少的跳跃次数</p>
+</blockquote>
+
+<ul>
+<li><p>利用i遍历数组，若i超过current_max_index，jump_min则加1，更新current_max_index为pre_max_index</p></li>
+
+<li><p>遍历过程中若nums[i] + i更大，则更新pre_max_index = num[i]+i</p></li>
+</ul>
+
+<blockquote>
+<p><strong>（4）代码实现</strong></p>
+</blockquote>
+
+<pre><code class="language-python">    def jump(self, nums: List[int]) -&gt; int:
+        if len(nums) &lt; 2:          #如果数组长度小于2，则说明不用跳跃，返回0
+            return 0;
+        current_max_index = nums[0]  #当前可达到的最远位置
+        pre_max_index = nums[0]     #遍历各个位置过程中可能达到的最远位置
+        jump_min = 1;
+        for i in range(1,len(nums)):
+            if i &gt; current_max_index:      #如果已经无法向前移动了，进行跳跃
+                jump_min+=1                #及时更新当前可以到达的最远位置
+                current_max_index = pre_max_index
+            if pre_max_index &lt; nums[i] + i:
+                pre_max_index = nums[i] + i   #更新pre_max_index
+        return jump_min
+</code></pre>
+
+<blockquote>
+<p><strong>（5）算法分析</strong></p>
+
+<p>该算法中遍历了一遍数组，时间复杂度为O（n），使用了常数量级的空间，空间复杂度为O（1）</p>
+</blockquote>
+
+<h4 id="6-452-使用最少数量的箭引爆气球">6.452 使用最少数量的箭引爆气球</h4>
+
+<blockquote>
+<p><strong>（1）问题描述</strong></p>
+
+<p>已知在一个平面上有一定数量的气球，平面可以看做是一个坐标系，在平面的X轴的不同位置上安排弓箭</p>
+</blockquote>
+
+<p>手向y轴方向射箭，弓箭可以向y轴走无穷远；给定气球的宽度xstart &lt;= x &lt;= xend，求为将气球全部打爆至少</p>
+
+<p>需要多少弓箭手。如四个气球至少需要两个弓箭手</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/20/3mEqVe.png" alt="3mEqVe.png" /></p>
+
+<blockquote>
+<p><strong>（2）解题思想</strong></p>
+
+<p>对于某个气球，至少需要使用1只弓箭将它击穿；而且在这只气球将其击穿的同时，尽可能击穿其他更多的</p>
+</blockquote>
+
+<p>气球，这就是贪心的思想</p>
+
+<blockquote>
+<p><strong>（3）算法思路</strong></p>
+</blockquote>
+
+<ul>
+<li><p>对各个气球进行排序，按照气球的左端点从小到大排序</p></li>
+
+<li><p>遍历气球数组，同时维护一个射击区间，在满足可以将当前气球射穿的情况下，尽可能击穿更多的气球，每</p></li>
+</ul>
+
+<blockquote>
+<p>击穿一个新的气球，更新一次射击区间</p>
+</blockquote>
+
+<ul>
+<li>如果新的气球没有办法击穿了，则需要增加一名弓箭手，维护一个新的射击区间（将该气球击穿），然后继</li>
+</ul>
+
+<blockquote>
+<p>续遍历</p>
+</blockquote>
+
+<ul>
+<li>特别需注意的是，当一个区间右端点和另一个区间的左端点相同时，用一支箭也是可以射爆两个的</li>
+</ul>
+
+<blockquote>
+<p><strong>（4）代码实现</strong></p>
+</blockquote>
+
+<pre><code class="language-python"> class Solution:
+    def findMinArrowShots(self, points: List[List[int]]) -&gt; int:
+        if not points:
+            return 0
+        points.sort(key = self.takeFirst)   #对气球按照左端点大小进行排序
+        shooter = 1                         #初始化弓箭手的数量
+        shoot_begin = points[0][0]          
+        shoot_end = points[0][1]            #初始化射击区间
+        for i in range(1,len(points)):
+            if points[i][0] &lt;= shoot_end:
+                shoot_begin = points[i][0]      #更新射击区间左端点即为新气球的左端点
+                if shoot_end &gt; points[i][1]:   
+                    shoot_end = points[i][1]    #更新射击区间的右端点为新气球的右端点
+            else:                             #在保证当前气球被射穿的情况下，射击区间不能再更新了
+                shooter += 1                  #需要增加一个新的设计区间了
+                shoot_begin = points[i][0]
+                shoot_end = points[i][1]
+        return shooter
+
+    def takeFirst(self,element:List[int]) -&gt; int:   #获取列表中的第一个元素
+        return element[0]
+</code></pre>
+
+<blockquote>
+<p><strong>（5）算法分析</strong></p>
+
+<p>该算法主要是对原数组进行排序和遍历，假设排序的时间复杂度是O（nlogn），总共的时间复杂度是</p>
+</blockquote>
+
+<p>O（nlogn + n），而且只使用了常量级的空间，空间复杂度为O（n）</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

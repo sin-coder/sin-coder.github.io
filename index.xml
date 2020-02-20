@@ -6,10 +6,44 @@
     <description>Recent content on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Feb 2020 21:50:14 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 17 Feb 2020 08:04:41 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>分布式一致性</title>
+      <link>https://sin-coder.github.io/post/consistency/</link>
+      <pubDate>Mon, 17 Feb 2020 08:04:41 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/consistency/</guid>
+      <description>分布式一致性概述 一、什么是分布式一致性 1.CAP 理论  对于分布式一致性，最直观的理解就是分布式系统中的不同节点不能产生矛盾。比较著名的理论就是
+ CAP Theorem，即在一个分布式系统中，不能同时满足以下三点：一致性（Consistency）、可用性
+（Availability）、分区容错性（Partition Tolerance）
+ 一致性（C）：在分布式系统中的所有数据备份，同一时刻是否有同样的值
+ 可用性（A）：在集群中一部分节点故障后，集群整体能否响应客户端的读写请求
+ 分区容忍性（P）：大多数的分布式系统都分布在多个子网络，每个网络都叫做一个区，分区容错的意思即是
+    区间通信可能失败；比如一个分布式系统有5个节点，有3个在美国，有两个在中国，这就是两个区
+它们之间可能无法通信
+   CAP原则的核心就是只能实现AP、CP、AC，不会存在CAP，从上图中也可以看到典型的一些数据库
+ 产品也只是满足了CAP的部分特性
+2.一致性模型  （1）弱一致性（最终一致性）
+关于弱一致性，通俗的解释就是当一个节点向数据库写入数据时，其他的节点可能无法立即读到该数据，
+ 但是它们最终一定会读到该数据，下面是一些典型的实例
+ DNS （Domain Name System）
+ Gossip（Cassandra 的通讯协议）
+   （2）强一致性
+对于分布式系统的容错性最关注的问题就是数据不能存储在单个的节点上，一般的解决方案就是state
+ machine replication（状态机复制共识算法）,具体的实现算法有以下几种：
+ 同步
+ Paxos
+ Raft（multi-paxos）
+ ZAB（multi-paxos）
+  二、强一致性算法 1.主从同步  主从同步复制的工作过程如下，Master接受写请求、Master复制日志到slave、Master等待，直到
+ 所有从库返回；但是这样存在一个问题：一个节点失败，Master阻塞，导致整个集群不可用，保证了
+一致性，但是可用性却大大降低了
+ 解决上述问题的方法：多数派的算法，每次写都保证写入大于N/2个节点，每次读保证从大于N/2个</description>
+    </item>
     
     <item>
       <title>基于Ubuntu系统安装Docker</title>
@@ -448,6 +482,37 @@ GFS系统的优点：高可用性、自动负载均衡
 ​ 导入包时一般为 import &amp;ldquo;项目名/包名&amp;rdquo;
 ​ 调用函数时则是通过PackageName.FunctionName() 来进行调用
 （3）函数 ​ fun main()是程序开始执行的函数，该函数也是每一个可执行程序所必须的，每个函数后都会有{}，但是 &amp;ldquo; { &amp;ldquo;</description>
+    </item>
+    
+    <item>
+      <title>贪心算法集锦</title>
+      <link>https://sin-coder.github.io/leetcode/greedy/</link>
+      <pubDate>Mon, 02 Dec 2019 22:26:15 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/leetcode/greedy/</guid>
+      <description>贪心算法解题总结 一、引例  某天你在超市购物后，总共消费了782元，这时假设你有1元、5元、10元、20元、100元和200元的钞票
+ 无穷多张，那么最少需要多少张钞票足够支付？
+ 直觉告诉我们：要尽可能多地使用面值较大的钞票，其实这就是一种贪心的思想
+ 二、贪心算法简介  由引例我们已经大概了解了什么是贪心，在这儿对它下个定义：贪心算法是指在对问题求解时，总是做
+ 出在当前看来是最好的选择；也就是说不从整体最优上加以考虑，它所做出的是在某种意义上的局部最优解
+ 贪心算法不是对所有的问题都能得到整体的最优解，关键是贪心策略的选择，具体的贪心策略中某个状
+ 态以前的过程不会影响以后的状态，只与当前的状态有关
+三、Leetcode典型例题 1.455分发饼干  (1) 题目描述
+假设你是一位很棒的家长，想要给你的孩子们一些小饼干。但是，每个孩子最多只能给一块饼干。对每
+ 个孩子 i ，都有一个胃口值 gi ，这是能让孩子们满足胃口的饼干的最小尺寸；并且每块饼干 j ，都有一个尺
+寸 sj 。如果 sj &amp;gt;= gi ，我们可以将这个饼干 j 分配给孩子 i ，这个孩子会得到满足。你的目标是尽可能满足
+越多数量的孩子，并输出这个最大数值。一个小朋友最多能拥有一块饼干
+ (2)解题思想
+根据让更多的孩子得到满足这个目标，可以分析出如下贪心规律：
+  某块饼干不能满足某个孩子的胃口，则它也一定不能满足胃口更大的孩子
+ 某个孩子的胃口可以用更小的饼干来满足，则没有必要用更大的饼干满足，更大的饼干留给胃口更大的孩子
+ 孩子的胃口越小，则其更容易被满足，所以优先从胃口小的孩子尝试
+   (3)算法思路
+  按照胃口大小和饼干大小对两个数组进行从小到大的排序
+ 按照从小到大的顺序用饼干来尝试是否可以满足某个孩子的胃口，每个饼干只尝试一次，如能够满足，接着
+   用下一块饼干继续尝试能否满足下一个孩子的胃口；否则，抛弃该饼干，用下一块饼干继续尝试满足当前
+的孩子。直到没有更多的孩子或者没有更多的饼干，算法结束
+(4)代码实现</description>
     </item>
     
     <item>
