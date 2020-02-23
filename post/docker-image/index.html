@@ -1,2 +1,433 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Docker 镜像详解 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker 镜像详解"/>
+<meta name="twitter:description" content="Docker 镜像详解  镜像是Docker三大核心概念中最为重要的。Docker运行容器前需要本地存在对应的镜像，如果镜像不
+ 存在，Docker会从Docker Hub中下载，当然用户也可以配置自定义的镜像仓库
+关键问题  使用pull命令从Docker Hub中下载镜像到本地 查看本地已有的镜像信息、管理镜像标签 使用search命令在远端仓库进行搜索和过滤 删除镜像标签和镜像文件 创建用户定制的镜像并保存为外部文件 向Docker Hub仓库中推送自己的镜像s  一、获取镜像  docker [image] pull NAME[:TAG] #直接从Docker Hub镜像源来下载镜像  其中 [] 中的内容为可选项，NAME为镜像仓库名称（用来区分镜像），TAG为镜像的标签，一般用来
+ 表示版本信息，描述一个镜像需要“名称&#43;标签”；如果不显式地指定TAG，则默认会选择latest标签，会下
+载仓库中的最新镜像。不过，镜像的仓库名称中还应该添加仓库地址（即注册服务器）作为前缀，默认情
+况下使用官方的Docker Hub服务（前缀可以忽略的），如果从非官方的仓库下载，则必须指定完整的仓库
+地址
+ 从下载镜像的过程中，可以看到镜像文件一般是由若干层组成的，Docker下载中会获取并输出镜像
+ 的各层信息，每一层都有一个简写的唯一id。当不同的镜像包括相同的层时，本地仅存储了层的一份内
+容，这样可以减少存储空间
+ $ docker pull ubuntu Using default tag: latest latest: Pulling from library/ubuntu 5c939e3a4d10: Pull complete c63719cdbe7a: Pull complete 19a861ea6baf: Pull complete 651c9d2d6c4f: Pull complete Digest: sha256:8d31dad0c58f552e890d68bbfb735588b6b820a46e459672d96e585871acc110 Status: Downloaded newer image for ubuntu:latest docker."/>
+
+    <meta property="og:title" content="Docker 镜像详解" />
+<meta property="og:description" content="Docker 镜像详解  镜像是Docker三大核心概念中最为重要的。Docker运行容器前需要本地存在对应的镜像，如果镜像不
+ 存在，Docker会从Docker Hub中下载，当然用户也可以配置自定义的镜像仓库
+关键问题  使用pull命令从Docker Hub中下载镜像到本地 查看本地已有的镜像信息、管理镜像标签 使用search命令在远端仓库进行搜索和过滤 删除镜像标签和镜像文件 创建用户定制的镜像并保存为外部文件 向Docker Hub仓库中推送自己的镜像s  一、获取镜像  docker [image] pull NAME[:TAG] #直接从Docker Hub镜像源来下载镜像  其中 [] 中的内容为可选项，NAME为镜像仓库名称（用来区分镜像），TAG为镜像的标签，一般用来
+ 表示版本信息，描述一个镜像需要“名称&#43;标签”；如果不显式地指定TAG，则默认会选择latest标签，会下
+载仓库中的最新镜像。不过，镜像的仓库名称中还应该添加仓库地址（即注册服务器）作为前缀，默认情
+况下使用官方的Docker Hub服务（前缀可以忽略的），如果从非官方的仓库下载，则必须指定完整的仓库
+地址
+ 从下载镜像的过程中，可以看到镜像文件一般是由若干层组成的，Docker下载中会获取并输出镜像
+ 的各层信息，每一层都有一个简写的唯一id。当不同的镜像包括相同的层时，本地仅存储了层的一份内
+容，这样可以减少存储空间
+ $ docker pull ubuntu Using default tag: latest latest: Pulling from library/ubuntu 5c939e3a4d10: Pull complete c63719cdbe7a: Pull complete 19a861ea6baf: Pull complete 651c9d2d6c4f: Pull complete Digest: sha256:8d31dad0c58f552e890d68bbfb735588b6b820a46e459672d96e585871acc110 Status: Downloaded newer image for ubuntu:latest docker." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/docker-image/" />
+<meta property="article:published_time" content="2020-02-02T22:17:53+08:00" />
+<meta property="article:modified_time" content="2020-02-02T22:17:53+08:00" />
 
 
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Docker 镜像详解</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 2, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          4 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/">云计算</a><a class="tag" href="https://sin-coder.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/">虚拟化</a><a class="tag" href="https://sin-coder.github.io/tags/docker/">Docker</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="docker-镜像详解">Docker 镜像详解</h2>
+
+<blockquote>
+<p>镜像是Docker三大核心概念中最为重要的。Docker运行容器前需要本地存在对应的镜像，如果镜像不</p>
+</blockquote>
+
+<p>存在，Docker会从Docker Hub中下载，当然用户也可以配置自定义的镜像仓库</p>
+
+<h3 id="关键问题">关键问题</h3>
+
+<ul>
+<li>使用pull命令从Docker Hub中下载镜像到本地</li>
+<li>查看本地已有的镜像信息、管理镜像标签</li>
+<li>使用search命令在远端仓库进行搜索和过滤</li>
+<li>删除镜像标签和镜像文件</li>
+<li>创建用户定制的镜像并保存为外部文件</li>
+<li>向Docker Hub仓库中推送自己的镜像s</li>
+</ul>
+
+<h3 id="一-获取镜像">一、获取镜像</h3>
+
+<blockquote>
+<pre><code class="language-bash">docker [image] pull NAME[:TAG]      #直接从Docker Hub镜像源来下载镜像
+</code></pre>
+
+<p>其中 [] 中的内容为可选项，NAME为镜像仓库名称（用来区分镜像），TAG为镜像的标签，一般用来</p>
+</blockquote>
+
+<p>表示版本信息，描述一个镜像需要“名称+标签”；如果不显式地指定TAG，则默认会选择latest标签，会下</p>
+
+<p>载仓库中的最新镜像。不过，镜像的仓库名称中还应该添加仓库地址（即注册服务器）作为前缀，默认情</p>
+
+<p>况下使用官方的Docker Hub服务（前缀可以忽略的），如果从非官方的仓库下载，则必须指定完整的仓库</p>
+
+<p>地址</p>
+
+<blockquote>
+<p>从下载镜像的过程中，可以看到镜像文件一般是由若干层组成的，Docker下载中会获取并输出镜像</p>
+</blockquote>
+
+<p>的各层信息，每一层都有一个简写的唯一id。当不同的镜像包括相同的层时，本地仅存储了层的一份内</p>
+
+<p>容，这样可以减少存储空间</p>
+
+<blockquote>
+<pre><code class="language-bash">$ docker pull ubuntu
+Using default tag: latest
+latest: Pulling from library/ubuntu
+5c939e3a4d10: Pull complete 
+c63719cdbe7a: Pull complete 
+19a861ea6baf: Pull complete 
+651c9d2d6c4f: Pull complete 
+Digest: sha256:8d31dad0c58f552e890d68bbfb735588b6b820a46e459672d96e585871acc110
+Status: Downloaded newer image for ubuntu:latest
+docker.io/library/ubuntu:latest
+</code></pre>
+
+<p>由于Docker Hub是位于国外的网站，在未科学上网的情况下载速度较慢，所以可以使用镜像代理服务</p>
+</blockquote>
+
+<p>来加速Docker镜像的获取过程。目前阿里云是为个人提供免费的容器镜像服务，按照命令配置即可</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/03/1UDPcF.png" alt="1UDPcF.png"  /></p>
+
+<h3 id="二-查看镜像信息">二、查看镜像信息</h3>
+
+<h4 id="1-dockers-image-ls">1.dockers image ls</h4>
+
+<blockquote>
+<p>使用Dokcer image ls 命令可以列出本地主机上已有镜像的基本信息</p>
+
+<pre><code class="language-bash">$ docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              2073e0bcb60e        23 hours ago        127MB
+mysql               latest              791b6e40940c        37 hours ago        465MB
+ubuntu              latest              ccc6e87d482b        2 weeks ago         64.2MB
+#常用的可选参数为
+-a : 列出所有镜像文件
+-q : 仅输出ID信息
+--no--trunc=true|false : 对输出结果中太长的部分截断
+-f : 过滤列出的镜像
+</code></pre>
+
+<p>在列出的信息中分别是仓库名称、镜像标签、镜像ID、创建时间和镜像大小。其中镜像的id十分重要</p>
+</blockquote>
+
+<p>，它唯一标识了镜像，在使用镜像的过程中，一般可用该id的前若干个字符组成的可区分串来替代完整的</p>
+
+<p>ID；镜像大小实际上只是逻辑体积大小，由于相同的镜像层本地只会存储一份，物理上占用的存储空间会</p>
+
+<p>小于逻辑体积之和</p>
+
+<h4 id="2-tag更改标签">2.tag更改标签</h4>
+
+<blockquote>
+<p>docker tag命令可以为本地镜像任意地添加新的标签，就像建立了一个快捷方式</p>
+
+<pre><code class="language-bash">[root@CSUYZZ-Docker /]# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mysql               latest              791b6e40940c        37 hours ago        465MB
+tomcat              latest              d191f894a2c7        11 days ago         507MB
+[root@CSUYZZ-Docker /]# docker tag mysql:latest mysql:5.7
+[root@CSUYZZ-Docker /]# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mysql               5.7                 791b6e40940c        37 hours ago        465MB
+mysql               latest              791b6e40940c        37 hours ago        465MB
+tomcat              latest              d191f894a2c7        11 days ago         507MB
+</code></pre>
+
+<p>可以看到mysql:5.7 和 mysql:latest 的镜像ID是相同的，之后便可以使用mysql:5.7替代原来的镜像了</p>
+</blockquote>
+
+<h4 id="3-使用inspect命令查看详细信息">3.使用inspect命令查看详细信息</h4>
+
+<blockquote>
+<p>docker inspect  NAME 命令可以获取镜像的详细信息，返回信息是一个JSON格式的数据，其中包括</p>
+</blockquote>
+
+<p>制作者、适应架构等。当只需要其中某项信息时，通过 -f 来指定过滤的条件</p>
+
+<blockquote>
+<pre><code class="language-bash">docker inspect -f {{&quot;.Architecture&quot;}} mysql:latest
+amd64
+</code></pre>
+</blockquote>
+
+<h4 id="4-history-命令查看镜像创建信息">4.history 命令查看镜像创建信息</h4>
+
+<blockquote>
+<p>docker history NAME命令将列出各层的创建信息</p>
+</blockquote>
+
+<h3 id="三-搜索镜像">三、搜索镜像</h3>
+
+<blockquote>
+<p>docker search [option] keyword 可以搜索Dokcer Hub官方仓库中的镜像</p>
+
+<p>示例： 搜索官方提供的带有mysql关键字的镜像，返回信息包括镜像名称、描述、收藏数等</p>
+
+<pre><code class="language-bash">docker search --filter=is-official=true mysql
+NAME                DESCRIPTION                                  STARS              OFFICIAL   
+mysql               MySQL is a widely used, open-source relation…   9081                [OK]
+mariadb             MariaDB is a community-developed fork of MyS…   3212                [OK]
+#常用可选参数
+-f : 过滤输出内容
+--format string : 格式化输出内容
+--limit int:限制输出个数，默认为25个
+</code></pre>
+</blockquote>
+
+<h4 id="四-删除和清理镜像">四、删除和清理镜像</h4>
+
+<blockquote>
+<p>dokcer rmi IMAGE命令用来删除镜像，其中IMAGE可以为标签或者ID</p>
+
+<pre><code class="language-bash"># docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mysql               5.7                 791b6e40940c        38 hours ago        465MB
+mysql               latest              791b6e40940c        38 hours ago        465MB
+tomcat              latest              d191f894a2c7        11 days ago         507MB
+# docker rmi mysql:5.7
+Untagged: mysql:5.7
+# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mysql               latest              791b6e40940c        38 hours ago        465MB
+tomcat              latest              d191f894a2c7        11 days ago         507MB
+#常用命令参数
+-f : 强制删除镜像，即使有容器依赖它，不推荐使用，应该先删除依赖镜像的容器再来删除镜像
+-no-prune: 不要清理未带标签的父镜像
+</code></pre>
+
+<p>当一个镜像拥有多个标签时，docker rmi 命令只是删除了该镜像中的标签中的指定标签而已，并不影</p>
+</blockquote>
+
+<p>响镜像文件，当镜像只剩下一个标签时便会删除这个镜像所有的文件层</p>
+
+<blockquote>
+<p>当使用镜像ID删除命令时，会先删除所有指向镜像的标签再删除镜像文件本身；当有该镜像创建的容</p>
+</blockquote>
+
+<p>器存在时，镜像文件默认是无法被删除的</p>
+
+<blockquote>
+<p>此外，在使用Docker一段时间之后，系统可能会残留有临时的镜像文件和一些没有使用过的镜像，可</p>
+</blockquote>
+
+<p>以通过docker image prune命令来进行清理</p>
+
+<h3 id="五-创建镜像">五、创建镜像</h3>
+
+<blockquote>
+<p>创建镜像的方法主要有三种，基于已有镜像的容器创建、基于本地模板导入、基于Dockerfile创建，三</p>
+</blockquote>
+
+<p>种创建方法也对应着三种待学习的命令commit、import、build</p>
+
+<h4 id="1-基于已有容器创建">1.基于已有容器创建</h4>
+
+<blockquote>
+<p>docker [container]  commit [OPTIONS] CONTAINER [REPOSITORY [:TAG]] 为基于已有容器创建对</p>
+</blockquote>
+
+<p>象的命令格式</p>
+
+<blockquote>
+<pre><code class="language-bash">[root@CSUYZZ-Docker /]# docker run -it ubuntu:18.04 /bin/bash   #创建容器并启动
+root@69edc769ef68:/# ls                                     #root@后为容器的ID
+bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
+boot  etc  lib   media  opt  root  sbin  sys  usr
+root@69edc769ef68:/# touch test                        #创建一个文件并保存
+root@69edc769ef68:/# ls                                
+bin   dev  home  lib64  mnt  proc  run   srv  test  usr
+boot  etc  lib   media  opt  root  sbin  sys  tmp   var
+root@69edc769ef68:/# exit                              #退出容器
+exit
+#提交为一个新的镜像，使用ID指定容器
+[root@CSUYZZ-Docker /]# docker commit -m &quot;Add a new File&quot; -a &quot;CSUYZZ&quot; 69edc769ef68 test:0.1    sha256:acb35d7730e7f88a494c6f5c6fcb5c62992702011e8c11247305b244d45b99db  #返回创建容器的ID信息
+[root@CSUYZZ-Docker /]# docker image ls    #重新查看镜像，该镜像已经存在
+REPOSITORY          TAG                 IMAGE ID            CREATED              SIZE
+test                0.1                 acb35d7730e7        About a minute ago   64.2MB
+mysql               latest              791b6e40940c        41 hours ago         465MB
+tomcat              latest              d191f894a2c7        11 days ago          507MB
+ubuntu              18.04               ccc6e87d482b        2 weeks ago          64.2MB
+#常用的命令参数为
+-a : 作者信息
+-m : 提交消息
+-p : 提交时暂停容器运行
+-c : 提交的时候执行Dockerfile命令，关于Dockerfile后面会有详细介绍
+</code></pre>
+</blockquote>
+
+<h4 id="2-基于本地模板导入">2.基于本地模板导入</h4>
+
+<blockquote>
+<p>用户也可直接从一个操作系统模板文件导入一个镜像，使用docker import命令</p>
+</blockquote>
+
+<h4 id="3-基于dockerfile创建">3.基于Dockerfile创建</h4>
+
+<blockquote>
+<p>基于Dockerfile创建是最常见的方式，它是一个文本文件，利用给定的指令描述基于某个父镜像创建</p>
+</blockquote>
+
+<p>新镜像的过程。使用的命令为docker [image]  build，关于Dockerfile后面的文章会有详细的介绍</p>
+
+<h3 id="六-保存和加载镜像">六、保存和加载镜像</h3>
+
+<blockquote>
+<p>docker save命令可以将镜像保存为 .tar格式的文件存放在本地，之后用户可以复制.tar文件并分享给他人；</p>
+
+<p>docker load 命令可以将.tar格式的文件重新加载成原来的镜像</p>
+
+<pre><code class="language-bash">#在一台上进行保存为.tar文件     
+[root@CSUYZZ-Docker /]# docker save -o ubuntu_18.04.tar ubuntu:18.04
+[root@CSUYZZ-Docker /]# ls
+bin   dev  home  lib64  mnt  opt   root  sbin  sys  ubuntu_18.04.tar  var
+boot  etc  lib   media  my   proc  run   srv   tmp  usr
+#使用参数: -o 即-output string参数，保存镜像到指定文件中
+
+#在另外一台主机上进行加载
+root@Ubuntu:/home# ls
+csuyzz  ubuntu_18.04.tar
+root@Ubuntu:/home# docker load -i ubuntu_18.04.tar
+#使用参数：-i 即-input string参数，从指定文件中加载镜像
+43c67172d1d1: Loading layer [==================================================&gt;]  65.57MB/65.57MB
+21ec61b65b20: Loading layer [==================================================&gt;]  991.2kB/991.2kB
+1d0dfb259f6a: Loading layer [==================================================&gt;]  15.87kB/15.87kB
+f55aa0bd26b8: Loading layer [==================================================&gt;]  3.072kB/3.072kB
+Loaded image: ubuntu:18.04
+root@Ubuntu:/home# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              18.04               ccc6e87d482b        2 weeks ago         64.2MB
+</code></pre>
+</blockquote>
+
+<h3 id="七-上传镜像">七、上传镜像</h3>
+
+<blockquote>
+<p>docker push命令可将镜像上传到仓库，默认上传到官方仓库</p>
+
+<pre><code class="language-bash">[root@CSUYZZ-Docker home]# docker login    #首次上传需要输入用户名和密码进行登录
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: csuyzz    
+Password:
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+Login Succeeded
+[root@CSUYZZ-Docker home]# docker push csuyzz/ubuntu:18.04
+The push refers to repository [docker.io/csuyzz/ubuntu]
+f55aa0bd26b8: Mounted from library/ubuntu
+1d0dfb259f6a: Mounted from library/ubuntu
+21ec61b65b20: Mounted from library/ubuntu
+43c67172d1d1: Mounted from library/ubuntu
+18.04: digest: sha256:bc025862c3e8ec4a8754ea4756e33da6c41cba38330d7e324abd25c8e0b93300 size: 1152
+</code></pre>
+
+<p>上传成功后从Docker Hub的界面即可看到我们上传的仓库</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/03/10aLWV.png" alt="10aLWV.png" /></p>
+</blockquote>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+  <div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '你的 GitHub ID',
+  repo: '存储评论的 repo',
+  oauth: {
+    client_id: '你的 client ID',
+    client_secret: '你的 client secret',
+  },
+})
+gitment.render('container')
+</script>
+
+
+    </main>
+  </body>
+</html>

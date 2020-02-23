@@ -1,2 +1,543 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>基于Hugo框架搭建个人博客 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="基于Hugo框架搭建个人博客"/>
+<meta name="twitter:description" content="关键词：Hugo 、Git、Github、域名解析 概述 1.Hugo简介  Hugo是基于Go语言开发的静态网站生成器，简单、易用、快速部署，主要用于构建个人博客
+ 2.Git简介  Git是目前主流的分布式版本控制工具，有关Git的使用请查看Git的来龙去脉这篇文章
+ 3.Github简介  Github是在外网环境下的一个代码托管库，有关Github的介绍请查看开始玩起Github这篇文章
+ 具体过程 1.准备工作  下载Git并安装、配置环境变量   完成后在终端执行&rdquo;git&rdquo;命令来测试是否安装成功，有关git的安装请看Git的来龙去脉
+  下载Hugo并安装、配置环境变量   完成后在终端执行&rdquo;hugo version&rdquo;命令来测试是否安装成功，终端提示如下信息表示安装成功
+ C:\Users\Administrator&gt;hugo version Hugo Static Site Generator v0.59.1-D5DAB232 windows/amd64 BuildDate: 2019-10-31T15:22:43Z   Hugo最好安装在英文目录下
+下载时可能由于网络问题失败，附上Hugo、Git、主题m10c的下载包链接: 下载链接
+  注册Github官网（已有账号请忽略）  2.生成个人站点 （1）在终端执行命令 C:\Users\Administrator&gt;hugo new site E:\hugo\Sites\myblog   出现以下提示信息表示创建成功：
+ C:\Users\Administrator&gt;hugo new site E:\hugo\Sites\myblog Congratulations! Your new Hugo site is created in E:\hugo\Sites\myblog."/>
+
+    <meta property="og:title" content="基于Hugo框架搭建个人博客" />
+<meta property="og:description" content="关键词：Hugo 、Git、Github、域名解析 概述 1.Hugo简介  Hugo是基于Go语言开发的静态网站生成器，简单、易用、快速部署，主要用于构建个人博客
+ 2.Git简介  Git是目前主流的分布式版本控制工具，有关Git的使用请查看Git的来龙去脉这篇文章
+ 3.Github简介  Github是在外网环境下的一个代码托管库，有关Github的介绍请查看开始玩起Github这篇文章
+ 具体过程 1.准备工作  下载Git并安装、配置环境变量   完成后在终端执行&rdquo;git&rdquo;命令来测试是否安装成功，有关git的安装请看Git的来龙去脉
+  下载Hugo并安装、配置环境变量   完成后在终端执行&rdquo;hugo version&rdquo;命令来测试是否安装成功，终端提示如下信息表示安装成功
+ C:\Users\Administrator&gt;hugo version Hugo Static Site Generator v0.59.1-D5DAB232 windows/amd64 BuildDate: 2019-10-31T15:22:43Z   Hugo最好安装在英文目录下
+下载时可能由于网络问题失败，附上Hugo、Git、主题m10c的下载包链接: 下载链接
+  注册Github官网（已有账号请忽略）  2.生成个人站点 （1）在终端执行命令 C:\Users\Administrator&gt;hugo new site E:\hugo\Sites\myblog   出现以下提示信息表示创建成功：
+ C:\Users\Administrator&gt;hugo new site E:\hugo\Sites\myblog Congratulations! Your new Hugo site is created in E:\hugo\Sites\myblog." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/hugo/" />
+<meta property="article:published_time" content="2020-01-07T14:08:20+08:00" />
+<meta property="article:modified_time" content="2020-01-07T14:08:20+08:00" />
 
 
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">基于Hugo框架搭建个人博客</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 7, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          3 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8/">框架使用</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h3 id="关键词-hugo-git-github-域名解析">关键词：Hugo 、Git、Github、域名解析</h3>
+
+<h2 id="概述">概述</h2>
+
+<h4 id="1-hugo简介">1.Hugo简介</h4>
+
+<blockquote>
+<p>Hugo是基于Go语言开发的静态网站生成器，简单、易用、快速部署，主要用于构建个人博客</p>
+</blockquote>
+
+<h4 id="2-git简介">2.Git简介</h4>
+
+<blockquote>
+<p>Git是目前主流的分布式版本控制工具，有关Git的使用请查看Git的来龙去脉这篇文章</p>
+</blockquote>
+
+<h4 id="3-github简介">3.Github简介</h4>
+
+<blockquote>
+<p>Github是在外网环境下的一个代码托管库，有关Github的介绍请查看开始玩起Github这篇文章</p>
+</blockquote>
+
+<h2 id="具体过程">具体过程</h2>
+
+<h4 id="1-准备工作">1.准备工作</h4>
+
+<ul>
+<li>下载Git并安装、配置环境变量</li>
+</ul>
+
+<blockquote>
+<p>完成后在终端执行&rdquo;git&rdquo;命令来测试是否安装成功，有关git的安装请看Git的来龙去脉</p>
+</blockquote>
+
+<ul>
+<li>下载Hugo并安装、配置环境变量</li>
+</ul>
+
+<blockquote>
+<p>完成后在终端执行&rdquo;hugo version&rdquo;命令来测试是否安装成功，终端提示如下信息表示安装成功</p>
+</blockquote>
+
+<pre><code class="language-bash">  C:\Users\Administrator&gt;hugo version
+  Hugo Static Site Generator v0.59.1-D5DAB232 windows/amd64 BuildDate: 2019-10-31T15:22:43Z
+</code></pre>
+
+<blockquote>
+<p>Hugo最好安装在英文目录下</p>
+
+<p>下载时可能由于网络问题失败，附上Hugo、Git、主题m10c的下载包链接: <a href="https://www.lanzous.com/i8iy3xg">下载链接</a></p>
+</blockquote>
+
+<ul>
+<li>注册Github官网（已有账号请忽略）</li>
+</ul>
+
+<h4 id="2-生成个人站点">2.生成个人站点</h4>
+
+<h4 id="1-在终端执行命令">（1）在终端执行命令</h4>
+
+<pre><code class="language-bash">C:\Users\Administrator&gt;hugo new site E:\hugo\Sites\myblog
+</code></pre>
+
+<blockquote>
+<p>出现以下提示信息表示创建成功：</p>
+</blockquote>
+
+<pre><code class="language-bash">C:\Users\Administrator&gt;hugo new site E:\hugo\Sites\myblog
+Congratulations! Your new Hugo site is created in E:\hugo\Sites\myblog.
+
+Just a few more steps and you're ready to go:
+
+1. Download a theme into the same-named folder.
+   Choose a theme from https://themes.gohugo.io/ or
+   create your own with the &quot;hugo new theme &lt;THEMENAME&gt;&quot; command.
+2. Perhaps you want to add some content. You can add single files
+   with &quot;hugo new &lt;SECTIONNAME&gt;\&lt;FILENAME&gt;.&lt;FORMAT&gt;&quot;.
+3. Start the built-in live server via &quot;hugo server&quot;.
+
+Visit https://gohugo.io/ for quickstart guide and full documentation.
+</code></pre>
+
+<blockquote>
+<p>命令执行完毕后即可在myblog目录下生成以下文件s</p>
+</blockquote>
+
+<pre><code class="language-bash">E:\hugo\Sites\myblog&gt;tree /f
+卷 CSUYZZ 的文件夹 PATH 列表
+卷序列号为 2C3A-5572
+E:.
+│  config.toml
+│
+├─archetypes
+│      default.md
+│
+├─content
+├─data
+├─layouts
+├─static
+└─themes
+</code></pre>
+
+<blockquote>
+<p>注意：&rdquo;E:\hugo\Sites\myblog&rdquo;为该博客的根目录，这个概念接下来将会多次用到</p>
+</blockquote>
+
+<h4 id="2-文件简介">（2）文件简介</h4>
+
+<blockquote>
+<p>了解根目录下的文件将有助于个性化地定制博客</p>
+</blockquote>
+
+<ul>
+<li><p>config.toml:全局配置文件，结合所用的主题进行配置(后面会讲解)</p></li>
+
+<li><p>themes:主题存放的位置，主题中的文件也可进行个性化定制</p></li>
+
+<li><p>static:存储图片、js、css等静态资源文件</p></li>
+
+<li><p>layouts:存放用来渲染博客内容的模板文件</p></li>
+
+<li><p>data:存放相关数据文件</p></li>
+
+<li><p>contents:所有博客内容(md文件)默认的存放目录</p></li>
+</ul>
+
+<h4 id="3-设置主题">（3）设置主题</h4>
+
+<blockquote>
+<p>Hugo框架有许多酷炫的主题，可以在<a href="themes.gohugo.io">主题官网</a>上进行挑选</p>
+
+<p>每个主题的详情页均会列出使用该主题的方法，这里m10c主题为例</p>
+
+<p>在根目录下执行如下命令:</p>
+</blockquote>
+
+<pre><code class="language-bash"> git clone https://github.com/vaga/hugo-theme-m10c.git  themes/m10c
+</code></pre>
+
+<blockquote>
+<p>终端出现如下结果表示下载成功，同时在themes文件夹会出现m10c文件夹</p>
+</blockquote>
+
+<pre><code class="language-bash">E:\hugo\Sites\myblog&gt;git clone https://github.com/vaga/hugo-theme-m10c.git themes/m10c
+Cloning into 'themes/m10c'...
+remote: Enumerating objects: 6, done.
+remote: Counting objects: 100% (6/6), done.
+remote: Compressing objects: 100% (5/5), done.
+remote: Total 276 (delta 0), reused 2 (delta 0), pack-reused 270Receiving objects:  52% (144/276), 308.01 KiB | 165.00 KReceiving objects:
+Receiving objects: 100% (276/276), 447.95 KiB | 231.00 KiB/s, done.
+Resolving deltas: 100% (88/88), done.
+</code></pre>
+
+<blockquote>
+<p>在进行测试前需要在config.toml文件中添加 theme = &ldquo;m10c&rdquo;,文件内容如下所示</p>
+</blockquote>
+
+<pre><code class="language-txt">baseURL = &quot;http://example.org/&quot;
+languageCode = &quot;en-us&quot;
+title = &quot;My New Hugo Site&quot;
+
+theme = &quot;m10c&quot;
+</code></pre>
+
+<h4 id="4-本地启动测试">（4）本地启动测试</h4>
+
+<blockquote>
+<p>在在根目录下执行命令</p>
+
+<p>hugo server -t m10c &ndash;buildDrafts</p>
+
+<p>会出现以下信息</p>
+</blockquote>
+
+<pre><code class="language-bash">E:\hugo\Sites\myblog&gt;hugo server -t m10c --buildDrafts
+Building sites …
+                   | EN
++------------------+----+
+  Pages            |  7
+  Paginator pages  |  0
+  Non-page files   |  0
+  Static files     |  1
+  Processed images |  0
+  Aliases          |  3
+  Sitemaps         |  1
+  Cleaned          |  0
+
+Total in 13 ms
+Watching for changes in E:\hugo\Sites\myblog\{archetypes,content,data,layouts,static,themes}
+Watching for config changes in E:\hugo\Sites\myblog\config.toml
+Environment: &quot;development&quot;
+Serving pages from memory
+Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
+Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
+Press Ctrl+C to stop
+</code></pre>
+
+<blockquote>
+<p>复制<a href="http://localhost:1313/">http://localhost:1313/</a> 在浏览器中打开即可看到如下界面</p>
+</blockquote>
+
+<p><img src="https://s2.ax1x.com/2020/01/27/1u3sSI.png" alt="本地测试预览" /></p>
+
+<h4 id="5-个性化定制">（5）个性化定制</h4>
+
+<blockquote>
+<p>以上生成的界面即为模板，需要我们个性化定制一波，相关参数在config.toml中配置</p>
+
+<p>在<a href="https://themes.gohugo.io/hugo-theme-m10c">m10c主题界面</a>有介绍相关参数的配置介绍，config.toml文件如下</p>
+</blockquote>
+
+<pre><code class="language-base">baseURL =&quot;http://example.org/
+languageCode=&quot;en-us&quot;
+title=&quot;sin-coder&quot;  //昵称
+
+theme=&quot;m10c&quot;       //主题
+
+paginate=10        //分页，每页最大博客数目
+[params]
+	author=&quot;csuyzz&quot;
+	description=&quot;I always remember that Talk is cheap，show me the code'&quot;#个人描述
+	avatar=&quot;cat.jpg&quot;  //头像文件，将置换的头像文件置于themes\m1ec\static\目录下，捋文件名作为avatar的参数
+
+[[params.social]]
+name=&quot;github&quot;        //github的社交链接，还可配置twitter
+ur1=&quot;https://github.comsin-coder&quot;  //Github主页地址
+
+[params.style]                     //配置界面颜色
+	darkestColor=&quot;#d35050&quot;
+	darkColor=&quot;#212121&quot;
+	lightColor=&quot;#f5e3e0&quot;
+	lightestColor=&quot;#f5f5f5&quot;
+	primaryColor=&quot;fff&quot;
+</code></pre>
+
+<blockquote>
+<p><strong>注意：</strong> “//”后的内容只是解释该参数的作用，在实际配置文件中不应该存在</p>
+
+<p>参数配置完成后进行测试的效果</p>
+</blockquote>
+
+<p><img src="https://s2.ax1x.com/2020/01/27/1u3ylt.png" alt="本地测试配置" /></p>
+
+<blockquote>
+<p>当然，可配置的参数还有许多，比如文章分类、评论系统等功能，这个希望大家继续研究</p>
+</blockquote>
+
+<h4 id="6-创建博客文章">（6）创建博客文章</h4>
+
+<blockquote>
+<p>在根目录下执行命令</p>
+</blockquote>
+
+<pre><code> E:\hugo\Sites\myblog&gt;hugo new post/firstblog.md
+</code></pre>
+
+<blockquote>
+<p>出现以下提示信息表示创建成功</p>
+</blockquote>
+
+<pre><code class="language-bash">E:\hugo\Sites\myblog&gt;hugo new post/firstblog.md
+E:\hugo\Sites\myblog\content\post\firstblog.md created
+</code></pre>
+
+<blockquote>
+<p>系统默认是在content目录下创建文件的,为了方便管理，将所有的文章至于post目录下</p>
+
+<p>创建成功后，在content/post即可看到firstblog.md了</p>
+
+<p>接下来就是使用markdown进行编写博客了，编写完之后在根目录下重新执行命令</p>
+
+<p>hugo server -t m10c &ndash;buildDrafts即可预览到以下界面</p>
+</blockquote>
+
+<p><img src="https://s2.ax1x.com/2020/01/27/1u366P.md.png" alt="1u366P.png" style="zoom: 102%;" /></p>
+
+<p><img src="https://s2.ax1x.com/2020/01/27/1u3cOf.png" alt="1u3cOf.png" /></p>
+
+<h4 id="7-本地部署测试命令总结">（7）本地部署测试命令总结</h4>
+
+<blockquote>
+<p>注意所有的命令均应该在根目录下执行</p>
+</blockquote>
+
+<pre><code>hugo new site myblog
+git clone https://github.com/vaga/hugo-theme-m10c.git themes/m10c
+hugo server -t m10c --buildDrafts
+hugo new post/firstblog.md
+hugo server -t m10c --buildDrafts
+</code></pre>
+
+<h4 id="3-部署到github上">3.部署到Github上</h4>
+
+<h4 id="1-创建仓库">（1）创建仓库</h4>
+
+<blockquote>
+<p>在Github上创建仓库 ,命名必须为 用户名.github.io，如sin-coder.github.io</p>
+</blockquote>
+
+<h4 id="2-生成最终html界面">（2）生成最终html界面</h4>
+
+<blockquote>
+<p>在根目录下执行命令</p>
+</blockquote>
+
+<pre><code> E:\hugo\Sites\myblog&gt; hugo --theme=m10c --baseUrl=&quot;https://sin-coder.github.io&quot; --buildDrafts
+</code></pre>
+
+<blockquote>
+<p>会在blog目录下生成一个public文件夹，文件夹中即是firstblog转换成的html文件</p>
+
+<p>public文件夹即是公开出来让别人能看到的文件，也是需要上传到仓库中的文件夹</p>
+</blockquote>
+
+<h4 id="3-将文件推送到github仓库">（3）将文件推送到Github仓库</h4>
+
+<pre><code class="language-bash">cd public  #先进入到public文件夹
+git init     #初始化
+git remote add origin https://github.com/sin-coder/sin-coder.github.io.git  #本地仓库链接到远程仓库
+git config --global user.email  邮箱地址   #这里设置的签名和远程登陆库与Github 的账号和密码无关
+git config --global user.name 名字      #作用仅仅是区分不同的开发人员
+git add -A
+git commit -m &quot;描述&quot; 
+git push -u origin master
+</code></pre>
+
+<blockquote>
+<p>这里操作中可能出现的错误就是与git有关了 建议先去学下git的基本命令</p>
+</blockquote>
+
+<h4 id="4-查看界面">（4）查看界面</h4>
+
+<blockquote>
+<p>在浏览器中输入  “用户名.github.io&rdquo; 即可查看界面</p>
+</blockquote>
+
+<h4 id="5-新建-修改-博客">（5）新建/修改 博客</h4>
+
+<blockquote>
+<p><strong>新建博客执行命令</strong></p>
+</blockquote>
+
+<p>​        （根目录）</p>
+
+<pre><code class="language-bash">hugo new post/filename.md
+hugo --theme=m10c --baseUrl=&quot;https://sin-coder.github.io&quot; --buildDrafts 
+</code></pre>
+
+<p>​           (public 目录)</p>
+
+<pre><code class="language-bash">cd public
+git add -A 
+git commit -m 
+git push -u origin master
+</code></pre>
+
+<blockquote>
+<p><strong>修改博客执行命令</strong></p>
+
+<p><strong>与新建博客基本相同，只是不执行第一条命令</strong></p>
+
+<p><strong>删除博客命令</strong></p>
+
+<p>在本地将<strong>content/post/filename.md</strong>文件删除</p>
+</blockquote>
+
+<p>​            <strong>（根目录）</strong></p>
+
+<pre><code>hugo --theme=m10c --baseUrl=&quot;https://sin-coder.github.io&quot; --buildDrafts 
+</code></pre>
+
+<p>​           <strong>（public目录）</strong></p>
+
+<pre><code class="language-ba'sh">git add -A
+git commit -m &quot;描述&quot;
+git push -u origin master
+</code></pre>
+
+<h4 id="4-域名解析">4.域名解析</h4>
+
+<h4 id="1-申请域名-域名认证">（1）申请域名、域名认证</h4>
+
+<blockquote>
+<p>在域名网站注册并购买自己的域名，同时进行域名认证</p>
+</blockquote>
+
+<h4 id="2-配置域名">（2）配置域名</h4>
+
+<blockquote>
+<p>在github仓库中添加CNAME文件，并在文件中填写绑定的域名</p>
+
+<p>注意填写的内容不能包括<a href="https://www">https://www</a>,  只能写上csuyzz.com</p>
+</blockquote>
+
+<p><img src="https://s2.ax1x.com/2020/01/27/1u3DfA.png" alt="1u3DfA.png" style="zoom:80%;" /></p>
+
+<blockquote>
+<p>进入设置Settings 找到Custom domain添加域名后进行保存，默认自动保存</p>
+</blockquote>
+
+<p><img src="https://s2.ax1x.com/2020/01/27/1u30FH.png" alt="1u30FH.png"  /></p>
+
+<h4 id="3-域名解析">（3）域名解析</h4>
+
+<blockquote>
+<p>在命令行下执行命令：ping 用户名.github.io  获取对应的IP地址</p>
+
+<p>然后修改域名解析记录，添加两个A记录，绑定域名和IP地址</p>
+
+<p>主机记录www 和@各一个，www表示解析域名为www.csuyzz.com ,@则表示解析域名为csuyzz.com</p>
+</blockquote>
+
+<p><img src="https://s2.ax1x.com/2020/01/27/1u3BYd.png" alt="1u3BYd.png" style="zoom:80%;" /></p>
+
+<p><img src="https://s2.ax1x.com/2020/01/27/1u3dTe.png" alt="1u3dTe.png" style="zoom:80%;" /></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+  <div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '你的 GitHub ID',
+  repo: '存储评论的 repo',
+  oauth: {
+    client_id: '你的 client ID',
+    client_secret: '你的 client secret',
+  },
+})
+gitment.render('container')
+</script>
+
+
+    </main>
+  </body>
+</html>

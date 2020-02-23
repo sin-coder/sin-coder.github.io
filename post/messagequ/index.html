@@ -1,2 +1,339 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>消息队列简介 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="消息队列简介"/>
+<meta name="twitter:description" content="消息队列简介 一、消息队列简介 1.概述  消息是指在应用间传送数据，消息可以只包含文本字符串、或者包含嵌入式对象。
+消息队列是一种应用程序对应用程序的通信方法。它是是生产者-消费者模型的一个典型的代表，一端往消息
+ 队列中不断地写入消息，而另一端则可以读取队列中的消息。这样发布者和接受者都不知道对方的存在。
+ 消息队列也可以简单理解为：把要传输的数据放在队列中
+ 2.消息获取模式  消费者获取消息时有两种模式，点对点模式和发布订阅模式
+ （1）点对点模式  点对点模型通常是一个基于拉取或者轮询的消息传递模型，这种模型从队列中请求消息，而不是将消息推送
+ 到客户端。这种模式的特点是一对一，发送到队列的消息被一个且只有一个接受者接收处理，即使有多
+个消息监听者也是如此，消息被收到后即可清除
+ 点对点模式的优点是队列发送数据和客户端接收数据的速度是相匹配的，缺点是客户端需要实时监控队列中
+ 是否有消息存在
+（2）发布/订阅模式  发布订阅模型是一个基于推送的消息传送模型，该种模型下订阅者有临时订阅者和持久订阅者之分，临时订
+ 阅者只在主动监听主题时才接收消息；而持久订阅者则监听主题的所有消息，即使当前订阅者不可用，
+处于离线状态。这种模型的特点是一对多，数据生产后，推送给所有的订阅者
+ 发布/订阅模式的优点是客户端不需要实时监控队列中是否有消息存在，缺点是队列发送数据的速度无法和多
+ 个客户端接收数据的速度是相匹配
+二、消息队列作用  解耦：客户端与客户端之间或者客户端和服务器 之间不需要直接连接，而是通过中间件来进行连接。而且允许你    独立的扩展或修改两边的处理过程，只要确保它们遵守同样的接口约束
+  冗余：消息队列可以对数据进行持久化（本地备份）直到它们已经被处理，这样就规避了数据的丢失。许多消息   队列均采用“插入-获取-删除”的范式，即在把一个消息从队列中删除之前，需要你的系统明确的指出该消息已
+经被处理完毕
+  峰值处理：可以组建集群，进而增大消息入队和处理的频率。在访问量剧增的情况下，应用仍然需要继续发挥作   用，但是这样的突发流量并不常见。如果为以能处理这类峰值访问为标准来投入资源随时待命无疑是巨大的
+浪费。消息队列基于它的可扩展性使其本身可以顶住突发的访问压力，而不会因为突发的超负荷的请求而使
+系统完全崩溃
+  数据可恢复：当系统的一部分组件失效时，不会影响到整个的系统 。消息队列降低了进程间的耦合度，即使一个   处理消息的进程挂掉，加入队列中的消息仍可在系统恢复后被处理
+  顺序保证：消息队列本来就是排好序的，并且也能够保证数据按照特定的顺序来进行处理
+ 缓冲：消息队列可以控制和优化数据流经过系统的速度，解决生产消息和消费消息的处理速度不一致的情况"/>
+
+    <meta property="og:title" content="消息队列简介" />
+<meta property="og:description" content="消息队列简介 一、消息队列简介 1.概述  消息是指在应用间传送数据，消息可以只包含文本字符串、或者包含嵌入式对象。
+消息队列是一种应用程序对应用程序的通信方法。它是是生产者-消费者模型的一个典型的代表，一端往消息
+ 队列中不断地写入消息，而另一端则可以读取队列中的消息。这样发布者和接受者都不知道对方的存在。
+ 消息队列也可以简单理解为：把要传输的数据放在队列中
+ 2.消息获取模式  消费者获取消息时有两种模式，点对点模式和发布订阅模式
+ （1）点对点模式  点对点模型通常是一个基于拉取或者轮询的消息传递模型，这种模型从队列中请求消息，而不是将消息推送
+ 到客户端。这种模式的特点是一对一，发送到队列的消息被一个且只有一个接受者接收处理，即使有多
+个消息监听者也是如此，消息被收到后即可清除
+ 点对点模式的优点是队列发送数据和客户端接收数据的速度是相匹配的，缺点是客户端需要实时监控队列中
+ 是否有消息存在
+（2）发布/订阅模式  发布订阅模型是一个基于推送的消息传送模型，该种模型下订阅者有临时订阅者和持久订阅者之分，临时订
+ 阅者只在主动监听主题时才接收消息；而持久订阅者则监听主题的所有消息，即使当前订阅者不可用，
+处于离线状态。这种模型的特点是一对多，数据生产后，推送给所有的订阅者
+ 发布/订阅模式的优点是客户端不需要实时监控队列中是否有消息存在，缺点是队列发送数据的速度无法和多
+ 个客户端接收数据的速度是相匹配
+二、消息队列作用  解耦：客户端与客户端之间或者客户端和服务器 之间不需要直接连接，而是通过中间件来进行连接。而且允许你    独立的扩展或修改两边的处理过程，只要确保它们遵守同样的接口约束
+  冗余：消息队列可以对数据进行持久化（本地备份）直到它们已经被处理，这样就规避了数据的丢失。许多消息   队列均采用“插入-获取-删除”的范式，即在把一个消息从队列中删除之前，需要你的系统明确的指出该消息已
+经被处理完毕
+  峰值处理：可以组建集群，进而增大消息入队和处理的频率。在访问量剧增的情况下，应用仍然需要继续发挥作   用，但是这样的突发流量并不常见。如果为以能处理这类峰值访问为标准来投入资源随时待命无疑是巨大的
+浪费。消息队列基于它的可扩展性使其本身可以顶住突发的访问压力，而不会因为突发的超负荷的请求而使
+系统完全崩溃
+  数据可恢复：当系统的一部分组件失效时，不会影响到整个的系统 。消息队列降低了进程间的耦合度，即使一个   处理消息的进程挂掉，加入队列中的消息仍可在系统恢复后被处理
+  顺序保证：消息队列本来就是排好序的，并且也能够保证数据按照特定的顺序来进行处理
+ 缓冲：消息队列可以控制和优化数据流经过系统的速度，解决生产消息和消费消息的处理速度不一致的情况" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/messagequ/" />
+<meta property="article:published_time" content="2020-01-28T01:22:22+08:00" />
+<meta property="article:modified_time" content="2020-01-28T01:22:22+08:00" />
 
 
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">消息队列简介</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 28, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><a class="tag" href="https://sin-coder.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a><a class="tag" href="https://sin-coder.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="消息队列简介">消息队列简介</h2>
+
+<hr />
+
+<h3 id="一-消息队列简介">一、消息队列简介</h3>
+
+<h4 id="1-概述">1.概述</h4>
+
+<blockquote>
+<p>消息是指在应用间传送数据，消息可以只包含文本字符串、或者包含嵌入式对象。</p>
+
+<p>消息队列是一种应用程序对应用程序的通信方法。它是是生产者-消费者模型的一个典型的代表，一端往消息</p>
+</blockquote>
+
+<p>队列中不断地写入消息，而另一端则可以读取队列中的消息。这样发布者和接受者都不知道对方的存在。</p>
+
+<blockquote>
+<p>消息队列也可以简单理解为：把要传输的数据放在队列中</p>
+</blockquote>
+
+<p><img src="https://s2.ax1x.com/2020/01/27/1urXfP.png" alt="1urXfP.png" /></p>
+
+<h4 id="2-消息获取模式">2.消息获取模式</h4>
+
+<blockquote>
+<p>消费者获取消息时有两种模式，点对点模式和发布订阅模式</p>
+</blockquote>
+
+<h4 id="1-点对点模式">（1）点对点模式</h4>
+
+<blockquote>
+<p>点对点模型通常是一个基于拉取或者轮询的消息传递模型，这种模型从队列中请求消息，而不是将消息推送</p>
+</blockquote>
+
+<p>到客户端。这种模式的特点是一对一，发送到队列的消息被一个且只有一个接受者接收处理，即使有多</p>
+
+<p>个消息监听者也是如此，消息被收到后即可清除</p>
+
+<blockquote>
+<p>点对点模式的优点是队列发送数据和客户端接收数据的速度是相匹配的，缺点是客户端需要实时监控队列中</p>
+</blockquote>
+
+<p>是否有消息存在</p>
+
+<h4 id="2-发布-订阅模式">（2）发布/订阅模式</h4>
+
+<blockquote>
+<p>发布订阅模型是一个基于推送的消息传送模型，该种模型下订阅者有临时订阅者和持久订阅者之分，临时订</p>
+</blockquote>
+
+<p>阅者只在主动监听主题时才接收消息；而持久订阅者则监听主题的所有消息，即使当前订阅者不可用，</p>
+
+<p>处于离线状态。这种模型的特点是一对多，数据生产后，推送给所有的订阅者</p>
+
+<blockquote>
+<p>发布/订阅模式的优点是客户端不需要实时监控队列中是否有消息存在，缺点是队列发送数据的速度无法和多</p>
+</blockquote>
+
+<p>个客户端接收数据的速度是相匹配</p>
+
+<h3 id="二-消息队列作用">二、消息队列作用</h3>
+
+<ul>
+<li>解耦：客户端与客户端之间或者客户端和服务器 之间不需要直接连接，而是通过中间件来进行连接。而且允许你
+
+<br /></li>
+</ul>
+
+<blockquote>
+<p>独立的扩展或修改两边的处理过程，只要确保它们遵守同样的接口约束</p>
+</blockquote>
+
+<ul>
+<li>冗余：消息队列可以对数据进行持久化（本地备份）直到它们已经被处理，这样就规避了数据的丢失。许多消息</li>
+</ul>
+
+<blockquote>
+<p>队列均采用“插入-获取-删除”的范式，即在把一个消息从队列中删除之前，需要你的系统明确的指出该消息已</p>
+
+<p>经被处理完毕</p>
+</blockquote>
+
+<ul>
+<li>峰值处理：可以组建集群，进而增大消息入队和处理的频率。在访问量剧增的情况下，应用仍然需要继续发挥作</li>
+</ul>
+
+<blockquote>
+<p>用，但是这样的突发流量并不常见。如果为以能处理这类峰值访问为标准来投入资源随时待命无疑是巨大的</p>
+
+<p>浪费。消息队列基于它的可扩展性使其本身可以顶住突发的访问压力，而不会因为突发的超负荷的请求而使</p>
+
+<p>系统完全崩溃</p>
+</blockquote>
+
+<ul>
+<li>数据可恢复：当系统的一部分组件失效时，不会影响到整个的系统 。消息队列降低了进程间的耦合度，即使一个</li>
+</ul>
+
+<blockquote>
+<p>处理消息的进程挂掉，加入队列中的消息仍可在系统恢复后被处理</p>
+</blockquote>
+
+<ul>
+<li><p>顺序保证：消息队列本来就是排好序的，并且也能够保证数据按照特定的顺序来进行处理</p></li>
+
+<li><p>缓冲：消息队列可以控制和优化数据流经过系统的速度，解决生产消息和消费消息的处理速度不一致的情况</p></li>
+
+<li><p>异步：用户可以将消息放入队列，不立即处理，仅在需要的时候再去处理，有关同步异步等问题请查看<a href="http://csuyzz.com/post/syn/">此篇博客</a></p></li>
+</ul>
+
+<h3 id="三-常用消息队列简介">三、常用消息队列简介</h3>
+
+<blockquote>
+<p>常见的消息队列有ActiveMQ、RabbitMQ、ZeroMQ、Kafka、MetaMQ、RocketMQ等几种</p>
+</blockquote>
+
+<h4 id="1-kafka">1.Kafka</h4>
+
+<ul>
+<li><p>开源消息系统，基于Scala写成</p></li>
+
+<li><p>完全的分布式消息队列，Kafka对消息保存时根据Topic进行归类；Kafka集群由多个实例组成，</p></li>
+</ul>
+
+<blockquote>
+<p>每个实例（Server）称为一个broker</p>
+</blockquote>
+
+<ul>
+<li><p>集群和消费者均依赖于Zookeeper集群保存一些meta信息，来保证系统的可用性</p></li>
+
+<li><p>系统在O(1)的系统开销下进行消息持久化</p></li>
+
+<li><p>可以自动实现负载均衡</p></li>
+</ul>
+
+<h4 id="2-pulsar">2.Pulsar</h4>
+
+<blockquote>
+<p>比Kafka有更大的吞吐量和更低的延迟。在地域复制和多租户方面性能更优越。</p>
+</blockquote>
+
+<h4 id="3-rabbitmq">3.RabbitMQ</h4>
+
+<blockquote>
+<p>基于Erlang开发的消息队列，本身支持AMQP、XMPP、SMTP、STOMP等协议，实现了Broker架构，消息</p>
+</blockquote>
+
+<p>在发送给和客户端时先在中心队列排队。同时比较好的支持负载均衡和数据持久化</p>
+
+<h4 id="4-redis">4.Redis</h4>
+
+<blockquote>
+<p>基于Key-Value对的NoSQL数据库，支持MQ功能，可视为一个轻量级的队列服务来使用</p>
+</blockquote>
+
+<h4 id="5-zeromq">5.ZeroMQ</h4>
+
+<blockquote>
+<p>ZeroMQ号称最快的消息队列系统，专门设计针对大吞吐量的场景，能够实现高级复杂的队列。它本身有一</p>
+</blockquote>
+
+<p>个独特的非中间件模式，应用程序可以扮演一个消息服务器或者中间件的角色，但是仅提供非持久化性的队列，宕机</p>
+
+<p>时数据将会丢失。</p>
+
+<h3 id="四-消息队列内容摘要">四、消息队列内容摘要</h3>
+
+<blockquote>
+<p>消息队列的种类较多，每种消息队列又有其自身的特点，我们不可能每种都很精通。因此学习的时候可以精</p>
+</blockquote>
+
+<p>学一个框架，总结出一些共性的特点，达到触类旁通的目的，下图为消息队列共有的内容</p>
+
+<blockquote>
+<p>此外，对于RabbitMQ、RocketMQ、Kafka、Redis和Pulsar而言，由于应用的比较广泛，因此会有专门的博</p>
+</blockquote>
+
+<p>客做简单的介绍</p>
+
+<p><img src="https://s2.ax1x.com/2020/01/28/1MAOxg.png" alt="1MAOxg.png" /></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+  <div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '你的 GitHub ID',
+  repo: '存储评论的 repo',
+  oauth: {
+    client_id: '你的 client ID',
+    client_secret: '你的 client secret',
+  },
+})
+gitment.render('container')
+</script>
+
+
+    </main>
+  </body>
+</html>

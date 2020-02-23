@@ -1,2 +1,889 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Git&amp;Github 学习笔记 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Git&amp;Github 学习笔记"/>
+<meta name="twitter:description" content="一、版本控制 1.版本控制工具的功能  协同修改：多人互不影响地修改服务器端的同一个文件
+ 数据备份：不仅要保存文件的当前状态，还能够保存每一个提交过的历史状态
+ 版本管理：在保存每一个版本的文件信息时，能够做到不保存重复的数据，节省存储空间，提高运行效率;
+     SVN采取的是增量式管理的方式，Git采取了文件系统快照的方式
+    权限控制：对团队中参与开发的人员进行权限控制，Git还可以对团队外开发者贡献的代码进行审核
+ 历史记录：查看修改人、修改时间、修改内容、日志信息；将本地文件恢复至某一个历史状态
+ 分支管理：允许开发团队在工作过程中多条生产线同时推进任务，提高效率
+  2.常见版本控制工具  （1）集中式版本控制工具：CVS、SVN、VSS等
+ 集中式的版本控制中每个开发者是一个客户端，文件和版本信息存储在服务端，开发者们都直接与
+ 服务器进行交互，集中式的版本控制具有单点故障的问题
+（2）分布式版本控制工具：Git、Mercurial、Bazaar等
+ 分布式版本控制相比于集中式最大的优点就是能够避免单点故障的问题
+  二、Git 简介 1.Git的发展历史  Git是一个免费、开源的分布式版本控制工具。在2005年，由Linus基于C语言开发完成，开发的初衷是
+ 管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭
+&ldquo;Talk is cheap, Show me the Code&rdquo;，少废话我只看代码。
+2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
+  大部分操作在本地完成版本控制，不需要联网
+ 对数据进行完整性保证，基于Hash算法
+ 尽可能添加数据而不是删除或者修改数据
+ 与Linux命令全面兼容，这个当然了，都是由Linus开发的
+    3.Git 的结构  Git的本地结构图"/>
+
+    <meta property="og:title" content="Git&amp;Github 学习笔记" />
+<meta property="og:description" content="一、版本控制 1.版本控制工具的功能  协同修改：多人互不影响地修改服务器端的同一个文件
+ 数据备份：不仅要保存文件的当前状态，还能够保存每一个提交过的历史状态
+ 版本管理：在保存每一个版本的文件信息时，能够做到不保存重复的数据，节省存储空间，提高运行效率;
+     SVN采取的是增量式管理的方式，Git采取了文件系统快照的方式
+    权限控制：对团队中参与开发的人员进行权限控制，Git还可以对团队外开发者贡献的代码进行审核
+ 历史记录：查看修改人、修改时间、修改内容、日志信息；将本地文件恢复至某一个历史状态
+ 分支管理：允许开发团队在工作过程中多条生产线同时推进任务，提高效率
+  2.常见版本控制工具  （1）集中式版本控制工具：CVS、SVN、VSS等
+ 集中式的版本控制中每个开发者是一个客户端，文件和版本信息存储在服务端，开发者们都直接与
+ 服务器进行交互，集中式的版本控制具有单点故障的问题
+（2）分布式版本控制工具：Git、Mercurial、Bazaar等
+ 分布式版本控制相比于集中式最大的优点就是能够避免单点故障的问题
+  二、Git 简介 1.Git的发展历史  Git是一个免费、开源的分布式版本控制工具。在2005年，由Linus基于C语言开发完成，开发的初衷是
+ 管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭
+&ldquo;Talk is cheap, Show me the Code&rdquo;，少废话我只看代码。
+2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
+  大部分操作在本地完成版本控制，不需要联网
+ 对数据进行完整性保证，基于Hash算法
+ 尽可能添加数据而不是删除或者修改数据
+ 与Linux命令全面兼容，这个当然了，都是由Linus开发的
+    3.Git 的结构  Git的本地结构图" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/git/" />
+<meta property="article:published_time" content="2020-01-27T00:52:28+08:00" />
+<meta property="article:modified_time" content="2020-01-27T00:52:28+08:00" />
 
 
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Git&amp;Github 学习笔记</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 27, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          8 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><a class="tag" href="https://sin-coder.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a><a class="tag" href="https://sin-coder.github.io/tags/git/">Git</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h3 id="一-版本控制">一、版本控制</h3>
+
+<h4 id="1-版本控制工具的功能">1.版本控制工具的功能</h4>
+
+<ul>
+<li><p>协同修改：多人互不影响地修改服务器端的同一个文件</p></li>
+
+<li><p>数据备份：不仅要保存文件的当前状态，还能够保存每一个提交过的历史状态</p></li>
+
+<li><p>版本管理：在保存每一个版本的文件信息时，能够做到不保存重复的数据，节省存储空间，提高运行效率;</p></li>
+</ul>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>SVN采取的是增量式管理的方式，Git采取了文件系统快照的方式</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+<ul>
+<li><p>权限控制：对团队中参与开发的人员进行权限控制，Git还可以对团队外开发者贡献的代码进行审核</p></li>
+
+<li><p>历史记录：查看修改人、修改时间、修改内容、日志信息；将本地文件恢复至某一个历史状态</p></li>
+
+<li><p>分支管理：允许开发团队在工作过程中多条生产线同时推进任务，提高效率</p></li>
+</ul>
+
+<h4 id="2-常见版本控制工具">2.常见版本控制工具</h4>
+
+<blockquote>
+<p><strong>（1）集中式版本控制工具</strong>：CVS、SVN、VSS等</p>
+
+<blockquote>
+<p>集中式的版本控制中每个开发者是一个客户端，文件和版本信息存储在服务端，开发者们都直接与</p>
+</blockquote>
+
+<p>服务器进行交互，集中式的版本控制具有单点故障的问题</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/04/1BDhTg.png" alt="1BDhTg.png" style="zoom: 33%;" /></p>
+
+<p><strong>（2）分布式版本控制工具</strong>：Git、Mercurial、Bazaar等</p>
+
+<blockquote>
+<p>分布式版本控制相比于集中式最大的优点就是能够避免单点故障的问题</p>
+</blockquote>
+
+<p><img src="https://s2.ax1x.com/2020/02/04/1BD5kQ.png" alt="1BD5kQ.png" style="zoom: 60%;" /></p>
+</blockquote>
+
+<h3 id="二-git-简介">二、Git 简介</h3>
+
+<h4 id="1-git的发展历史">1.Git的发展历史</h4>
+
+<blockquote>
+<p>Git是一个免费、开源的分布式版本控制工具。在2005年，由Linus基于C语言开发完成，开发的初衷是</p>
+</blockquote>
+
+<p>管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭</p>
+
+<p>&ldquo;Talk is cheap, Show me the Code&rdquo;，少废话我只看代码。</p>
+
+<h4 id="2-git的特性简介">2.Git的特性简介</h4>
+
+<blockquote>
+<p>从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多</p>
+</blockquote>
+
+<ul>
+<li><p>大部分操作在本地完成版本控制，不需要联网</p></li>
+
+<li><p>对数据进行完整性保证，基于Hash算法</p></li>
+
+<li><p>尽可能添加数据而不是删除或者修改数据</p></li>
+
+<li><p>与Linux命令全面兼容，这个当然了，都是由Linus开发的</p></li>
+</ul>
+
+<blockquote>
+<p><img src="https://s2.ax1x.com/2020/02/04/1B66US.jpg" alt="1B66US.jpg" /></p>
+</blockquote>
+
+<h4 id="3-git-的结构">3.Git 的结构</h4>
+
+<blockquote>
+<p>Git的本地结构图</p>
+</blockquote>
+
+<p><img src="https://s2.ax1x.com/2020/02/04/1BgQw6.png" alt="1BgQw6.png" /></p>
+
+<h4 id="4-代码托管中心">4.代码托管中心</h4>
+
+<blockquote>
+<p>代码托管中心就是维护远程库的，在局域网环境下使用GitLab服务器，在外网环境下使用Github和码云</p>
+</blockquote>
+
+<p>码云是位于国内的网站，访问速度相对较快些，而Github位于国外，访问的相对较慢</p>
+
+<h4 id="5-本地库和远程库">5.本地库和远程库</h4>
+
+<blockquote>
+<p>（1） 团队内部协作</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/04/1BIVMD.png" alt="1BIVMD.png" style="zoom:90%;" /></p>
+
+<p>（2）跨团队进行协作</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/04/1BIAxO.png" alt="1BIAxO.png" style="zoom: 80%;" /></p>
+</blockquote>
+
+<h3 id="三-git-基本操作">三、Git 基本操作</h3>
+
+<h4 id="1-本地库常规操作">1.本地库常规操作</h4>
+
+<blockquote>
+<p><strong>（1）本地库初始化</strong></p>
+</blockquote>
+
+<pre><code class="language-bash">Administrator@CSUYZZ MINGW64 /e/Workspace/GitTest
+#在本地库进行初始化，在当前目录下生成.git 文件
+$ git init
+Initialized empty Git repository in E:/Workspace/GitTest/.git/
+$ ls -A    #注意Linux默认隐藏以&quot;.&quot;开头为文件名的文件，使用 -a 显示
+.git/
+$ cd .git/ #进入.git目录中
+$ ll       #列出该目录中的文件和文件夹
+total 7
+-rw-r--r-- 1 Administrator 197121 130 2月   4 15:26 config
+-rw-r--r-- 1 Administrator 197121  73 2月   4 15:26 description
+-rw-r--r-- 1 Administrator 197121  23 2月   4 15:26 HEAD
+drwxr-xr-x 1 Administrator 197121   0 2月   4 15:26 hooks/
+drwxr-xr-x 1 Administrator 197121   0 2月   4 15:26 info/
+drwxr-xr-x 1 Administrator 197121   0 2月   4 15:26 objects/
+drwxr-xr-x 1 Administrator 197121   0 2月   4 15:26 refs/
+#注意 .git目录中存放的是本地库相关的子目录和文件爱你，切记不能做修改
+</code></pre>
+
+<blockquote>
+<p>签名的设置，Git 需要使用用户名和邮件地址来区别不同开发人员的身份，这里和登录远程库的账号</p>
+</blockquote>
+
+<p>和密码没有关系；签名又分为仓库级别和系统用户级别的，二者至少应该设置一个，项目级别的签名优</p>
+
+<p>于系统级别的签名，一般设置系统级别的签名即可</p>
+
+<ul>
+<li><p>仓库级别：仅在当前本地库范围内有效</p>
+
+<pre><code class="language-bash">#仓库级别签名配置命令
+$ git config user.name yzz
+$ git config user.email yzz@pro
+$ ls   
+config  description  HEAD  hooks/  info/  objects/  refs/
+$ cat config    #信息存放在.git/config中
+[core]
+ repositoryformatversion = 0
+ filemode = false
+ bare = false
+ logallrefupdates = true
+ symlinks = false
+ ignorecase = true
+[user]
+ name = yzz@pro
+ email = yzz@pro
+</code></pre></li>
+
+<li><p>系统用户级别：登录当前操作系统的用户范围</p>
+
+<pre><code class="language-bash">#系统级别签名配置命令
+$ git config --global user.name yzz
+$ git config --global user.email yzz@pro
+$ cd ~
+Administrator@CSUYZZ MINGW64 ~ #信息存放在~/.gitconfig中
+$ cat .gitconfig
+[user]
+ name = yzz
+ email = yzz@pro
+[http]
+ proxy = http://127.0.0.1:1080
+[https]
+ proxy = http://127.0.0.1:1080
+</code></pre></li>
+</ul>
+
+<blockquote>
+<p><strong>（2）基本操作</strong></p>
+</blockquote>
+
+<ul>
+<li><p>状态查看：git status:  查看工作去、暂存区的状态</p></li>
+
+<li><p>添加文件：git add [filename]  将工作区中的&rdquo;新建/修改&rdquo; 添加到暂存区</p></li>
+
+<li><p>提交文件：git commit -m &ldquo;commit message&rdquo; [filename]  将暂存区的内容提交到本地库</p>
+
+<pre><code class="language-bash">$ git status
+On branch master    #在master分支
+No commits yet      #在本地库中没有提交的文件
+nothing to commit   #暂存区中没有可提交的文件
+(create/copy files and use &quot;git add&quot; to track)   #track表示使用Git来管理文件
+
+$ vim first.txt      #创建一个新文件并进行编辑
+$ git status
+On branch master
+No commits yet
+Untracked files:
+(use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+ first.txt  #命令行下该文件显示为红色，表示该文件为使用Git进行管理
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+
+$ git add first.txt   #添加到暂存区中
+$ git status
+On branch master
+No commits yet
+Changes to be committed:
+(use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)   #已经添加到缓存区中，但未提交
+ new file:   first.txt   #命令行中显示绿色
+
+$ git rm --cached first.txt   #可以将缓存区中的内容进行删除
+rm 'first.txt'
+$ git status    #回到git add 之前的状态
+On branch master
+No commits yet
+Untracked files:
+(use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+ first.txt
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+
+$ git commit first.txt  -m &quot;CSUYZZ first commit Creat a file&quot; #提交到本地库，-m 后为描述信息
+[master (root-commit) 9b96e59] CSUYZZ first commit Creat a file  #9b96e59可视为版本号
+1 file changed, 4 insertions(+)       #在文件中插入四行
+create mode 100644 first.txt          
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+#修改first.txt文件后
+$ git status
+On branch master
+Changes not staged for commit:  #有没有进入缓存的修改
+(use &quot;git add &lt;file&gt;...&quot; to update what will be committed)    #update而不是include
+(use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+ modified:   first.txt
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;) #使用git add添加到缓存区即可
+</code></pre>
+
+<pre><code class="language-bash">git log  #打印出两次提交的信息
+commit e3727241725d628cd2251e10171c1878416a06e6 (HEAD -&gt; master)  
+#长字符串为索引，HEAD为指针，指向当前的版本
+Author: yzz &lt;yzz@pro&gt;
+Date:   Tue Feb 4 17:39:49 2020 +0800
+CSUYZZ second commit
+ 
+commit 9b96e598646f7c71d3a4a3269caebe041d9a5f8c  
+Author: yzz &lt;yzz@pro&gt;
+Date:   Tue Feb 4 17:28:05 2020 +0800
+CSUYZZ first commit Creat a file   
+# git log 常用参数
+# --pretty=oneline  :  一行显示所有所有的版本信息
+$ git log --pretty=oneline
+e3727241725d628cd2251e10171c1878416a06e6 (HEAD -&gt; master) CSUYZZ second commit
+9b96e598646f7c71d3a4a3269caebe041d9a5f8c CSUYZZ first commit Creat a file
+
+#--oneline :一行显示，但是精简哈希值
+git log --oneline
+e372724 (HEAD -&gt; master) CSUYZZ second commit
+9b96e59 CSUYZZ first commit Creat a file
+
+git reflog  #多出来的HEAD@{1}表示历史版本和当前最新版本的迭代次数
+e372724 (HEAD -&gt; master) HEAD@{0}: commit: CSUYZZ second commit
+9b96e59 HEAD@{1}: commit (initial): CSUYZZ first commit Creat a file
+</code></pre></li>
+</ul>
+
+<blockquote>
+<p>基于历史记录前进或者回退版本，Git在管理版本时实际上使用了HEAD指针，用户可以使用HEAD</p>
+</blockquote>
+
+<p>指针实现版本的前进或回退。实现的方式主要有三种：</p>
+
+<ul>
+<li><p>基于索引值操作（推荐）：</p>
+
+<pre><code class="language-bash">git reset --hard 9b96e59  #回退操作命令 --hard后面是版本索引值
+HEAD is now at 9b96e59 CSUYZZ first commit Creat a file
+</code></pre></li>
+
+<li><p>使用^符号：只能回退版本，git reset &ndash;hard HEAD^^  n个^符号表示回退n个版本</p></li>
+
+<li><p>使用~符号：只能回退版本，git reset &ndash;hard HEAD~n  回退n个版本</p></li>
+</ul>
+
+<blockquote>
+<p>reset命令三个参数的对比</p>
+
+<p>&ndash;soft参数：仅仅在本地库移动HEAD指针</p>
+
+<p>&ndash;mixed参数：在本地库移动HEAD指针、重置暂存区</p>
+
+<p>&ndash;hard参数：在本地库移动HEAD指针、重置暂存区、重置工作区</p>
+</blockquote>
+
+<ul>
+<li>删除文件的找回：删除前，文件存在的状态已提交到了本地库</li>
+</ul>
+
+<blockquote>
+<p>操作命令 :  git reset &ndash;hard [指针位置]</p>
+
+<p>当删除操作已提交到本地库时，指针位置指向历史记录即可</p>
+
+<p>当删除操作没有提交到本地库时，指针位置指向HEAD（当前版本）</p>
+</blockquote>
+
+<ul>
+<li>比较文件差异：</li>
+</ul>
+
+<blockquote>
+<p>git diff [文件名] ： 将工作区中的文件和暂存区进行比较</p>
+
+<p>git diff [本地库历史版本] [文件名] ：将工作区中的文件和本地库历史记录进行比较不带文件名时表示</p>
+</blockquote>
+
+<p>比较多个文件</p>
+
+<h4 id="2-git分支管理">2.Git分支管理</h4>
+
+<p><strong>（1）分支简介</strong></p>
+
+<blockquote>
+<p>在版本空中过程中，使用多条线同时推进多个任务</p>
+
+<p><a href="https://imgchr.com/i/1riq6U"><img src="https://s2.ax1x.com/2020/02/05/1riq6U.png" alt="1riq6U.png"  /></a></p>
+</blockquote>
+
+<p><strong>（2）分支管理优点</strong></p>
+
+<ul>
+<li><p>同时并行推进多个功能的开发，提高开发效率</p></li>
+
+<li><p>分支开发失败不会对其他分支造成任何应影响</p></li>
+</ul>
+
+<p><strong>（3）分支操作</strong></p>
+
+<ul>
+<li><p>创建分支：git branch [分支名]</p></li>
+
+<li><p>查看分支：git branch -v</p></li>
+
+<li><p>切换分支：git checkout [分支名]</p></li>
+
+<li><p>合并分支：git checkout [分支名] （切换分支）、合并分支（git merge [有新内容分支名]）</p></li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ git branch hot_fix   #创建分支
+$ git branch -v        #查看分支
+  hot_fix cb16613 Creat three file 
+* master  cb16613 Creat three file  #  *表示当前的主分支
+$ git checkout hot_fix  #切换分支
+Switched to branch 'hot_fix'
+$ git branch -v         #完成切换
+* hot_fix cb16613 Creat three file
+  master  cb16613 Creat three file
+  
+$ vim first.txt      #在hot_fix分支修改first.txt文件添加新内容
+$ git add first.txt
+$ git commit -m &quot;modify a file&quot; first.txt
+[hot_fix 128cb47] modify yy a file
+ 1 file changed, 2 insertions(+)
+
+$ git checkout master  #切换到主分支
+Switched to branch 'master'
+$ git branch -v
+  hot_fix 128cb47 modify yy a file
+* master  cb16613 Creat three file
+$ git merge hot_fix    #在主分支合并
+Updating cb16613..128cb47
+Fast-forward
+ first.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+$ cat first.txt       #查看文件发现文件内容已被修改
+csuyzzYang
+</code></pre>
+</blockquote>
+
+<ul>
+<li>解决冲突：两个分支对同一个文件的某个地方进行修改后再合并时，会产生冲突</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">#分别在master分支和hot_ix分支中对yzz.cmd文件的第一行进行了修改
+#在hot_fix分支合并master后会出现
+$ git merge master
+Auto-merging yzz.cmd
+CONFLICT (content): Merge conflict in yzz.cmd
+Automatic merge failed; fix conflicts and then commit the result.
+Administrator@CSUYZZ MINGW64 /e/Workspace/GitTest (hot_fix|MERGING) #处于正在合并状态
+#解决冲突步骤
+1.编辑文件，将特殊符号删除
+2.将文件修改至满意程度，保存退出即可
+3.git add [文件名]
+4.git commit -m &quot;日志信息&quot;  且此时commit一定不能带具体的文件名
+
+Administrator@CSUYZZ MINGW64 /e/Workspace/GitTest (hot_fix|MERGING)
+$ vim yzz.cmd    #编辑完文件后
+$ git status
+On branch hot_fix
+You have unmerged paths.
+  (fix conflicts and run &quot;git commit&quot;)
+  (use &quot;git merge --abort&quot; to abort the merge)
+Unmerged paths:
+  (use &quot;git add &lt;file&gt;...&quot; to mark resolution) 
+        both modified:   yzz.cmd
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+$ git add yzz.cmd  
+$ git status
+On branch hot_fix
+All conflicts fixed but you are still merging.
+  (use &quot;git commit&quot; to conclude merge)  
+Administrator@CSUYZZ MINGW64 /e/Workspace/GitTest (hot_fix|MERGING)
+$ git commit -m &quot;final modeify&quot;   #提交文件，不能带文件名否则会报错
+[hot_fix c3ae1bb] final modeify
+@CSUYZZ MINGW64 /e/Workspace/GitTest (hot_fix)  #状态由hot_fix|MERGING  恢复至hot_fix
+</code></pre>
+</blockquote>
+
+<h4 id="3-远程库操作">3.远程库操作</h4>
+
+<blockquote>
+<p><strong>（1）本地库推送到远程库</strong></p>
+
+<pre><code class="language-bash">$ git init   #本地库初始化
+Initialized empty Git repository in E:/Workspace/GitRemoteTest/.git/
+$ vim yzz.txt
+$ git add yzz.txt
+$ git commit -m &quot;Create a file&quot; yzz.txt  #提交到本地库
+[master (root-commit) 8f63ae2] Create a file
+ 1 file changed, 1 insertion(+)
+ create mode 100644 yzz.txt
+ #在Github创建远程库后，获取远程库的Git地址
+$ git remote add origin https://github.com/sin-coder/GitDemo.git    #远程库地址重命名origins
+$ git remote -v   #查看当前远程库地址
+origin  https://github.com/sin-coder/GitDemo.git (fetch)
+origin  https://github.com/sin-coder/GitDemo.git (push)
+$ git push origin master  #将本地库master分支推送到远程库
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 219 bytes | 219.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/sin-coder/GitDemo.git
+ * [new branch]      master -&gt; master   #从本地库的master分支推送到远程库的master分支
+</code></pre>
+
+<p><strong>(2) 克隆操作</strong></p>
+
+<pre><code class="language-bash">$ git clone https://github.com/sin-coder/GitDemo.git  # 命令格式：git clone [远程地址]
+Cloning into 'GitDemo'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+$ ls
+GitDemo/              #git clone会完整的把远程库下载到本地
+$ cd GitDemo/
+$ ls -a
+./  ../  .git/  yzz.txt  #git clone创建origin远程地址别名
+$ git remote -v          #git clone会初始化本地库
+origin  https://github.com/sin-coder/GitDemo.git (fetch)
+origin  https://github.com/sin-coder/GitDemo.git (push)
+</code></pre>
+
+<p><strong>(3) 拉取操作</strong></p>
+
+<p>pull=fetch+merge</p>
+
+<p>git fetch [远程库地址别名] [远程分支名]</p>
+
+<p>git merge [远程库地址别名/远程分支名]</p>
+
+<p>git pull [远程库地址别名] [远程分支名]</p>
+
+<pre><code class="language-bash">$ git fetch origin master     #将远程库中的内容下载到本地
+  remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+  remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+  From https://github.com/sin-coder/GitDemo
+* branch            master     -&gt; FETCH_HEAD
+     8f63ae2..de2cb76  master     -&gt; origin/master
+Administrator@CSUYZZ MINGW64 /e/Workspace/GitRemoteTest (master) #此时分支为master
+$ cat yzz.txt                     #查看本地文件内容发现没有变化
+I am a sin-coder man
+$ git checkout origin/master      #切换到origin/master分支
+Note: checking out 'origin/master'.
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+  git checkout -b &lt;new-branch-name&gt;
+HEAD is now at de2cb76 first modeify
+Administrator@CSUYZZ MINGW64 /e/Workspace/GitRemoteTest ((de2cb76...))
+$ cat yzz.txt                #查看文件内容，这是从远程库中文件的内容
+I am a sin-coder man
+This is new content
+$ git checkout master        #再次切换到master分支
+Previous HEAD position was de2cb76 first modeify
+Switched to branch 'master'
+$ git merge origin/master    #合并操作
+Updating 8f63ae2..de2cb76
+Fast-forward
+ yzz.txt | 1 +
+ 1 file changed, 1 insertion(+)
+$ cat yzz.txt
+I am a sin-coder man
+This is new content
+</code></pre>
+
+<p><strong>（4）解决冲突</strong></p>
+
+<p>如果不是基于Github远程库的最新版本所做的修改，则不能推送，必须先进行拉取；拉取下来后如果</p>
+</blockquote>
+
+<p>进入冲突的状态，则按照 “分支冲突解决”的方式解决之后才能再次推送到远程库</p>
+
+<blockquote>
+<p><strong>（5）免密登录</strong></p>
+
+<p>配置SSH方式登录可以避免每次登录时输入用户名和密码</p>
+
+<pre><code class="language-bash">#进入到当前用户目录 cd ~
+$ ssh-keygen -t rsa -C csuyzz@foxmail.com   #配置本地.ssh文件
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/Administrator/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/Administrator/.ssh/id_rsa.
+Your public key has been saved in /c/Users/Administrator/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:GgMl8aAhWmJQKAFO1QLQ7K1mEsziy+s1hZQthtqAQiQ csuyzz@foxmail.com
+The key's randomart image is:
++---[RSA 2048]----+
+|E%*.=..          |
+|@+++o*           |
+|O+.*o..          |
+|==+ +.           |
+|+..o .o S        |
+|..+ .  +         |
+|.+.o  .          |
+| o. .            |
+|.o.              |
++----[SHA256]-----+
+Administrator@CSUYZZ MINGW64 ~
+$ cd .ssh
+Administrator@CSUYZZ MINGW64 ~/.ssh
+$ ll
+total 5
+-rw-r--r-- 1 Administrator 197121 1823 2月   5 19:13 id_rsa
+-rw-r--r-- 1 Administrator 197121  400 2月   5 19:13 id_rsa.pub
+Administrator@CSUYZZ MINGW64 ~/.ssh
+$ cat id_rsa.pub               #查看ssh密钥
+ssh-rsa         AAAAB3NzaC1yc2EAAAADAQABAAABAQCy1FbP9Hp+CkvtzD8Q4Dpyb8KdfU/S3AcOop6jjR7hlFeCrwaxnHrDbYSqIrYZDxqmEtf/ah0Xq7ZgWBOIhWDpQL++gIebLZl8cgGeNsR75MKb5hYmXoiqJUm37pWk1stXgKAY1zINfoEiyVgYJLpQiX283WSAMQUaV0MG0Ba6wTyY1k1necIolymlpVmNO+PXx0VMLE8M/cnIlCPGNk6BrT/owD8vdiedcpgWRZWdtAf6Hl+kFalpYcBHNTmSqzqeu2hckCohNExjrC5WvBIFmTCde23VSN6fMgcIIcXFzJ4aBPQg+ajPwG2Ztb1YhIzP2UVCE5Dm1MZCGYV8bG+7 csuyzz@foxmail.com
+#将id_rsa.pub文件中的内容复制到远程库中：settings-&gt;Deploy keys-&gt;Add deploy key即可
+
+#切换到工作目录
+$ vim yzz.txt
+$ git add yzz.txt      #修改文件内容 提交到本地仓库
+$ git commit -m &quot;test ssh login&quot; yzz.txt
+[master 2e009a9] test ssh login
+ 1 file changed, 1 insertion(+)
+$ git remote -v        #查看远程仓库地址
+origin  https://github.com/sin-coder/GitDemo.git (fetch)
+origin  https://github.com/sin-coder/GitDemo.git (push)
+$ git remote add origin_ssh git@github.com:sin-coder/GitDemo.git  #配置远程仓库ssh地址
+$ git remote -v        #重新查看远程仓库地址，新增两个ssh地址
+origin  https://github.com/sin-coder/GitDemo.git (fetch)
+origin  https://github.com/sin-coder/GitDemo.git (push)
+origin_ssh      git@github.com:sin-coder/GitDemo.git (fetch)
+origin_ssh      git@github.com:sin-coder/GitDemo.git (push)
+$ git push origin_ssh master   #使用ssh的远程仓库地址登录
+The authenticity of host 'github.com (52.74.223.119)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no)? y
+Warning: Permanently added 'github.com,52.74.223.119' (RSA) to the list of known hosts.
+Everything up-to-date
+</code></pre>
+</blockquote>
+
+<h3 id="四-git的工作流">四、Git的工作流</h3>
+
+<blockquote>
+<p>Git的工作流就是在项目开发的过程中使用Git的方式，主要有集中式工作流、GitFlow和Forking</p>
+</blockquote>
+
+<h4 id="1-gitflow工作流">1.GitFlow工作流</h4>
+
+<ul>
+<li><p><strong>主干分支master</strong> : 负责管理正在运行的生产环境代码，永远保持与正在运行的生产环境，完全一致</p></li>
+
+<li><p><strong>开发分支develop</strong>: 负责管理正在开发过程中的代码。一般情况下应该是最新的代码</p></li>
+
+<li><p><strong>Bug修理分支 （热修复）</strong>：主要负责管理生产环境下出现的紧急修复的代码。 从主干分支分出，修理</p></li>
+</ul>
+
+<blockquote>
+<blockquote>
+<p>完毕并测试上线后，并回主干分支。并回后，视情况可以删除该分支</p>
+</blockquote>
+</blockquote>
+
+<ul>
+<li><strong>预发布分支 release</strong> : 较大的版本上线前，会从开发分支中分出准生产分支，进行最后阶段的集成测试。</li>
+</ul>
+
+<blockquote>
+<blockquote>
+<p>该版本上线后，会合并到主干分支。生产环境运行一段阶段较稳定后 可以视情况删除。</p>
+</blockquote>
+</blockquote>
+
+<ul>
+<li><strong>功能分支 feature</strong> : 为了不影响较短周期的开发工作，一般把中长期开发模块，会从开发分支中独立出</li>
+</ul>
+
+<blockquote>
+<blockquote>
+<p>来, 开发完成后会合并到开发分支。</p>
+</blockquote>
+
+<p><img src="https://s2.ax1x.com/2020/02/05/1ssBjA.png" alt="1ssBjA.png" style="zoom:80%;" /></p>
+</blockquote>
+
+<h4 id="2-forking工作流">2.Forking工作流</h4>
+
+<blockquote>
+<p>Forking 工作流是在 GitFlow基础上，充分利用了Git 的Fork和pull request的功能以达到代码审核的目的</p>
+</blockquote>
+
+<p>这种方式适合管理大团队的开发者，而且能接受任何不信任贡献者的提交</p>
+
+<h4 id="3-集中式工作流">3.集中式工作流</h4>
+
+<blockquote>
+<p>此种方式与SVN颇为相似，集中式工作流以中央仓库为项目所有修改的单点实体，所有修改都提交</p>
+</blockquote>
+
+<p>到Master这个分支上，与SVN的主要区别就是开发人员具有本地库，但Git的许多特性没有使用</p>
+
+<blockquote>
+<p><a href="https://imgchr.com/i/1sBBXq"><img src="https://s2.ax1x.com/2020/02/05/1sBBXq.png" alt="1sBBXq.png"  /></a></p>
+</blockquote>
+
+<h3 id="五-git的基本原理">五、Git的基本原理</h3>
+
+<h4 id="1-哈希算法简介">1.哈希算法简介</h4>
+
+<blockquote>
+<p>Git使用哈希算法来保证文件传输的安全性，哈希是一系列的加密算法，各个不同的哈希算法虽</p>
+</blockquote>
+
+<p>然加密长度不同，但是均有以下共同点：</p>
+
+<ul>
+<li><p>使用同一个哈希算法得到的加密结果长度固定，不管输入数据的数据量有多大</p></li>
+
+<li><p>哈希算法确定，输入数据确定，输出的数据能够保持不变</p></li>
+
+<li><p>哈希算法确定，输入数据有变化，输出的数据一定有变化，而且通常变化很大</p></li>
+
+<li><p>哈希算法是不可逆的</p></li>
+</ul>
+
+<blockquote>
+<p>Git底层采用的SHA-1的算法，哈希算法可以被用来验证文件，原理图如下</p>
+
+<p><a href="https://imgchr.com/i/1rEhvV"><img src="https://s2.ax1x.com/2020/02/05/1rEhvV.png" alt="1rEhvV.png" /></a></p>
+</blockquote>
+
+<h4 id="2-版本保存的机制">2.版本保存的机制</h4>
+
+<blockquote>
+<p>集中式版本控制的管理机制是每个版本仅保存较于之前版本修改的部分数据，每个版本的信息都是原</p>
+</blockquote>
+
+<p>始版本和每个版本随时间的逐步累积的差异，如SVN就是增量式的文件管理系统，这样节约了存储空间</p>
+
+<blockquote>
+<p><a href="https://imgchr.com/i/1rjFAK"><img src="https://s2.ax1x.com/2020/02/05/1rjFAK.png" alt="1rjFAK.png" /></a></p>
+
+<p>而Git则把数据看作是小型文件系统的一组快照，每次提交更新的时候Git都会对当前的全部文件制作</p>
+</blockquote>
+
+<p>一个快照并保存这个快照的索引。如果文件没有修改，Git不再重新存储该文件，而是只保留一个链接指</p>
+
+<p>向之前存储的文件，所以Git的工作方式可以称之为快照流</p>
+
+<blockquote>
+<p><img src="https://s2.ax1x.com/2020/02/05/1rjAhD.png" alt="1rjAhD.png" /></p>
+</blockquote>
+
+<h4 id="3-git的提交对象">3.Git的提交对象</h4>
+
+<blockquote>
+<p>Git中有一个提交对象的概念，每次提交时，在当前目录下的每一个文件的部分哈希值会组成一个树对象，</p>
+</blockquote>
+
+<p>树对象的哈希值会被包括在这个提交对象中，与此同时，每个提交对象都会包含其父对象的哈希值；这种哈</p>
+
+<p>希的依赖关系与区块链比较相似</p>
+
+<blockquote>
+<p><a href="https://imgchr.com/i/1rvze1"><img src="https://s2.ax1x.com/2020/02/05/1rvze1.png" alt="1rvze1.png" style="zoom: 80%;" /></a></p>
+
+<p><img src="https://s2.ax1x.com/2020/02/05/1rvXQJ.png" alt="1rvXQJ.png" /></p>
+</blockquote>
+
+<h4 id="4-git分支的管理机制">4.Git分支的管理机制</h4>
+
+<blockquote>
+<p>在SVN中新建一个分支相当于将原来的版本重新复制拷贝一份，效率比较低；而Git的分支管理机制是</p>
+</blockquote>
+
+<p>基于指针的，效率非常高。</p>
+
+<blockquote>
+<p>在本地库初始化后会自动生成一个master分支，第一次提交（root commit）时会创建一个链表的根节</p>
+</blockquote>
+
+<p>点，HEAD指针指向根节点（即指向master分支），当再次提交时会以根提交作为其父节点去创建新的节点，</p>
+
+<p>同时指针也指向到新的节点；当用户创建一个分支时，Git只是新建一个指针指向当前的版本，当切换分支时</p>
+
+<p>只是改变了指针的指向</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+  <div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '你的 GitHub ID',
+  repo: '存储评论的 repo',
+  oauth: {
+    client_id: '你的 client ID',
+    client_secret: '你的 client secret',
+  },
+})
+gitment.render('container')
+</script>
+
+
+    </main>
+  </body>
+</html>

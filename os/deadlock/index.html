@@ -1,2 +1,283 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>什么是死锁？ // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="什么是死锁？"/>
+<meta name="twitter:description" content="什么是死锁？ 一、死锁概念的介绍  以两个进程为例，每个进程正在申请的资源恰好是其他进程正在占用的资源； 当然这里的进程数也有
+ 可能是多个。但最终都是形成一个资源的依赖环
+ 简述：多个进程由于互相等待对方持有的资源而造成的谁都无法执行的情况
+ 二、死锁的必要条件  互斥：系统资源之间是互斥使用的，一旦某个进程占用，其他进程便无法使用
+ 占有并等待：一个进程占有了一些资源，但是又不去释放，同时再去申请其他的资源
+ 非抢占：每个进程所拥有的资源必须不能被其他进程所抢占
+ 循环等待：进程之间各自占有的资源和互相申请的资源形成了环路的等待
+  三、死锁常用的处理方法 1、死锁预防  （1）简述：
+破坏死锁形成的必要条件之一，可以通过限制如何申请这些资源的方法来预防死锁
+（2）方法
+  基于互斥条件来预防死锁：资源可以进行共享
+ 基于抢占的解决方案：如果一个进程占有资源并申请另一个不能立即分配的资源，则该进程所占用的资源
+   即可被抢占
+  基于占有并等待的解决方案：一个进程在申请其他资源之前必须要释放掉自己已有的资源
+ 基于循环等待的解决方案：对所有的资源进行完全排序，且要求每个进程按递增的顺序来申请资源，这样
+   就不会出现环路的等待
+ 2、死锁避免  （1）简述
+检测每个资源的请求，如果造成死锁就立刻拒绝
+（2）银行家算法
+  安全状态：如果系统中的所有进程存在一个可完成的执行序列P1，P2，P3，………Pn，则称系统处于安   全状态
+  使用特定算法判断是否存在一个执行序列，当按照这种执行序列执行时，不会产生死锁
+ 银行家算法的执行方法：进程在执行的时候主要关注三种类型的资源：进程本身所占用的资源，进程需要
+   申请的资源，系统中剩余的资源申请一个work变量（表示系统剩余的资源），need变量（系统正在申请
+的资源），allocate(已经分配给进程的资源)按照特定的序列执行，在每个序列执行时，判断当前剩余资
+源是否能够满足申请资源，如果能，则将剩余资源减去申请资源在加上释放资源。但是时间复杂度：
+T（n）=O(mn^2),执行的代价非常大"/>
+
+    <meta property="og:title" content="什么是死锁？" />
+<meta property="og:description" content="什么是死锁？ 一、死锁概念的介绍  以两个进程为例，每个进程正在申请的资源恰好是其他进程正在占用的资源； 当然这里的进程数也有
+ 可能是多个。但最终都是形成一个资源的依赖环
+ 简述：多个进程由于互相等待对方持有的资源而造成的谁都无法执行的情况
+ 二、死锁的必要条件  互斥：系统资源之间是互斥使用的，一旦某个进程占用，其他进程便无法使用
+ 占有并等待：一个进程占有了一些资源，但是又不去释放，同时再去申请其他的资源
+ 非抢占：每个进程所拥有的资源必须不能被其他进程所抢占
+ 循环等待：进程之间各自占有的资源和互相申请的资源形成了环路的等待
+  三、死锁常用的处理方法 1、死锁预防  （1）简述：
+破坏死锁形成的必要条件之一，可以通过限制如何申请这些资源的方法来预防死锁
+（2）方法
+  基于互斥条件来预防死锁：资源可以进行共享
+ 基于抢占的解决方案：如果一个进程占有资源并申请另一个不能立即分配的资源，则该进程所占用的资源
+   即可被抢占
+  基于占有并等待的解决方案：一个进程在申请其他资源之前必须要释放掉自己已有的资源
+ 基于循环等待的解决方案：对所有的资源进行完全排序，且要求每个进程按递增的顺序来申请资源，这样
+   就不会出现环路的等待
+ 2、死锁避免  （1）简述
+检测每个资源的请求，如果造成死锁就立刻拒绝
+（2）银行家算法
+  安全状态：如果系统中的所有进程存在一个可完成的执行序列P1，P2，P3，………Pn，则称系统处于安   全状态
+  使用特定算法判断是否存在一个执行序列，当按照这种执行序列执行时，不会产生死锁
+ 银行家算法的执行方法：进程在执行的时候主要关注三种类型的资源：进程本身所占用的资源，进程需要
+   申请的资源，系统中剩余的资源申请一个work变量（表示系统剩余的资源），need变量（系统正在申请
+的资源），allocate(已经分配给进程的资源)按照特定的序列执行，在每个序列执行时，判断当前剩余资
+源是否能够满足申请资源，如果能，则将剩余资源减去申请资源在加上释放资源。但是时间复杂度：
+T（n）=O(mn^2),执行的代价非常大" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/os/deadlock/" />
+<meta property="article:published_time" content="2019-11-02T21:50:12+08:00" />
+<meta property="article:modified_time" content="2019-11-02T21:50:12+08:00" />
 
 
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">什么是死锁？</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Nov 2, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="什么是死锁">什么是死锁？</h2>
+
+<h3 id="一-死锁概念的介绍">一、死锁概念的介绍</h3>
+
+<blockquote>
+<p>以两个进程为例，每个进程正在申请的资源恰好是其他进程正在占用的资源； 当然这里的进程数也有</p>
+</blockquote>
+
+<p>可能是多个。但最终都是形成一个资源的依赖环</p>
+
+<blockquote>
+<p>简述：多个进程由于互相等待对方持有的资源而造成的谁都无法执行的情况</p>
+</blockquote>
+
+<h3 id="二-死锁的必要条件">二、死锁的必要条件</h3>
+
+<ul>
+<li><p><strong>互斥</strong>：系统资源之间是互斥使用的，一旦某个进程占用，其他进程便无法使用</p></li>
+
+<li><p><strong>占有并等待</strong>：一个进程占有了一些资源，但是又不去释放，同时再去申请其他的资源</p></li>
+
+<li><p><strong>非抢占</strong>：每个进程所拥有的资源必须不能被其他进程所抢占</p></li>
+
+<li><p><strong>循环等待</strong>：进程之间各自占有的资源和互相申请的资源形成了环路的等待</p></li>
+</ul>
+
+<h3 id="三-死锁常用的处理方法">三、死锁常用的处理方法</h3>
+
+<h4 id="1-死锁预防">1、死锁预防</h4>
+
+<blockquote>
+<p><strong>（1）简述</strong>：</p>
+
+<p>破坏死锁形成的必要条件之一，可以通过限制如何申请这些资源的方法来预防死锁</p>
+
+<p><strong>（2）方法</strong></p>
+</blockquote>
+
+<ul>
+<li><p>基于互斥条件来预防死锁：资源可以进行共享</p></li>
+
+<li><p>基于抢占的解决方案：如果一个进程占有资源并申请另一个不能立即分配的资源，则该进程所占用的资源</p></li>
+</ul>
+
+<blockquote>
+<p>即可被抢占</p>
+</blockquote>
+
+<ul>
+<li><p>基于占有并等待的解决方案：一个进程在申请其他资源之前必须要释放掉自己已有的资源</p></li>
+
+<li><p>基于循环等待的解决方案：对所有的资源进行完全排序，且要求每个进程按递增的顺序来申请资源，这样</p></li>
+</ul>
+
+<blockquote>
+<p>就不会出现环路的等待</p>
+</blockquote>
+
+<h4 id="2-死锁避免">2、死锁避免</h4>
+
+<blockquote>
+<p><strong>（1）简述</strong></p>
+
+<p>检测每个资源的请求，如果造成死锁就立刻拒绝</p>
+
+<p><strong>（2）银行家算法</strong></p>
+</blockquote>
+
+<ul>
+<li>安全状态：如果系统中的所有进程存在一个可完成的执行序列P1，P2，P3，………Pn，则称系统处于安</li>
+</ul>
+
+<blockquote>
+<p>全状态</p>
+</blockquote>
+
+<ul>
+<li><p>使用特定算法判断是否存在一个执行序列，当按照这种执行序列执行时，不会产生死锁</p></li>
+
+<li><p>银行家算法的执行方法：进程在执行的时候主要关注三种类型的资源：进程本身所占用的资源，进程需要</p></li>
+</ul>
+
+<blockquote>
+<p>申请的资源，系统中剩余的资源申请一个work变量（表示系统剩余的资源），need变量（系统正在申请</p>
+
+<p>的资源），allocate(已经分配给进程的资源)按照特定的序列执行，在每个序列执行时，判断当前剩余资</p>
+
+<p>源是否能够满足申请资源，如果能，则将剩余资源减去申请资源在加上释放资源。但是时间复杂度：</p>
+
+<p>T（n）=O(mn^2),执行的代价非常大</p>
+</blockquote>
+
+<h4 id="3-死锁检测和恢复">3、死锁检测和恢复</h4>
+
+<blockquote>
+<p><strong>（1）简述</strong></p>
+
+<p>检测到死锁出现之后，让一些进程进行回滚，让出一部分资源 恢复非常不容易，进程造成的改变很</p>
+</blockquote>
+
+<p>难恢复</p>
+
+<blockquote>
+<p><strong>（2）死锁的恢复方法</strong></p>
+</blockquote>
+
+<ul>
+<li><p>简单地终止一个或多个进程以打破循环等待，终止所有死锁进程，每次只终止一个进程直到取消死锁循环</p></li>
+
+<li><p>从一个或者多个死锁进程抢占一个或多个资源，但是要考虑到 选择一个牺牲品、进行回滚、饥饿（不能</p></li>
+</ul>
+
+<blockquote>
+<p>总是选择同一个牺牲品）</p>
+</blockquote>
+
+<h4 id="4-死锁忽略">4、死锁忽略</h4>
+
+<blockquote>
+<p>忽略发生的死锁，通常用在个人的PC机上，进行重启即可，效率比较高</p>
+</blockquote>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+  <div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '你的 GitHub ID',
+  repo: '存储评论的 repo',
+  oauth: {
+    client_id: '你的 client ID',
+    client_secret: '你的 client secret',
+  },
+})
+gitment.render('container')
+</script>
+
+
+    </main>
+  </body>
+</html>

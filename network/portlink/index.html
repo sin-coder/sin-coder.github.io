@@ -1,2 +1,233 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>端口镜像和链路聚合小结 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="端口镜像和链路聚合小结"/>
+<meta name="twitter:description" content=" 端口镜像和链路聚合 一、端口镜像 1.背景需求  监控交换机特定端口的入站或出战报文，流量监测和故障定位
+ 2.镜像的分类  （1）基于端口的镜像
+指定端口的所有数据复制到指定的端口，交换机可以指定入站和出站；以太网交换机支持多对一的镜
+ 像，即是将多个端口的报文复制到某一个监控端口上
+ 本地端口镜像：监控主机和观察端口进行直接相连。
+远程端口镜像 : 监控主机和观察端口之间通过二层网络或三层网络相联
+ 二层端口镜像：交换机将镜像端口的报文封装成VLAN、然后通过观察端口将该报文在此VLAN中进行广播
+三层端口镜像：GRE报文头来封装和解封装镜像报文，穿透三层网络
+ （2）基于流的镜像
+只是将匹配访问控制列表的业务流量复制到指定的监控端口。具体可分为流镜像到端口和流镜像到CPU
+ 二、链路聚合 1.问题背景  网络中某些链路承载的流量非常大，链路存在带宽瓶颈；链路存在端口故障 。而链路聚合就是将多条
+ 以太网链路进行捆绑，链路冗余、负载分担来解决这些问题的
+2.工作模式  （1）手工负载分担模式
+允许在聚合组中手工加入多个成员接口，所有接口均处于转发状态，分担负载的流量。Eth-Trunk的
+ 创建、成员接口的加入都需要手工配置来完成，没有LACP协议报文的参与，通常运用在对端设备不支
+持LACP协议的情况之下 该工作模式下的所有接口均处于转发状态
+ （2）静态LACP
+M：N模式 :M条链路处于活动状态 N条线路非活动状态作为备份链路；当M条链路中出现故障后，系
+ 统会从N条链路中选择优先级较高的链路接替出现故障的链路同时实现链路负载分担和链路冗余备份的功
+能 。利用LACP协议进行聚合参数的协商、确定活动的接口和非活动的接口的链路聚合方式
+ 静态：手工配置Eth-Trunk成员接口、由LACP协议协商确定活动接口和非活动接口
+（3）动态LACP模式
+从ETH-TRunk的创建到加入到成员接口都不需要人工的干预，由LACP协议自动协商来完成
+ "/>
+
+    <meta property="og:title" content="端口镜像和链路聚合小结" />
+<meta property="og:description" content=" 端口镜像和链路聚合 一、端口镜像 1.背景需求  监控交换机特定端口的入站或出战报文，流量监测和故障定位
+ 2.镜像的分类  （1）基于端口的镜像
+指定端口的所有数据复制到指定的端口，交换机可以指定入站和出站；以太网交换机支持多对一的镜
+ 像，即是将多个端口的报文复制到某一个监控端口上
+ 本地端口镜像：监控主机和观察端口进行直接相连。
+远程端口镜像 : 监控主机和观察端口之间通过二层网络或三层网络相联
+ 二层端口镜像：交换机将镜像端口的报文封装成VLAN、然后通过观察端口将该报文在此VLAN中进行广播
+三层端口镜像：GRE报文头来封装和解封装镜像报文，穿透三层网络
+ （2）基于流的镜像
+只是将匹配访问控制列表的业务流量复制到指定的监控端口。具体可分为流镜像到端口和流镜像到CPU
+ 二、链路聚合 1.问题背景  网络中某些链路承载的流量非常大，链路存在带宽瓶颈；链路存在端口故障 。而链路聚合就是将多条
+ 以太网链路进行捆绑，链路冗余、负载分担来解决这些问题的
+2.工作模式  （1）手工负载分担模式
+允许在聚合组中手工加入多个成员接口，所有接口均处于转发状态，分担负载的流量。Eth-Trunk的
+ 创建、成员接口的加入都需要手工配置来完成，没有LACP协议报文的参与，通常运用在对端设备不支
+持LACP协议的情况之下 该工作模式下的所有接口均处于转发状态
+ （2）静态LACP
+M：N模式 :M条链路处于活动状态 N条线路非活动状态作为备份链路；当M条链路中出现故障后，系
+ 统会从N条链路中选择优先级较高的链路接替出现故障的链路同时实现链路负载分担和链路冗余备份的功
+能 。利用LACP协议进行聚合参数的协商、确定活动的接口和非活动的接口的链路聚合方式
+ 静态：手工配置Eth-Trunk成员接口、由LACP协议协商确定活动接口和非活动接口
+（3）动态LACP模式
+从ETH-TRunk的创建到加入到成员接口都不需要人工的干预，由LACP协议自动协商来完成
+ " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/network/portlink/" />
+<meta property="article:published_time" content="2019-08-07T21:26:25+08:00" />
+<meta property="article:modified_time" content="2019-08-07T21:26:25+08:00" />
 
 
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">端口镜像和链路聚合小结</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Aug 7, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><a class="tag" href="https://sin-coder.github.io/tags/%E4%BA%8C%E5%B1%82%E4%BA%A4%E6%8D%A2/">二层交换</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="端口镜像和链路聚合">端口镜像和链路聚合</h2>
+
+<h3 id="一-端口镜像">一、端口镜像</h3>
+
+<h4 id="1-背景需求">1.背景需求</h4>
+
+<blockquote>
+<p>监控交换机特定端口的入站或出战报文，流量监测和故障定位</p>
+</blockquote>
+
+<h4 id="2-镜像的分类">2.镜像的分类</h4>
+
+<blockquote>
+<p><strong>（1）基于端口的镜像</strong></p>
+
+<p>指定端口的所有数据复制到指定的端口，交换机可以指定入站和出站；以太网交换机支持多对一的镜</p>
+</blockquote>
+
+<p>像，即是将多个端口的报文复制到某一个监控端口上</p>
+
+<blockquote>
+<p><strong>本地端口镜像</strong>：监控主机和观察端口进行直接相连。</p>
+
+<p><strong>远程端口镜像</strong> : 监控主机和观察端口之间通过二层网络或三层网络相联</p>
+
+<blockquote>
+<p>二层端口镜像：交换机将镜像端口的报文封装成VLAN、然后通过观察端口将该报文在此VLAN中进行广播</p>
+
+<p>三层端口镜像：GRE报文头来封装和解封装镜像报文，穿透三层网络</p>
+</blockquote>
+
+<p><strong>（2）基于流的镜像</strong></p>
+
+<p>只是将匹配访问控制列表的业务流量复制到指定的监控端口。具体可分为流镜像到端口和流镜像到CPU</p>
+</blockquote>
+
+<h3 id="二-链路聚合">二、链路聚合</h3>
+
+<h4 id="1-问题背景">1.问题背景</h4>
+
+<blockquote>
+<p>网络中某些链路承载的流量非常大，链路存在带宽瓶颈；链路存在端口故障  。而链路聚合就是将多条</p>
+</blockquote>
+
+<p>以太网链路进行捆绑，链路冗余、负载分担来解决这些问题的</p>
+
+<h4 id="2-工作模式">2.工作模式</h4>
+
+<blockquote>
+<p><strong>（1）手工负载分担模式</strong></p>
+
+<p>允许在聚合组中手工加入多个成员接口，所有接口均处于转发状态，分担负载的流量。Eth-Trunk的</p>
+</blockquote>
+
+<p>创建、成员接口的加入都需要手工配置来完成，没有LACP协议报文的参与，通常运用在对端设备不支</p>
+
+<p>持LACP协议的情况之下 该工作模式下的所有接口均处于转发状态</p>
+
+<blockquote>
+<p><strong>（2）静态LACP</strong></p>
+
+<p><strong>M：N模式</strong> :M条链路处于活动状态 N条线路非活动状态作为备份链路；当M条链路中出现故障后，系</p>
+</blockquote>
+
+<p>统会从N条链路中选择优先级较高的链路接替出现故障的链路同时实现链路负载分担和链路冗余备份的功</p>
+
+<p>能  。利用LACP协议进行聚合参数的协商、确定活动的接口和非活动的接口的链路聚合方式</p>
+
+<blockquote>
+<p><strong>静态</strong>：手工配置Eth-Trunk成员接口、由LACP协议协商确定活动接口和非活动接口</p>
+
+<p><strong>（3）动态LACP模式</strong></p>
+
+<p>从ETH-TRunk的创建到加入到成员接口都不需要人工的干预，由LACP协议自动协商来完成</p>
+</blockquote>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+  <div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '你的 GitHub ID',
+  repo: '存储评论的 repo',
+  oauth: {
+    client_id: '你的 client ID',
+    client_secret: '你的 client secret',
+  },
+})
+gitment.render('container')
+</script>
+
+
+    </main>
+  </body>
+</html>

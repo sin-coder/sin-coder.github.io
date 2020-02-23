@@ -1,2 +1,407 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Go语言学习总结（一） // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Go语言学习总结（一）"/>
+<meta name="twitter:description" content="Go语言学习总结（一） 一、Go语言简介 1. Go语言用途 ​ 搭载Web服务器，存储集群或类似用途的巨型中央服务器的系统编程语言
+​ 在高性能的分布式系统领域，Go语言比其他语言有着更高的开发效率
+2. Go语言特点 ​ 自动垃圾回收、丰富的内置类型、函数多返回值、错误处理、数组安全
+​ 匿名函数和闭包、类型和接口、并发编程、反射、语言交互性等
+3. 设计思想 ​ 目前主流的编程思想主要有面向对象编程、面向过程编程，但是Go语言在设计的过程中吸收了一些
+​ 小众的编程哲学思想，比如函数式编程思想（支持匿名函数与闭包）， 面向消息编程思想（支持 goroutine
+​ 和通道），因此Go推荐使用消息而不是共享内存来进行并发编程
+二、Go语言基础语法 1. 程序组成元素 （1）包声明 ​ 源文件中非注释的第一行指明这个文件属于哪个包，如package main, package main表示一个可独立执行的
+​ 程序，Go程序是通过package来进行组织的，只有package名称为main的源码文件可以包含main函数
+（2）引入包 ​ 导入程序所要使用的包 fmt包格式化的输入输出
+​ 导入包时可以通过import关键字来单个导入，也可以同时导入多个，如：
+//单个导入 import &quot;fmt&quot; import &quot;io&quot; //同时导入多个 import ( &quot;fmt&quot; &quot;math&quot; )  ​ 文件名与包名没有直接关系、同一个文件夹下只能有一个包名，否则编译报错
+​ 导入包时一般为 import &ldquo;项目名/包名&rdquo;
+​ 调用函数时则是通过PackageName.FunctionName() 来进行调用
+（3）函数 ​ fun main()是程序开始执行的函数，该函数也是每一个可执行程序所必须的，每个函数后都会有{}，但是 &ldquo; { &ldquo;"/>
+
+    <meta property="og:title" content="Go语言学习总结（一）" />
+<meta property="og:description" content="Go语言学习总结（一） 一、Go语言简介 1. Go语言用途 ​ 搭载Web服务器，存储集群或类似用途的巨型中央服务器的系统编程语言
+​ 在高性能的分布式系统领域，Go语言比其他语言有着更高的开发效率
+2. Go语言特点 ​ 自动垃圾回收、丰富的内置类型、函数多返回值、错误处理、数组安全
+​ 匿名函数和闭包、类型和接口、并发编程、反射、语言交互性等
+3. 设计思想 ​ 目前主流的编程思想主要有面向对象编程、面向过程编程，但是Go语言在设计的过程中吸收了一些
+​ 小众的编程哲学思想，比如函数式编程思想（支持匿名函数与闭包）， 面向消息编程思想（支持 goroutine
+​ 和通道），因此Go推荐使用消息而不是共享内存来进行并发编程
+二、Go语言基础语法 1. 程序组成元素 （1）包声明 ​ 源文件中非注释的第一行指明这个文件属于哪个包，如package main, package main表示一个可独立执行的
+​ 程序，Go程序是通过package来进行组织的，只有package名称为main的源码文件可以包含main函数
+（2）引入包 ​ 导入程序所要使用的包 fmt包格式化的输入输出
+​ 导入包时可以通过import关键字来单个导入，也可以同时导入多个，如：
+//单个导入 import &quot;fmt&quot; import &quot;io&quot; //同时导入多个 import ( &quot;fmt&quot; &quot;math&quot; )  ​ 文件名与包名没有直接关系、同一个文件夹下只能有一个包名，否则编译报错
+​ 导入包时一般为 import &ldquo;项目名/包名&rdquo;
+​ 调用函数时则是通过PackageName.FunctionName() 来进行调用
+（3）函数 ​ fun main()是程序开始执行的函数，该函数也是每一个可执行程序所必须的，每个函数后都会有{}，但是 &ldquo; { &ldquo;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/go/" />
+<meta property="article:published_time" content="2020-01-27T00:53:21+08:00" />
+<meta property="article:modified_time" content="2020-01-27T00:53:21+08:00" />
 
 
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Go语言学习总结（一）</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 27, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h1 id="go语言学习总结-一">Go语言学习总结（一）</h1>
+
+<h2 id="一-go语言简介">一、Go语言简介</h2>
+
+<h3 id="1-go语言用途">1. Go语言用途</h3>
+
+<p>​       搭载Web服务器，存储集群或类似用途的巨型中央服务器的系统编程语言</p>
+
+<p>​        在高性能的分布式系统领域，Go语言比其他语言有着更高的开发效率</p>
+
+<h3 id="2-go语言特点">2. Go语言特点</h3>
+
+<p>​       自动垃圾回收、丰富的内置类型、函数多返回值、错误处理、数组安全</p>
+
+<p>​        匿名函数和闭包、类型和接口、并发编程、反射、语言交互性等</p>
+
+<h3 id="3-设计思想">3.  设计思想</h3>
+
+<p>​         目前主流的编程思想主要有面向对象编程、面向过程编程，但是Go语言在设计的过程中吸收了一些</p>
+
+<p>​         小众的编程哲学思想，比如函数式编程思想（支持匿名函数与闭包）， 面向消息编程思想（支持 goroutine</p>
+
+<p>​          和通道），因此Go推荐使用消息而不是共享内存来进行并发编程</p>
+
+<h2 id="二-go语言基础语法">二、Go语言基础语法</h2>
+
+<h3 id="1-程序组成元素">1. 程序组成元素</h3>
+
+<h4 id="1-包声明">（1）包声明</h4>
+
+<p>​        源文件中非注释的第一行指明这个文件属于哪个包，如package main,  package main表示一个可独立执行的</p>
+
+<p>​        程序，Go程序是通过package来进行组织的，只有package名称为main的源码文件可以包含main函数</p>
+
+<h4 id="2-引入包">（2）引入包</h4>
+
+<p>​        导入程序所要使用的包    fmt包格式化的输入输出</p>
+
+<p>​        导入包时可以通过import关键字来单个导入，也可以同时导入多个，如：</p>
+
+<pre><code class="language-go">//单个导入
+import &quot;fmt&quot;
+import &quot;io&quot;
+//同时导入多个
+import (
+    &quot;fmt&quot;
+    &quot;math&quot;
+)
+</code></pre>
+
+<p>​        文件名与包名没有直接关系、同一个文件夹下只能有一个包名，否则编译报错</p>
+
+<p>​        导入包时一般为  import &ldquo;项目名/包名&rdquo;</p>
+
+<p>​        调用函数时则是通过PackageName.FunctionName() 来进行调用</p>
+
+<h4 id="3-函数">（3）函数</h4>
+
+<p>​        fun main()是程序开始执行的函数，该函数也是每一个可执行程序所必须的，每个函数后都会有{}，但是  &ldquo; {  &ldquo;</p>
+
+<p>​        是不能单独放置在一行中的，否则在运行时会产生错误</p>
+
+<h4 id="4-标识符">（4）标识符</h4>
+
+<p>​        以一个大写字母开头的标识符，可以被外部包的代码所使用，这被成为导出，类似于public</p>
+
+<p>​        以一个小写字母开头的标识符，对外包则是不可见的，在整个包的内部是可见的，类似于private</p>
+
+<h4 id="5-语句">（5）语句</h4>
+
+<p>​        每行一条语句，且不需要加分号</p>
+
+<p>​        语句中适当使用空格能够让程序更加容易地阅读，但是变量的声明必须使用空格来进行隔开</p>
+
+<h3 id="2-程序的基本结构">2.程序的基本结构</h3>
+
+<p>​        程序的基本结构示例：</p>
+
+<pre><code class="language-go">//当前程序的包名
+package main
+
+//导入其他包
+import &quot;fmt&quot;
+
+//常量的定义  
+const PI = 3.14
+
+//全局变量的声明和赋值   在函数外部定义的变量
+var name = &quot;CSUYZZ&quot;
+
+//一般类型的声明
+type newType int
+
+//结构体的声明
+type structName struct{}
+
+//接口的声明
+type golang interface{}
+
+//函数的声明
+fun funname(){}
+
+//main函数、程序的入口点
+fun main(){
+    fmt.Println(&quot;Hello World!&quot;)
+}
+</code></pre>
+
+<h3 id="3-go语言数据类型">3.Go语言数据类型</h3>
+
+<p>​     划分不同的数据类型就是为了最大限度的利用内存</p>
+
+<h4 id="1-布尔型">（1）布尔型</h4>
+
+<p>​     布尔型值：true false   示例：var flag bool = false</p>
+
+<h4 id="2-数字类型">（2）数字类型</h4>
+
+<p>​      整型：uint8 、uint16、uint32、uint64、int8、int16、int32、int64</p>
+
+<p>​      浮点型：float32、float64、complex64(32位的实数和虚数)、complex128(64位的实数和叙述)</p>
+
+<p>​      其他数字类型：byte、rune、uint(32位或64位)、int(32位或64位)、uintptr(指针)</p>
+
+<h4 id="3-字符串类型">（3）字符串类型</h4>
+
+<p>​      Go语言的字符串由单个字节连接，使用UTF-8编码来标识Unicode文本</p>
+
+<p>​      ==注意==：字符串类型在Go语言中是个结构，大小为16个字节</p>
+
+<h4 id="4-派生类型">（4）派生类型</h4>
+
+<p>​      指针类型、数组类型、结构体类型、Channel类型、函数类型、切片类型、接口类型、Map类型</p>
+
+<h4 id="5-类型转换">（5）类型转换</h4>
+
+<p>​       基本格式：type_name(expression)</p>
+
+<h3 id="4-变量-常量">4.变量&amp;常量</h3>
+
+<h4 id="1-变量声明">（1）变量声明</h4>
+
+<p>​       变量声明可以先定义后初始化、也可根据值自动判定变量类型、还可以省略var,示例代码如下</p>
+
+<p>​       Go语言是非常严格的，函数内部变量在声明之后必须被使用，全局变量允许声明但不使用</p>
+
+<pre><code class="language-go">//1.指定变量类型定义，再初始化；如果不初始化则变量值为系统默认值
+var vname vtype
+vname = value
+var v1,v2,v3 type
+
+//常见数据类型的系统默认值
+/*
+数值类型 ： 0
+布尔类型 ： false 
+字符串为 ： &quot;&quot;  
+以下几种类型均为nil
+var a *int 
+var a []int
+var a map[string] int
+var a chan int
+var a func(string) int
+var a error (接口)
+*/
+
+//2.根据值自动判别变量类型
+var vname = value
+var vname1,vname2,vname3 = v1,v2,v3
+//3.省略var  := 左侧如果没有声明新的变量，就会产生编译错误  首选形式
+//该种方法只能用于函数体内，全局变量则不能使用
+vname := value
+//并行赋值
+vname1,vname2,vname3 := v1,v2,v3
+//交换两个变量的值
+a,b = b,a 
+//空白标识符_被用于抛弃值,_实际上是一个只写变量，不能得到它的值
+//Go语言中要求你必须使用所有被声明的变量，但有时并不需要得到一个函数的所有返回值
+_,b = 5,7 
+
+
+//4.所有变量的声明置于{}中   一般用于全局变量的声明   程序更加结构化
+var (
+    vname1 vtype
+    vname2 vtype
+)
+</code></pre>
+
+<h4 id="2-常量">（2）常量</h4>
+
+<p>​    常量定义使用const关键字，定义的方式与变量相同</p>
+
+<p>​    特殊常量：itoa ,可以被编译器自动修改的常量；itoa在const内部的第一行被重置为0，const中每新增一行常量</p>
+
+<p>​     itoa加一，可以将它理解为iota的行索引，示例代码：</p>
+
+<pre><code class="language-go">//itoa可以被用作枚举值
+const (
+    a = itoa  //a=0
+    b = iota  //b=1
+    c = iota  //c=2
+)
+//也可以简写为
+const (
+    a = iota  //a=0 
+    b         //b=1
+    c         //c=2
+)
+</code></pre>
+
+<h3 id="5-条件语句">5.条件语句</h3>
+
+<h4 id="1-if语句使用语法">（1）if语句使用语法</h4>
+
+<ul>
+<li>不需要使用括号将条件包含起来</li>
+<li>大括号{}必须存在，即使只有一行语句</li>
+<li>左括号必须在if或者else的同一行</li>
+<li>在if之后，条件语句之前，可以声明变量，但是其作用域只能够在该条件逻辑块内</li>
+<li>在有返回值的函数中，最终的return 不能在条件语句中</li>
+</ul>
+
+<h4 id="2-switch语句使用语法">（2）switch语句使用语法</h4>
+
+<ul>
+<li>每个case语句后默认自带break语句，匹配成功后就不执行其他语句</li>
+<li>使用fallthrough会强制执行后面的case语句，不会判断下一条case语句的表达式结构是否为True</li>
+<li>switch支持多条件匹配</li>
+</ul>
+
+<h4 id="3-select语句使用">（3）select语句使用</h4>
+
+<p>select语句就是通信中的switch语句</p>
+
+<ul>
+<li><p>每个case都必须是一个通信</p></li>
+
+<li><p>所有channel 表达式都会被执行</p></li>
+
+<li><p>所有被发送的表达式都会被求值</p></li>
+
+<li><p>如果任意某个通信可以进行，它就执行，其他被忽略</p></li>
+
+<li><p>如果有多个case可以执行，Select会随机公平地选出一个执行，其他不会执行</p>
+
+<p>否则，如果有default语句，则执行该语句；</p>
+
+<p>如果没有，select将阻塞，直到某个通信可以运行；Go不会对channel或值进行求值</p>
+
+<h3 id="6-循环语句">6.循环语句</h3></li>
+</ul>
+
+<p>for循环的常见使用示例如下：</p>
+
+<pre><code class="language-go">for init; condition; post {}
+for condition{}   //相当于while
+for { }      //相当于for(;;)  无限循环
+
+//for循环的range形式可以对slice,map，数组，字符串等进行迭代循环 
+for key,value := range oldMap {
+    newMap[key] = value
+}
+
+
+</code></pre>
+
+<h2 id="三-go语言数据类型详解">三、Go语言数据类型详解</h2>
+
+<p>数组、指针、结构体、切片（Slice）、范围Range、Map集合、接口</p>
+
+<h2 id="四-go语言特征详解">四、Go语言特征详解</h2>
+
+<p>并发、错误处理</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+  <div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '你的 GitHub ID',
+  repo: '存储评论的 repo',
+  oauth: {
+    client_id: '你的 client ID',
+    client_secret: '你的 client secret',
+  },
+})
+gitment.render('container')
+</script>
+
+
+    </main>
+  </body>
+</html>

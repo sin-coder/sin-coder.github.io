@@ -1,2 +1,276 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>环形链表 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="环形链表"/>
+<meta name="twitter:description" content="环形链表专题 一、问题1  给定一个链表，判断一个链表中是否有环
+ 1.算法思路  （1）判断是否存在重复节点
+通过检查一个节点此前是否被访问来判断是否为环形链表，可以使用哈希表来存储访问过的节点
+（2）快慢指针
+通过快慢指针遍历链表，慢指针每次移动一步，而快指针每次移动两步；如果链表中不存在环，最终快
+ 指针将会最先达到尾部，此时返回Fasle即可；如果链表中存在环，最终快慢指针一定会相遇
+2.代码实现 //元素判重法 public boolean hasCycle(ListNode head) { Set&lt;ListNode&gt; visited = new HashSet&lt;ListNode&gt;(); while (head != null) { if (visited.contains(head)) { return true; } else { visited.add(head); } head = head.next; } return false; } //分析，时间复杂度是O（n），对链表中的每个元素最多访问一次，向哈希表中添加一个元素为O(1) //空间复杂度为O（n）,最多将链表中的所有元素均添加到哈希表中  //快慢指针法 public boolean hasCycle(ListNode head) { if (head == null || head.next == null) { return false; } ListNode slow = head; ListNode fast = head."/>
+
+    <meta property="og:title" content="环形链表" />
+<meta property="og:description" content="环形链表专题 一、问题1  给定一个链表，判断一个链表中是否有环
+ 1.算法思路  （1）判断是否存在重复节点
+通过检查一个节点此前是否被访问来判断是否为环形链表，可以使用哈希表来存储访问过的节点
+（2）快慢指针
+通过快慢指针遍历链表，慢指针每次移动一步，而快指针每次移动两步；如果链表中不存在环，最终快
+ 指针将会最先达到尾部，此时返回Fasle即可；如果链表中存在环，最终快慢指针一定会相遇
+2.代码实现 //元素判重法 public boolean hasCycle(ListNode head) { Set&lt;ListNode&gt; visited = new HashSet&lt;ListNode&gt;(); while (head != null) { if (visited.contains(head)) { return true; } else { visited.add(head); } head = head.next; } return false; } //分析，时间复杂度是O（n），对链表中的每个元素最多访问一次，向哈希表中添加一个元素为O(1) //空间复杂度为O（n）,最多将链表中的所有元素均添加到哈希表中  //快慢指针法 public boolean hasCycle(ListNode head) { if (head == null || head.next == null) { return false; } ListNode slow = head; ListNode fast = head." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/leetcode/circlelist/" />
+<meta property="article:published_time" content="2019-11-15T14:01:10+08:00" />
+<meta property="article:modified_time" content="2019-11-15T14:01:10+08:00" />
 
 
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">环形链表</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Nov 15, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><a class="tag" href="https://sin-coder.github.io/tags/leetcode/">leetcode</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="环形链表专题">环形链表专题</h2>
+
+<h3 id="一-问题1">一、问题1</h3>
+
+<blockquote>
+<p>给定一个链表，判断一个链表中是否有环</p>
+</blockquote>
+
+<h4 id="1-算法思路">1.算法思路</h4>
+
+<blockquote>
+<p><strong>（1）判断是否存在重复节点</strong></p>
+
+<p>通过检查一个节点此前是否被访问来判断是否为环形链表，可以使用哈希表来存储访问过的节点</p>
+
+<p><strong>（2）快慢指针</strong></p>
+
+<p>通过快慢指针遍历链表，慢指针每次移动一步，而快指针每次移动两步；如果链表中不存在环，最终快</p>
+</blockquote>
+
+<p>指针将会最先达到尾部，此时返回Fasle即可；如果链表中存在环，最终快慢指针一定会相遇</p>
+
+<h4 id="2-代码实现">2.代码实现</h4>
+
+<pre><code class="language-java">//元素判重法
+public boolean hasCycle(ListNode head) {
+    Set&lt;ListNode&gt; visited = new HashSet&lt;ListNode&gt;();
+    while (head != null) {
+        if (visited.contains(head)) {
+            return true;
+        } else {
+            visited.add(head);
+        }
+        head = head.next;
+    }
+    return false;
+}
+//分析，时间复杂度是O（n），对链表中的每个元素最多访问一次，向哈希表中添加一个元素为O(1)
+//空间复杂度为O（n）,最多将链表中的所有元素均添加到哈希表中
+</code></pre>
+
+<pre><code class="language-java">//快慢指针法
+public boolean hasCycle(ListNode head) {
+    if (head == null || head.next == null) {
+        return false;
+    }
+    ListNode slow = head;
+    ListNode fast = head.next;
+    while (slow != fast) {
+        if (fast == null || fast.next == null) {
+            return false;
+        }
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return true;
+}
+
+//分析：空间复杂度是O（1）,只使用了快慢指针两个节点
+//时间复杂度O（n）,实际上快慢指针算法的时间复杂度要大于等于判重算法
+</code></pre>
+
+<h3 id="二-问题2">二、问题2</h3>
+
+<blockquote>
+<p>给定一个链表，返回链表开始入环的第一个节点，如果链表无环，则返回null</p>
+</blockquote>
+
+<h4 id="1-算法思路-1">1.算法思路</h4>
+
+<blockquote>
+<p><strong>（1）判重法找出入口节点</strong></p>
+
+<p>通过检查一个节点此前是否被访问来判断该点是否为环的入口点，可以使用哈希表来存储访问过的节点</p>
+
+<p><strong>（2）快慢指针</strong></p>
+
+<p>第一步时通过快慢指针遍历链表，慢指针每次移动一步，而快指针每次移动两步,先判断此单链表中是</p>
+</blockquote>
+
+<p>否有环，无环则直接返回空值，有环就返回环的入口节点；</p>
+
+<blockquote>
+<p>第二步是让快指针重新从头结点出发，和慢指针（此时指向相遇节点）同时走，每次走一步，当再相遇</p>
+</blockquote>
+
+<p>时的节点就是环的入口节点，具体原理如下图</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/16/39JdRx.gif" alt="39JdRx.gif" /></p>
+
+<blockquote>
+<p><strong>(3)引用计数解法</strong></p>
+
+<p>链表中环的入口节点在程序中恰好被引用5次</p>
+</blockquote>
+
+<h4 id="2-代码实现-1">2.代码实现</h4>
+
+<pre><code class="language-python">#快慢指针解题
+def detectCycle(self, head):
+   fast, slow = head, head  #快慢节点进行初始化为头结点
+   while True:
+      if not (fast and fast.next): 
+        return None   #链表中是没有环的
+      fast, slow = fast.next.next, slow.next
+      if fast == slow: #第一个相遇节点
+        break
+      fast = head      #将快指针初始化初始节点
+      while fast != slow:
+        fast, slow = fast.next, slow.next   #快慢指针再次相遇的节点就是环的入口节点
+   return fast
+#时间复杂度O（n）、空间复杂度O（1）
+    
+#引用计数解题
+def detectCycle(self, head: ListNode) -&gt; ListNode:
+   if not head:
+      return None
+   while head.next:
+   	  if sys.getrefcount(head) &gt;= 5:
+        return head
+      head = head.next
+   return None
+#分析：在遍历链表的过程中目标节点（环的入口节点）被其两个前驱节点（head.next）分别引用一次
+#被当前节点引用一次（head）
+#在当做参数传入函数时被引用一次，在函数内部又被引用一次，总共5次
+#算法的时间复杂度O(n)、空间复杂度O（1）
+</code></pre>
+
+<h3 id="三-双指针的其他常见问题">三、双指针的其他常见问题</h3>
+
+<blockquote>
+<p>输入一个链表，输出该链表中倒数第K个节点</p>
+</blockquote>
+
+<pre><code class="language-java">public ListNode getKthFromEnd(ListNode head, int k) {
+   if(head == null || k == 0){
+       return null;
+     }
+   ListNode slow = head,fast = head;
+   for(int i = 1;i&lt;k;i++){
+       fast = fast.next;
+     }
+   while(fast.next != null){
+       fast = fast.next;
+       slow = slow.next;
+     }
+   return slow;
+}
+//分析：快、慢两个指针，快指针先走k-1步，然后快慢指针同时走；当快指针走到结尾时
+//此时慢指针指向的节点就是倒数第K个节点
+//时间复杂度O（n）、空间复杂度O（1）
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+  <div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '你的 GitHub ID',
+  repo: '存储评论的 repo',
+  oauth: {
+    client_id: '你的 client ID',
+    client_secret: '你的 client secret',
+  },
+})
+gitment.render('container')
+</script>
+
+
+    </main>
+  </body>
+</html>

@@ -1,2 +1,202 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Bigtable // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Bigtable"/>
+<meta name="twitter:description" content="1.如何在文件内进行快速查询？
+关键点： 从File 到 Table Table = a list of sorted 
+2.如何保存一个很大的表？
+关键点： A table = a list of tables (小表)
+A tablet = a list of sorted 
+使用MetaData的形式保存每一个小表的位置
+3.如何保存一个超大的表？
+关键点：A table = a list of tablets （小表）
+​ A tablet = a list of SSTables （小小表）
+​ A SSTables = a list of sorted 
+4.如何向表中写数据？
+关键点：通过写入memTable（内存表）来加速
+A tablet = memTable &#43; a list of SSTables
+5.内存表过大怎么办？如何避免内存丢失数据？"/>
+
+    <meta property="og:title" content="Bigtable" />
+<meta property="og:description" content="1.如何在文件内进行快速查询？
+关键点： 从File 到 Table Table = a list of sorted 
+2.如何保存一个很大的表？
+关键点： A table = a list of tables (小表)
+A tablet = a list of sorted 
+使用MetaData的形式保存每一个小表的位置
+3.如何保存一个超大的表？
+关键点：A table = a list of tablets （小表）
+​ A tablet = a list of SSTables （小小表）
+​ A SSTables = a list of sorted 
+4.如何向表中写数据？
+关键点：通过写入memTable（内存表）来加速
+A tablet = memTable &#43; a list of SSTables
+5.内存表过大怎么办？如何避免内存丢失数据？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/bigtable/" />
+<meta property="article:published_time" content="2020-01-27T00:53:53+08:00" />
+<meta property="article:modified_time" content="2020-01-27T00:53:53+08:00" />
 
 
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Bigtable</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 27, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      <p>1.如何在文件内进行快速查询？</p>
+
+<p>关键点：  从File   到  Table     Table  = a   list   of    sorted   <key,value></p>
+
+<p>2.如何保存一个很大的表？</p>
+
+<p>关键点：  A table  =  a   list    of    tables  (小表)</p>
+
+<p>A tablet =   a list  of  sorted <key,value></p>
+
+<p>使用MetaData的形式保存每一个小表的位置</p>
+
+<p>3.如何保存一个超大的表？</p>
+
+<p>关键点：A  table   =  a list of tablets  （小表）</p>
+
+<p>​              A   tablet =  a   list   of  SSTables  （小小表）</p>
+
+<p>​             A SSTables  =  a  list  of   sorted  <key,value></p>
+
+<p>4.如何向表中写数据？</p>
+
+<p>关键点：通过写入memTable（内存表）来加速</p>
+
+<p>A  tablet  =   memTable  +  a  list  of  SSTables</p>
+
+<p>5.内存表过大怎么办？如何避免内存丢失数据？</p>
+
+<p>内存表过大时，重新写成一个小小表   导入硬盘进行保存  成为一个新的SSTables</p>
+
+<p>在硬盘中添加Tabletlog  记录写入的数据</p>
+
+<p>A  Tablet =  memTable  +  a  list  of   SSTables +  log</p>
+
+<p>6.如何读数据？（相当于是查找数据）</p>
+
+<p>关键点：   SSTable 内部的数据是有序的，但是SSTable之间的数据是无序的</p>
+
+<p>​                 需要查找所有的SSTables 和 memTable  需要在硬盘中的SSTable中查找该元素</p>
+
+<p><img src="C:%5CUsers%5CAdministrator%5CDesktop%5CGFS%5CBigTable%20%E8%AF%BB%E6%95%B0%E6%8D%AE.png" alt="BigTable 读数据" style="zoom:100%;" /></p>
+
+<p>7.如何加速读数据？</p>
+
+<p>关键点：A  SSTable  =  a  list   of  sorted  <key,value>  =    a  list  of   64K  blocks   +  index</p>
+
+<p>Index会预先加载到内存    通过Index才能找到硬盘的位置</p>
+
+<p><img src="C:%5CUsers%5CAdministrator%5CDesktop%5CGFS%5CBigTable%20%E5%8A%A0%E9%80%9F%E8%AF%BB%E6%95%B0%E6%8D%AE.png" alt="BigTable 加速读数据" style="zoom:80%;" /></p>
+
+<p>8.继续加速读数据？</p>
+
+<p>关键点 ：  使用bloomfilter      A   SSTables  =  a  list  of   sorted  <key,value>   =  a  list  of   64K blocks  +  bloomfilter</p>
+
+<p>​                 Bloomfilter会预先加载到内存    通过bloomfilter判断元素是否会存在</p>
+
+<p><img src="C:%5CUsers%5CAdministrator%5CDesktop%5CGFS%5Cbloom%E8%BF%87%E6%BB%A4%E5%99%A8.png" alt="bloom过滤器" style="zoom:80%;" /></p>
+
+<p>9.将表装入内存？</p>
+
+<p>10.如何将表的物理视图装入表的逻辑视图?</p>
+
+<p>Key =  string(row，column，time)</p>
+
+<p>11.BigTable的架构</p>
+
+<p>​     Chubby锁服务</p>
+
+<p>总结：BigTable使用<key,value>的物理结构存储了一个超大表</p>
+
+<p>​          吃内存的BigTable和吃硬盘的GFS合为一体</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+  <div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '你的 GitHub ID',
+  repo: '存储评论的 repo',
+  oauth: {
+    client_id: '你的 client ID',
+    client_secret: '你的 client secret',
+  },
+})
+gitment.render('container')
+</script>
+
+
+    </main>
+  </body>
+</html>
