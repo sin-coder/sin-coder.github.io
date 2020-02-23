@@ -26,7 +26,7 @@
  分布式版本控制相比于集中式最大的优点就是能够避免单点故障的问题
   二、Git 简介 1.Git的发展历史  Git是一个免费、开源的分布式版本控制工具。在2005年，由Linus基于C语言开发完成，开发的初衷是
  管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭
-&ldquo;Talk is cheap, Show me the Code&rdquo;，少废话我只看代码。
+&quot;Talk is cheap, Show me the Code&quot;，少废话我只看代码。
 2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
   大部分操作在本地完成版本控制，不需要联网
  对数据进行完整性保证，基于Hash算法
@@ -49,7 +49,7 @@
  分布式版本控制相比于集中式最大的优点就是能够避免单点故障的问题
   二、Git 简介 1.Git的发展历史  Git是一个免费、开源的分布式版本控制工具。在2005年，由Linus基于C语言开发完成，开发的初衷是
  管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭
-&ldquo;Talk is cheap, Show me the Code&rdquo;，少废话我只看代码。
+&quot;Talk is cheap, Show me the Code&quot;，少废话我只看代码。
 2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
   大部分操作在本地完成版本控制，不需要联网
  对数据进行完整性保证，基于Hash算法
@@ -184,7 +184,7 @@
 
 <p>管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭</p>
 
-<p>&ldquo;Talk is cheap, Show me the Code&rdquo;，少废话我只看代码。</p>
+<p>&quot;Talk is cheap, Show me the Code&quot;，少废话我只看代码。</p>
 
 <h4 id="2-git的特性简介">2.Git的特性简介</h4>
 
@@ -315,9 +315,9 @@ $ cat .gitconfig
 <ul>
 <li><p>状态查看：git status:  查看工作去、暂存区的状态</p></li>
 
-<li><p>添加文件：git add [filename]  将工作区中的&rdquo;新建/修改&rdquo; 添加到暂存区</p></li>
+<li><p>添加文件：git add [filename]  将工作区中的&quot;新建/修改&quot; 添加到暂存区</p></li>
 
-<li><p>提交文件：git commit -m &ldquo;commit message&rdquo; [filename]  将暂存区的内容提交到本地库</p>
+<li><p>提交文件：git commit -m &quot;commit message&quot; [filename]  将暂存区的内容提交到本地库</p>
 
 <pre><code class="language-bash">$ git status
 On branch master    #在master分支
@@ -411,19 +411,19 @@ e372724 (HEAD -&gt; master) HEAD@{0}: commit: CSUYZZ second commit
 HEAD is now at 9b96e59 CSUYZZ first commit Creat a file
 </code></pre></li>
 
-<li><p>使用^符号：只能回退版本，git reset &ndash;hard HEAD^^  n个^符号表示回退n个版本</p></li>
+<li><p>使用^符号：只能回退版本，git reset --hard HEAD^^  n个^符号表示回退n个版本</p></li>
 
-<li><p>使用~符号：只能回退版本，git reset &ndash;hard HEAD~n  回退n个版本</p></li>
+<li><p>使用~符号：只能回退版本，git reset --hard HEAD~n  回退n个版本</p></li>
 </ul>
 
 <blockquote>
 <p>reset命令三个参数的对比</p>
 
-<p>&ndash;soft参数：仅仅在本地库移动HEAD指针</p>
+<p>--soft参数：仅仅在本地库移动HEAD指针</p>
 
-<p>&ndash;mixed参数：在本地库移动HEAD指针、重置暂存区</p>
+<p>--mixed参数：在本地库移动HEAD指针、重置暂存区</p>
 
-<p>&ndash;hard参数：在本地库移动HEAD指针、重置暂存区、重置工作区</p>
+<p>--hard参数：在本地库移动HEAD指针、重置暂存区、重置工作区</p>
 </blockquote>
 
 <ul>
@@ -431,7 +431,7 @@ HEAD is now at 9b96e59 CSUYZZ first commit Creat a file
 </ul>
 
 <blockquote>
-<p>操作命令 :  git reset &ndash;hard [指针位置]</p>
+<p>操作命令 :  git reset --hard [指针位置]</p>
 
 <p>当删除操作已提交到本地库时，指针位置指向历史记录即可</p>
 
@@ -867,22 +867,13 @@ Everything up-to-date
       
     </div>
   </article>
-
-  <div id="container"></div>
-<link rel="stylesheet" href="https://lovesora.github.io/gitment/style/default.css">
-<script src="https://lovesora.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  owner: '58158090',
-  repo: 'hugocomments',
-  oauth: {
-    client_id: '1755854f590601c9e723',
-    client_secret: 'ccc13cc93cebb3f1e3b9c08a22c77b19bc059ac8',
-  },
-})
-gitment.render('container')
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-light"  
+        crossorigin="anonymous"
+        async>
 </script>
-
 
     </main>
   </body>

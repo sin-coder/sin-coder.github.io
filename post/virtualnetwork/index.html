@@ -23,7 +23,7 @@
 虚拟网络，并不真实存在于网络中，所以宿主机无法ping通虚拟机，虚拟机彼此间也不通，但
 是通过NAT虚拟机可以访问主机、和主机同网络的其他主机和互联网
  不过这里的网络连接方式中有网络地址转换（NAT）和NAT网络，这二者之间又有什么区别呢？
- 其实这二者本质是相同的，不过后者是提前创建好的网络，在主界面的管理&mdash;&gt;全局设定&ndash;&gt;网络
+ 其实这二者本质是相同的，不过后者是提前创建好的网络，在主界面的管理---&gt;全局设定--&gt;网络
 我们可以提前设置一个NAT网络供虚拟机来选用
  总结起来，NAT模式可以节省网段中的IP地址，适合仅需自己使用的虚拟机配置
  2.桥接模式  桥接方式下，虚拟机需要桥接到宿主机的一块网卡上（有线或者无线均可），虚拟机和宿主机
@@ -54,7 +54,7 @@
 虚拟网络，并不真实存在于网络中，所以宿主机无法ping通虚拟机，虚拟机彼此间也不通，但
 是通过NAT虚拟机可以访问主机、和主机同网络的其他主机和互联网
  不过这里的网络连接方式中有网络地址转换（NAT）和NAT网络，这二者之间又有什么区别呢？
- 其实这二者本质是相同的，不过后者是提前创建好的网络，在主界面的管理&mdash;&gt;全局设定&ndash;&gt;网络
+ 其实这二者本质是相同的，不过后者是提前创建好的网络，在主界面的管理---&gt;全局设定--&gt;网络
 我们可以提前设置一个NAT网络供虚拟机来选用
  总结起来，NAT模式可以节省网段中的IP地址，适合仅需自己使用的虚拟机配置
  2.桥接模式  桥接方式下，虚拟机需要桥接到宿主机的一块网卡上（有线或者无线均可），虚拟机和宿主机
@@ -176,7 +176,7 @@
 <p>不过这里的网络连接方式中有网络地址转换（NAT）和NAT网络，这二者之间又有什么区别呢？</p>
 </blockquote>
 
-<p>其实这二者本质是相同的，不过后者是提前创建好的网络，在主界面的管理&mdash;&gt;全局设定&ndash;&gt;网络</p>
+<p>其实这二者本质是相同的，不过后者是提前创建好的网络，在主界面的管理---&gt;全局设定--&gt;网络</p>
 
 <p>我们可以提前设置一个NAT网络供虚拟机来选用</p>
 
@@ -245,22 +245,13 @@
       
     </div>
   </article>
-
-  <div id="container"></div>
-<link rel="stylesheet" href="https://lovesora.github.io/gitment/style/default.css">
-<script src="https://lovesora.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  owner: '58158090',
-  repo: 'hugocomments',
-  oauth: {
-    client_id: '1755854f590601c9e723',
-    client_secret: 'ccc13cc93cebb3f1e3b9c08a22c77b19bc059ac8',
-  },
-})
-gitment.render('container')
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-light"  
+        crossorigin="anonymous"
+        async>
 </script>
-
 
     </main>
   </body>

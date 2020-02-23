@@ -14,7 +14,7 @@
 <meta name="twitter:title" content="Mapreduce"/>
 <meta name="twitter:description" content="1.什么是Map? 什么是Reduce?
 Map是拆解 Reduce是组装 本治就是分治法
-Input &ndash;&gt; Split&ndash;&gt;Map&mdash;&gt;Shuffle（组装）&mdash;&gt;Reduce &mdash;-&gt;Finalize（高度并行的）
+Input --&gt; Split--&gt;Map---&gt;Shuffle（组装）---&gt;Reduce ----&gt;Finalize（高度并行的）
 实现代码：
 MapReduce如何实现统计单词出现的次数的
 Map（string key, string value） #key : the id of a line #value: the content of the line for each word in value: OutputTemp(word,1) # Reduce 的过程 Reduce(string key,list valueList) #key : the name of a word #valueList: the appearance of this world int sum = 0 for value in valueList: sum&#43;=value OutputFinal(key,sum)  MapReduce 如何实现倒排索引的？
@@ -24,7 +24,7 @@ MapReduce的整体结构？
     <meta property="og:title" content="Mapreduce" />
 <meta property="og:description" content="1.什么是Map? 什么是Reduce?
 Map是拆解 Reduce是组装 本治就是分治法
-Input &ndash;&gt; Split&ndash;&gt;Map&mdash;&gt;Shuffle（组装）&mdash;&gt;Reduce &mdash;-&gt;Finalize（高度并行的）
+Input --&gt; Split--&gt;Map---&gt;Shuffle（组装）---&gt;Reduce ----&gt;Finalize（高度并行的）
 实现代码：
 MapReduce如何实现统计单词出现的次数的
 Map（string key, string value） #key : the id of a line #value: the content of the line for each word in value: OutputTemp(word,1) # Reduce 的过程 Reduce(string key,list valueList) #key : the name of a word #valueList: the appearance of this world int sum = 0 for value in valueList: sum&#43;=value OutputFinal(key,sum)  MapReduce 如何实现倒排索引的？
@@ -95,7 +95,7 @@ MapReduce的整体结构？
 
 <p>Map是拆解   Reduce是组装    本治就是分治法</p>
 
-<p>Input  &ndash;&gt;  Split&ndash;&gt;Map&mdash;&gt;Shuffle（组装）&mdash;&gt;Reduce  &mdash;-&gt;Finalize（高度并行的）</p>
+<p>Input  --&gt;  Split--&gt;Map---&gt;Shuffle（组装）---&gt;Reduce  ----&gt;Finalize（高度并行的）</p>
 
 <p>实现代码：</p>
 
@@ -131,22 +131,13 @@ Reduce(string key,list valueList)
       
     </div>
   </article>
-
-  <div id="container"></div>
-<link rel="stylesheet" href="https://lovesora.github.io/gitment/style/default.css">
-<script src="https://lovesora.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  owner: '58158090',
-  repo: 'hugocomments',
-  oauth: {
-    client_id: '1755854f590601c9e723',
-    client_secret: 'ccc13cc93cebb3f1e3b9c08a22c77b19bc059ac8',
-  },
-})
-gitment.render('container')
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-light"  
+        crossorigin="anonymous"
+        async>
 </script>
-
 
     </main>
   </body>

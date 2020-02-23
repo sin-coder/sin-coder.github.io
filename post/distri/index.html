@@ -24,13 +24,13 @@
 ​
 二、分布式计算 1.概述 ​ 分布式计算核心的思路就是系统架构无单点，让整个系统可以扩展。分布式计算环境下的节点分为有状态存储节点和无状态存储节点。
 ​ 无状态存储节点，不存储数据，请求分发可以采取很简单的随机算法或者是轮询的算法就可以了，如果需要增加机器，则只需要把对应的运算代码部署到一些机器上然后启动起来，引导流量到那些机器即可实现动态的扩展了。简单来说就是某台机器承担了某种角色后，能够快速的广播给需要这个角色提供服务的机器。
-​ 而针对有状态节点，扩容难度较大，因为每台Server中均有数据，所以请求分发的算法不能够随机或者轮询，一般来说常见算法就是哈希或者使用Tree来做一层映射，增加机器时需要经历一个复杂的数据迁移过程&mdash;&mdash;》自动化扩容和迁移的工具
+​ 而针对有状态节点，扩容难度较大，因为每台Server中均有数据，所以请求分发的算法不能够随机或者轮询，一般来说常见算法就是哈希或者使用Tree来做一层映射，增加机器时需要经历一个复杂的数据迁移过程------》自动化扩容和迁移的工具
 2.数据处理的发展过程
-GFS&mdash;&mdash;&mdash;&mdash;-》HDFS
-BigTable&mdash;&mdash;&ndash;》HBase
-​ MapReduce&mdash;-》MapReduce
+GFS-------------》HDFS
+BigTable--------》HBase
+​ MapReduce----》MapReduce
 ​ （Hadoop技术栈）
-MapReduce(离线处理)&mdash;&ndash;》Spark(高性能批处理技术)&mdash;&mdash;》Storm(流处理)&mdash;-》Flink
+MapReduce(离线处理)-----》Spark(高性能批处理技术)------》Storm(流处理)----》Flink
 3.批处理（Batch Processing）与流处理（Stream Processing） 主要区别：每一条数据在到达时是被处理的（流处理），还是作为一组新数据的一部分稍后进行处理（批处理）
 批处理：在批处理中新到达的数据元素被收集到一个组中，整个组在未来的时间内进行处理。至于何时处理每个组可以选择多种方式来确定，可以基于预定的时间间隔（如每隔5分钟）、或者在某些触发的条件下（只要包含5个元素/拥有超过1MB的数据）。传统的数据仓库和Hadoop就是专注于批处理的。批处理示意图如下：
 缺点：具有延迟性、新数据的到达与该数据的处理之间的延迟将取决于直到下一批处理窗口的时间
@@ -42,7 +42,7 @@ MapReduce(离线处理)&mdash;&ndash;》Spark(高性能批处理技术)&mdash;&m
 ​ Flink: 提供的流式API，可以处理有界或者无界的场景，同时任然提供了单独的DataSet API用于批处理
 ​
 三、分布式调度 1.概述
-经典资源调度器（Yarn）&mdash;&ndash;》数据调度（Data Placement）、资源任务调度（Resource Management）、计算调度（Application Manager）、本地微（自治）调度
+经典资源调度器（Yarn）-----》数据调度（Data Placement）、资源任务调度（Resource Management）、计算调度（Application Manager）、本地微（自治）调度
 2.资源调度"/>
 
     <meta property="og:title" content="分布式系统学习笔记" />
@@ -58,13 +58,13 @@ MapReduce(离线处理)&mdash;&ndash;》Spark(高性能批处理技术)&mdash;&m
 ​
 二、分布式计算 1.概述 ​ 分布式计算核心的思路就是系统架构无单点，让整个系统可以扩展。分布式计算环境下的节点分为有状态存储节点和无状态存储节点。
 ​ 无状态存储节点，不存储数据，请求分发可以采取很简单的随机算法或者是轮询的算法就可以了，如果需要增加机器，则只需要把对应的运算代码部署到一些机器上然后启动起来，引导流量到那些机器即可实现动态的扩展了。简单来说就是某台机器承担了某种角色后，能够快速的广播给需要这个角色提供服务的机器。
-​ 而针对有状态节点，扩容难度较大，因为每台Server中均有数据，所以请求分发的算法不能够随机或者轮询，一般来说常见算法就是哈希或者使用Tree来做一层映射，增加机器时需要经历一个复杂的数据迁移过程&mdash;&mdash;》自动化扩容和迁移的工具
+​ 而针对有状态节点，扩容难度较大，因为每台Server中均有数据，所以请求分发的算法不能够随机或者轮询，一般来说常见算法就是哈希或者使用Tree来做一层映射，增加机器时需要经历一个复杂的数据迁移过程------》自动化扩容和迁移的工具
 2.数据处理的发展过程
-GFS&mdash;&mdash;&mdash;&mdash;-》HDFS
-BigTable&mdash;&mdash;&ndash;》HBase
-​ MapReduce&mdash;-》MapReduce
+GFS-------------》HDFS
+BigTable--------》HBase
+​ MapReduce----》MapReduce
 ​ （Hadoop技术栈）
-MapReduce(离线处理)&mdash;&ndash;》Spark(高性能批处理技术)&mdash;&mdash;》Storm(流处理)&mdash;-》Flink
+MapReduce(离线处理)-----》Spark(高性能批处理技术)------》Storm(流处理)----》Flink
 3.批处理（Batch Processing）与流处理（Stream Processing） 主要区别：每一条数据在到达时是被处理的（流处理），还是作为一组新数据的一部分稍后进行处理（批处理）
 批处理：在批处理中新到达的数据元素被收集到一个组中，整个组在未来的时间内进行处理。至于何时处理每个组可以选择多种方式来确定，可以基于预定的时间间隔（如每隔5分钟）、或者在某些触发的条件下（只要包含5个元素/拥有超过1MB的数据）。传统的数据仓库和Hadoop就是专注于批处理的。批处理示意图如下：
 缺点：具有延迟性、新数据的到达与该数据的处理之间的延迟将取决于直到下一批处理窗口的时间
@@ -76,7 +76,7 @@ MapReduce(离线处理)&mdash;&ndash;》Spark(高性能批处理技术)&mdash;&m
 ​ Flink: 提供的流式API，可以处理有界或者无界的场景，同时任然提供了单独的DataSet API用于批处理
 ​
 三、分布式调度 1.概述
-经典资源调度器（Yarn）&mdash;&ndash;》数据调度（Data Placement）、资源任务调度（Resource Management）、计算调度（Application Manager）、本地微（自治）调度
+经典资源调度器（Yarn）-----》数据调度（Data Placement）、资源任务调度（Resource Management）、计算调度（Application Manager）、本地微（自治）调度
 2.资源调度" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sin-coder.github.io/post/distri/" />
@@ -182,19 +182,19 @@ MapReduce(离线处理)&mdash;&ndash;》Spark(高性能批处理技术)&mdash;&m
 
 <p>​      无状态存储节点，不存储数据，请求分发可以采取很简单的随机算法或者是轮询的算法就可以了，如果需要增加机器，则只需要把对应的运算代码部署到一些机器上然后启动起来，引导流量到那些机器即可实现动态的扩展了。简单来说就是某台机器承担了某种角色后，能够快速的广播给需要这个角色提供服务的机器。</p>
 
-<p>​      而针对有状态节点，扩容难度较大，因为每台Server中均有数据，所以请求分发的算法不能够随机或者轮询，一般来说常见算法就是哈希或者使用Tree来做一层映射，增加机器时需要经历一个复杂的数据迁移过程&mdash;&mdash;》自动化扩容和迁移的工具</p>
+<p>​      而针对有状态节点，扩容难度较大，因为每台Server中均有数据，所以请求分发的算法不能够随机或者轮询，一般来说常见算法就是哈希或者使用Tree来做一层映射，增加机器时需要经历一个复杂的数据迁移过程------》自动化扩容和迁移的工具</p>
 
 <p>2.数据处理的发展过程</p>
 
-<p>GFS&mdash;&mdash;&mdash;&mdash;-》HDFS</p>
+<p>GFS-------------》HDFS</p>
 
-<p>BigTable&mdash;&mdash;&ndash;》HBase</p>
+<p>BigTable--------》HBase</p>
 
-<p>​    MapReduce&mdash;-》MapReduce</p>
+<p>​    MapReduce----》MapReduce</p>
 
 <p>​    （Hadoop技术栈）</p>
 
-<p>MapReduce(离线处理)&mdash;&ndash;》Spark(高性能批处理技术)&mdash;&mdash;》Storm(流处理)&mdash;-》Flink</p>
+<p>MapReduce(离线处理)-----》Spark(高性能批处理技术)------》Storm(流处理)----》Flink</p>
 
 <h3 id="3-批处理-batch-processing-与流处理-stream-processing">3.批处理（Batch Processing）与流处理（Stream Processing）</h3>
 
@@ -224,7 +224,7 @@ MapReduce(离线处理)&mdash;&ndash;》Spark(高性能批处理技术)&mdash;&m
 
 <p>1.概述</p>
 
-<p>经典资源调度器（Yarn）&mdash;&ndash;》数据调度（Data Placement）、资源任务调度（Resource Management）、计算调度（Application  Manager）、本地微（自治）调度</p>
+<p>经典资源调度器（Yarn）-----》数据调度（Data Placement）、资源任务调度（Resource Management）、计算调度（Application  Manager）、本地微（自治）调度</p>
 
 <p>2.资源调度</p>
 
@@ -550,22 +550,13 @@ MapReduce(离线处理)&mdash;&ndash;》Spark(高性能批处理技术)&mdash;&m
       
     </div>
   </article>
-
-  <div id="container"></div>
-<link rel="stylesheet" href="https://lovesora.github.io/gitment/style/default.css">
-<script src="https://lovesora.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  owner: '58158090',
-  repo: 'hugocomments',
-  oauth: {
-    client_id: '1755854f590601c9e723',
-    client_secret: 'ccc13cc93cebb3f1e3b9c08a22c77b19bc059ac8',
-  },
-})
-gitment.render('container')
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-light"  
+        crossorigin="anonymous"
+        async>
 </script>
-
 
     </main>
   </body>

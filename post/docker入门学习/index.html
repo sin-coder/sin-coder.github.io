@@ -22,13 +22,13 @@ Docker三大基础概念：镜像、容器和仓库 一、镜像（Image）  镜
 搬过去，重新取出（Load）镜像即可。当然这些比喻并不十分严格，只是帮助理解而已。
  通过版本管理和增量的文件系统，Docker提供了一套十分简单的机制来创建和更新现有的镜像。用户在
  对容器进行修改并提交（commit）后，重新运行依然可以保持这个变化
- 有关Docker镜像的操作详解，请参看Docker入门学习&ndash;镜像
+ 有关Docker镜像的操作详解，请参看Docker入门学习--镜像
  二、容器（Container）  容器是从镜像创建的运行实例，可以将其启动（run）、开始、停止和删除，而且这些容器都是相互隔离
  的，互相不可见的。用户可以将容器看做一个简易版的Linux系统环境（包括root用户权限、进程空间、用户
 空间和网络空间），以及运行在其中的应用程序打包而成的应用盒子
  镜像本身是可读的，容器从镜像启动的时候，Docker会在镜像的最上层创建一个可写层，镜像本身并没
  有发生改变
- 有关Docker镜像的操作详解，请参看Docker入门学习&ndash;容器
+ 有关Docker镜像的操作详解，请参看Docker入门学习--容器
  三、仓库（Repository）  Docker仓库类似于代码的仓库，是Docker集中存放镜像文件的场所。Docker利用仓库来管理镜像，这
  种设计理念与Git十分相似。用户可以直接从仓库中拉取（pull）镜像来供自己使用，也可以将自行制作镜像
 并上传（pull）到仓库中，等到在另外一台机器上使用该镜像时，再pull下来即可
@@ -36,7 +36,7 @@ Docker三大基础概念：镜像、容器和仓库 一、镜像（Image）  镜
  放着多个仓库。每个仓库集中存放某一类的镜像，这些镜像通过Tag进行区分。
  根据所存储镜像的公开与否，Docker仓库可以分为公开仓库和私有仓库。Docker Hub是目前最大的公
  开仓库；当然Docker也支持用户在本地的网络内创建 一个只能自己访问的仓库
- 有关Docker镜像的操作详解，请参看Docker入门学习&ndash;仓库
+ 有关Docker镜像的操作详解，请参看Docker入门学习--仓库
 当然Docker的内容远不止这些，接下来会 一 一 介绍
  "/>
 
@@ -51,13 +51,13 @@ Docker三大基础概念：镜像、容器和仓库 一、镜像（Image）  镜
 搬过去，重新取出（Load）镜像即可。当然这些比喻并不十分严格，只是帮助理解而已。
  通过版本管理和增量的文件系统，Docker提供了一套十分简单的机制来创建和更新现有的镜像。用户在
  对容器进行修改并提交（commit）后，重新运行依然可以保持这个变化
- 有关Docker镜像的操作详解，请参看Docker入门学习&ndash;镜像
+ 有关Docker镜像的操作详解，请参看Docker入门学习--镜像
  二、容器（Container）  容器是从镜像创建的运行实例，可以将其启动（run）、开始、停止和删除，而且这些容器都是相互隔离
  的，互相不可见的。用户可以将容器看做一个简易版的Linux系统环境（包括root用户权限、进程空间、用户
 空间和网络空间），以及运行在其中的应用程序打包而成的应用盒子
  镜像本身是可读的，容器从镜像启动的时候，Docker会在镜像的最上层创建一个可写层，镜像本身并没
  有发生改变
- 有关Docker镜像的操作详解，请参看Docker入门学习&ndash;容器
+ 有关Docker镜像的操作详解，请参看Docker入门学习--容器
  三、仓库（Repository）  Docker仓库类似于代码的仓库，是Docker集中存放镜像文件的场所。Docker利用仓库来管理镜像，这
  种设计理念与Git十分相似。用户可以直接从仓库中拉取（pull）镜像来供自己使用，也可以将自行制作镜像
 并上传（pull）到仓库中，等到在另外一台机器上使用该镜像时，再pull下来即可
@@ -65,7 +65,7 @@ Docker三大基础概念：镜像、容器和仓库 一、镜像（Image）  镜
  放着多个仓库。每个仓库集中存放某一类的镜像，这些镜像通过Tag进行区分。
  根据所存储镜像的公开与否，Docker仓库可以分为公开仓库和私有仓库。Docker Hub是目前最大的公
  开仓库；当然Docker也支持用户在本地的网络内创建 一个只能自己访问的仓库
- 有关Docker镜像的操作详解，请参看Docker入门学习&ndash;仓库
+ 有关Docker镜像的操作详解，请参看Docker入门学习--仓库
 当然Docker的内容远不止这些，接下来会 一 一 介绍
  " />
 <meta property="og:type" content="article" />
@@ -175,7 +175,7 @@ Docker三大基础概念：镜像、容器和仓库 一、镜像（Image）  镜
 <p>对容器进行修改并提交（commit）后，重新运行依然可以保持这个变化</p>
 
 <blockquote>
-<p>有关Docker镜像的操作详解，请参看Docker入门学习&ndash;镜像</p>
+<p>有关Docker镜像的操作详解，请参看Docker入门学习--镜像</p>
 </blockquote>
 
 <h3 id="二-容器-container">二、容器（Container）</h3>
@@ -195,7 +195,7 @@ Docker三大基础概念：镜像、容器和仓库 一、镜像（Image）  镜
 <p>有发生改变</p>
 
 <blockquote>
-<p>有关Docker镜像的操作详解，请参看Docker入门学习&ndash;容器</p>
+<p>有关Docker镜像的操作详解，请参看Docker入门学习--容器</p>
 </blockquote>
 
 <h3 id="三-仓库-repository">三、仓库（Repository）</h3>
@@ -221,7 +221,7 @@ Docker三大基础概念：镜像、容器和仓库 一、镜像（Image）  镜
 <p>开仓库；当然Docker也支持用户在本地的网络内创建 一个只能自己访问的仓库</p>
 
 <blockquote>
-<p>有关Docker镜像的操作详解，请参看<a href="http://csuyzz.com/post/docker-image/">Docker入门学习&ndash;仓库</a></p>
+<p>有关Docker镜像的操作详解，请参看<a href="http://csuyzz.com/post/docker-image/">Docker入门学习--仓库</a></p>
 
 <p>当然Docker的内容远不止这些，接下来会 一 一 介绍</p>
 </blockquote>
@@ -231,22 +231,13 @@ Docker三大基础概念：镜像、容器和仓库 一、镜像（Image）  镜
       
     </div>
   </article>
-
-  <div id="container"></div>
-<link rel="stylesheet" href="https://lovesora.github.io/gitment/style/default.css">
-<script src="https://lovesora.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  owner: '58158090',
-  repo: 'hugocomments',
-  oauth: {
-    client_id: '1755854f590601c9e723',
-    client_secret: 'ccc13cc93cebb3f1e3b9c08a22c77b19bc059ac8',
-  },
-})
-gitment.render('container')
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-light"  
+        crossorigin="anonymous"
+        async>
 </script>
-
 
     </main>
   </body>

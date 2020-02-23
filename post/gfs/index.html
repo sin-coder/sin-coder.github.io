@@ -221,11 +221,11 @@ GFS系统的优点：高可用性、自动负载均衡
 
 <p>​        如果数据损坏的话，Chunk Server就需要去找Master恢复数据   具体的过程为：</p>
 
-<p>​        （1） ChunkServer4  向Master服务器发送请求信息   &ldquo;我的Chunk坏了，谁还有数据的备份&rdquo;</p>
+<p>​        （1） ChunkServer4  向Master服务器发送请求信息   &quot;我的Chunk坏了，谁还有数据的备份&quot;</p>
 
 <p>​        （2）Master服务器向ChunkServer4发送  “ChunkServer1  和ChunkServer3  这两台服务器还有你数据的备份”</p>
 
-<p>​        （3）ChunkServer4 向ChunkServer3(距离较近) 发送请求 &ldquo;我需要备份的数据&rdquo;</p>
+<p>​        （3）ChunkServer4 向ChunkServer3(距离较近) 发送请求 &quot;我需要备份的数据&quot;</p>
 
 <p>​        （4）ChunkServer3 便向ChunkServer4发送它所需要的数据</p>
 
@@ -248,22 +248,13 @@ GFS系统的优点：高可用性、自动负载均衡
       
     </div>
   </article>
-
-  <div id="container"></div>
-<link rel="stylesheet" href="https://lovesora.github.io/gitment/style/default.css">
-<script src="https://lovesora.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  owner: '58158090',
-  repo: 'hugocomments',
-  oauth: {
-    client_id: '1755854f590601c9e723',
-    client_secret: 'ccc13cc93cebb3f1e3b9c08a22c77b19bc059ac8',
-  },
-})
-gitment.render('container')
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-light"  
+        crossorigin="anonymous"
+        async>
 </script>
-
 
     </main>
   </body>

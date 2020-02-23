@@ -31,7 +31,7 @@
  分布式版本控制相比于集中式最大的优点就是能够避免单点故障的问题
   二、Git 简介 1.Git的发展历史  Git是一个免费、开源的分布式版本控制工具。在2005年，由Linus基于C语言开发完成，开发的初衷是
  管理Linux社区中提交的代码, 而这位Linus正是是开发Linux系统内核的大神，它的个人语录也是我的座右铭
-&amp;ldquo;Talk is cheap, Show me the Code&amp;rdquo;，少废话我只看代码。
+&amp;quot;Talk is cheap, Show me the Code&amp;quot;，少废话我只看代码。
 2.Git的特性简介  从Git的图标中就可以看到分支是其最引以为傲的特点，实际上Git的优点还有很多
   大部分操作在本地完成版本控制，不需要联网
  对数据进行完整性保证，基于Hash算法

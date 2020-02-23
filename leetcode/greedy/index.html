@@ -400,7 +400,7 @@
 <p>假设此时处在数组的第ｉ个位置上，该位置最远可以调到ｊ位置（ｊ位置可计算），则从ｉ位置一定还可以</p>
 </blockquote>
 
-<p>跳至ｉ＋１、i + 2、&hellip;..、j - 1和 j位置；那么从这些可选的位置中应该选择去调到哪一个位置才是最好的，这里</p>
+<p>跳至ｉ＋１、i + 2、.....、j - 1和 j位置；那么从这些可选的位置中应该选择去调到哪一个位置才是最好的，这里</p>
 
 <p>就体现出了贪心的思想，从第i位置应该跳到可跳位置中可以跳得更远位置的位置（不要晕），看看下面算法的</p>
 
@@ -608,22 +608,13 @@
       
     </div>
   </article>
-
-  <div id="container"></div>
-<link rel="stylesheet" href="https://lovesora.github.io/gitment/style/default.css">
-<script src="https://lovesora.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  owner: '58158090',
-  repo: 'hugocomments',
-  oauth: {
-    client_id: '1755854f590601c9e723',
-    client_secret: 'ccc13cc93cebb3f1e3b9c08a22c77b19bc059ac8',
-  },
-})
-gitment.render('container')
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-light"  
+        crossorigin="anonymous"
+        async>
 </script>
-
 
     </main>
   </body>
