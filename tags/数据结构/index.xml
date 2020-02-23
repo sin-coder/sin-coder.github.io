@@ -112,10 +112,10 @@ public void traverse(ListNode head){ while(head != null){ //访问head.val head 
     
     <item>
       <title>数据结构之容器</title>
-      <link>https://sin-coder.github.io/datastructure/datastructure/container/</link>
+      <link>https://sin-coder.github.io/datastructure/container/</link>
       <pubDate>Thu, 28 Nov 2019 17:01:10 +0800</pubDate>
       
-      <guid>https://sin-coder.github.io/datastructure/datastructure/container/</guid>
+      <guid>https://sin-coder.github.io/datastructure/container/</guid>
       <description>一、概述 1.什么是数据结构中的容器？  容器是一种把多个元素组织在一起的数据结构，也可以理解为一种可以包含其他类型对象作为元素的
  的对象。容器是仅仅用来存放数据的，本身没有取出元素这种能力，大多数情况下是通过可迭代对象来
 操作容器
