@@ -321,4 +321,9 @@
     <loc>https://sin-coder.github.io/categories/</loc>
   </url>
   
+  <url>
+    <loc>https://sin-coder.github.io/search/</loc>
+    <priority>0.1</priority>
+  </url>
+  
 </urlset>
