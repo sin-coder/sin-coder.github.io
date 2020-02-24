@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>编程语言 on sin-coder</title>
+    <link>https://sin-coder.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</link>
+    <description>Recent content in 编程语言 on sin-coder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 03 Dec 2019 21:14:28 +0800</lastBuildDate>
+    
+	<atom:link href="https://sin-coder.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java和Python中如何使用大顶堆</title>
+      <link>https://sin-coder.github.io/program/javapqueue/</link>
+      <pubDate>Tue, 03 Dec 2019 21:14:28 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/javapqueue/</guid>
+      <description>Java和Python中如何使用大顶堆  在数据结构之容器的那篇文章中，我们对于优先队列即堆这种数据结构的底层实现进行了剖析，在实际的
+ 应用中我们不必自己去实现一个堆，主流的编程语言都提供了相关的集合模块，比如Java中的PriorityQueue
+类，Python中的heapq模块。但是这两种语言中实现的堆都是小顶堆（根节点的元素小于左右节点元素的值），
+当需要使用大顶堆时该如何解决呢？比如典型的最大的K个元素需要用小顶堆解决，但是最小的K个元素不就
+是需要使用一个大顶堆来解决了吗！
+ 具体的解决方案如下：
+ 一、通用的方法: 取反  通用的解决方法就是跟语言没有关系的解法，想要构造一个大顶堆，只要保证根节点大于左右节点即可，
+ 所以我们可以将数据取成相反数再添加到小顶堆中去，取出时再对数据进行取反即可实现大顶堆的效果
+二、针对Java的方法  优先队列中存放的是基本数据类型的包装类（Integer、Long）或者自定义的包装类。对于基本数据类型
+ 的包装器类，优先队列中元素默认排列顺序是升序排列的，也就是说是小顶堆，但是既然是默认的就可以进
+行更改。此外，对于自定义的类来说，需要自己定义比较器，比如：
+//自定义比较器，降序排列 public static Comparator&amp;lt;Integer&amp;gt; cmp = new Comparator&amp;lt;Integer&amp;gt;(){ public int compare(Integer e1,Integer e2){ return e2 - e1; } } //声明对象时 Queue&amp;lt;Integer&amp;gt; pqueue = new PriorityQueue&amp;lt;Integer&amp;gt;(); //不使用比较器，默认升序排列，即小顶堆 Queue&amp;lt;Integer&amp;gt; pqueue = new PriorityQueue&amp;lt;Integer&amp;gt;(cmp); //使用比较器，降序排列，即为大顶堆 //比较器升降序的声明 Comparator&amp;lt;Object&amp;gt; cmp = new Comparator&amp;lt;Object&amp;gt;(){ public int compare(Object o1,Object o2){ return o1 - o2 //升序 return o2 - o1 //降序 } }   所以在实际解决问题的过程中如果需要使用大顶堆可以这样声明</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java和Python中如何使用大顶堆 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java和Python中如何使用大顶堆"/>
+<meta name="twitter:description" content="Java和Python中如何使用大顶堆  在数据结构之容器的那篇文章中，我们对于优先队列即堆这种数据结构的底层实现进行了剖析，在实际的
+ 应用中我们不必自己去实现一个堆，主流的编程语言都提供了相关的集合模块，比如Java中的PriorityQueue
+类，Python中的heapq模块。但是这两种语言中实现的堆都是小顶堆（根节点的元素小于左右节点元素的值），
+当需要使用大顶堆时该如何解决呢？比如典型的最大的K个元素需要用小顶堆解决，但是最小的K个元素不就
+是需要使用一个大顶堆来解决了吗！
+ 具体的解决方案如下：
+ 一、通用的方法: 取反  通用的解决方法就是跟语言没有关系的解法，想要构造一个大顶堆，只要保证根节点大于左右节点即可，
+ 所以我们可以将数据取成相反数再添加到小顶堆中去，取出时再对数据进行取反即可实现大顶堆的效果
+二、针对Java的方法  优先队列中存放的是基本数据类型的包装类（Integer、Long）或者自定义的包装类。对于基本数据类型
+ 的包装器类，优先队列中元素默认排列顺序是升序排列的，也就是说是小顶堆，但是既然是默认的就可以进
+行更改。此外，对于自定义的类来说，需要自己定义比较器，比如：
+//自定义比较器，降序排列 public static Comparator&lt;Integer&gt; cmp = new Comparator&lt;Integer&gt;(){ public int compare(Integer e1,Integer e2){ return e2 - e1; } } //声明对象时 Queue&lt;Integer&gt; pqueue = new PriorityQueue&lt;Integer&gt;(); //不使用比较器，默认升序排列，即小顶堆 Queue&lt;Integer&gt; pqueue = new PriorityQueue&lt;Integer&gt;(cmp); //使用比较器，降序排列，即为大顶堆 //比较器升降序的声明 Comparator&lt;Object&gt; cmp = new Comparator&lt;Object&gt;(){ public int compare(Object o1,Object o2){ return o1 - o2 //升序 return o2 - o1 //降序 } }   所以在实际解决问题的过程中如果需要使用大顶堆可以这样声明"/>
+
+    <meta property="og:title" content="Java和Python中如何使用大顶堆" />
+<meta property="og:description" content="Java和Python中如何使用大顶堆  在数据结构之容器的那篇文章中，我们对于优先队列即堆这种数据结构的底层实现进行了剖析，在实际的
+ 应用中我们不必自己去实现一个堆，主流的编程语言都提供了相关的集合模块，比如Java中的PriorityQueue
+类，Python中的heapq模块。但是这两种语言中实现的堆都是小顶堆（根节点的元素小于左右节点元素的值），
+当需要使用大顶堆时该如何解决呢？比如典型的最大的K个元素需要用小顶堆解决，但是最小的K个元素不就
+是需要使用一个大顶堆来解决了吗！
+ 具体的解决方案如下：
+ 一、通用的方法: 取反  通用的解决方法就是跟语言没有关系的解法，想要构造一个大顶堆，只要保证根节点大于左右节点即可，
+ 所以我们可以将数据取成相反数再添加到小顶堆中去，取出时再对数据进行取反即可实现大顶堆的效果
+二、针对Java的方法  优先队列中存放的是基本数据类型的包装类（Integer、Long）或者自定义的包装类。对于基本数据类型
+ 的包装器类，优先队列中元素默认排列顺序是升序排列的，也就是说是小顶堆，但是既然是默认的就可以进
+行更改。此外，对于自定义的类来说，需要自己定义比较器，比如：
+//自定义比较器，降序排列 public static Comparator&lt;Integer&gt; cmp = new Comparator&lt;Integer&gt;(){ public int compare(Integer e1,Integer e2){ return e2 - e1; } } //声明对象时 Queue&lt;Integer&gt; pqueue = new PriorityQueue&lt;Integer&gt;(); //不使用比较器，默认升序排列，即小顶堆 Queue&lt;Integer&gt; pqueue = new PriorityQueue&lt;Integer&gt;(cmp); //使用比较器，降序排列，即为大顶堆 //比较器升降序的声明 Comparator&lt;Object&gt; cmp = new Comparator&lt;Object&gt;(){ public int compare(Object o1,Object o2){ return o1 - o2 //升序 return o2 - o1 //降序 } }   所以在实际解决问题的过程中如果需要使用大顶堆可以这样声明" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/program/javapqueue/" />
+<meta property="article:published_time" content="2019-12-03T21:14:28+08:00" />
+<meta property="article:modified_time" content="2019-12-03T21:14:28+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java和Python中如何使用大顶堆</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 3, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><a class="tag" href="https://sin-coder.github.io/tags/java/">Java</a><a class="tag" href="https://sin-coder.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><a class="tag" href="https://sin-coder.github.io/tags/python/">Python</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="java和python中如何使用大顶堆">Java和Python中如何使用大顶堆</h2>
+
+<blockquote>
+<p>在<a href="http://csuyzz.com/datastructure/container/">数据结构之容器</a>的那篇文章中，我们对于优先队列即堆这种数据结构的底层实现进行了剖析，在实际的</p>
+</blockquote>
+
+<p>应用中我们不必自己去实现一个堆，主流的编程语言都提供了相关的集合模块，比如Java中的PriorityQueue</p>
+
+<p>类，Python中的heapq模块。但是这两种语言中实现的堆都是小顶堆（根节点的元素小于左右节点元素的值），</p>
+
+<p>当需要使用大顶堆时该如何解决呢？比如典型的最大的K个元素需要用小顶堆解决，但是最小的K个元素不就</p>
+
+<p>是需要使用一个大顶堆来解决了吗！</p>
+
+<blockquote>
+<p>具体的解决方案如下：</p>
+</blockquote>
+
+<h3 id="一-通用的方法-取反">一、通用的方法:    取反</h3>
+
+<blockquote>
+<p>通用的解决方法就是跟语言没有关系的解法，想要构造一个大顶堆，只要保证根节点大于左右节点即可，</p>
+</blockquote>
+
+<p>所以我们可以将数据取成相反数再添加到小顶堆中去，取出时再对数据进行取反即可实现大顶堆的效果</p>
+
+<h3 id="二-针对java的方法">二、针对Java的方法</h3>
+
+<blockquote>
+<p>优先队列中存放的是基本数据类型的包装类（Integer、Long）或者自定义的包装类。对于基本数据类型</p>
+</blockquote>
+
+<p>的包装器类，优先队列中元素默认排列顺序是升序排列的，也就是说是小顶堆，但是既然是默认的就可以进</p>
+
+<p>行更改。此外，对于自定义的类来说，需要自己定义比较器，比如：</p>
+
+<pre><code class="language-java">//自定义比较器，降序排列
+public static Comparator&lt;Integer&gt; cmp = new Comparator&lt;Integer&gt;(){
+    public int compare(Integer e1,Integer e2){
+        return e2 - e1;
+    }
+} 
+
+//声明对象时
+Queue&lt;Integer&gt; pqueue = new PriorityQueue&lt;Integer&gt;();   //不使用比较器，默认升序排列，即小顶堆
+Queue&lt;Integer&gt; pqueue = new PriorityQueue&lt;Integer&gt;(cmp); //使用比较器，降序排列，即为大顶堆
+
+//比较器升降序的声明
+Comparator&lt;Object&gt; cmp = new Comparator&lt;Object&gt;(){
+    public int compare(Object o1,Object o2){
+        return o1 - o2    //升序
+        return o2 - o1    //降序
+    }
+}
+
+</code></pre>
+
+<blockquote>
+<p>所以在实际解决问题的过程中如果需要使用大顶堆可以这样声明</p>
+</blockquote>
+
+<pre><code class="language-java">PriorityQueue&lt;Integer&gt; pqueue = new PriorityQueue&lt;&gt;((o1,o2) -&gt; o2 - o1);
+</code></pre>
+
+<blockquote>
+<p>最后再补充一个堆的遍历，对于PriorityQueue类来说，当调用iterator()方法时，返回的iterator迭代器实际上</p>
+</blockquote>
+
+<p>不保证以任何特定的顺序遍历队列的元素；若想按特定顺序遍历，需要先将队列转换成数组，在排序遍历</p>
+
+<pre><code class="language-java">Queue&lt;Integer&gt; pqueue = new PriorityQueue&lt;&gt;(cmp);   //定义一个优先队列
+Object[] retarr = pqueue.toArray();
+Arrays.sort(retarr);
+//注意，此时retarr数组中的元素的类型是Object类型的，如果想要组成整数数组，需用(int)强制类型转化
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>
