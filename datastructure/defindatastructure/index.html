@@ -12,10 +12,10 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="常见数据结构的定义"/>
-<meta name="twitter:description" content="常见数据结构的定义 一、单链表（singly-linked list） 1.Java public class ListNode{ int val; ListNode next; ListNode(int x) { val = x; next = null; } }  2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node  3.C struct ListNode{ int val; struct ListNode *next; };  4.Go type ListNode struct{ Val int Next *ListNode }  二、二叉树（Binary Tree Node） 1.Java //Definition for a binary tree node public class TreeNode{ int val; TreeNode left; TreeNode right; TreeNode(int x){val = x;} }  2."/>
+<meta name="twitter:description" content="常见数据结构的定义 一、链表（以singly-linked list为例） 1.Java public class ListNode{ int val; ListNode next; //如果是双向链表，则会为left or right ListNode(int x) { val = x; next = null; } }  2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node  3.C struct ListNode{ int val; struct ListNode *next; };  4.Go type ListNode struct{ Val int Next *ListNode }  二、二叉树（Binary Tree Node） 1.Java //Definition for a binary tree node public class TreeNode{ int val; TreeNode left; TreeNode right; TreeNode(int x){val = x;} }  2."/>
 
     <meta property="og:title" content="常见数据结构的定义" />
-<meta property="og:description" content="常见数据结构的定义 一、单链表（singly-linked list） 1.Java public class ListNode{ int val; ListNode next; ListNode(int x) { val = x; next = null; } }  2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node  3.C struct ListNode{ int val; struct ListNode *next; };  4.Go type ListNode struct{ Val int Next *ListNode }  二、二叉树（Binary Tree Node） 1.Java //Definition for a binary tree node public class TreeNode{ int val; TreeNode left; TreeNode right; TreeNode(int x){val = x;} }  2." />
+<meta property="og:description" content="常见数据结构的定义 一、链表（以singly-linked list为例） 1.Java public class ListNode{ int val; ListNode next; //如果是双向链表，则会为left or right ListNode(int x) { val = x; next = null; } }  2.Python class ListNode: def __init__(self,x): self.val = x self.next = Node  3.C struct ListNode{ int val; struct ListNode *next; };  4.Go type ListNode struct{ Val int Next *ListNode }  二、二叉树（Binary Tree Node） 1.Java //Definition for a binary tree node public class TreeNode{ int val; TreeNode left; TreeNode right; TreeNode(int x){val = x;} }  2." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sin-coder.github.io/datastructure/defindatastructure/" />
 <meta property="article:published_time" content="2019-11-15T14:01:10+08:00" />
@@ -86,13 +86,13 @@
 
 <h2 id="常见数据结构的定义">常见数据结构的定义</h2>
 
-<h3 id="一-单链表-singly-linked-list">一、单链表（singly-linked list）</h3>
+<h3 id="一-链表-以singly-linked-list为例">一、链表（以singly-linked list为例）</h3>
 
 <h3 id="1-java">1.Java</h3>
 
 <pre><code class="language-java">public class ListNode{
     int val;
-    ListNode next;
+    ListNode next;            //如果是双向链表，则会为left or right
     ListNode(int x) {
         val = x;
         next = null;
@@ -164,14 +164,14 @@ public class TreeNode{
 }
 </code></pre>
 
-<h3 id="三-n叉树">三、N叉树</h3>
+<h3 id="三-n叉树-图">三、N叉树/图</h3>
 
 <h4 id="1-java-2">1.Java</h4>
 
 <pre><code class="language-java">//Definition for a Node 
 class Node{
     public int val;
-    public List&lt;Node&gt; children;
+    public List&lt;Node&gt; children; //在图中不是children,而是neighbours
     public Node(){}
     public Node(int _val){
         val = _val;
