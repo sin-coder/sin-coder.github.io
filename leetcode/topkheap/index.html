@@ -184,7 +184,9 @@ public List&lt;Integer&gt; topKFrequent(int[] nums, int k) {
     }
 </code></pre>
 
+<blockquote>
 <p>拓展：统计每个元素出现频率更简单的写法：</p>
+</blockquote>
 
 <pre><code class="language-java">//使用getOrDefault()方法，JDK8中新增的方法
 //意思就是当map集合中有这个key时，就使用这个key值，如果没有就使用默认值defaultValue
@@ -193,7 +195,9 @@ for (int n: nums) {
 }
 </code></pre>
 
+<blockquote>
 <p>当然我们也可以用python来实现：</p>
+</blockquote>
 
 <pre><code class="language-python">def topKFrequent(self, nums, k):
     #Python中的Collections中Counter可以对元素出现的频率从大到小排序，返回的是一个字典
