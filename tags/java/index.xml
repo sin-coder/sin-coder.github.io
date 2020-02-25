@@ -6,10 +6,29 @@
     <description>Recent content in Java on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Dec 2019 21:14:28 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 25 Feb 2020 16:10:36 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java中的ArrayDeque和LinkedList的使用</title>
+      <link>https://sin-coder.github.io/datastructure/deque_linked/</link>
+      <pubDate>Tue, 25 Feb 2020 16:10:36 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/datastructure/deque_linked/</guid>
+      <description> Java中的ArrayDeque和LinkedList的使用  在Java的集合框架中，ArrayDeque和LinkdedList是实现栈和队列的两种不同方式，那么应该如何使用，
+ 才能使自己构造的数据结构解决问题时性能更好呢，先上一张继承关系表
+ImplementationsHash TableResizable ArrayBalanced TreeLinked ListHash Table + Linked ListInterfacesSetHashSetTreeSetLinkedHashSetListArrayListLinkedListDequeArrayDequeLinkedListMapHashMapTreeMapLinkedHashMap  从上图中我们可以看到，ArrayDeque是继承于Deque接口，LinkedList继承于List接口和Deque接口，看
+ 起来功能要更加强大，那么我们从几个方面来进行比较
+    底层数据存储 常用操作 线程安全 扩容问题 随机访问     ArrayDeque 初始长度为16的循环数组 首尾插入、删除、查看 线程不同步 存在 支持   LinkedList 双向链表 首尾插入、删除、查看 线程不同步 不存在 不支持     从这张表格可以看出ArrayDeque和LinkedList的主要区别就是数组和链表的区别，二者都能用作双向队列、
+ 栈；但是使用ArrayDeque当数据不断插入时，底层数组可能扩容，对性能的影响是比较大的；LinkedList底层
+是使用的双向链表，不存在扩容的问题，但由于链表，占用的存储空间更大。二者各有优劣，所以综合来看：
+ 当做队列或栈使用并且数据量比较少时，使用ArrayDeque，占用的存储空间更小
+ 当做队列或栈使用并且数据量很大时，使用LinkjedList，这样不用扩容对性能的影响
+ 当需要随机访问时，使用ArrayDeque，数组有先天的优势
+  </description>
+    </item>
     
     <item>
       <title>Java和Python中如何使用大顶堆</title>
