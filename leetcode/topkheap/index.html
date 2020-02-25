@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>使用堆解决常见TOPK问题 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用堆解决常见TOPK问题"/>
+<meta name="twitter:description" content="使用堆解决常见的TOK问题  关于常见的TOPK问题，都可以使用堆这种数据结构来巧妙的解决，除了去统计最大的或者最小的K个元素
+ 之外，还有一些变形的问题，比如统计出现频率TOPK的问题，这种问题一般需要进行排序。下面列出leetcode
+上一些典型的例题：
+ 数组中的第K最大的元素
+ 根据字符出现的频率进行排序（堆排序）
+ 前K个高频元素 leetcode 347
+ 前K个高频单词 leetcode 692
+   理解了堆的特点后，解决这些问题并不难，但是我们要熟悉一些堆的基本操作，比如如何生成一个堆、对
+ 堆中的元素进行排序等。此外，在满足复杂度要求的前提下，如何写出更加简练的代码也是一个关注点。毫无
+疑问的是在对数据的处理上，python比Java有着先天的优势，在代码编写方面会更加简洁，下面是例题
+一、前K个高频元素  给定一个非空的整数数组，返回其中出现频率前 *k* 高的元素
+对于这种求TOPK频率的问题，与以往的求最大的K个元素不同，我们需要用哈希表来存放每个元素及其出
+ 现的频率，再用堆这种数据结构去按照升序排列，代码如下：
+//构建一个哈希表用来存放每个元素及其出现的频率 private HashMap&lt;Integer,Integer&gt; map = new HashMap(); //构建一个小顶堆，并且该堆要对map中的元素出现的频率进行排序 private PriorityQueue&lt;Integer&gt; heap = new PriorityQueue&lt;&gt;((n1,n2) -&gt; map.get(n1) map.get(n2)); //返回的列表 private List&lt;Integer&gt; topK = new LinkedList(); public List&lt;Integer&gt; topKFrequent(int[] nums, int k) { //先统计每个元素及其出现的频率，当然还有更简单的写法，请看拓展内容 for(int n : nums){ if(map."/>
+
+    <meta property="og:title" content="使用堆解决常见TOPK问题" />
+<meta property="og:description" content="使用堆解决常见的TOK问题  关于常见的TOPK问题，都可以使用堆这种数据结构来巧妙的解决，除了去统计最大的或者最小的K个元素
+ 之外，还有一些变形的问题，比如统计出现频率TOPK的问题，这种问题一般需要进行排序。下面列出leetcode
+上一些典型的例题：
+ 数组中的第K最大的元素
+ 根据字符出现的频率进行排序（堆排序）
+ 前K个高频元素 leetcode 347
+ 前K个高频单词 leetcode 692
+   理解了堆的特点后，解决这些问题并不难，但是我们要熟悉一些堆的基本操作，比如如何生成一个堆、对
+ 堆中的元素进行排序等。此外，在满足复杂度要求的前提下，如何写出更加简练的代码也是一个关注点。毫无
+疑问的是在对数据的处理上，python比Java有着先天的优势，在代码编写方面会更加简洁，下面是例题
+一、前K个高频元素  给定一个非空的整数数组，返回其中出现频率前 *k* 高的元素
+对于这种求TOPK频率的问题，与以往的求最大的K个元素不同，我们需要用哈希表来存放每个元素及其出
+ 现的频率，再用堆这种数据结构去按照升序排列，代码如下：
+//构建一个哈希表用来存放每个元素及其出现的频率 private HashMap&lt;Integer,Integer&gt; map = new HashMap(); //构建一个小顶堆，并且该堆要对map中的元素出现的频率进行排序 private PriorityQueue&lt;Integer&gt; heap = new PriorityQueue&lt;&gt;((n1,n2) -&gt; map.get(n1) map.get(n2)); //返回的列表 private List&lt;Integer&gt; topK = new LinkedList(); public List&lt;Integer&gt; topKFrequent(int[] nums, int k) { //先统计每个元素及其出现的频率，当然还有更简单的写法，请看拓展内容 for(int n : nums){ if(map." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/leetcode/topkheap/" />
+<meta property="article:published_time" content="2019-12-11T14:01:10+08:00" />
+<meta property="article:modified_time" content="2019-12-11T14:01:10+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">使用堆解决常见TOPK问题</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 11, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><a class="tag" href="https://sin-coder.github.io/tags/leetcode/">leetcode</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="使用堆解决常见的tok问题">使用堆解决常见的TOK问题</h2>
+
+<hr />
+
+<blockquote>
+<p>关于常见的TOPK问题，都可以使用堆这种数据结构来巧妙的解决，除了去统计最大的或者最小的K个元素</p>
+</blockquote>
+
+<p>之外，还有一些变形的问题，比如统计出现频率TOPK的问题，这种问题一般需要进行排序。下面列出leetcode</p>
+
+<p>上一些典型的例题：</p>
+
+<ul>
+<li><p>数组中的第K最大的元素</p></li>
+
+<li><p>根据字符出现的频率进行排序（堆排序）</p></li>
+
+<li><p><a href="https://leetcode-cn.com/problems/top-k-frequent-elements/">前K个高频元素</a> leetcode 347</p></li>
+
+<li><p><a href="https://leetcode-cn.com/problems/top-k-frequent-words/">前K个高频单词</a> leetcode 692</p></li>
+</ul>
+
+<blockquote>
+<p>理解了堆的特点后，解决这些问题并不难，但是我们要熟悉一些堆的基本操作，比如如何生成一个堆、对</p>
+</blockquote>
+
+<p>堆中的元素进行排序等。此外，在满足复杂度要求的前提下，如何写出更加简练的代码也是一个关注点。毫无</p>
+
+<p>疑问的是在对数据的处理上，python比Java有着先天的优势，在代码编写方面会更加简洁，下面是例题</p>
+
+<h3 id="一-前k个高频元素">一、前K个高频元素</h3>
+
+<blockquote>
+<p>给定一个非空的整数数组，返回其中出现频率前 *<strong>k*</strong> 高的元素</p>
+
+<p>对于这种求TOPK频率的问题，与以往的求最大的K个元素不同，我们需要用哈希表来存放每个元素及其出</p>
+</blockquote>
+
+<p>现的频率，再用堆这种数据结构去按照升序排列，代码如下：</p>
+
+<pre><code class="language-java">//构建一个哈希表用来存放每个元素及其出现的频率
+private HashMap&lt;Integer,Integer&gt; map = new HashMap(); 
+
+//构建一个小顶堆，并且该堆要对map中的元素出现的频率进行排序
+private PriorityQueue&lt;Integer&gt; heap = new PriorityQueue&lt;&gt;((n1,n2) -&gt; map.get(n1) map.get(n2));
+
+//返回的列表
+private List&lt;Integer&gt; topK = new LinkedList();
+public List&lt;Integer&gt; topKFrequent(int[] nums, int k) {
+    //先统计每个元素及其出现的频率，当然还有更简单的写法，请看拓展内容
+    for(int n : nums){
+            if(map.containsKey(n)){
+                map.put(n,map.get(n) + 1);
+            }else{
+                map.put(n,0);
+            }
+        }
+    
+    //按照元素出现的频率进行排序
+     for(int n : map.keySet()){
+            heap.add(n);
+            if(heap.size() &gt; k){
+                heap.poll();
+            }
+        }
+     while(!heap.isEmpty()){
+            //每次都取出堆顶的元素，也就是出现频率最小的元素首位，
+            //这样每个列表中元素就是按照频率从大到小进行排序的
+            topK.addFirst(heap.poll());  
+        }
+        return topK;
+    }
+</code></pre>
+
+<p>拓展：统计每个元素出现频率更简单的写法：</p>
+
+<pre><code class="language-java">//使用getOrDefault()方法，JDK8中新增的方法
+//意思就是当map集合中有这个key时，就使用这个key值，如果没有就使用默认值defaultValue
+for (int n: nums) {
+    map.put(n, map.getOrDefault(n, 0) + 1);
+}
+</code></pre>
+
+<p>当然我们也可以用python来实现：</p>
+
+<pre><code class="language-python">def topKFrequent(self, nums, k):
+    #Python中的Collections中Counter可以对元素出现的频率从大到小排序，返回的是一个字典
+    count = collections.Counter(nums)
+    #将count的键值集合转化成一个堆，按照对对应的值（频率）取出前K个最高的元素
+	return heapq.nlargest(k, count.keys(), key=count.get)
+
+#拓展
+heapq.nlargest(n,iterable[,key]) 
+#从迭代器对象iterable返回的前n个最大的元素列表，其中关键字参数key用于匹配是字典对象的iterable，
+#可用于更加复杂的数据结构
+</code></pre>
+
+<blockquote>
+<p><strong>复杂度的分析</strong>：建立一个哈希表并统计出现频率的时间复杂度为O（n）,建堆和输出的复杂度均为</p>
+</blockquote>
+
+<p>O（Nlog(k)），所有总的时间复杂度为O（Nlog(k)）,是要小于O（NlogN）的；当k比较大的时候，我</p>
+
+<p>们可以将算法改成删除频率最低的如干个元素；  算法的整个过程中用到了哈希表存储数据，空间复杂</p>
+
+<p>度为O(n)，返回的列表为O(k)，所以总共还是O（n）</p>
+
+<h3 id="二-前k个高频的单词">二、前K个高频的单词</h3>
+
+<blockquote>
+<p>给一非空的单词列表，返回前 <em>k</em> 个出现次数最多的单词。返回的答案应该按单词出现频率由高到低排序。</p>
+</blockquote>
+
+<p>如果不同的单词有相同出现频率，按字母顺序排序</p>
+
+<blockquote>
+<p>这个问题与上一个问题是相似的，只需需要进行两级排序即可，代码与前题类似</p>
+</blockquote>
+
+<pre><code class="language-java">//这里只写出新建堆关于排序规则的代码
+PriorityQueue&lt;String&gt; heap = new PriorityQueue&lt;String&gt;(
+    (o1,o2) -&gt; map.get(o1).equals(map.get(o2))? o2.compareTo(o1):map.get(o1) - map.get(o2)
+);
+//如果出现的频率相同就按照字符串大小进行比较（首字母排序），不同就升序排序（小顶堆）
+</code></pre>
+
+<blockquote>
+<p>复杂度的分析与前题相同</p>
+</blockquote>
+
+<h3 id="三-数据流中的中位数-leetcode-295">三、数据流中的中位数  leetcode 295</h3>
+
+<blockquote>
+<p>计算取出数据流中的中位数</p>
+
+<p>这个问题使用堆可以很好的解决，因为中位数就是数据流进行排序后，中间两个数的平均数（数据流的</p>
+</blockquote>
+
+<p>个数为偶数）的平均值，或者中间那个数（数据流的个数为奇数）。我们不需要对整个数据流进行排序，只</p>
+
+<p>需保证中间的那个数比它左边的所有树都大，比其右边的所有数都小即可</p>
+
+<blockquote>
+<p>我们可以维护两个堆，一个小顶堆，待存放的是比中位数大的数据；另一个大顶堆，存放的是比中位数</p>
+</blockquote>
+
+<p>小的数据，当待添加的数据是偶数个时，可以将其先添加到小顶堆中，但如何保证这个元素要比所有大顶堆</p>
+
+<p>中的元素大呢，就是需要先将其插入大顶堆中，再将大顶堆中的首个元素添加到小顶堆；同理，当数据是第</p>
+
+<p>奇数个时，可以将其加入到大顶堆中，但是如何保证这个元素比所有小顶堆中的元素小呢，就需要先将其</p>
+
+<p>插入到小顶堆中，在将小顶堆中的首个元素添加到大顶堆中</p>
+
+<blockquote>
+<p>等到将数据流处理完毕后，就可以求中位数了，如果数据个数为偶数，那就取小顶堆和大顶堆的中间值</p>
+</blockquote>
+
+<p>的平均值，如果数据个数为奇数，那就取小顶堆的首个元素，因为先插入小顶堆的。代码如下：</p>
+
+<pre><code class="language-java">    //大顶堆，存储左半边元素
+    private PriorityQueue&lt;Integer&gt; left = new PriorityQueue&lt;&gt;((o1,o2) -&gt; o2 - o1);
+    //小顶堆，存储右半边的元素，且右半边的元素大于左半边的元素
+    private PriorityQueue&lt;Integer&gt; right = new PriorityQueue&lt;&gt;();
+    //当前数据流中读入元素的个数
+    private int N = 0;
+    /** initialize your data structure here. */
+    public MedianFinder() {
+    }
+    
+    //插入要保证两个堆都处于平衡状态
+    public void addNum(int num) {
+        if(N%2 == 0){
+            left.add(num);    
+            right.add(left.poll());    //先插入小顶堆
+        }else{
+            right.add(num);
+            left.add(right.poll());   //再插入大顶堆
+        }
+        N++;
+    }
+    
+    public double findMedian() {
+        if(N % 2 == 0){
+            return (left.peek() + right.peek())/2.0;
+        }else{
+            return (double)right.peek();
+        }
+    }
+}
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>

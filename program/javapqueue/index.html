@@ -168,6 +168,8 @@ Comparator&lt;Object&gt; cmp = new Comparator&lt;Object&gt;(){
 </blockquote>
 
 <pre><code class="language-java">PriorityQueue&lt;Integer&gt; pqueue = new PriorityQueue&lt;&gt;((o1,o2) -&gt; o2 - o1);
+//实例：对哈希表中的值进行排序
+PriorityQueue&lt;Integer&gt; heap = new PriorityQueue&lt;&gt;((o1,o2) -&gt;hashmap.get(o1) - hashmap.get(o2))
 </code></pre>
 
 <blockquote>

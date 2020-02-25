@@ -591,6 +591,28 @@ GFS系统的优点：高可用性、自动负载均衡
     </item>
     
     <item>
+      <title>使用堆解决常见TOPK问题</title>
+      <link>https://sin-coder.github.io/leetcode/topkheap/</link>
+      <pubDate>Wed, 11 Dec 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/leetcode/topkheap/</guid>
+      <description>使用堆解决常见的TOK问题  关于常见的TOPK问题，都可以使用堆这种数据结构来巧妙的解决，除了去统计最大的或者最小的K个元素
+ 之外，还有一些变形的问题，比如统计出现频率TOPK的问题，这种问题一般需要进行排序。下面列出leetcode
+上一些典型的例题：
+ 数组中的第K最大的元素
+ 根据字符出现的频率进行排序（堆排序）
+ 前K个高频元素 leetcode 347
+ 前K个高频单词 leetcode 692
+   理解了堆的特点后，解决这些问题并不难，但是我们要熟悉一些堆的基本操作，比如如何生成一个堆、对
+ 堆中的元素进行排序等。此外，在满足复杂度要求的前提下，如何写出更加简练的代码也是一个关注点。毫无
+疑问的是在对数据的处理上，python比Java有着先天的优势，在代码编写方面会更加简洁，下面是例题
+一、前K个高频元素  给定一个非空的整数数组，返回其中出现频率前 *k* 高的元素
+对于这种求TOPK频率的问题，与以往的求最大的K个元素不同，我们需要用哈希表来存放每个元素及其出
+ 现的频率，再用堆这种数据结构去按照升序排列，代码如下：
+//构建一个哈希表用来存放每个元素及其出现的频率 private HashMap&amp;lt;Integer,Integer&amp;gt; map = new HashMap(); //构建一个小顶堆，并且该堆要对map中的元素出现的频率进行排序 private PriorityQueue&amp;lt;Integer&amp;gt; heap = new PriorityQueue&amp;lt;&amp;gt;((n1,n2) -&amp;gt; map.get(n1) map.get(n2)); //返回的列表 private List&amp;lt;Integer&amp;gt; topK = new LinkedList(); public List&amp;lt;Integer&amp;gt; topKFrequent(int[] nums, int k) { //先统计每个元素及其出现的频率，当然还有更简单的写法，请看拓展内容 for(int n : nums){ if(map.</description>
+    </item>
+    
+    <item>
       <title>Java和Python中如何使用大顶堆</title>
       <link>https://sin-coder.github.io/program/javapqueue/</link>
       <pubDate>Tue, 03 Dec 2019 21:14:28 +0800</pubDate>
