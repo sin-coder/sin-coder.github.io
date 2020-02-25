@@ -683,6 +683,17 @@ GFS系统的优点：高可用性、自动负载均衡
     </item>
     
     <item>
+      <title>Python中的sort()和sorted</title>
+      <link>https://sin-coder.github.io/program/sort_sorted/</link>
+      <pubDate>Thu, 28 Nov 2019 21:14:28 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/sort_sorted/</guid>
+      <description>Python中sort和sorted的区别和使用 一、函数介绍  sort函数和sorted函数的功能是非常强大的，在有些leetcode题目中，使用了这些函数，几行代码就可以
+ 搞定了（只要你不怕被面试官打死），下面我们先看看这两个函数的介绍吧
+&amp;gt;&amp;gt;&amp;gt; help(list.sort) Help on method_descriptor: sort(self, /, *, key=None, reverse=False) Stable sort *IN PLACE*. #inplace &amp;gt;&amp;gt;&amp;gt; help(sorted) Help on built-in function sorted in module builtins: sorted(iterable, /, *, key=None, reverse=False) Return a new list containing all items from the iterable in ascending order. #new list A custom key function can be supplied to customize the sort order, and the reverse flag can be set to request the result in descending order.</description>
+    </item>
+    
+    <item>
       <title>BFS &amp; DFS算法</title>
       <link>https://sin-coder.github.io/datastructure/bfs-dfs/</link>
       <pubDate>Thu, 28 Nov 2019 17:01:10 +0800</pubDate>

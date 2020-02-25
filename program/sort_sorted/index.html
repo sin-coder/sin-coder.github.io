@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Python中的sort()和sorted // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Python中的sort()和sorted"/>
+<meta name="twitter:description" content="Python中sort和sorted的区别和使用 一、函数介绍  sort函数和sorted函数的功能是非常强大的，在有些leetcode题目中，使用了这些函数，几行代码就可以
+ 搞定了（只要你不怕被面试官打死），下面我们先看看这两个函数的介绍吧
+&gt;&gt;&gt; help(list.sort) Help on method_descriptor: sort(self, /, *, key=None, reverse=False) Stable sort *IN PLACE*. #inplace &gt;&gt;&gt; help(sorted) Help on built-in function sorted in module builtins: sorted(iterable, /, *, key=None, reverse=False) Return a new list containing all items from the iterable in ascending order. #new list A custom key function can be supplied to customize the sort order, and the reverse flag can be set to request the result in descending order."/>
+
+    <meta property="og:title" content="Python中的sort()和sorted" />
+<meta property="og:description" content="Python中sort和sorted的区别和使用 一、函数介绍  sort函数和sorted函数的功能是非常强大的，在有些leetcode题目中，使用了这些函数，几行代码就可以
+ 搞定了（只要你不怕被面试官打死），下面我们先看看这两个函数的介绍吧
+&gt;&gt;&gt; help(list.sort) Help on method_descriptor: sort(self, /, *, key=None, reverse=False) Stable sort *IN PLACE*. #inplace &gt;&gt;&gt; help(sorted) Help on built-in function sorted in module builtins: sorted(iterable, /, *, key=None, reverse=False) Return a new list containing all items from the iterable in ascending order. #new list A custom key function can be supplied to customize the sort order, and the reverse flag can be set to request the result in descending order." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/program/sort_sorted/" />
+<meta property="article:published_time" content="2019-11-28T21:14:28+08:00" />
+<meta property="article:modified_time" content="2019-11-28T21:14:28+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Python中的sort()和sorted</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Nov 28, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><a class="tag" href="https://sin-coder.github.io/tags/python/">Python</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="python中sort和sorted的区别和使用">Python中sort和sorted的区别和使用</h2>
+
+<h3 id="一-函数介绍">一、函数介绍</h3>
+
+<blockquote>
+<p>sort函数和sorted函数的功能是非常强大的，在有些leetcode题目中，使用了这些函数，几行代码就可以</p>
+</blockquote>
+
+<p>搞定了（只要你不怕被面试官打死），下面我们先看看这两个函数的介绍吧</p>
+
+<pre><code class="language-bash">&gt;&gt;&gt; help(list.sort)
+Help on method_descriptor:
+sort(self, /, *, key=None, reverse=False)
+    Stable sort *IN PLACE*.      #inplace
+    
+&gt;&gt;&gt; help(sorted)
+Help on built-in function sorted in module builtins:
+sorted(iterable, /, *, key=None, reverse=False)
+    Return a new list containing all items from the iterable in ascending order.  #new list
+    A custom key function can be supplied to customize the sort order, and the
+    reverse flag can be set to request the result in descending order.
+</code></pre>
+
+<blockquote>
+<p>抓住最主要的关键词就可以看出区别了，<strong>sort()是在原位重新排列列表、sorted()是产生新列表</strong></p>
+</blockquote>
+
+<h3 id="二-函数的主要功能">二、函数的主要功能</h3>
+
+<blockquote>
+<p>sort（）方法的语法：sort（cmp = None，reverse = False），注意只有列表才有sort()方法</p>
+
+<p>主要的参数含义如下：</p>
+</blockquote>
+
+<ul>
+<li><p><strong>key</strong>  : 主要用来比较的元素，只有一个参数（取自于可迭代的对象）</p></li>
+
+<li><p><strong>reverse</strong> : 是排序的规则，reverse = True是降序的，reverse = False升序（默认）</p></li>
+</ul>
+
+<blockquote>
+<p>sorted（）方法的语法：sorted（iterable，cmp = None，key = None，reverse = False）</p>
+
+<p>其中key参数和reverse参数与sort（）相同，其他参数含义如下，任何可迭代的类型均可使用sorted()</p>
+</blockquote>
+
+<ul>
+<li><p><strong>iterable</strong>： 是可迭代的数据类型</p></li>
+
+<li><p><strong>cmp</strong> : 用于比较的函数，比较什么由key决定，有默认值，是迭代集合中的一项，cmp和key可以使用lambda</p></li>
+
+<li><p><strong>返回值</strong>：函数的返回值是一个经过排序的可迭代类型，与iterable一样</p></li>
+</ul>
+
+<h3 id="三-基本使用">三、基本使用</h3>
+
+<blockquote>
+<p>默认情况下sort（）和sorted（）函数会优先排序第一个元素，然后再排序第二个元素；大写字母会排在</p>
+</blockquote>
+
+<p>小写字母的前面，默认是按照从小到大的顺序进行排列</p>
+
+<h4 id="1-sort函数的使用">1.sort函数的使用</h4>
+
+<pre><code class="language-python">#获取列表中的第二个元素
+def takeSecond(element):
+    return element[1]
+#元素为元组的列表
+random = [(2,3),(4,5),(4,3)]
+random.sort(key = takeSecond)  #指定第二个元素进行排序
+</code></pre>
+
+<h4 id="2-sorted-函数的使用">2.sorted（）函数的使用</h4>
+
+<pre><code class="language-python">#Sorted cmp
+random = [('b',3),('a',5),('d',3),('c',2)]
+sorted(random,cmp = lambda x,y:cmp(x[1],y[1])) #先按照每个元组的第二个元素排序，再按照第一个元素排序
+
+#Sorted key
+random = [('b',3),('a',5),('d',3),('c',2)]
+sorted(random,key = lambda x:x[1])  #对列表中每个元组的第二个元素排序
+sorted(random,key = lambda x:(x[1],x[0])) #先按照每个元组的第二个元素排序，再按照第一个元素排序
+
+#在效率上，key&gt;cmp
+
+#更加高级的排序结构，当列表中元素是字典时
+message = [{'name':'yzz','age':18},{'name':'zjn','age':20},{'name':'ldd','age':19}]
+sorted(message,key = lambda x : (x['name'],x['age']))  #对于每一个字典，先按照name,再按照age进行排序
+sorted(message,key = lambda x : (x['name'],-x['age']))  #对age进行逆序排序
+
+#使用sorted()函数对字典的key或者value进行排序
+dic = {'yzz':45,'cxx':23,'xvv':90}
+sorted(dic.keys())  #对字典的键进行排序
+sorted(dic.values())  #对字典中所有的值排序
+sorted(dic.items()) #将字典转化为可迭代对象，iterms()方法将字典的元素转换成元组，排序后为列表
+</code></pre>
+
+<h3 id="四-其他数据类型的排序">四、其他数据类型的排序</h3>
+
+<blockquote>
+<p>在python的基本数据类型中，只有列表和元组是有序的，字典和集合都是无序的，但是在一些扩展的库中</p>
+</blockquote>
+
+<p>也提供了有序的集合或者字典</p>
+
+<h4 id="1-增强的集合">1.增强的集合</h4>
+
+<blockquote>
+<p>pydu的set模块中，有OrderedSet() 可以保持插入元素是有序的集合</p>
+</blockquote>
+
+<pre><code class="language-python">from pydu.set import OrderedSet
+
+origin = {2,3,4,5,2,1,&quot;ddf&quot;}
+origin.add(5)
+origin.add(6)
+origin.add(90)
+origin.add(29384)
+print(origin)   #每次运行的结果顺序不同
+
+new = OrderedSet([3,4,5,7,1,&quot;r45454&quot;])  
+new.add(289)
+new.add(9898)
+new.add(889379)
+print(list(new))   #每次运行的结果顺序相同
+</code></pre>
+
+<h4 id="2-字典到底是有序的还是无序的">2.字典到底是有序的还是无序的？</h4>
+
+<blockquote>
+<p>Python 3.6改写了dict的内部算法，使得dict是有序的，在此版本之前均是无需的，在之前的话可以通过</p>
+</blockquote>
+
+<p>使用Collections库中的orderDict来保证插入的元素是有序的</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>

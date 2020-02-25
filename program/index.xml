@@ -31,5 +31,16 @@
 //自定义比较器，降序排列 public static Comparator&amp;lt;Integer&amp;gt; cmp = new Comparator&amp;lt;Integer&amp;gt;(){ public int compare(Integer e1,Integer e2){ return e2 - e1; } } //声明对象时 Queue&amp;lt;Integer&amp;gt; pqueue = new PriorityQueue&amp;lt;Integer&amp;gt;(); //不使用比较器，默认升序排列，即小顶堆 Queue&amp;lt;Integer&amp;gt; pqueue = new PriorityQueue&amp;lt;Integer&amp;gt;(cmp); //使用比较器，降序排列，即为大顶堆 //比较器升降序的声明 Comparator&amp;lt;Object&amp;gt; cmp = new Comparator&amp;lt;Object&amp;gt;(){ public int compare(Object o1,Object o2){ return o1 - o2 //升序 return o2 - o1 //降序 } }   所以在实际解决问题的过程中如果需要使用大顶堆可以这样声明</description>
     </item>
     
+    <item>
+      <title>Python中的sort()和sorted</title>
+      <link>https://sin-coder.github.io/program/sort_sorted/</link>
+      <pubDate>Thu, 28 Nov 2019 21:14:28 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/sort_sorted/</guid>
+      <description>Python中sort和sorted的区别和使用 一、函数介绍  sort函数和sorted函数的功能是非常强大的，在有些leetcode题目中，使用了这些函数，几行代码就可以
+ 搞定了（只要你不怕被面试官打死），下面我们先看看这两个函数的介绍吧
+&amp;gt;&amp;gt;&amp;gt; help(list.sort) Help on method_descriptor: sort(self, /, *, key=None, reverse=False) Stable sort *IN PLACE*. #inplace &amp;gt;&amp;gt;&amp;gt; help(sorted) Help on built-in function sorted in module builtins: sorted(iterable, /, *, key=None, reverse=False) Return a new list containing all items from the iterable in ascending order. #new list A custom key function can be supplied to customize the sort order, and the reverse flag can be set to request the result in descending order.</description>
+    </item>
+    
   </channel>
 </rss>
