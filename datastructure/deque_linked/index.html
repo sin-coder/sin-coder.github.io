@@ -13,10 +13,10 @@
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Java中的ArrayDeque和LinkedList的使用"/>
 <meta name="twitter:description" content=" Java中的ArrayDeque和LinkedList的使用  在Java的集合框架中，ArrayDeque和LinkdedList是实现栈和队列的两种不同方式，那么应该如何使用，
- 才能使自己构造的数据结构解决问题时性能更好呢，先上一张继承关系表
-ImplementationsHash TableResizable ArrayBalanced TreeLinked ListHash Table &#43; Linked ListInterfacesSetHashSetTreeSetLinkedHashSetListArrayListLinkedListDequeArrayDequeLinkedListMapHashMapTreeMapLinkedHashMap  从上图中我们可以看到，ArrayDeque是继承于Deque接口，LinkedList继承于List接口和Deque接口，看
+ 才能使自己构造的数据结构解决问题时性能更好呢，先上一张继承关系表 
+ 从上图中我们可以看到，ArrayDeque是继承于Deque接口，LinkedList继承于List接口和Deque接口，看
  起来功能要更加强大，那么我们从几个方面来进行比较
-    底层数据存储 常用操作 线程安全 扩容问题 随机访问     ArrayDeque 初始长度为16的循环数组 首尾插入、删除、查看 线程不同步 存在 支持   LinkedList 双向链表 首尾插入、删除、查看 线程不同步 不存在 不支持     从这张表格可以看出ArrayDeque和LinkedList的主要区别就是数组和链表的区别，二者都能用作双向队列、
+ 从这张表格可以看出ArrayDeque和LinkedList的主要区别就是数组和链表的区别，二者都能用作双向队列、
  栈；但是使用ArrayDeque当数据不断插入时，底层数组可能扩容，对性能的影响是比较大的；LinkedList底层
 是使用的双向链表，不存在扩容的问题，但由于链表，占用的存储空间更大。二者各有优劣，所以综合来看：
  当做队列或栈使用并且数据量比较少时，使用ArrayDeque，占用的存储空间更小
@@ -26,10 +26,10 @@ ImplementationsHash TableResizable ArrayBalanced TreeLinked ListHash Table &#43;
 
     <meta property="og:title" content="Java中的ArrayDeque和LinkedList的使用" />
 <meta property="og:description" content=" Java中的ArrayDeque和LinkedList的使用  在Java的集合框架中，ArrayDeque和LinkdedList是实现栈和队列的两种不同方式，那么应该如何使用，
- 才能使自己构造的数据结构解决问题时性能更好呢，先上一张继承关系表
-ImplementationsHash TableResizable ArrayBalanced TreeLinked ListHash Table &#43; Linked ListInterfacesSetHashSetTreeSetLinkedHashSetListArrayListLinkedListDequeArrayDequeLinkedListMapHashMapTreeMapLinkedHashMap  从上图中我们可以看到，ArrayDeque是继承于Deque接口，LinkedList继承于List接口和Deque接口，看
+ 才能使自己构造的数据结构解决问题时性能更好呢，先上一张继承关系表 
+ 从上图中我们可以看到，ArrayDeque是继承于Deque接口，LinkedList继承于List接口和Deque接口，看
  起来功能要更加强大，那么我们从几个方面来进行比较
-    底层数据存储 常用操作 线程安全 扩容问题 随机访问     ArrayDeque 初始长度为16的循环数组 首尾插入、删除、查看 线程不同步 存在 支持   LinkedList 双向链表 首尾插入、删除、查看 线程不同步 不存在 不支持     从这张表格可以看出ArrayDeque和LinkedList的主要区别就是数组和链表的区别，二者都能用作双向队列、
+ 从这张表格可以看出ArrayDeque和LinkedList的主要区别就是数组和链表的区别，二者都能用作双向队列、
  栈；但是使用ArrayDeque当数据不断插入时，底层数组可能扩容，对性能的影响是比较大的；LinkedList底层
 是使用的双向链表，不存在扩容的问题，但由于链表，占用的存储空间更大。二者各有优劣，所以综合来看：
  当做队列或栈使用并且数据量比较少时，使用ArrayDeque，占用的存储空间更小
@@ -38,8 +38,8 @@ ImplementationsHash TableResizable ArrayBalanced TreeLinked ListHash Table &#43;
   " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sin-coder.github.io/datastructure/deque_linked/" />
-<meta property="article:published_time" content="2020-02-25T16:10:36+08:00" />
-<meta property="article:modified_time" content="2020-02-25T16:10:36+08:00" />
+<meta property="article:published_time" content="2019-12-10T16:10:36+08:00" />
+<meta property="article:modified_time" content="2019-12-10T16:10:36+08:00" />
 
 
   </head>
@@ -86,7 +86,7 @@ ImplementationsHash TableResizable ArrayBalanced TreeLinked ListHash Table &#43;
   <title>calendar</title>
   <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
 </svg>
-          Feb 25, 2020
+          Dec 10, 2019
         </div>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
@@ -112,9 +112,8 @@ ImplementationsHash TableResizable ArrayBalanced TreeLinked ListHash Table &#43;
 <p>在Java的集合框架中，ArrayDeque和LinkdedList是实现栈和队列的两种不同方式，那么应该如何使用，</p>
 </blockquote>
 
-<p>才能使自己构造的数据结构解决问题时性能更好呢，先上一张继承关系表</p>
-
-<table align="center"><tr><td colspan="2" rowspan="2" align="center" border="0"></td><th colspan="5" align="center">Implementations</th></tr><tr><th>Hash Table</th><th>Resizable Array</th><th>Balanced Tree</th><th>Linked List</th><th>Hash Table + Linked List</th></tr><tr><th rowspan="4">Interfaces</th><th>Set</th><td><tt>HashSet</tt></td><td></td><td><tt>TreeSet</tt></td><td></td><td><tt>LinkedHashSet</tt></td></tr><tr><th>List</th><td></td><td><tt>ArrayList</tt></td><td></td><td><tt>LinkedList</tt></td><td></td></tr><tr><th>Deque</th><td></td><td><tt>ArrayDeque</tt></td><td></td><td><tt>LinkedList</tt></td><td></td></tr><tr><th>Map</th><td><tt>HashMap</tt></td><td></td><td><tt>TreeMap</tt></td><td></td><td><tt>LinkedHashMap</tt></td></tr></table>
+<p>才能使自己构造的数据结构解决问题时性能更好呢，先上一张继承关系表
+<a href="https://imgchr.com/i/3YHe5d"><img src="https://s2.ax1x.com/2020/02/25/3YHe5d.jpg" alt="3YHe5d.jpg" /></a></p>
 
 <blockquote>
 <p>从上图中我们可以看到，ArrayDeque是继承于Deque接口，LinkedList继承于List接口和Deque接口，看</p>
@@ -122,38 +121,7 @@ ImplementationsHash TableResizable ArrayBalanced TreeLinked ListHash Table &#43;
 
 <p>起来功能要更加强大，那么我们从几个方面来进行比较</p>
 
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">底层数据存储</th>
-<th align="center">常用操作</th>
-<th align="center">线程安全</th>
-<th align="center">扩容问题</th>
-<th align="center">随机访问</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="center">ArrayDeque</td>
-<td align="center">初始长度为16的循环数组</td>
-<td align="center">首尾插入、删除、查看</td>
-<td align="center">线程不同步</td>
-<td align="center">存在</td>
-<td align="center">支持</td>
-</tr>
-
-<tr>
-<td align="center">LinkedList</td>
-<td align="center">双向链表</td>
-<td align="center">首尾插入、删除、查看</td>
-<td align="center">线程不同步</td>
-<td align="center">不存在</td>
-<td align="center">不支持</td>
-</tr>
-</tbody>
-</table>
+<p><img src="https://s2.ax1x.com/2020/02/25/3YHZUH.jpg" alt="3YHZUH.jpg" /></p>
 
 <blockquote>
 <p>从这张表格可以看出ArrayDeque和LinkedList的主要区别就是数组和链表的区别，二者都能用作双向队列、</p>
