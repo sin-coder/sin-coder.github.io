@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>动态规划解题思想总结 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="动态规划解题思想总结"/>
+<meta name="twitter:description" content="动态规划解题思想总结 一、动态规划和递归、分治的关系 1.递归  关于递归其实就是一个函数调用它自己，它和分治和回溯等算法没有完全隔离开来，它们都可以看做是
+ 描述一个问题的不同方面。使用递归方法解题时都是有模板的：
+public void recur(int level,int param){ //terminator if(level &gt; MAX_LEVEL){ //process result return; } //process current logic process(level,param); //drill down recur(level:level &#43; 1,newParam) //restore current status }   这里上一道经典的使用递归解决的算法题来说明这个框架的使用
+经典的汉诺塔问题：原题链接
+ public void hanota(List&lt;Integer&gt; A, List&lt;Integer&gt; B, List&lt;Integer&gt; C) { int len = A.size(); //汉诺塔的数量 Hanota(len,A,B,C); } //递归函数 public void Hanota(int n,List&lt;Integer&gt; X,List&lt;Integer&gt; Y,List&lt;Integer&gt; Z){ if(n == 1){ //终止条件 Z.add(0,X.remove(0)); //处理结果 }else{ Hanota(n - 1,X,Z,Y); //向下递归 Z."/>
+
+    <meta property="og:title" content="动态规划解题思想总结" />
+<meta property="og:description" content="动态规划解题思想总结 一、动态规划和递归、分治的关系 1.递归  关于递归其实就是一个函数调用它自己，它和分治和回溯等算法没有完全隔离开来，它们都可以看做是
+ 描述一个问题的不同方面。使用递归方法解题时都是有模板的：
+public void recur(int level,int param){ //terminator if(level &gt; MAX_LEVEL){ //process result return; } //process current logic process(level,param); //drill down recur(level:level &#43; 1,newParam) //restore current status }   这里上一道经典的使用递归解决的算法题来说明这个框架的使用
+经典的汉诺塔问题：原题链接
+ public void hanota(List&lt;Integer&gt; A, List&lt;Integer&gt; B, List&lt;Integer&gt; C) { int len = A.size(); //汉诺塔的数量 Hanota(len,A,B,C); } //递归函数 public void Hanota(int n,List&lt;Integer&gt; X,List&lt;Integer&gt; Y,List&lt;Integer&gt; Z){ if(n == 1){ //终止条件 Z.add(0,X.remove(0)); //处理结果 }else{ Hanota(n - 1,X,Z,Y); //向下递归 Z." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/leetcode/dp/" />
+<meta property="article:published_time" content="2019-12-03T22:26:15+08:00" />
+<meta property="article:modified_time" content="2019-12-03T22:26:15+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">动态规划解题思想总结</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 3, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          4 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><a class="tag" href="https://sin-coder.github.io/tags/leetcode/">leetcode</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="动态规划解题思想总结">动态规划解题思想总结</h2>
+
+<hr />
+
+<h3 id="一-动态规划和递归-分治的关系">一、动态规划和递归、分治的关系</h3>
+
+<h4 id="1-递归">1.递归</h4>
+
+<blockquote>
+<p>关于递归其实就是一个函数调用它自己，它和分治和回溯等算法没有完全隔离开来，它们都可以看做是</p>
+</blockquote>
+
+<p>描述一个问题的不同方面。使用递归方法解题时都是有模板的：</p>
+
+<pre><code class="language-java">public void recur(int level,int param){
+    //terminator
+    if(level &gt; MAX_LEVEL){
+        //process result
+        return;
+    }
+    
+    //process current logic
+    process(level,param);
+    
+    //drill down
+    recur(level:level + 1,newParam)
+    //restore current status
+}
+</code></pre>
+
+<blockquote>
+<p>这里上一道经典的使用递归解决的算法题来说明这个框架的使用</p>
+
+<p>经典的汉诺塔问题：<strong><a href="https://leetcode-cn.com/problems/hanota-lcci/">原题链接</a></strong></p>
+</blockquote>
+
+<pre><code class="language-java">public void hanota(List&lt;Integer&gt; A, List&lt;Integer&gt; B, List&lt;Integer&gt; C) {
+    int len = A.size();  //汉诺塔的数量
+    Hanota(len,A,B,C);
+}
+//递归函数
+public void Hanota(int n,List&lt;Integer&gt; X,List&lt;Integer&gt; Y,List&lt;Integer&gt; Z){
+    if(n == 1){                      //终止条件
+      Z.add(0,X.remove(0));          //处理结果
+     }else{
+      Hanota(n - 1,X,Z,Y);           //向下递归
+      Z.add(0,X.remove(0));          //保存当前状态
+      Hanota(n - 1,Y,X,Z);           
+     }
+}
+//解题思路：
+/*
+先将A塔上的从上至下的n-1个盘子借助C移动到B
+再将A塔上剩余的一个最大的盘子移动到C
+最后将B塔上的n-1个盘子借助A移动到C
+*/
+</code></pre>
+
+<h4 id="2-分治">2.分治</h4>
+
+<blockquote>
+<p>分治就是分而治之，将一个大的问题分解成若干个子问题求解，再将子问题的解进行归并，而且分治一</p>
+</blockquote>
+
+<p>般也是使用递归来解决问题的</p>
+
+<p><a href="https://imgchr.com/i/3NvY01"><img src="https://s2.ax1x.com/2020/02/26/3NvY01.jpg" alt="3NvY01.jpg" style="zoom: 67%;" /></a></p>
+
+<pre><code class="language-python">def divide_conquer(problem,param1,param2,...):
+    # recursion terminator
+    if problem is None:       #递归的终止条件
+        print_result
+        return
+    
+    #prepare data
+    data = prepare_data(problem)      #准备数据
+    subproblems = split_problem(problem,data)   #将问题进行拆分
+    
+    #conquer subproblems
+    subresult1 = self.divide_conque(subproblem[0],p1,.....)    #调用递归函数进行再次求解
+    subresult2 = self.divide_conque(subproblem[1],p1,.....)
+    subresult3 = self.divide_conque(subproblem[2],p1,.....)
+    
+    #process and generate the final result
+    result = process_result(subresult1,subresult2,subresult3,.....)  #合并当前结果
+    
+    #revert the current level status           #返回
+    
+</code></pre>
+
+<blockquote>
+<p>最典型的分治算法就是归并排序和快速排序了，给出代码查看框架</p>
+</blockquote>
+
+<pre><code class="language-python">def merge_sort(s):                 #s是一个列表
+    n = len(s)
+    if n &lt; 2:                   #剩一个或没有直接返回，不用排序
+        return
+    #开始拆分
+    mid = n // 2                #向下取整
+    s1 = s[0:mid]               #左开右闭
+    s2 = s[mid:n]      
+    #子序列递归调用排序
+    merge_sort(s1)
+    merge_sort(s2)
+    #进行合并
+    merge(s1,s2,s)
+   
+def merge(s1,s2,s):
+    #将两个列表s1,s2按照顺序融合为一个列表s,s为原列表
+    i = j = 0
+    while i+j&lt;len(s):
+        #当s2已经走完时，或者s1当前位置的元素比s2要小
+        if j == len(s2) or (i &lt; len(s1) and s1[i] &lt; s2[j]):
+            s[i+j] = s1[i]
+            i +=1
+        else:
+            s[i+j] = s2[j]
+            j +=1
+</code></pre>
+
+<h4 id="3-动态规划">3.动态规划</h4>
+
+<blockquote>
+<p>动态规划与分治、递归其实是比较相似的，它们都是在寻找一个问题的子问题并进行求解的过程，但是</p>
+</blockquote>
+
+<p>对于分治来说，它在求解子问题的过程中会遇到很多重叠的子问题，如果说我们能够找到这些子问题的最</p>
+
+<p>优解，去掉次优解，那这就是动态规划的思想了，注意动态规划和递归分治没有本质上的区别</p>
+
+<blockquote>
+<p>一般来说解决动态规划的问题就是先将问题分解成为一个子问题或者一系列简单的子问题，这里其实就</p>
+</blockquote>
+
+<p>是分治的思想，然后再去寻找这些最优的子结构，最后进行动态递推即可。动态规划解题的关键就是定义</p>
+
+<p>状态方程和找出状态之间的递推关系，我们通常解题的模板是这样的：</p>
+
+<pre><code class="language-python">fun DP():
+    dp = [][]   #二维时的情况        状态定义
+    for i = 0...M:
+        for j = 0.....N:
+            dp[i][j] = Function(dp[i'][j'])    #状态转移方程
+    return dp[M][N]
+</code></pre>
+
+<blockquote>
+<p>动态规划的难题一般都是状态的维度比较多（二维、三维或者更多），状态方程更加复杂</p>
+</blockquote>
+
+<h3 id="二-常见的动态规划问题">二、常见的动态规划问题</h3>
+
+<blockquote>
+<p>动态规划有一些经典的问题，比如股票问题、打家劫舍、找硬币、爬楼梯等等，每个问题都是一类的问</p>
+</blockquote>
+
+<p>题，还有着不同的变形问题，这里我们着重分析每类问题中状态的定义，以及状态间的递推关系</p>
+
+<h4 id="1-爬楼梯-fibonacci">1.爬楼梯  &amp;&amp; Fibonacci</h4>
+
+<blockquote>
+<p><strong>（1）每次只走一步或两步</strong></p>
+
+<p>老生长谈的问题了，直接上递推公式吧：<strong>f（n） = f（n - 1）+f（n - 2）</strong>，<strong>f(1) = 1, f（0）=1</strong></p>
+</blockquote>
+
+<p>但是，算法的实现有以下几种，复杂度也是依次降低的</p>
+
+<pre><code class="language-python">#1.直接进行递归，没有任何记忆化缓存
+def f(n):        
+    if n &lt;= 1:
+        return 1
+    return f(n - 1) + f(n -2)
+#由于对各个子问题进行重叠计算，时间复杂度和空间复杂度为2^n
+
+#2.在分治中加上简单的记忆化搜索的递归
+def f(n):
+    if n &lt; = 1:return 1
+    if n not in mem:
+        mem[n] = f(n - 1) + f(n - 2)
+    return mem[n]
+#由于对每个子问题的结果都进行了存储，时间复杂度和空间复杂度都是O(n)
+
+#3.从递归走向递推
+def f(n):
+    dp = [1] * (n + 1)
+    for i in range(2,n+1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+    return dp[n]  
+#时间复杂度和空间复杂度都是O（n）的
+
+#4.优化空间
+def f(n):
+    if n &lt;= 1:
+        return n
+    dp = [1]*(n)
+    dp[0] = 1
+    dp[1] = 2
+    for i in range(2,n):
+        dp[i] = dp[i - 1]+dp[i - 2]
+        i+=1
+    return dp[n-1]
+#这里时间复杂度是O（n）的，但是空间复杂度是O（1）
+
+
+#拓展：每次走三步怎么办?
+#修改初始化的值，状态转移方程，还有数组的上下界
+def f(n):
+    if n &lt;= 1:
+        return n
+    dp = [1]*(n)
+    dp[0] = 1
+    dp[1] = 2
+    dp[2] = 3 
+    for i in range(3,n):
+        dp[i] = dp[i - 1]+dp[i - 2]+dp[i-3]
+        i+=1
+    return dp[n-1]
+
+</code></pre>
+
+<blockquote>
+<p>在后面的例题中我们会都采用顺推的方式解决问题，这样是符合动态规划的思想的</p>
+</blockquote>
+
+<h4 id="2-变态爬楼梯">（2）变态爬楼梯</h4>
+
+<blockquote>
+<p>每次可以跳1级楼梯，也可以跳两级楼梯.......也可以跳n级楼梯，跳到n级有多少种跳法</p>
+
+<p>跳到第n级楼梯时可以从n-1级跳，可以从n-2级跳.....也可以从0级跳，所以递推的公式就是：</p>
+
+<blockquote>
+<blockquote>
+<p><strong>f(n) = f(n-1) + f(n-2) +......+f(0)</strong></p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+<pre><code class="language-java">public int JumpFloor(int n){
+    int[] dp = new int[n];      //定义一个状态数组
+    Arrays.fill(dp,1);          //对数组中元素的值进行初始化
+    for(int i = 0; i &lt; n;i++){
+        for(int j = 0;j &lt; i;j++){
+            dp[i] += dp[j];
+        }
+    }
+    return dp[n-1];
+}
+//这里的时间复杂度为O（n^2）、空间复杂度为O(n)
+
+//当然从递推的关系式中我们可以看出：
+//f(n) = f(n-1) + f(n-2) +......+f(0) = 2f(n-1)，所以这是一个等比数列，f(n) = 2^(n-1)
+</code></pre>
+
+<h4 id="3-使用最小的花费爬楼梯">(3)使用最小的花费爬楼梯</h4>
+
+<blockquote>
+<p>数组中的每个索引作为一个阶梯，每个阶梯对应着一个体力的消耗值，每次只能走一个或两个阶梯，</p>
+</blockquote>
+
+<p>那么走到第n层所花费的最小体力值为多少，<a href="https://leetcode-cn.com/problems/min-cost-climbing-stairs/">leetcode链接</a></p>
+
+<blockquote>
+<p>其实这个问题和第一个非常相似了，就是要想走到第n阶台阶，需要从n-1阶和n-2阶中找到一个较小</p>
+</blockquote>
+
+<p>体力花费值得就行</p>
+
+<pre><code class="language-java">public int minCostClimbingStairs(int[] cost){   //cost[]数组表示每一级台阶所代表的体力花费值
+    int pre1 = 0,pre2 = 0;
+    for(int i = 0;i &lt; cost.length;i++){
+        int curr = cost[i] + Math.min(pre1,pre2);
+        pre2 = pre1;
+        pre1 = curr;
+    }
+    return Math.min(pre2,pre1);
+}
+</code></pre>
+
+<h4 id="4-每次可以走的步数在一个数组中">（4）每次可以走的步数在一个数组中</h4>
+
+<blockquote>
+<p>这样在达到每一步的前一步必须在已知步数的数组里面去寻找，设nums为步数的数组，则递推公式可以</p>
+</blockquote>
+
+<p>这样写，dp[i] += dp[i-nums [j] ]，j从1到步数数组的长度，具体的实现请看下面找零钱的问题，两个很相似</p>
+
+<h4 id="5-在第-4-的基础上不能走重复步数">（5）在第（4）的基础上不能走重复步数</h4>
+
+<blockquote>
+<p>不能走重复步数时，需要再加一维变量dp[i] [k]，其中k表示走到当前位置的上一步的步数，则递推公式可以</p>
+</blockquote>
+
+<p>这样写dp[i] [k]  +=  dp[i-（除去步数k的其他可走步数）]</p>
+
+<h4 id="2-找零钱问题">2.找零钱问题</h4>
+
+<blockquote>
+<p>(1) <a href="https://leetcode-cn.com/problems/coin-change/">leetcode 322</a> 最少使用的硬币数</p>
+
+<p>这个问题就是用最少个数的零钱凑出给定的金额，所以对于当前金额使用的最少零钱数就是其减去已知</p>
+</blockquote>
+
+<p>币值得到的金额使用的最少零钱数加1，具体实现中还有一些限制条件，代码如下：</p>
+
+<pre><code class="language-python">def coinChange(self, coins: List[int], amount: int) -&gt; int:
+   dp = [float(&quot;inf&quot;)] *(amount+1)   #初始化dp数组全都赋值成最大值
+   dp[0] = 0  #0元的组成种类为0
+   for i in range(1,amount+1):      #求出从1到amount每个金额所使用的最少零钱数
+      for coin in coins:
+         if i &gt;= coin:            #必须要满足当前金额大于币值
+             dp[i] = min(dp[i],dp[i-coin]+1)           #递推方程，取最小值
+   return dp[-1] if dp[-1] != float(&quot;inf&quot;) else -1     #dp[amount]不为MAX就返回，否则返回-1
+</code></pre>
+
+<blockquote>
+<p>(2) <a href="https://leetcode-cn.com/problems/coin-change-2/">leetcode 518</a>  多少种不同的组合</p>
+</blockquote>
+
+<h4 id="2-不同的路径">2、不同的路径</h4>
+
+<blockquote>
+<p>（1）<a href="https://leetcode-cn.com/problems/unique-paths/">leetcode 62</a>  <strong>网格的左上角走到右下脚的不同走法</strong></p>
+
+<p>到达每一个位置的走法等于达到该位置左边位置的走法加上达到该位置上面位置的走法，所以很容以得出</p>
+</blockquote>
+
+<p>递推的公式：F（x，y）= F（x - 1，y）+F（x，y-1）,代码如下</p>
+
+<pre><code class="language-python">#dp[i][j]是到达第i+1行和第j+1列的位置的最多路径
+#特别要注意的是：对于第一行dp[0][j]或者第一列dp[i][0]都在边界，所以只能为1
+#整个算法的时间复杂度为m*n,空间复杂度也是m*n
+def uniquePaths(self,m:int,n:int) -&gt; int:
+    dp = [[1]*n] + [[1]+[0]*(n-1) for _ in range(m-1)]  #初始化一个二维数组，该数组的第一行和第一列均为1
+    
+    for i in range(1,m):
+        for j in range(1,n):
+            dp[i][j] = dp[i-1][j] + dp[i][j-1]
+        return dp[-1][-1]
+    
+#当然也可以对空间复杂度进行优化,空间复杂度为O（n）  自行领悟吧
+f = [1]*m
+for j in range(1,n):
+    for i in range(1,m):
+        f[i] = f[i-1]+f[i]  
+return f[-1]        
+</code></pre>
+
+<blockquote>
+<p>（2）<a href="https://leetcode-cn.com/problems/unique-paths-ii/">leetcode 63</a> <strong>当网格中有障碍物的问题</strong></p>
+
+<p>当网络中出现随机的障碍物时，达到某点的路径和有多少，当我们去推算状态转移方程时，要想到障碍物</p>
+</blockquote>
+
+<p>可能会影响哪些地方的路径，比如当第一行或者第一列出翔障碍物时，这个障碍物前面的方格，仍然可以到达，</p>
+
+<p>但是后面的方格就不能到到达了，那么我们用什么标识这些不可能的位置，很简单啊，只需把该点的dp值置为</p>
+
+<p>0即可，具体的实现代码如下</p>
+
+<pre><code class="language-python">def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -&gt; int:
+    row = len(obstacleGrid)  #行数
+    col = len(obstacleGrid[0])  #列数
+    if obstacleGrid[0][0] == 1:return 0  #如果首个元素是1，则任何方格不可达，返回0
+    obstacleGrid[0][0] = 1     #如果首个元素不是障碍，则将其置为1
+    for i in range(1,row):    #检测第一列元素是否有障碍
+        obstacleGrid[i][0] =  obstacleGrid[i-1][0] if obstacleGrid[i][0] == 0 else 0
+    for j in range(1,col):     #检测第一行元素是否有障碍
+        obstacleGrid[0][j] = obstacleGrid[0][j-1] if obstacleGrid[0][j] == 0 else 0
+    for i in range(1,row):    #递归方程中检测当前元素是否有障碍，有就dp值置0，没有dp值正常计算
+        for j in range(1,col):
+          obstacleGrid[i][j] = obstacleGrid[i-1][j] + obstacleGrid[i][j-1] if obstacleGrid[i][j] == 0 else 0
+
+     return obstacleGrid[row-1][col-1]
+
+#时间复杂度为O(m*n)  相当于将每个元素都遍历了一遍
+#空间复杂度为O（1）,因为题目中使用了现成的数组
+</code></pre>
+
+<h4 id="3-打家劫舍问题">3、打家劫舍问题</h4>
+
+<blockquote>
+<p>(1) <a href="https://leetcode-cn.com/problems/house-robber/">leetcode 198</a> <strong>一排房屋不能连续偷</strong></p>
+
+<p>可以定义dp[i] 表示到索引为i的房屋是能偷到的最高金额，那么索引为i-1的房屋偷不偷决定了dp[i]的大小，</p>
+</blockquote>
+
+<p>当i-1 那个房屋偷时，当前房屋就不能偷了，反之i-1的那个房屋不偷的时候，那就偷i-2的那个房屋和当前房</p>
+
+<p>屋，这个时候只需要比较两种方式中怎样偷到的钱最多就行了</p>
+
+<blockquote>
+<p>状态转移方程为：dp[i] = max(dp[i-2] + nums[i]，dp[i-1])  ，dp[0] = nums[0],dp[1] = max(nums[0],nums[1])</p>
+
+<p>当然也可以用一个二维数组来定义：dp[i] [0]表示没有偷nums[i],dp[i] [1]表示偷了nums[i]</p>
+
+<p>对应的状态转移方程就是，dp[i] [1] = dp[i-1] [0] + nums[i],dp[i] [0] = max(dp[i-1] [0]，dp[i-1] [1])</p>
+
+<p>(2) <a href="https://leetcode-cn.com/problems/house-robber-ii/">leetcode 213</a>  <strong>房屋成环不能连续偷</strong></p>
+
+<p>此题与前一提最大的区别就是，环形房屋意味着第一个房子和最后一个文档中只能选择一个进行偷窃,</p>
+</blockquote>
+
+<p>因此可以将环状排列的房间问题转化为两个单排排列的问题</p>
+
+<blockquote>
+<p>如果不偷第一个房子，nums[1:] 最大金额是p1；如果偷第一个房子nums[:n-1]，最大金额就是p2,我们</p>
+</blockquote>
+
+<p>只需要取max(p1,p2)即可</p>
+
+<blockquote>
+<p>（3）<a href="https://leetcode-cn.com/problems/house-robber-ii/">leetcode 337</a>  <strong>房屋成树不能连续偷</strong></p>
+
+<p>这个问题将数据结构换成了树，可是本质的问题还是一样的，对于每一个房屋无外乎就是去偷或者不去偷，</p>
+</blockquote>
+
+<p>最后的返回值就是偷或者不偷的最大值</p>
+
+<pre><code class="language-java">class Solution {
+    public int rob(TreeNode root) {
+        int[] res = dp(root);
+        return Math.max(res[0],res[1]);
+    }
+    public int[] dp(TreeNode node){
+        if(node == null) return new int[]{0,0};  //当前节点为空时，无论偷或是都是只能返回0,0
+        int[] left = dp(node.left);             //后序遍历，根据子节点计算根节点偷还是不偷
+        int[] right = dp(node.right);
+
+        int rob = node.val + left[0] + right[0];      //当前节点偷的时候，左右节点就不能偷了
+            
+        //当前节点偷时，左右节点只能偷一个
+        int not_rob = Math.max(left[0],left[1]) + Math.max(right[0],right[1]);
+        return new int[]{not_rob,rob};
+    }
+}
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>

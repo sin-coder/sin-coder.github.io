@@ -6,7 +6,7 @@
     <description>Recent content on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Feb 2020 22:31:32 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 25 Feb 2020 20:44:56 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -414,6 +414,15 @@ MapReduce(离线处理)-----》Spark(高性能批处理技术)------》Storm(流
     </item>
     
     <item>
+      <title>Pycollect</title>
+      <link>https://sin-coder.github.io/program/pycollect/</link>
+      <pubDate>Tue, 25 Feb 2020 20:44:56 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/pycollect/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Git向Github push时，连接超时</title>
       <link>https://sin-coder.github.io/post/git%E8%BF%9E%E6%8E%A5github%E5%A4%B1%E8%B4%A5/</link>
       <pubDate>Tue, 28 Jan 2020 17:10:44 +0800</pubDate>
@@ -629,6 +638,19 @@ GFS系统的优点：高可用性、自动负载均衡
  当做队列或栈使用并且数据量很大时，使用LinkjedList，这样不用扩容对性能的影响
  当需要随机访问时，使用ArrayDeque，数组有先天的优势
   </description>
+    </item>
+    
+    <item>
+      <title>动态规划解题思想总结</title>
+      <link>https://sin-coder.github.io/leetcode/dp/</link>
+      <pubDate>Tue, 03 Dec 2019 22:26:15 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/leetcode/dp/</guid>
+      <description>动态规划解题思想总结 一、动态规划和递归、分治的关系 1.递归  关于递归其实就是一个函数调用它自己，它和分治和回溯等算法没有完全隔离开来，它们都可以看做是
+ 描述一个问题的不同方面。使用递归方法解题时都是有模板的：
+public void recur(int level,int param){ //terminator if(level &amp;gt; MAX_LEVEL){ //process result return; } //process current logic process(level,param); //drill down recur(level:level + 1,newParam) //restore current status }   这里上一道经典的使用递归解决的算法题来说明这个框架的使用
+经典的汉诺塔问题：原题链接
+ public void hanota(List&amp;lt;Integer&amp;gt; A, List&amp;lt;Integer&amp;gt; B, List&amp;lt;Integer&amp;gt; C) { int len = A.size(); //汉诺塔的数量 Hanota(len,A,B,C); } //递归函数 public void Hanota(int n,List&amp;lt;Integer&amp;gt; X,List&amp;lt;Integer&amp;gt; Y,List&amp;lt;Integer&amp;gt; Z){ if(n == 1){ //终止条件 Z.add(0,X.remove(0)); //处理结果 }else{ Hanota(n - 1,X,Z,Y); //向下递归 Z.</description>
     </item>
     
     <item>
