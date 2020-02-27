@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java和Python的面向对象对比 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java和Python的面向对象对比"/>
+<meta name="twitter:description" content="Java和Python中面向对象的对比  说起面向对象，大家都不陌生，常用的Java就是一门面向对象的语言，但是很少人会觉得Python是一门
+ 面向对象的语言，习惯使用Python的人更会觉得它有点像面向过程的语言，毕竟那流程化的操作让人觉得
+是从哪里冒出来的对象啊，今天是时候为Python平反了，Python和Java都是面向对象的语言
+ 但是我们所说的面向对象通常指的是编程的一种设计思想，更加准确的说应该是Python和Java都是支持
+ 面向对象的语言，而且Python和Java都不是纯碎的面向对象，当然我们也不必过于纠结什么是纯碎。这篇
+文章主要是从面向对象的角度来对比一下两门语言的异同
+一、面向对象的主要特性  在面向对象编程中，函数和变量被进一步的封装成类，类是程序的基本元素，类和类的实例是面向对象
+ 的核心概念，面向对象的主要编程框架如下：
+ 导入各种外部库
+ 设计各种全局变量
+ 决定你要的类
+ 给每个类提供完整的一组操作
+ 明确的使用继承来表现不同类的特点
+ 根据需要决定是否要写一个mian函数作为程序入口
+   面向对象中一些基础的概念是多态、继承、封装、抽象、类、对象、实例、方法、重载，下面对一些主要
+ 的概念稍作解释
+ 类变量：所有实例公有的变量，类变量定义在类中，但是在方法体之外
+ 实例变量：是实例本身所拥有的变量，每个实例变量在内存都是不一样的
+ 静态方法：不需要实例化就可以由类指向的方法
+ 类方法：类方法是将类本身作为对象进行操作的方法
+ 重写：从父类继承的方法不能满足子类的需求，这个过程称为override
+ 封装：将内部实现包装起来，对外透明
+ 继承：子类继承父类的变量和方法
+ 多态：根据对象类型的不同以不同的方式进行处理
+  二、类与对象 1.类和对象的创建  Python中类和对象的创建是这样进行的
+ class test: classVar = &quot;Test&quot; #类变量 def __init__(self,para1,para2): #理解为构造函数 self.para1 = para1 self."/>
+
+    <meta property="og:title" content="Java和Python的面向对象对比" />
+<meta property="og:description" content="Java和Python中面向对象的对比  说起面向对象，大家都不陌生，常用的Java就是一门面向对象的语言，但是很少人会觉得Python是一门
+ 面向对象的语言，习惯使用Python的人更会觉得它有点像面向过程的语言，毕竟那流程化的操作让人觉得
+是从哪里冒出来的对象啊，今天是时候为Python平反了，Python和Java都是面向对象的语言
+ 但是我们所说的面向对象通常指的是编程的一种设计思想，更加准确的说应该是Python和Java都是支持
+ 面向对象的语言，而且Python和Java都不是纯碎的面向对象，当然我们也不必过于纠结什么是纯碎。这篇
+文章主要是从面向对象的角度来对比一下两门语言的异同
+一、面向对象的主要特性  在面向对象编程中，函数和变量被进一步的封装成类，类是程序的基本元素，类和类的实例是面向对象
+ 的核心概念，面向对象的主要编程框架如下：
+ 导入各种外部库
+ 设计各种全局变量
+ 决定你要的类
+ 给每个类提供完整的一组操作
+ 明确的使用继承来表现不同类的特点
+ 根据需要决定是否要写一个mian函数作为程序入口
+   面向对象中一些基础的概念是多态、继承、封装、抽象、类、对象、实例、方法、重载，下面对一些主要
+ 的概念稍作解释
+ 类变量：所有实例公有的变量，类变量定义在类中，但是在方法体之外
+ 实例变量：是实例本身所拥有的变量，每个实例变量在内存都是不一样的
+ 静态方法：不需要实例化就可以由类指向的方法
+ 类方法：类方法是将类本身作为对象进行操作的方法
+ 重写：从父类继承的方法不能满足子类的需求，这个过程称为override
+ 封装：将内部实现包装起来，对外透明
+ 继承：子类继承父类的变量和方法
+ 多态：根据对象类型的不同以不同的方式进行处理
+  二、类与对象 1.类和对象的创建  Python中类和对象的创建是这样进行的
+ class test: classVar = &quot;Test&quot; #类变量 def __init__(self,para1,para2): #理解为构造函数 self.para1 = para1 self." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/program/oop/" />
+<meta property="article:published_time" content="2019-12-20T21:14:28+08:00" />
+<meta property="article:modified_time" content="2019-12-20T21:14:28+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java和Python的面向对象对比</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 20, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><a class="tag" href="https://sin-coder.github.io/tags/python/">Python</a><a class="tag" href="https://sin-coder.github.io/tags/java/">Java</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="java和python中面向对象的对比">Java和Python中面向对象的对比</h2>
+
+<hr />
+
+<blockquote>
+<p>说起面向对象，大家都不陌生，常用的Java就是一门面向对象的语言，但是很少人会觉得Python是一门</p>
+</blockquote>
+
+<p>面向对象的语言，习惯使用Python的人更会觉得它有点像面向过程的语言，毕竟那流程化的操作让人觉得</p>
+
+<p>是从哪里冒出来的对象啊，今天是时候为Python平反了，Python和Java都是面向对象的语言</p>
+
+<blockquote>
+<p>但是我们所说的面向对象通常指的是编程的一种设计思想，更加准确的说应该是Python和Java都是支持</p>
+</blockquote>
+
+<p>面向对象的语言，而且Python和Java都不是纯碎的面向对象，当然我们也不必过于纠结什么是纯碎。这篇</p>
+
+<p>文章主要是从面向对象的角度来对比一下两门语言的异同</p>
+
+<h3 id="一-面向对象的主要特性">一、面向对象的主要特性</h3>
+
+<blockquote>
+<p>在面向对象编程中，函数和变量被进一步的封装成类，类是程序的基本元素，类和类的实例是面向对象</p>
+</blockquote>
+
+<p>的核心概念，面向对象的主要编程框架如下：</p>
+
+<ul>
+<li><p>导入各种外部库</p></li>
+
+<li><p>设计各种全局变量</p></li>
+
+<li><p>决定你要的类</p></li>
+
+<li><p>给每个类提供完整的一组操作</p></li>
+
+<li><p>明确的使用继承来表现不同类的特点</p></li>
+
+<li><p>根据需要决定是否要写一个mian函数作为程序入口</p></li>
+</ul>
+
+<blockquote>
+<p>面向对象中一些基础的概念是多态、继承、封装、抽象、类、对象、实例、方法、重载，下面对一些主要</p>
+</blockquote>
+
+<p>的概念稍作解释</p>
+
+<ul>
+<li><p>类变量：所有实例公有的变量，类变量定义在类中，但是在方法体之外</p></li>
+
+<li><p>实例变量：是实例本身所拥有的变量，每个实例变量在内存都是不一样的</p></li>
+
+<li><p>静态方法：不需要实例化就可以由类指向的方法</p></li>
+
+<li><p>类方法：类方法是将类本身作为对象进行操作的方法</p></li>
+
+<li><p>重写：从父类继承的方法不能满足子类的需求，这个过程称为override</p></li>
+
+<li><p>封装：将内部实现包装起来，对外透明</p></li>
+
+<li><p>继承：子类继承父类的变量和方法</p></li>
+
+<li><p>多态：根据对象类型的不同以不同的方式进行处理</p></li>
+</ul>
+
+<h3 id="二-类与对象">二、类与对象</h3>
+
+<h4 id="1-类和对象的创建">1.类和对象的创建</h4>
+
+<blockquote>
+<p>Python中类和对象的创建是这样进行的</p>
+</blockquote>
+
+<pre><code class="language-python">class test:
+    classVar = &quot;Test&quot;  #类变量
+    def __init__(self,para1,para2):   #理解为构造函数
+        self.para1 = para1
+        self.para2 = para2
+    def fun1(self):              #类中的方法
+        pass
+    def fun2(self):
+        pass
+</code></pre>
+
+<h4 id="2-方法的调用">2.方法的调用</h4>
+
+<blockquote>
+<p>在类中方法主要有四类，实例方法（就是每个实例可以调用的方法）、类方法（只能由类调用的方法）、</p>
+</blockquote>
+
+<p>静态方法（也是用类进行调用，但是不需要传入任何参数）。实例方法比较简单，就不再阐述了，下面主要</p>
+
+<p>介绍类方法和静态方法</p>
+
+<blockquote>
+<p>静态方法没有默认的参数，它将实例方法参数中的self去掉，然后在方法定义上加上@staticmethod，就</p>
+</blockquote>
+
+<p>成为了静态方法，它属于类，与实例无关，建议只用类名.静态方法的调用方式</p>
+
+<blockquote>
+<p>经常有一些跟类有关系的功能但是运行时又不需要实例和类参与的情况下需要用到静态方法，比如更改环</p>
+</blockquote>
+
+<p>镜变量或者修改其他类的属性等能用到静态方法</p>
+
+<pre><code class="language-python">class Test:
+    @staticmethod   #定义了一个静态方法
+    def fun():
+        pass
+Test.fun()    #使用类直接去调用静态方法
+</code></pre>
+
+<blockquote>
+<p>类方法由类调用，采用@classmethod装饰，类方法只能访问类变量，但是不能访问实例变量，在类方法</p>
+</blockquote>
+
+<p>中必须要传入一个cls参数（就是当前类的__ init __方法）</p>
+
+<h3 id="三-类的主要特性">三、类的主要特性</h3>
+
+<h4 id="1-继承">1.继承</h4>
+
+<blockquote>
+<p>在Python中的类可以继承多个类，但是Java只能继承一个类；Python中如果父类和子类都重新定义了</p>
+</blockquote>
+
+<p>构造方法init()，在进行子类实例化的时候，子类的构造方法不会自动调用父类的构造方法，必须在子类中</p>
+
+<p>显示调用</p>
+
+<p>2.成员修饰符</p>
+
+<blockquote>
+<p>Python中的类只有私有成员和公有成员两种，并且python中没有关键字去修饰成员，默认python中</p>
+</blockquote>
+
+<p>所有的成员都是公有成员，私有成员是以两个下划线开头来标识的</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>

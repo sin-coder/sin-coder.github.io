@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java中的包(Package) // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java中的包(Package)"/>
+<meta name="twitter:description" content="Java中的包（Package） 一、Java中包的作用  在Java中为了更好的组织类，提供了包机制，可以看成是区别类名的命名空间，主要作用如下：
+  把功能相似或者相关的类或接口组织在同一个包中，方便类的查找和使用
+ 包采用了类似文件夹一样的树形目录的存储方式，同一个包中类的名字是不同的，不同包中类的名字可以是
+   相同的，当同时调用不同包中相同类名的类时，应该加上包名加以区分，避免冲突
+  包限定了访问权限，拥有包访问权限的类才能访问某个包中的类  二、包的使用 1.包语句的格式  包语句的语法格式为
+ package pkg1[.pkg2[.pkg3]] //示例如下 package net.java.util; //注意包声明语句后有分号 public class Test{} //那么这个文件的保存路径应该是这样的：net/java/util/Test.java   一个包可以定义为一组相互联系的类型，为这些类型提供访问保护和命名空间管理的功能；在实际的应用
+ 中，可以将自己完成的一组类或者接口等打包，方便管理和使用
+2.创建包  包声明应该在源文件的第一行，每个源文件只能有一个包的声明，这个文件中的每个类型都应用于它；如
+ 果一个源文件没有包的声明，那么其中的类都将被放到一个无名的包中，创建包的包名应该最好使用小写的
+3.使用包  为了能够使用某一个包的成员，需要在Java程序中明确导入该包，使用import语句即可完成；
+ 在Java源文件中的import语句应位于package语句之后，所有类的定义之前；格式如下：
+import package1[.package2...](classname|*);   如果在一个包中一个类想要使用本包中的任何一个类，包名是可以忽略的
+值得注意的是import是导入包所包含的类，而不能导入包，通常情况下，我们也不是只导入包中的某个类
+ 而是导入包下所有的类；Java编译器默认为所有的Java程序导入了JDK中java.lang包中的所有类，其中定义了
+一些常用的类，如Objetc、Math等，因此我们可以直接使用这些类而不必显示导入，当使用其他类时必须导入
+ 并且import实际上导入的是每一个类的.class文件，并不是.java类型的文件
+ 4.Java中类的搜索路径  在安装JDK时，我们已经设置了环境变量CLASSPATH，在Windos下的cmd中可以通过set命令查看
+ #一个CLASSPATH可能包含好几个路径，多路径应该使用分割符进行分开 C:\Users\Administrator&gt;set CLASSPATH CLASSPATH=.;C:\Program Files\Java\jdk1.8.0_91\lib; C:\Program Files\Java\jdk1."/>
+
+    <meta property="og:title" content="Java中的包(Package)" />
+<meta property="og:description" content="Java中的包（Package） 一、Java中包的作用  在Java中为了更好的组织类，提供了包机制，可以看成是区别类名的命名空间，主要作用如下：
+  把功能相似或者相关的类或接口组织在同一个包中，方便类的查找和使用
+ 包采用了类似文件夹一样的树形目录的存储方式，同一个包中类的名字是不同的，不同包中类的名字可以是
+   相同的，当同时调用不同包中相同类名的类时，应该加上包名加以区分，避免冲突
+  包限定了访问权限，拥有包访问权限的类才能访问某个包中的类  二、包的使用 1.包语句的格式  包语句的语法格式为
+ package pkg1[.pkg2[.pkg3]] //示例如下 package net.java.util; //注意包声明语句后有分号 public class Test{} //那么这个文件的保存路径应该是这样的：net/java/util/Test.java   一个包可以定义为一组相互联系的类型，为这些类型提供访问保护和命名空间管理的功能；在实际的应用
+ 中，可以将自己完成的一组类或者接口等打包，方便管理和使用
+2.创建包  包声明应该在源文件的第一行，每个源文件只能有一个包的声明，这个文件中的每个类型都应用于它；如
+ 果一个源文件没有包的声明，那么其中的类都将被放到一个无名的包中，创建包的包名应该最好使用小写的
+3.使用包  为了能够使用某一个包的成员，需要在Java程序中明确导入该包，使用import语句即可完成；
+ 在Java源文件中的import语句应位于package语句之后，所有类的定义之前；格式如下：
+import package1[.package2...](classname|*);   如果在一个包中一个类想要使用本包中的任何一个类，包名是可以忽略的
+值得注意的是import是导入包所包含的类，而不能导入包，通常情况下，我们也不是只导入包中的某个类
+ 而是导入包下所有的类；Java编译器默认为所有的Java程序导入了JDK中java.lang包中的所有类，其中定义了
+一些常用的类，如Objetc、Math等，因此我们可以直接使用这些类而不必显示导入，当使用其他类时必须导入
+ 并且import实际上导入的是每一个类的.class文件，并不是.java类型的文件
+ 4.Java中类的搜索路径  在安装JDK时，我们已经设置了环境变量CLASSPATH，在Windos下的cmd中可以通过set命令查看
+ #一个CLASSPATH可能包含好几个路径，多路径应该使用分割符进行分开 C:\Users\Administrator&gt;set CLASSPATH CLASSPATH=.;C:\Program Files\Java\jdk1.8.0_91\lib; C:\Program Files\Java\jdk1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/program/package/" />
+<meta property="article:published_time" content="2019-12-21T21:14:28+08:00" />
+<meta property="article:modified_time" content="2019-12-21T21:14:28+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java中的包(Package)</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 21, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><a class="tag" href="https://sin-coder.github.io/tags/java/">Java</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="java中的包-package">Java中的包（Package）</h2>
+
+<h3 id="一-java中包的作用">一、Java中包的作用</h3>
+
+<blockquote>
+<p>在Java中为了更好的组织类，提供了包机制，可以看成是区别类名的命名空间，主要作用如下：</p>
+</blockquote>
+
+<ul>
+<li><p>把功能相似或者相关的类或接口组织在同一个包中，方便类的查找和使用</p></li>
+
+<li><p>包采用了类似文件夹一样的树形目录的存储方式，同一个包中类的名字是不同的，不同包中类的名字可以是</p></li>
+</ul>
+
+<blockquote>
+<p>相同的，当同时调用不同包中相同类名的类时，应该加上包名加以区分，避免冲突</p>
+</blockquote>
+
+<ul>
+<li>包限定了访问权限，拥有包访问权限的类才能访问某个包中的类</li>
+</ul>
+
+<h3 id="二-包的使用">二、包的使用</h3>
+
+<h4 id="1-包语句的格式">1.包语句的格式</h4>
+
+<blockquote>
+<p>包语句的语法格式为</p>
+</blockquote>
+
+<pre><code class="language-java">package pkg1[.pkg2[.pkg3]]
+//示例如下
+package net.java.util;  //注意包声明语句后有分号
+public class Test{}
+//那么这个文件的保存路径应该是这样的：net/java/util/Test.java
+</code></pre>
+
+<blockquote>
+<p>一个包可以定义为一组相互联系的类型，为这些类型提供访问保护和命名空间管理的功能；在实际的应用</p>
+</blockquote>
+
+<p>中，可以将自己完成的一组类或者接口等打包，方便管理和使用</p>
+
+<h4 id="2-创建包">2.创建包</h4>
+
+<blockquote>
+<p>包声明应该在源文件的第一行，每个源文件只能有一个包的声明，这个文件中的每个类型都应用于它；如</p>
+</blockquote>
+
+<p>果一个源文件没有包的声明，那么其中的类都将被放到一个无名的包中，创建包的包名应该最好使用小写的</p>
+
+<h4 id="3-使用包">3.使用包</h4>
+
+<blockquote>
+<p>为了能够使用某一个包的成员，需要在Java程序中明确导入该包，使用import语句即可完成；</p>
+</blockquote>
+
+<p>在Java源文件中的import语句应位于package语句之后，所有类的定义之前；格式如下：</p>
+
+<pre><code class="language-java">import package1[.package2...](classname|*);
+</code></pre>
+
+<blockquote>
+<p>如果在一个包中一个类想要使用本包中的任何一个类，包名是可以忽略的</p>
+
+<p>值得注意的是import是导入包所包含的类，而不能导入包，通常情况下，我们也不是只导入包中的某个类</p>
+</blockquote>
+
+<p>而是导入包下所有的类；Java编译器默认为所有的Java程序导入了JDK中java.lang包中的所有类，其中定义了</p>
+
+<p>一些常用的类，如Objetc、Math等，因此我们可以直接使用这些类而不必显示导入，当使用其他类时必须导入</p>
+
+<blockquote>
+<p>并且import实际上导入的是每一个类的.class文件，并不是.java类型的文件</p>
+</blockquote>
+
+<h4 id="4-java中类的搜索路径">4.Java中类的搜索路径</h4>
+
+<blockquote>
+<p>在安装JDK时，我们已经设置了环境变量CLASSPATH，在Windos下的cmd中可以通过set命令查看</p>
+</blockquote>
+
+<pre><code class="language-bash">#一个CLASSPATH可能包含好几个路径，多路径应该使用分割符进行分开
+C:\Users\Administrator&gt;set CLASSPATH
+CLASSPATH=.;C:\Program Files\Java\jdk1.8.0_91\lib;
+C:\Program Files\Java\jdk1.8.0_91\lib\dt.jar;
+C:\Program Files\Java\jdk1.8.0_91\lib\tools.jar;
+</code></pre>
+
+<blockquote>
+<p>Java运行环境在寻找某个类时，会首先从当前包中去查找是否存在；如果不存在会依次到CLASSPATH</p>
+</blockquote>
+
+<p>路径中去寻找并载入对应的字节码文件；如果在所有的路径下都未能找到所需的类文件，编译或者运行就会</p>
+
+<p>出错；当然你可以在CLASSPATH变量中增加搜索的路径，用来存放相关的类文件</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>

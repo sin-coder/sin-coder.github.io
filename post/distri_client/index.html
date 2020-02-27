@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>RPC框架中客户端的实现 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="RPC框架中客户端的实现"/>
+<meta name="twitter:description" content="RPC框架中客户端的实现  RPC客户端实现的难点在于客户端一般都不是单线程的，需要考虑在多线程的情况下如何流畅的使用客
+ 户端而不会出现并发的问题，交互过程的模型图如下：
+ 就如上面的模型图所示，在多线程的客户端中，客户端与数据库之间会维护一个连接池。当线程中的代码
+ 需要访问数据库时，先从数据库中获取一个连接，与数据库交互完成后再将这个连接归还给线程池。所以对
+于业务线程来说，拿到的连接不会同时被其他的线程所共享，这样就可以避免并发的问题
+ 此外，服务器的性能往往随着并发连接数量的增加而下降，所以必须严格控制有效连接的数量；连接池的
+ 数量上限也是数据库的一层壁垒，下面将介绍一些客户端设计中的主要机制
+一、安全锁  连接池是为多线程而设计的，每个线程都会访问线程池的对象，所以线程池需要使用锁来控制数据结构
+ 的安全。安全锁会使线程安全，但是也会导致性能受损。锁的临界区代码要尽量避免耗时的计算和I/O操作，
+而且锁的粒度还要尽可能的细，但是代码实现不易
+ 增大锁的粒度可能在某些程度上使代码实现更为容易，因为连接都是用来进行相对缓慢的I/O操作的，锁
+ 是基于内存操作的，相比于I/O操作可以忽略不记
+二、懒惰连接  连接池的连接多为懒惰连接，在需要的时候才会向数据库中申请。因为一个系统非常闲置，以前开辟了
+ 太多的连接是对资源的浪费；懒惰的连接池可以保证只会对单线程的程序开辟一个连接
+ 当然懒惰连接也有不好的地方，比如服务器的代码需要经过一个热身的过程，早来的请求需要额外付出
+ 一次建立连接的耗时代价、如果数据库连接参数不正确，需要在收到用户的请求进行显式数据访问时才能发现
+三、健康检查和性能追踪  连接池中管理的连接可能或因为网络原因而损坏断开连接，连接池需要保持内部管理的连接是健康可用
+ 具体实现的机制如下：
+ 线程从连接池中申请连接返回之前，线程池需要对连接进行检查，确定连接是通常的
+ 线程将连接归还给连接池时，线程池对连接进行检查，确定连接没有被搞坏
+ 线程池定时对管理的连接进行检查
+   如果检查发现连接有问题时，一般的做法两种：
+  抛弃当前的连接连接池的连接数量减1，如果是在线程的borrow方法中，那就再重新去连接池申请一个
+ 修复当前连接，一般也就是执行重连
+   此外，好的连接池还应该考虑到性能的可追踪性，当用户通过线程池分配的连接去访问数据库时，
+ 它的消息执行时间应该是可以被统计和追踪的。所以连接池往往还需要对原生的连接进行一定程度的
+包装，在关键的函数代码调用前后增加性能统计代码，并对外提供监听端口，以便将统计信息传递给
+外部的监控模块
+四、超时策略  当业务线程繁忙的时，连接池内部的连接可能会出现不够用的场景，一个线程请求的borrow方法
+ 在长时间的等待后仍然等不到空闲的连接，这就是超时问题，主要有以下是3种解决方案：
+ 永不超时，等不到就一直接着等 一定的时间拿不到后，就像外部抛出超时异常，中断业务逻辑 如果发现连接池没有空闲连接，就去申请一个新的连接给调用方。当调用方归还连接的时候，连接池计算当前   缓存的连接数量，如果超过了最大的连接数，就将当前的连接销毁，否则就保存"/>
+
+    <meta property="og:title" content="RPC框架中客户端的实现" />
+<meta property="og:description" content="RPC框架中客户端的实现  RPC客户端实现的难点在于客户端一般都不是单线程的，需要考虑在多线程的情况下如何流畅的使用客
+ 户端而不会出现并发的问题，交互过程的模型图如下：
+ 就如上面的模型图所示，在多线程的客户端中，客户端与数据库之间会维护一个连接池。当线程中的代码
+ 需要访问数据库时，先从数据库中获取一个连接，与数据库交互完成后再将这个连接归还给线程池。所以对
+于业务线程来说，拿到的连接不会同时被其他的线程所共享，这样就可以避免并发的问题
+ 此外，服务器的性能往往随着并发连接数量的增加而下降，所以必须严格控制有效连接的数量；连接池的
+ 数量上限也是数据库的一层壁垒，下面将介绍一些客户端设计中的主要机制
+一、安全锁  连接池是为多线程而设计的，每个线程都会访问线程池的对象，所以线程池需要使用锁来控制数据结构
+ 的安全。安全锁会使线程安全，但是也会导致性能受损。锁的临界区代码要尽量避免耗时的计算和I/O操作，
+而且锁的粒度还要尽可能的细，但是代码实现不易
+ 增大锁的粒度可能在某些程度上使代码实现更为容易，因为连接都是用来进行相对缓慢的I/O操作的，锁
+ 是基于内存操作的，相比于I/O操作可以忽略不记
+二、懒惰连接  连接池的连接多为懒惰连接，在需要的时候才会向数据库中申请。因为一个系统非常闲置，以前开辟了
+ 太多的连接是对资源的浪费；懒惰的连接池可以保证只会对单线程的程序开辟一个连接
+ 当然懒惰连接也有不好的地方，比如服务器的代码需要经过一个热身的过程，早来的请求需要额外付出
+ 一次建立连接的耗时代价、如果数据库连接参数不正确，需要在收到用户的请求进行显式数据访问时才能发现
+三、健康检查和性能追踪  连接池中管理的连接可能或因为网络原因而损坏断开连接，连接池需要保持内部管理的连接是健康可用
+ 具体实现的机制如下：
+ 线程从连接池中申请连接返回之前，线程池需要对连接进行检查，确定连接是通常的
+ 线程将连接归还给连接池时，线程池对连接进行检查，确定连接没有被搞坏
+ 线程池定时对管理的连接进行检查
+   如果检查发现连接有问题时，一般的做法两种：
+  抛弃当前的连接连接池的连接数量减1，如果是在线程的borrow方法中，那就再重新去连接池申请一个
+ 修复当前连接，一般也就是执行重连
+   此外，好的连接池还应该考虑到性能的可追踪性，当用户通过线程池分配的连接去访问数据库时，
+ 它的消息执行时间应该是可以被统计和追踪的。所以连接池往往还需要对原生的连接进行一定程度的
+包装，在关键的函数代码调用前后增加性能统计代码，并对外提供监听端口，以便将统计信息传递给
+外部的监控模块
+四、超时策略  当业务线程繁忙的时，连接池内部的连接可能会出现不够用的场景，一个线程请求的borrow方法
+ 在长时间的等待后仍然等不到空闲的连接，这就是超时问题，主要有以下是3种解决方案：
+ 永不超时，等不到就一直接着等 一定的时间拿不到后，就像外部抛出超时异常，中断业务逻辑 如果发现连接池没有空闲连接，就去申请一个新的连接给调用方。当调用方归还连接的时候，连接池计算当前   缓存的连接数量，如果超过了最大的连接数，就将当前的连接销毁，否则就保存" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/distri_client/" />
+<meta property="article:published_time" content="2020-02-21T16:08:30+08:00" />
+<meta property="article:modified_time" content="2020-02-21T16:08:30+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">RPC框架中客户端的实现</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 21, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a><a class="tag" href="https://sin-coder.github.io/tags/rpc/">RPC</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="rpc框架中客户端的实现">RPC框架中客户端的实现</h2>
+
+<hr />
+
+<blockquote>
+<p>RPC客户端实现的难点在于客户端一般都不是单线程的，需要考虑在多线程的情况下如何流畅的使用客</p>
+</blockquote>
+
+<p>户端而不会出现并发的问题，交互过程的模型图如下：</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/27/3weuJU.jpg" alt="3weuJU.jpg" style="zoom:80%;" /></p>
+
+<blockquote>
+<p>就如上面的模型图所示，在多线程的客户端中，客户端与数据库之间会维护一个连接池。当线程中的代码</p>
+</blockquote>
+
+<p>需要访问数据库时，先从数据库中获取一个连接，与数据库交互完成后再将这个连接归还给线程池。所以对</p>
+
+<p>于业务线程来说，拿到的连接不会同时被其他的线程所共享，这样就可以避免并发的问题</p>
+
+<blockquote>
+<p>此外，服务器的性能往往随着并发连接数量的增加而下降，所以必须严格控制有效连接的数量；连接池的</p>
+</blockquote>
+
+<p>数量上限也是数据库的一层壁垒，下面将介绍一些客户端设计中的主要机制</p>
+
+<h3 id="一-安全锁">一、安全锁</h3>
+
+<p><img src="https://s2.ax1x.com/2020/02/27/3wlqbQ.png" alt="3wlqbQ.png" /></p>
+
+<blockquote>
+<p>连接池是为多线程而设计的，每个线程都会访问线程池的对象，所以线程池需要使用锁来控制数据结构</p>
+</blockquote>
+
+<p>的安全。安全锁会使线程安全，但是也会导致性能受损。锁的临界区代码要尽量避免耗时的计算和I/O操作，</p>
+
+<p>而且锁的粒度还要尽可能的细，但是代码实现不易</p>
+
+<blockquote>
+<p>增大锁的粒度可能在某些程度上使代码实现更为容易，因为连接都是用来进行相对缓慢的I/O操作的，锁</p>
+</blockquote>
+
+<p>是基于内存操作的，相比于I/O操作可以忽略不记</p>
+
+<h3 id="二-懒惰连接">二、懒惰连接</h3>
+
+<blockquote>
+<p>连接池的连接多为懒惰连接，在需要的时候才会向数据库中申请。因为一个系统非常闲置，以前开辟了</p>
+</blockquote>
+
+<p>太多的连接是对资源的浪费；懒惰的连接池可以保证只会对单线程的程序开辟一个连接</p>
+
+<blockquote>
+<p>当然懒惰连接也有不好的地方，比如服务器的代码需要经过一个热身的过程，早来的请求需要额外付出</p>
+</blockquote>
+
+<p>一次建立连接的耗时代价、如果数据库连接参数不正确，需要在收到用户的请求进行显式数据访问时才能发现</p>
+
+<h3 id="三-健康检查和性能追踪">三、健康检查和性能追踪</h3>
+
+<blockquote>
+<p>连接池中管理的连接可能或因为网络原因而损坏断开连接，连接池需要保持内部管理的连接是健康可用</p>
+</blockquote>
+
+<p>具体实现的机制如下：</p>
+
+<ul>
+<li><p>线程从连接池中申请连接返回之前，线程池需要对连接进行检查，确定连接是通常的</p></li>
+
+<li><p>线程将连接归还给连接池时，线程池对连接进行检查，确定连接没有被搞坏</p></li>
+
+<li><p>线程池定时对管理的连接进行检查</p></li>
+</ul>
+
+<blockquote>
+<p>如果检查发现连接有问题时，一般的做法两种：</p>
+</blockquote>
+
+<ul>
+<li><p>抛弃当前的连接连接池的连接数量减1，如果是在线程的borrow方法中，那就再重新去连接池申请一个</p></li>
+
+<li><p>修复当前连接，一般也就是执行重连</p></li>
+</ul>
+
+<blockquote>
+<p>此外，好的连接池还应该考虑到性能的可追踪性，当用户通过线程池分配的连接去访问数据库时，</p>
+</blockquote>
+
+<p>它的消息执行时间应该是可以被统计和追踪的。所以连接池往往还需要对原生的连接进行一定程度的</p>
+
+<p>包装，在关键的函数代码调用前后增加性能统计代码，并对外提供监听端口，以便将统计信息传递给</p>
+
+<p>外部的监控模块</p>
+
+<h3 id="四-超时策略">四、超时策略</h3>
+
+<blockquote>
+<p>当业务线程繁忙的时，连接池内部的连接可能会出现不够用的场景，一个线程请求的borrow方法</p>
+</blockquote>
+
+<p>在长时间的等待后仍然等不到空闲的连接，这就是超时问题，主要有以下是3种解决方案：</p>
+
+<ul>
+<li>永不超时，等不到就一直接着等</li>
+<li>一定的时间拿不到后，就像外部抛出超时异常，中断业务逻辑</li>
+<li>如果发现连接池没有空闲连接，就去申请一个新的连接给调用方。当调用方归还连接的时候，连接池计算当前</li>
+</ul>
+
+<blockquote>
+<p>缓存的连接数量，如果超过了最大的连接数，就将当前的连接销毁，否则就保存</p>
+</blockquote>
+
+<h3 id="五-多路复用">五、多路复用</h3>
+
+<blockquote>
+<p>传统的RPC客户端都是基于一问一答的，同一个连接上连续的两个请求必须按先后顺序排队获取结果。高级</p>
+</blockquote>
+
+<p>RPC客户端往往是同一个连接上可以同时进行多个请求，并且可以乱序的执行。通过在请求中增加一个唯一的ID</p>
+
+<p>进行标识，服务器的响应消息携带请求ID到客户端，客户端就可以将响应和请求进行关联</p>
+
+<blockquote>
+<p>上述实现多个请求的方式就是多路复用，HTTP1.X协议是一问一答的，但是HTTP2.0就具备了多路复用的</p>
+</blockquote>
+
+<p>特性，Google开源的gRPC就是基于HTTP2.0的多用复用连接实现的高性能RPC框架</p>
+
+<blockquote>
+<p>而且多路复用的连接往往都是线程安全的，它支持多个线程同时写入请求而不会出现并发问题，性能很好，</p>
+</blockquote>
+
+<p>但是实现起来比较难</p>
+
+<h3 id="六-单向请求">六、单向请求</h3>
+
+<blockquote>
+<p>对一些不是特别重要的请求可以不需要服务器进行响应，客户端在发送完请求后不需要等待结果直接返回</p>
+</blockquote>
+
+<p>的就是单向请求，它一般适应于允许少量丢失的请求，比如日志信息</p>
+
+<h3 id="七-心跳">七、心跳</h3>
+
+<p><img src="https://s2.ax1x.com/2020/02/27/3wKlh6.png" alt="3wKlh6.png" style="zoom:150%;" /></p>
+
+<blockquote>
+<p>当客户端长期空闲时，服务器往往会自动关闭连接以减轻资源的消耗，当客户端再次请求时，就会遇到连接</p>
+</blockquote>
+
+<p>已断开的错误；为了避免这种错误，一般有两种方法，一是当请求遇到连接错误时进行重连测试，另一种就是</p>
+
+<p>通过心跳告知服务器不要关闭连接</p>
+
+<hr />
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>

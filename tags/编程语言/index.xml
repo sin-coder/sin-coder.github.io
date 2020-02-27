@@ -6,10 +6,103 @@
     <description>Recent content in 编程语言 on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Dec 2019 21:14:28 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 24 Dec 2019 21:14:28 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python中的魔法方法</title>
+      <link>https://sin-coder.github.io/program/magic/</link>
+      <pubDate>Tue, 24 Dec 2019 21:14:28 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/magic/</guid>
+      <description>Python中的魔法方法 一、什么是Python的魔法方法？  魔法方法就是Python的内置方法，不需要主动调用，存在的目的就是给Python的解释器进行调用，几乎每个
+ 魔法方法都有一个对应的内置函数或者运算符，它们经常是使用两个下划线包围来命名的，最为常见的就是
+__ init __方法了。总的来说魔法方法就是让我们对类添加魔法的特殊方法</description>
+    </item>
+    
+    <item>
+      <title>Java中的包(Package)</title>
+      <link>https://sin-coder.github.io/program/package/</link>
+      <pubDate>Sat, 21 Dec 2019 21:14:28 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/package/</guid>
+      <description>Java中的包（Package） 一、Java中包的作用  在Java中为了更好的组织类，提供了包机制，可以看成是区别类名的命名空间，主要作用如下：
+  把功能相似或者相关的类或接口组织在同一个包中，方便类的查找和使用
+ 包采用了类似文件夹一样的树形目录的存储方式，同一个包中类的名字是不同的，不同包中类的名字可以是
+   相同的，当同时调用不同包中相同类名的类时，应该加上包名加以区分，避免冲突
+  包限定了访问权限，拥有包访问权限的类才能访问某个包中的类  二、包的使用 1.包语句的格式  包语句的语法格式为
+ package pkg1[.pkg2[.pkg3]] //示例如下 package net.java.util; //注意包声明语句后有分号 public class Test{} //那么这个文件的保存路径应该是这样的：net/java/util/Test.java   一个包可以定义为一组相互联系的类型，为这些类型提供访问保护和命名空间管理的功能；在实际的应用
+ 中，可以将自己完成的一组类或者接口等打包，方便管理和使用
+2.创建包  包声明应该在源文件的第一行，每个源文件只能有一个包的声明，这个文件中的每个类型都应用于它；如
+ 果一个源文件没有包的声明，那么其中的类都将被放到一个无名的包中，创建包的包名应该最好使用小写的
+3.使用包  为了能够使用某一个包的成员，需要在Java程序中明确导入该包，使用import语句即可完成；
+ 在Java源文件中的import语句应位于package语句之后，所有类的定义之前；格式如下：
+import package1[.package2...](classname|*);   如果在一个包中一个类想要使用本包中的任何一个类，包名是可以忽略的
+值得注意的是import是导入包所包含的类，而不能导入包，通常情况下，我们也不是只导入包中的某个类
+ 而是导入包下所有的类；Java编译器默认为所有的Java程序导入了JDK中java.lang包中的所有类，其中定义了
+一些常用的类，如Objetc、Math等，因此我们可以直接使用这些类而不必显示导入，当使用其他类时必须导入
+ 并且import实际上导入的是每一个类的.class文件，并不是.java类型的文件
+ 4.Java中类的搜索路径  在安装JDK时，我们已经设置了环境变量CLASSPATH，在Windos下的cmd中可以通过set命令查看
+ #一个CLASSPATH可能包含好几个路径，多路径应该使用分割符进行分开 C:\Users\Administrator&amp;gt;set CLASSPATH CLASSPATH=.;C:\Program Files\Java\jdk1.8.0_91\lib; C:\Program Files\Java\jdk1.</description>
+    </item>
+    
+    <item>
+      <title>Java面向对象之抽象类</title>
+      <link>https://sin-coder.github.io/program/abstract/</link>
+      <pubDate>Sat, 21 Dec 2019 21:14:28 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/abstract/</guid>
+      <description> Java面向对象之抽象类  面向对象的设计原因中所有的对象都是通过类来进行描绘的，但是并不是所有的类都是用来描述对象的，
+ 如果一个类中没有包含足够的信息来描绘一个具体的对象，这样的就是抽象类
+ 抽象类正常类最大的区别就是不能实例化对象，所以抽象类必须被继承，才能被使用；但是抽象类的其
+ 它功能如：成员变量、成员方法和构造方法依然存在
+一、抽象类的定义和使用  在Java语言中使用abstract class来定义抽象类，而且只能通过其他类来继承抽象类
+ //文件名为Test.java public abstract class Test{} //文件名为smallTest public class smallTest extends Test{}  二、抽象方法  抽象方法必须是一个特别的成员方法，该方法的具体实现是由它的子类确定的，那么可以在父类中声明
+ 该方法是一个抽象方法；而且抽象方法所在的类一定是抽象类；
+ abstract关键词同样可以用来声明抽象方法，抽象方法只包含一个方法名而没有方法体；抽象方法没有定
+ 义，方法名后面直接跟上一个分号，而不是花括号
+public abstract class Employee{ public abstract int getMsg();//抽象方法 }   任何子类必须重写父类的抽象方法，或者声明自身是一个抽象类；
+ 三、其他规定  抽象类中不一定包含抽象方法，但是有抽象方法的类必定是抽象类
+ 抽象类中的抽象方法只是声明，不包含方法体，即不给出方法的具体实现
+ 构造方法和类方法（用static方法修饰的方法）不能声明为抽象的方法
+  </description>
+    </item>
+    
+    <item>
+      <title>Java和Python的面向对象对比</title>
+      <link>https://sin-coder.github.io/program/oop/</link>
+      <pubDate>Fri, 20 Dec 2019 21:14:28 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/oop/</guid>
+      <description>Java和Python中面向对象的对比  说起面向对象，大家都不陌生，常用的Java就是一门面向对象的语言，但是很少人会觉得Python是一门
+ 面向对象的语言，习惯使用Python的人更会觉得它有点像面向过程的语言，毕竟那流程化的操作让人觉得
+是从哪里冒出来的对象啊，今天是时候为Python平反了，Python和Java都是面向对象的语言
+ 但是我们所说的面向对象通常指的是编程的一种设计思想，更加准确的说应该是Python和Java都是支持
+ 面向对象的语言，而且Python和Java都不是纯碎的面向对象，当然我们也不必过于纠结什么是纯碎。这篇
+文章主要是从面向对象的角度来对比一下两门语言的异同
+一、面向对象的主要特性  在面向对象编程中，函数和变量被进一步的封装成类，类是程序的基本元素，类和类的实例是面向对象
+ 的核心概念，面向对象的主要编程框架如下：
+ 导入各种外部库
+ 设计各种全局变量
+ 决定你要的类
+ 给每个类提供完整的一组操作
+ 明确的使用继承来表现不同类的特点
+ 根据需要决定是否要写一个mian函数作为程序入口
+   面向对象中一些基础的概念是多态、继承、封装、抽象、类、对象、实例、方法、重载，下面对一些主要
+ 的概念稍作解释
+ 类变量：所有实例公有的变量，类变量定义在类中，但是在方法体之外
+ 实例变量：是实例本身所拥有的变量，每个实例变量在内存都是不一样的
+ 静态方法：不需要实例化就可以由类指向的方法
+ 类方法：类方法是将类本身作为对象进行操作的方法
+ 重写：从父类继承的方法不能满足子类的需求，这个过程称为override
+ 封装：将内部实现包装起来，对外透明
+ 继承：子类继承父类的变量和方法
+ 多态：根据对象类型的不同以不同的方式进行处理
+  二、类与对象 1.类和对象的创建  Python中类和对象的创建是这样进行的
+ class test: classVar = &amp;quot;Test&amp;quot; #类变量 def __init__(self,para1,para2): #理解为构造函数 self.para1 = para1 self.</description>
+    </item>
     
     <item>
       <title>Java和Python中如何使用大顶堆</title>
