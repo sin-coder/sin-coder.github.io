@@ -6,10 +6,33 @@
     <description>Recent content in 编程语言 on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Dec 2019 21:14:28 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 01 Feb 2020 16:08:30 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python之美</title>
+      <link>https://sin-coder.github.io/program/beauty/</link>
+      <pubDate>Sat, 01 Feb 2020 16:08:30 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/beauty/</guid>
+      <description>Python之美  新建一个Python文件，写入下面语句 &amp;quot;import this&amp;quot; 执行下看看发生了什么
+终端会打出这样的信息：
+ The Zen of Python, by Tim Peters
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren&#39;t special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.</description>
+    </item>
     
     <item>
       <title>Python中的魔法方法</title>
