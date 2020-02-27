@@ -51,6 +51,38 @@
     </item>
     
     <item>
+      <title>RPC的简介和使用</title>
+      <link>https://sin-coder.github.io/post/intro_rpc/</link>
+      <pubDate>Wed, 19 Feb 2020 16:08:30 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/intro_rpc/</guid>
+      <description>RPC的简介和使用 一、RPC出现的背景  当单台服务器无法满足用户的请求，就需要多台服务器联合起来构成一个集群共同对外提供一个服务，这
+ 也是我们常说的分布式。同时业务服务或随着产品需求的增多愈发变得臃肿，架构上必须进行服务的拆分，一
+个完整的大型服务会分成许多独立的小服务，每个小服务都会有独立的进程去管理对外的提供服务，这就是我
+们常说微服务
+ 当用户请求到来的时候，需要将其分散到多个服务去各自的处理，然后又需要将这些子服务的结果汇总
+ 起来呈现给用户。那么服务之间如何进行交互？这就是RPC要解决的问题
+二、什么是RPC?  RPC（Remote Procedure Call）即远程过程调用，是分布式系统中一中常见的通信方法。当然除了RPC
+ 外，常见的多系统数据交互方案还有分布式消息队列、HTTP请求调用、数据库和分布式缓存。如下图
+ 其中可以明显的看到RPC和HTTP调用都是没有经过中间件的，它是端到端系统的直接数据交互。关于
+ RPC和HTTP的主要区别接下来会阐述
+三、RPC的应用  RPC是分布式系统进行通信的基础，像Nignx/Redis/MuSQL/Dubbo/Spark/Tensorflow都是基于RPC技术
+ 发展起来的，似乎每一个分布式的软件或者系统实现上都有它的身影
+ Nginx和后端服务之间的交互本质上属于RPC数据的交互   Hadoop的文件系统HDFS中NameNode和多个DataNode之间通过二进制的RPC协议通讯   TensorFlow Cluster的RPC的通讯框架使用了Google自研的gRPC框架  四、HTTP和RPC的区别与联系  HTTP1.0协议时，HTTP的调用还只是短链接调用，一个请求来回之后连接就会关闭。HTTP1.1在HTTP
+ 1.0协议的基础上进行了改进，引入了KeepAlive特性可以保持HTTP连接长时间不会断开，以便在同一个连接
+上进行多次连续的请求，使的HTTP进一步地接近了RPC
+ 当HTTP进化到2.0版本时，Google开源了一个建立在HTTP2.0协议上的RPC框架:gRPC, 这时的HTTP
+ 和RPC之间已经没有明显的界限了。
+ 所以我们可以将HTTP看成一种特殊的RPC
+ 五、广义上的RPC  在分布式系统中我们经常使用的数据库、消息队列和缓存本质上也可以看成RPC技术的一种应用，比如
+ 像下面的分布式数据库模型图：
+ 可以看出子系统和数据库时间的交互也是通过RPC进行的，只不过这里是三个子系统之间进行的交互，
+ 而且这里的数据库是具备主从复制功能的数据库。一般情况为了提升系统的性能，都会使用这种主从读写
+分离的数据库。一个业务系统将数据写往主库，主库再将数据同步到从库，然后另一个业务子系统又从库
+里将数据取出来</description>
+    </item>
+    
+    <item>
       <title>分布式一致性</title>
       <link>https://sin-coder.github.io/post/consistency/</link>
       <pubDate>Mon, 17 Feb 2020 08:04:41 +0800</pubDate>
@@ -218,38 +250,6 @@ MapReduce(离线处理)-----》Spark(高性能批处理技术)------》Storm(流
 阻塞只有多线程而且异步的时候才能发挥作用。
  回来继续看烧水的例子，老王在烧水的同时去隔壁，也即在烧水这个线程之中，又开启了去隔壁
  这个线程，所以使用异步非阻塞才更加有意义</description>
-    </item>
-    
-    <item>
-      <title>RPC的简介和使用</title>
-      <link>https://sin-coder.github.io/post/intro_rpc/</link>
-      <pubDate>Wed, 19 Feb 2020 16:08:30 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/post/intro_rpc/</guid>
-      <description>RPC的简介和使用 一、RPC出现的背景  当单台服务器无法满足用户的请求，就需要多台服务器联合起来构成一个集群共同对外提供一个服务，这
- 也是我们常说的分布式。同时业务服务或随着产品需求的增多愈发变得臃肿，架构上必须进行服务的拆分，一
-个完整的大型服务会分成许多独立的小服务，每个小服务都会有独立的进程去管理对外的提供服务，这就是我
-们常说微服务
- 当用户请求到来的时候，需要将其分散到多个服务去各自的处理，然后又需要将这些子服务的结果汇总
- 起来呈现给用户。那么服务之间如何进行交互？这就是RPC要解决的问题
-二、什么是RPC?  RPC（Remote Procedure Call）即远程过程调用，是分布式系统中一中常见的通信方法。当然除了RPC
- 外，常见的多系统数据交互方案还有分布式消息队列、HTTP请求调用、数据库和分布式缓存。如下图
- 其中可以明显的看到RPC和HTTP调用都是没有经过中间件的，它是端到端系统的直接数据交互。关于
- RPC和HTTP的主要区别接下来会阐述
-三、RPC的应用  RPC是分布式系统进行通信的基础，像Nignx/Redis/MuSQL/Dubbo/Spark/Tensorflow都是基于RPC技术
- 发展起来的，似乎每一个分布式的软件或者系统实现上都有它的身影
- Nginx和后端服务之间的交互本质上属于RPC数据的交互   Hadoop的文件系统HDFS中NameNode和多个DataNode之间通过二进制的RPC协议通讯   TensorFlow Cluster的RPC的通讯框架使用了Google自研的gRPC框架  四、HTTP和RPC的区别与联系  HTTP1.0协议时，HTTP的调用还只是短链接调用，一个请求来回之后连接就会关闭。HTTP1.1在HTTP
- 1.0协议的基础上进行了改进，引入了KeepAlive特性可以保持HTTP连接长时间不会断开，以便在同一个连接
-上进行多次连续的请求，使的HTTP进一步地接近了RPC
- 当HTTP进化到2.0版本时，Google开源了一个建立在HTTP2.0协议上的RPC框架:gRPC, 这时的HTTP
- 和RPC之间已经没有明显的界限了。
- 所以我们可以将HTTP看成一种特殊的RPC
- 五、广义上的RPC  在分布式系统中我们经常使用的数据库、消息队列和缓存本质上也可以看成RPC技术的一种应用，比如
- 像下面的分布式数据库模型图：
- 可以看出子系统和数据库时间的交互也是通过RPC进行的，只不过这里是三个子系统之间进行的交互，
- 而且这里的数据库是具备主从复制功能的数据库。一般情况为了提升系统的性能，都会使用这种主从读写
-分离的数据库。一个业务系统将数据写往主库，主库再将数据同步到从库，然后另一个业务子系统又从库
-里将数据取出来</description>
     </item>
     
   </channel>
