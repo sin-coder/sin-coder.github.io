@@ -42,21 +42,34 @@ In the face of ambiguity, refuse the temptation to guess.</description>
       <guid>https://sin-coder.github.io/program/magic/</guid>
       <description>Python中的魔法方法 一、什么是Python的魔法方法？  魔法方法就是Python的内置方法，不需要主动调用，存在的目的就是给Python的解释器进行调用，几乎每个
  魔法方法都有一个对应的内置函数或者运算符，它们经常是使用两个下划线包围来命名的，最为常见的就是
-__ init __方法了。总的来说魔法方法就是让我们对类添加魔法的特殊方法</description>
+__ init __方法了。总的来说魔法方法就是让我们对类添加魔法的特殊方法（说跟没有说一样）
+二、常见的魔法方法 1.构造方法  最为常用的魔法方法就是__ init __方法了，我们可以使用它来指明一个对象初始化的行为。实际上，
+ 当我们再实例化对象时，__ init __方法并不是第一个被调用的方法。事实上应该是new方法，当这个对
+象的生命周期结束的时候，__ del __方法会被调用。下面具体阐述
+ （1）__ new __(cls,[....])
+__ new __是对象实例化第一个调用的方法，它只取下cls参数并把其他的参数传递给init方法，它很少使用
+（2）__ init __(self,[....])
+这是类的初始化方法，它能获取任何传给构造器的参数，这个方法在类的定义中使用到的是最多的
+（3）__ del __(self)
+new和init都是对象的构造器，__ del __是对象的销毁器，它不是实现了语句del x,而是定义了对象被垃圾
+ 回收时的行为。当对象需要销毁做一些处理的时候这个方法很有用，比如socket对象、文件对象。但是当
+Python解释器退出但对象仍然存活的时候，__ del __并不会执行，所以要及时地手工清理对象
+ 下面是一个示例：
+ from os.path import join class FileObject: #文件对象的装饰类，用来保证文件被删除时能够正确关闭 def __init__(self,filepath = &#39;~&#39;,filename = &#39;sample.txt&#39;): self.file = open(join(filepath,filename),&#39;r+&#39;) def __del__(self): self.file.close() del self.file  2.</description>
     </item>
     
     <item>
-      <title>Java和Python的面向对象对比</title>
+      <title>Python中的面向对象</title>
       <link>https://sin-coder.github.io/program/oop/</link>
       <pubDate>Fri, 20 Dec 2019 21:14:28 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/program/oop/</guid>
-      <description>Java和Python中面向对象的对比  说起面向对象，大家都不陌生，常用的Java就是一门面向对象的语言，但是很少人会觉得Python是一门
+      <description>Python中的面向对象  说起面向对象，大家都不陌生，常用的Java就是一门面向对象的语言，但是很少人会觉得Python是一门
  面向对象的语言，习惯使用Python的人更会觉得它有点像面向过程的语言，毕竟那流程化的操作让人觉得
 是从哪里冒出来的对象啊，今天是时候为Python平反了，Python和Java都是面向对象的语言
  但是我们所说的面向对象通常指的是编程的一种设计思想，更加准确的说应该是Python和Java都是支持
  面向对象的语言，而且Python和Java都不是纯碎的面向对象，当然我们也不必过于纠结什么是纯碎。这篇
-文章主要是从面向对象的角度来对比一下两门语言的异同
+讲解一些Python中面向对象的一些特性
 一、面向对象的主要特性  在面向对象编程中，函数和变量被进一步的封装成类，类是程序的基本元素，类和类的实例是面向对象
  的核心概念，面向对象的主要编程框架如下：
  导入各种外部库

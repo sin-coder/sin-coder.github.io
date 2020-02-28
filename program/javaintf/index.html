@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java面向对象之接口 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java面向对象之接口"/>
+<meta name="twitter:description" content="Java面向对象和接口  在Java编程语言中接口是一个抽象类型，是抽象方法的结合，一个类通过继承接口的方法来继承接口的
+ 抽象方法；除非实现接口的类是抽象类，否则该类要实现接口中的所有方法；接口无法被实例化，但是可以
+被实现；在Java中，接口类型可以用来声明一个变量
+一、接口和类的异同 1.接口和类的相似点  一个接口可以有多个方法
+ 接口文件保存在.java文件中，文件名使用接口名
+ 接口的字节码文件保存在.class文件中
+ 接口相应的字节码文件必须在与包名称匹配的目录中
+  2.接口和类的主要区别  接口不能用于实例化对象
+ 接口没有构造方法
+ 接口的所有方法必须是抽象方法
+ 接口不能包含成员变量，除了static和final变量
+ 接口可以被类继承或者实现
+  3.接口特性  接口中的方法会被隐式地指定为public abstract
+ 接口可以含有变量，但是会被隐式地指定为public static final
+ 接口中的方法是不能在接口中实现的，只能由实现接口的类来实现
+  二、接口的操作 1.接口的声明 [可见度] interface 接口名称 [extends 其他的接口名]{ //声明变量 //声明方法 }  2.接口的实现  类使用implements关键字来实现接口，类声明中，implements关键字放在class声明后
+ ...implements 接口名称[,其他接口名称,.....]   类实现接口的时候必须实现接口的所有方法，否则就要被定义为抽象类
+重写接口中声明的方法时，有以下要求
+  类实现接口中的方法时，不能抛出强制性的异常，只能在接口中，或者继承接口的抽象类中抛出
+ 类在重写方法时要保持一致的方法名，并且应该保持相同或者相兼容的返回值类型"/>
+
+    <meta property="og:title" content="Java面向对象之接口" />
+<meta property="og:description" content="Java面向对象和接口  在Java编程语言中接口是一个抽象类型，是抽象方法的结合，一个类通过继承接口的方法来继承接口的
+ 抽象方法；除非实现接口的类是抽象类，否则该类要实现接口中的所有方法；接口无法被实例化，但是可以
+被实现；在Java中，接口类型可以用来声明一个变量
+一、接口和类的异同 1.接口和类的相似点  一个接口可以有多个方法
+ 接口文件保存在.java文件中，文件名使用接口名
+ 接口的字节码文件保存在.class文件中
+ 接口相应的字节码文件必须在与包名称匹配的目录中
+  2.接口和类的主要区别  接口不能用于实例化对象
+ 接口没有构造方法
+ 接口的所有方法必须是抽象方法
+ 接口不能包含成员变量，除了static和final变量
+ 接口可以被类继承或者实现
+  3.接口特性  接口中的方法会被隐式地指定为public abstract
+ 接口可以含有变量，但是会被隐式地指定为public static final
+ 接口中的方法是不能在接口中实现的，只能由实现接口的类来实现
+  二、接口的操作 1.接口的声明 [可见度] interface 接口名称 [extends 其他的接口名]{ //声明变量 //声明方法 }  2.接口的实现  类使用implements关键字来实现接口，类声明中，implements关键字放在class声明后
+ ...implements 接口名称[,其他接口名称,.....]   类实现接口的时候必须实现接口的所有方法，否则就要被定义为抽象类
+重写接口中声明的方法时，有以下要求
+  类实现接口中的方法时，不能抛出强制性的异常，只能在接口中，或者继承接口的抽象类中抛出
+ 类在重写方法时要保持一致的方法名，并且应该保持相同或者相兼容的返回值类型" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/program/javaintf/" />
+<meta property="article:published_time" content="2019-12-22T21:14:28+08:00" />
+<meta property="article:modified_time" content="2019-12-22T21:14:28+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java面向对象之接口</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 22, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><a class="tag" href="https://sin-coder.github.io/tags/java/">Java</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="java面向对象和接口">Java面向对象和接口</h2>
+
+<hr />
+
+<blockquote>
+<p>在Java编程语言中接口是一个抽象类型，是抽象方法的结合，一个类通过继承接口的方法来继承接口的</p>
+</blockquote>
+
+<p>抽象方法；除非实现接口的类是抽象类，否则该类要实现接口中的所有方法；接口无法被实例化，但是可以</p>
+
+<p>被实现；在Java中，接口类型可以用来声明一个变量</p>
+
+<h3 id="一-接口和类的异同">一、接口和类的异同</h3>
+
+<h4 id="1-接口和类的相似点">1.接口和类的相似点</h4>
+
+<ul>
+<li><p>一个接口可以有多个方法</p></li>
+
+<li><p>接口文件保存在.java文件中，文件名使用接口名</p></li>
+
+<li><p>接口的字节码文件保存在.class文件中</p></li>
+
+<li><p>接口相应的字节码文件必须在与包名称匹配的目录中</p></li>
+</ul>
+
+<h4 id="2-接口和类的主要区别">2.接口和类的主要区别</h4>
+
+<ul>
+<li><p>接口不能用于实例化对象</p></li>
+
+<li><p>接口没有构造方法</p></li>
+
+<li><p>接口的所有方法必须是抽象方法</p></li>
+
+<li><p>接口不能包含成员变量，除了static和final变量</p></li>
+
+<li><p>接口可以被类继承或者实现</p></li>
+</ul>
+
+<h4 id="3-接口特性">3.接口特性</h4>
+
+<ul>
+<li><p>接口中的方法会被隐式地指定为public abstract</p></li>
+
+<li><p>接口可以含有变量，但是会被隐式地指定为public static final</p></li>
+
+<li><p>接口中的方法是不能在接口中实现的，只能由实现接口的类来实现</p></li>
+</ul>
+
+<h3 id="二-接口的操作">二、接口的操作</h3>
+
+<h4 id="1-接口的声明">1.接口的声明</h4>
+
+<pre><code class="language-java">[可见度] interface 接口名称 [extends 其他的接口名]{
+    //声明变量
+    //声明方法
+}
+</code></pre>
+
+<h4 id="2-接口的实现">2.接口的实现</h4>
+
+<blockquote>
+<p>类使用implements关键字来实现接口，类声明中，implements关键字放在class声明后</p>
+</blockquote>
+
+<pre><code class="language-java">...implements 接口名称[,其他接口名称,.....]
+</code></pre>
+
+<blockquote>
+<p>类实现接口的时候必须实现接口的所有方法，否则就要被定义为抽象类</p>
+
+<p>重写接口中声明的方法时，有以下要求</p>
+</blockquote>
+
+<ul>
+<li><p>类实现接口中的方法时，不能抛出强制性的异常，只能在接口中，或者继承接口的抽象类中抛出</p></li>
+
+<li><p>类在重写方法时要保持一致的方法名，并且应该保持相同或者相兼容的返回值类型</p></li>
+
+<li><p>如果实现接口的类是抽象类，就没必要实现该接口的方法</p></li>
+</ul>
+
+<h4 id="3-接口的继承">3.接口的继承</h4>
+
+<ul>
+<li>一个接口能继承其他接口，而且可以继承多个</li>
+</ul>
+
+<h3 id="三-标记接口">三、标记接口</h3>
+
+<blockquote>
+<p>标记接口是没有任何方法和属性的接口，它仅仅表明它的类属于一个特定的类型。具体的作用</p>
+</blockquote>
+
+<p>就是给某个对象打个标签，使对象拥有某个或者某些特权</p>
+
+<pre><code class="language-java">//示例：java.awt.event包中的MouseListener接口继承的java.util.EventListener接口定义如下
+public interface EventListener{}   //没有任何的方法
+</code></pre>
+
+<blockquote>
+<p>如果某个类想要变成一个接口类型，但是又不想定义任何接口的方法，就可以让它实现标记接口</p>
+</blockquote>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>

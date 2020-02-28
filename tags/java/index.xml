@@ -6,10 +6,38 @@
     <description>Recent content in Java on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Dec 2019 21:14:28 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 22 Dec 2019 21:14:28 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java面向对象之接口</title>
+      <link>https://sin-coder.github.io/program/javaintf/</link>
+      <pubDate>Sun, 22 Dec 2019 21:14:28 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/javaintf/</guid>
+      <description>Java面向对象和接口  在Java编程语言中接口是一个抽象类型，是抽象方法的结合，一个类通过继承接口的方法来继承接口的
+ 抽象方法；除非实现接口的类是抽象类，否则该类要实现接口中的所有方法；接口无法被实例化，但是可以
+被实现；在Java中，接口类型可以用来声明一个变量
+一、接口和类的异同 1.接口和类的相似点  一个接口可以有多个方法
+ 接口文件保存在.java文件中，文件名使用接口名
+ 接口的字节码文件保存在.class文件中
+ 接口相应的字节码文件必须在与包名称匹配的目录中
+  2.接口和类的主要区别  接口不能用于实例化对象
+ 接口没有构造方法
+ 接口的所有方法必须是抽象方法
+ 接口不能包含成员变量，除了static和final变量
+ 接口可以被类继承或者实现
+  3.接口特性  接口中的方法会被隐式地指定为public abstract
+ 接口可以含有变量，但是会被隐式地指定为public static final
+ 接口中的方法是不能在接口中实现的，只能由实现接口的类来实现
+  二、接口的操作 1.接口的声明 [可见度] interface 接口名称 [extends 其他的接口名]{ //声明变量 //声明方法 }  2.接口的实现  类使用implements关键字来实现接口，类声明中，implements关键字放在class声明后
+ ...implements 接口名称[,其他接口名称,.....]   类实现接口的时候必须实现接口的所有方法，否则就要被定义为抽象类
+重写接口中声明的方法时，有以下要求
+  类实现接口中的方法时，不能抛出强制性的异常，只能在接口中，或者继承接口的抽象类中抛出
+ 类在重写方法时要保持一致的方法名，并且应该保持相同或者相兼容的返回值类型</description>
+    </item>
     
     <item>
       <title>Java中的包(Package)</title>
@@ -57,40 +85,6 @@ public abstract class Employee{ public abstract int getMsg();//抽象方法 }   
  抽象类中的抽象方法只是声明，不包含方法体，即不给出方法的具体实现
  构造方法和类方法（用static方法修饰的方法）不能声明为抽象的方法
   </description>
-    </item>
-    
-    <item>
-      <title>Java和Python的面向对象对比</title>
-      <link>https://sin-coder.github.io/program/oop/</link>
-      <pubDate>Fri, 20 Dec 2019 21:14:28 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/program/oop/</guid>
-      <description>Java和Python中面向对象的对比  说起面向对象，大家都不陌生，常用的Java就是一门面向对象的语言，但是很少人会觉得Python是一门
- 面向对象的语言，习惯使用Python的人更会觉得它有点像面向过程的语言，毕竟那流程化的操作让人觉得
-是从哪里冒出来的对象啊，今天是时候为Python平反了，Python和Java都是面向对象的语言
- 但是我们所说的面向对象通常指的是编程的一种设计思想，更加准确的说应该是Python和Java都是支持
- 面向对象的语言，而且Python和Java都不是纯碎的面向对象，当然我们也不必过于纠结什么是纯碎。这篇
-文章主要是从面向对象的角度来对比一下两门语言的异同
-一、面向对象的主要特性  在面向对象编程中，函数和变量被进一步的封装成类，类是程序的基本元素，类和类的实例是面向对象
- 的核心概念，面向对象的主要编程框架如下：
- 导入各种外部库
- 设计各种全局变量
- 决定你要的类
- 给每个类提供完整的一组操作
- 明确的使用继承来表现不同类的特点
- 根据需要决定是否要写一个mian函数作为程序入口
-   面向对象中一些基础的概念是多态、继承、封装、抽象、类、对象、实例、方法、重载，下面对一些主要
- 的概念稍作解释
- 类变量：所有实例公有的变量，类变量定义在类中，但是在方法体之外
- 实例变量：是实例本身所拥有的变量，每个实例变量在内存都是不一样的
- 静态方法：不需要实例化就可以由类指向的方法
- 类方法：类方法是将类本身作为对象进行操作的方法
- 重写：从父类继承的方法不能满足子类的需求，这个过程称为override
- 封装：将内部实现包装起来，对外透明
- 继承：子类继承父类的变量和方法
- 多态：根据对象类型的不同以不同的方式进行处理
-  二、类与对象 1.类和对象的创建  Python中类和对象的创建是这样进行的
- class test: classVar = &amp;quot;Test&amp;quot; #类变量 def __init__(self,para1,para2): #理解为构造函数 self.para1 = para1 self.</description>
     </item>
     
     <item>
