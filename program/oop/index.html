@@ -123,7 +123,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          2 min read
         </div><div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
   <title>tag</title>
@@ -222,37 +222,83 @@
 <h4 id="2-方法的调用">2.方法的调用</h4>
 
 <blockquote>
-<p>在类中方法主要有四类，实例方法（就是每个实例可以调用的方法）、类方法（只能由类调用的方法）、</p>
+<p>在类中方法主要有四类：实例方法、类方法、静态方法、属性方法</p>
 </blockquote>
 
-<p>静态方法（也是用类进行调用，但是不需要传入任何参数）。实例方法比较简单，就不再阐述了，下面主要</p>
+<ul>
+<li><p>实例方法：就是每个实例可以调用的方法，就是最普通的方法，一般会有一个self参数</p></li>
 
-<p>介绍类方法和静态方法</p>
+<li><p>类方法： 只能访问类变量，不能访问实例变量，使用装饰器@classmethod表示</p></li>
+
+<li><p>属性方法：将一个方法变成一个静态属性，不同加小括号就可以直接调用的，使用装饰器@property表示</p></li>
+
+<li><p>静态方法：静态方法没有默认的参数，它将实例方法参数中的self去掉，然后在方法定义上加上@staticmethod，</p></li>
+</ul>
 
 <blockquote>
-<p>静态方法没有默认的参数，它将实例方法参数中的self去掉，然后在方法定义上加上@staticmethod，就</p>
+<p>就成为了静态方法，它属于类，与实例无关，建议只用类名.静态方法的调用方式。经常有一些跟类有关系</p>
+
+<p>的功能但是运行时又不需要实例和类参与的情况下需要用到静态方法，比如更改环镜变量或者修改其他类的</p>
+
+<p>属性等能用到静态方法</p>
 </blockquote>
 
-<p>成为了静态方法，它属于类，与实例无关，建议只用类名.静态方法的调用方式</p>
-
-<blockquote>
-<p>经常有一些跟类有关系的功能但是运行时又不需要实例和类参与的情况下需要用到静态方法，比如更改环</p>
-</blockquote>
-
-<p>镜变量或者修改其他类的属性等能用到静态方法</p>
-
-<pre><code class="language-python">class Test:
+<pre><code class="language-python">#静态方法使用示例
+class Test:
     @staticmethod   #定义了一个静态方法
     def fun():
         pass
 Test.fun()    #使用类直接去调用静态方法
+
+#类方法使用示例
+class Person(object):
+    def __init__(self,name):
+        self.name = name
+    @classmethod
+    def printMsg(self):
+        print(self.name)    #self.name这个变量是实例化这个类是传进去的，类方法不能访问
+    
+class Person(object):
+    name = &quot;yzz&quot;
+    def __init__(self,name):
+        self.name = name
+    @classmethod
+    def printMsg(self):
+        print(self.name)    #类方法可以访问类变量
+        
+ #属性方法使用实例
+class Person(object):
+    def __init__(self,name):
+        self.name = name
+    @property
+    def printMsg(self):
+        print(&quot;Hello World&quot;)
+per = Person(&quot;yzz&quot;)
+per.eat                  #按照调用属性的方式调用
 </code></pre>
 
+<h4 id="3-成员修饰符">3.成员修饰符</h4>
+
 <blockquote>
-<p>类方法由类调用，采用@classmethod装饰，类方法只能访问类变量，但是不能访问实例变量，在类方法</p>
+<p>Python中的类只有私有成员和公有成员两种，并且python中没有关键字去修饰成员，默认python中</p>
 </blockquote>
 
-<p>中必须要传入一个cls参数（就是当前类的__ init __方法）</p>
+<p>所有的成员都是公有成员，私有成员是以两个下划线开头来标识的；私有成员不允许直接访问，只能通</p>
+
+<p>过内部方法去访问，私有成员也不允许被继承</p>
+
+<pre><code class="language-python">class Test:
+    __age = 10 #私有变量
+    def __init__(self,name,salary):
+        self.name = name
+        self.__salary = salary #私有变量
+    def printName(self):
+        print(self.name)
+    #如果要在类中调用私有变量，应该使用类方法
+    @classmethod
+    def printMsg(cls):
+        print(cls.__age,self.__salary)
+</code></pre>
 
 <h3 id="三-类的主要特性">三、类的主要特性</h3>
 
@@ -264,17 +310,112 @@ Test.fun()    #使用类直接去调用静态方法
 
 <p>构造方法init()，在进行子类实例化的时候，子类的构造方法不会自动调用父类的构造方法，必须在子类中</p>
 
-<p>显示调用</p>
+<p>显式地调用</p>
 
-<p>2.成员修饰符</p>
+<pre><code class="language-python">#单继承
+class DerivedClassName(BaseClassName1):
+    pass
+#基类定义在另一个模块中时
+class DerivedClassName(modname.BaseClassName):
+    pass
+
+#多继承
+class DerivedClassName(Base1,Base2,Base3):
+    pass
+#当父类中有相同方法名，但在子类中使用时未指定，Python会从左至右搜索父类是否包含该方法
+</code></pre>
+
+<h4 id="2-方法重写">2.方法重写</h4>
 
 <blockquote>
-<p>Python中的类只有私有成员和公有成员两种，并且python中没有关键字去修饰成员，默认python中</p>
+<p>当Python中的父类方法功能不能满足时，子类中可以进行重写</p>
 </blockquote>
 
-<p>所有的成员都是公有成员，私有成员是以两个下划线开头来标识的</p>
+<pre><code class="language-python">class Parent:
+    def printMsg(self):
+        print(&quot;我是父类方法&quot;)
+class Child(Parent):
+    def printMsg(self):
+        print(&quot;我是子类方法&quot;)
+#super()函数就是调用父类方法的一个方法
+</code></pre>
 
-<p>成员保护机制</p>
+<h4 id="3-反射和自省">3.反射和自省</h4>
+
+<blockquote>
+<p>Python中反射和自省的实现是通过一些魔法方法来实现的：hasattr、getattr、setattr、delattr四个内置函</p>
+</blockquote>
+
+<p>数来实现的，这些方法在类和对象以及其他模块中用的都是比较多的，其中key都是字符串</p>
+
+<ul>
+<li><p>hasattr(key)： 返回的是一个bool值，判断某个成员或者属性是否存在于类或者对象中</p></li>
+
+<li><p>getattr(key，default = xxx)：获取类或者对象的成员或者属性，如果不存在抛出AttributrError异常，如果</p></li>
+</ul>
+
+<blockquote>
+<p>定义了default那么没有属性的时候会返回默认值</p>
+</blockquote>
+
+<ul>
+<li><p>setattr(key, value)：加入有这个属性就更新这个属性，如果没有就添加这个属性并赋值value</p></li>
+
+<li><p>delattr(key):删除某个属性</p>
+
+<pre><code class="language-python">class Test:
+def __init__(self,name,age):
+    self.name = name
+    self.age = age
+def show(self):
+    return self.name.self.age 
+obj = Test(&quot;yzz&quot;,18)
+print(getattr(obj,&quot;name&quot;)) #获取属性值
+set(obj,&quot;k1&quot;,&quot;v1&quot;)  #添加属性
+print(hasattr(obj,&quot;k1&quot;))  #查看是否存在这个属性
+delattr(obj,&quot;k1&quot;)       #删除这个属性
+</code></pre></li>
+</ul>
+
+<blockquote>
+<p>反射和自省能够直接访问以及修改运行的类和对象的成员和属性，实际用例：</p>
+</blockquote>
+
+<pre><code class="language-python">import test
+addr = input(&quot;请输入URL：&quot;)
+if addr in test.__dict__:
+    getattr(test,addr)()
+else:
+    print(&quot;404&quot;)
+</code></pre>
+
+<h3 id="四-单例模式">四、单例模式</h3>
+
+<blockquote>
+<p>在面向对象中的单例模式就是一个类只有一个对象，所有的操作都是通过这个对象来完成，示例如下</p>
+</blockquote>
+
+<pre><code class="language-python">class Test:
+    __v = None
+    @classmethod
+    def getinstance(cls):
+        if cls.__v:
+            return cls.__v
+        else:
+            cls.__v = Test()
+            return cls.__v
+        
+obj1 = Test.getinstance()
+obj2 = Test.getinstance()
+obj3 = Test.getinstance()
+#三个对象的内存地址都是一样的，这样可以节省资源
+</code></pre>
+
+<blockquote>
+<p>比如在数据库连接池时使用单例模式，只创建一个类的对象供其他程序调用；Web服务请求中也是使用</p>
+</blockquote>
+
+<p>这个单例模式</p>
 
     </div>
     <div class="post-footer">
