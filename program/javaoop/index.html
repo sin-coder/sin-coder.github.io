@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Java面向对象总结 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java面向对象总结"/>
+<meta name="twitter:description" content="Java面向对象总结 一、类和对象  Java中的类可以包含局部变量、成员变量、类变量
+  局部变量：在方法、构造方法中定义的变量
+ 成员变量：定义在类中，方法体之外的变量。可以被类中的各种方法使用
+ 类变量：定义在各种类中，方法体之外。必须声明为static类型
+   构造方法 : 如果没有显式地为类定义构造方法，Java编译器会为该类提供一个默认的构造方法。在创
+ 建一个对象的时候，至少要调用一个构造方法
+ Java中import语句执行的过程，import语句主要是提供一个合理的路径，使得编译器能够找到某个类
+Java中的类有若干访问级别：抽象类、final类、内部类、匿名类
+Java中强制要求类名和文件名相同，是因为在引用其他类的时候无需显式的声明，在编译时会根据类
+ 名去寻找同名文件
+ Java中包的作用就是防止名字相同的类产生冲突。编译器在编译时直接根据package指定的信息直接
+ 将生成的class文件生成到对应文件的目录中，比如package com.util.Test，编译器就将生成的.java文件
+放于./com/util/Test/这个目录下
+ import的作用是为了简化使用package之后的实例化的代码，就是将new java.net.Socket()简化成
+ new Socket（）
+ 一个Java文件中只能包含一个Public的类
+this是指向对象本身的指针，super是指向父类对象的一个指针
+new关键字的一个作用，为对象分配内存空间、引起对象构造方法的调用，为对象返回一个引用
+对象和引用的区别，对象是具体的一个实例，使用new创建一个对象时，是在堆内存中开辟一块空间
+ 引用名称存放的对象的地址
+二、Java中的继承  在Java中可以通过extends关键字可以声明一个类是从另外一个类继承而来的
+Java中不支持多继承，但是支持多重继承
+子类可以拥有父类非private的属性和方法，子类可以用自己的方式实现父类的方法
+Java中所有的类都是继承于java.lang.Object这个祖先类，如果一个类没有显示继承，则默认情况
+ 下继承Object 祖先类
+ implements关键字可以变相的使Java具有多继承的特性，同时实现多个接口
+final关键字声明类可以把类定义为不能继承的，即是最终类。或者用于修饰方法，该方法不能被子类重写
+final修饰类中的属性或者变量时，无论是基本类型还是引用类型
+Java文件被编译成class文件时，在子类的所有构造函数中的第一行会默认添加super()语句，在执行子类
+ 的构造函数前，总是会先执行父类的构造函数，执行父类构造函数的语句只能放在函数内语句的首句，不然
+报错；如果父类不含默认的构造函数，子类中的super()语句就会执行失败
+ Object类是所有类的根父类，可以用于参数的传递，当你不清楚函数需要的参数是什么类型的，可以使
+ 用Object类来代替，Object可以代替任何类
+三、重写和重载 1.重写（Override）  重写是子类对父类的允许访问的方法的实现过程进行重新编写，返回值和参数都不能变"/>
+
+    <meta property="og:title" content="Java面向对象总结" />
+<meta property="og:description" content="Java面向对象总结 一、类和对象  Java中的类可以包含局部变量、成员变量、类变量
+  局部变量：在方法、构造方法中定义的变量
+ 成员变量：定义在类中，方法体之外的变量。可以被类中的各种方法使用
+ 类变量：定义在各种类中，方法体之外。必须声明为static类型
+   构造方法 : 如果没有显式地为类定义构造方法，Java编译器会为该类提供一个默认的构造方法。在创
+ 建一个对象的时候，至少要调用一个构造方法
+ Java中import语句执行的过程，import语句主要是提供一个合理的路径，使得编译器能够找到某个类
+Java中的类有若干访问级别：抽象类、final类、内部类、匿名类
+Java中强制要求类名和文件名相同，是因为在引用其他类的时候无需显式的声明，在编译时会根据类
+ 名去寻找同名文件
+ Java中包的作用就是防止名字相同的类产生冲突。编译器在编译时直接根据package指定的信息直接
+ 将生成的class文件生成到对应文件的目录中，比如package com.util.Test，编译器就将生成的.java文件
+放于./com/util/Test/这个目录下
+ import的作用是为了简化使用package之后的实例化的代码，就是将new java.net.Socket()简化成
+ new Socket（）
+ 一个Java文件中只能包含一个Public的类
+this是指向对象本身的指针，super是指向父类对象的一个指针
+new关键字的一个作用，为对象分配内存空间、引起对象构造方法的调用，为对象返回一个引用
+对象和引用的区别，对象是具体的一个实例，使用new创建一个对象时，是在堆内存中开辟一块空间
+ 引用名称存放的对象的地址
+二、Java中的继承  在Java中可以通过extends关键字可以声明一个类是从另外一个类继承而来的
+Java中不支持多继承，但是支持多重继承
+子类可以拥有父类非private的属性和方法，子类可以用自己的方式实现父类的方法
+Java中所有的类都是继承于java.lang.Object这个祖先类，如果一个类没有显示继承，则默认情况
+ 下继承Object 祖先类
+ implements关键字可以变相的使Java具有多继承的特性，同时实现多个接口
+final关键字声明类可以把类定义为不能继承的，即是最终类。或者用于修饰方法，该方法不能被子类重写
+final修饰类中的属性或者变量时，无论是基本类型还是引用类型
+Java文件被编译成class文件时，在子类的所有构造函数中的第一行会默认添加super()语句，在执行子类
+ 的构造函数前，总是会先执行父类的构造函数，执行父类构造函数的语句只能放在函数内语句的首句，不然
+报错；如果父类不含默认的构造函数，子类中的super()语句就会执行失败
+ Object类是所有类的根父类，可以用于参数的传递，当你不清楚函数需要的参数是什么类型的，可以使
+ 用Object类来代替，Object可以代替任何类
+三、重写和重载 1.重写（Override）  重写是子类对父类的允许访问的方法的实现过程进行重新编写，返回值和参数都不能变" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/program/javaoop/" />
+<meta property="article:published_time" content="2019-12-20T00:14:28+08:00" />
+<meta property="article:modified_time" content="2019-12-20T00:14:28+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Java面向对象总结</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 20, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a><a class="tag" href="https://sin-coder.github.io/tags/java/">Java</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="java面向对象总结">Java面向对象总结</h2>
+
+<hr />
+
+<h3 id="一-类和对象">一、类和对象</h3>
+
+<blockquote>
+<p>Java中的类可以包含局部变量、成员变量、类变量</p>
+</blockquote>
+
+<ul>
+<li><p>局部变量：在方法、构造方法中定义的变量</p></li>
+
+<li><p>成员变量：定义在类中，方法体之外的变量。可以被类中的各种方法使用</p></li>
+
+<li><p>类变量：定义在各种类中，方法体之外。必须声明为static类型</p></li>
+</ul>
+
+<blockquote>
+<p>构造方法 :  如果没有显式地为类定义构造方法，Java编译器会为该类提供一个默认的构造方法。在创</p>
+</blockquote>
+
+<p>建一个对象的时候，至少要调用一个构造方法</p>
+
+<blockquote>
+<p>Java中import语句执行的过程，import语句主要是提供一个合理的路径，使得编译器能够找到某个类</p>
+
+<p>Java中的类有若干访问级别：抽象类、final类、内部类、匿名类</p>
+
+<p>Java中强制要求类名和文件名相同，是因为在引用其他类的时候无需显式的声明，在编译时会根据类</p>
+</blockquote>
+
+<p>名去寻找同名文件</p>
+
+<blockquote>
+<p>Java中包的作用就是防止名字相同的类产生冲突。编译器在编译时直接根据package指定的信息直接</p>
+</blockquote>
+
+<p>将生成的class文件生成到对应文件的目录中，比如package com.util.Test，编译器就将生成的.java文件</p>
+
+<p>放于./com/util/Test/这个目录下</p>
+
+<blockquote>
+<p>import的作用是为了简化使用package之后的实例化的代码，就是将new java.net.Socket()简化成</p>
+</blockquote>
+
+<p>new Socket（）</p>
+
+<blockquote>
+<p>一个Java文件中只能包含一个Public的类</p>
+
+<p>this是指向对象本身的指针，super是指向父类对象的一个指针</p>
+
+<p>new关键字的一个作用，为对象分配内存空间、引起对象构造方法的调用，为对象返回一个引用</p>
+
+<p>对象和引用的区别，对象是具体的一个实例，使用new创建一个对象时，是在堆内存中开辟一块空间</p>
+</blockquote>
+
+<p>引用名称存放的对象的地址</p>
+
+<h3 id="二-java中的继承">二、Java中的继承</h3>
+
+<blockquote>
+<p>在Java中可以通过extends关键字可以声明一个类是从另外一个类继承而来的</p>
+
+<p>Java中不支持多继承，但是支持多重继承</p>
+
+<p>子类可以拥有父类非private的属性和方法，子类可以用自己的方式实现父类的方法</p>
+
+<p>Java中所有的类都是继承于java.lang.Object这个祖先类，如果一个类没有显示继承，则默认情况</p>
+</blockquote>
+
+<p>下继承Object 祖先类</p>
+
+<blockquote>
+<p>implements关键字可以变相的使Java具有多继承的特性，同时实现多个接口</p>
+
+<p>final关键字声明类可以把类定义为不能继承的，即是最终类。或者用于修饰方法，该方法不能被子类重写</p>
+
+<p>final修饰类中的属性或者变量时，无论是基本类型还是引用类型</p>
+
+<p>Java文件被编译成class文件时，在子类的所有构造函数中的第一行会默认添加super()语句，在执行子类</p>
+</blockquote>
+
+<p>的构造函数前，总是会先执行父类的构造函数，执行父类构造函数的语句只能放在函数内语句的首句，不然</p>
+
+<p>报错；如果父类不含默认的构造函数，子类中的super()语句就会执行失败</p>
+
+<blockquote>
+<p>Object类是所有类的根父类，可以用于参数的传递，当你不清楚函数需要的参数是什么类型的，可以使</p>
+</blockquote>
+
+<p>用Object类来代替，Object可以代替任何类</p>
+
+<h3 id="三-重写和重载">三、重写和重载</h3>
+
+<h4 id="1-重写-override">1.重写（Override）</h4>
+
+<blockquote>
+<p>重写是子类对父类的允许访问的方法的实现过程进行重新编写，返回值和参数都不能变</p>
+
+<p>关于重写的一些注意事项：</p>
+</blockquote>
+
+<ul>
+<li>重写方法不能抛出新的检查异常或者比被重写方法申明更加宽泛的异常；比如说父类的一个方法声明了一个</li>
+</ul>
+
+<blockquote>
+<p>IOException，子类就不能抛出Exception的异常了</p>
+</blockquote>
+
+<ul>
+<li><p>重写方法的参数列表必须和被重写方法相同</p></li>
+
+<li><p>返回类型和被重写方法的返回类型可以不相同，但是必须是父类返回值的派生类</p></li>
+
+<li><p>访问权限不能比父类中方法的访问权限更低</p></li>
+</ul>
+
+<blockquote>
+<p>能否被重写的一些情况：</p>
+</blockquote>
+
+<ul>
+<li><p>构造方法不能被重写</p></li>
+
+<li><p>声明为final的方法不能被重新</p></li>
+
+<li><p>声明为static的方法不能被重写</p></li>
+</ul>
+
+<h3 id="四-java转型的问题">四、Java转型的问题</h3>
+
+<blockquote>
+<p>关于Java的转型问题主要有以下几点：</p>
+</blockquote>
+
+<ul>
+<li><p>父类应用指向子类对象，但是子类引用不能指向父类对象，Java的抽象变成思想</p></li>
+
+<li><p>把子类对象直接赋给父类引用是向上转型，向上转型不用强制转换的，父类可以是接口</p></li>
+
+<li><p>把指向子类对象的父类引用赋给子类引用叫做向下转型，需要强制转换</p>
+
+<pre><code class="language-java">Father f1 = new Son();  //父类引用指向子类对象 向上转型
+Son s1 = (Son)f1;       //向下转型 需要强制转型
+</code></pre></li>
+</ul>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>
