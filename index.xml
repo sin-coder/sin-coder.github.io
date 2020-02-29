@@ -12,12 +12,12 @@
     
     
     <item>
-      <title>Reids中的RPC协议结构</title>
+      <title>Redis中的RPC协议结构</title>
       <link>https://sin-coder.github.io/post/redisrpc/</link>
       <pubDate>Mon, 24 Feb 2020 16:59:37 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/post/redisrpc/</guid>
-      <description>Reids中的RPC协议结构  Redis的客户端和服务器之间进行RPC通信时，使用的是其开发者专门设计的文本通讯协议RESP。它的
+      <description>Redis中的RPC协议结构  Redis的客户端和服务器之间进行RPC通信时，使用的是其开发者专门设计的文本通讯协议RESP。它的
  开发者认为数据库系统的性能瓶颈一般不在于网络流量，而是数据库自身内部的逻辑处理上。所以Redis使
 用了浪费流量的文本协议。但是，依然可以取得很高的访问性能
  下面主要介绍RESP协议的相关内容
