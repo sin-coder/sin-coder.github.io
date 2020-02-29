@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Reids中的RPC协议结构 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Reids中的RPC协议结构"/>
+<meta name="twitter:description" content="Reids中的RPC协议结构  Redis的客户端和服务器之间进行RPC通信时，使用的是其开发者专门设计的文本通讯协议RESP。它的
+ 开发者认为数据库系统的性能瓶颈一般不在于网络流量，而是数据库自身内部的逻辑处理上。所以Redis使
+用了浪费流量的文本协议。但是，依然可以取得很高的访问性能
+ 下面主要介绍RESP协议的相关内容
+ 一、RESP协议简介  RESP（Redis Serialization Protocol）,就是Redis的序列化协议，这是一种对人友好的文本协议。它将
+ 传输的结构数据分为5种最下单元的类型，单元结束时统一加上回车换行符\r\n，具体如下
+ 单行字符串以&#43;符号开头
+&#43;hello world\r\n  多行字符串以$符号开头，后跟字符串的长度
+$11\r\nhello world\r\n #长度加上字符串  整数值以：符号开头，后跟整数的字符串形式
+:1024\r\n  错误的消息以 - 开头
+-WRONGTYPE Operation against a key holding the wrong kind of value\r\n  数组以*开头，后面跟数组的长度
+*3\r\n:1\r\n:2\r\n:3\r\n #先是数组长度，依次再是每个内容，表示数组[1,2,3]  NULL用多行字符串表示，不过长度要写成-1
+$-1\r\n  空串用多行字符串表示，长度填0
+$0\r\n\r\n #两个\r\n之间隔的是空串  客户端向服务器发送指令使用多行字符串数组，比如一个简单的set指令 set author codehole会被序列化为
+   下面的字符串
+ *3\r\n$3\r\nset\r\n$6\r\nauthor\r\n$8\r\ncodehole\r\n   服务端向客户端回复的响应要支持多种数据结构，基本上都是上述5种基本类型的组合
+#单行字符串响应 &gt;set author codehole OK #这里的OK就是单行响应，没有使用引号括起来 #错误响应 -ERR ."/>
+
+    <meta property="og:title" content="Reids中的RPC协议结构" />
+<meta property="og:description" content="Reids中的RPC协议结构  Redis的客户端和服务器之间进行RPC通信时，使用的是其开发者专门设计的文本通讯协议RESP。它的
+ 开发者认为数据库系统的性能瓶颈一般不在于网络流量，而是数据库自身内部的逻辑处理上。所以Redis使
+用了浪费流量的文本协议。但是，依然可以取得很高的访问性能
+ 下面主要介绍RESP协议的相关内容
+ 一、RESP协议简介  RESP（Redis Serialization Protocol）,就是Redis的序列化协议，这是一种对人友好的文本协议。它将
+ 传输的结构数据分为5种最下单元的类型，单元结束时统一加上回车换行符\r\n，具体如下
+ 单行字符串以&#43;符号开头
+&#43;hello world\r\n  多行字符串以$符号开头，后跟字符串的长度
+$11\r\nhello world\r\n #长度加上字符串  整数值以：符号开头，后跟整数的字符串形式
+:1024\r\n  错误的消息以 - 开头
+-WRONGTYPE Operation against a key holding the wrong kind of value\r\n  数组以*开头，后面跟数组的长度
+*3\r\n:1\r\n:2\r\n:3\r\n #先是数组长度，依次再是每个内容，表示数组[1,2,3]  NULL用多行字符串表示，不过长度要写成-1
+$-1\r\n  空串用多行字符串表示，长度填0
+$0\r\n\r\n #两个\r\n之间隔的是空串  客户端向服务器发送指令使用多行字符串数组，比如一个简单的set指令 set author codehole会被序列化为
+   下面的字符串
+ *3\r\n$3\r\nset\r\n$6\r\nauthor\r\n$8\r\ncodehole\r\n   服务端向客户端回复的响应要支持多种数据结构，基本上都是上述5种基本类型的组合
+#单行字符串响应 &gt;set author codehole OK #这里的OK就是单行响应，没有使用引号括起来 #错误响应 -ERR ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/redisrpc/" />
+<meta property="article:published_time" content="2020-02-24T16:59:37+08:00" />
+<meta property="article:modified_time" content="2020-02-24T16:59:37+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Reids中的RPC协议结构</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 24, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a><a class="tag" href="https://sin-coder.github.io/tags/rpc/">RPC</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="reids中的rpc协议结构">Reids中的RPC协议结构</h2>
+
+<hr />
+
+<blockquote>
+<p>Redis的客户端和服务器之间进行RPC通信时，使用的是其开发者专门设计的文本通讯协议RESP。它的</p>
+</blockquote>
+
+<p>开发者认为数据库系统的性能瓶颈一般不在于网络流量，而是数据库自身内部的逻辑处理上。所以Redis使</p>
+
+<p>用了浪费流量的文本协议。但是，依然可以取得很高的访问性能</p>
+
+<blockquote>
+<p>下面主要介绍RESP协议的相关内容</p>
+</blockquote>
+
+<h3 id="一-resp协议简介">一、RESP协议简介</h3>
+
+<blockquote>
+<p>RESP（Redis Serialization Protocol）,就是Redis的序列化协议，这是一种对人友好的文本协议。它将</p>
+</blockquote>
+
+<p>传输的结构数据分为5种最下单元的类型，单元结束时统一加上回车换行符\r\n，具体如下</p>
+
+<ul>
+<li><p>单行字符串以+符号开头</p>
+
+<pre><code class="language-bash">+hello world\r\n
+</code></pre></li>
+
+<li><p>多行字符串以$符号开头，后跟字符串的长度</p>
+
+<pre><code class="language-bash">$11\r\nhello world\r\n       #长度加上字符串
+</code></pre></li>
+
+<li><p>整数值以：符号开头，后跟整数的字符串形式</p>
+
+<pre><code class="language-bash">:1024\r\n
+</code></pre></li>
+
+<li><p>错误的消息以 - 开头</p>
+
+<pre><code class="language-bash">-WRONGTYPE Operation against a key holding the wrong kind of value\r\n
+</code></pre></li>
+
+<li><p>数组以*开头，后面跟数组的长度</p>
+
+<pre><code class="language-bash">*3\r\n:1\r\n:2\r\n:3\r\n  #先是数组长度，依次再是每个内容，表示数组[1,2,3]
+</code></pre></li>
+
+<li><p>NULL用多行字符串表示，不过长度要写成-1</p>
+
+<pre><code>$-1\r\n
+</code></pre></li>
+
+<li><p>空串用多行字符串表示，长度填0</p>
+
+<pre><code class="language-bash">$0\r\n\r\n   #两个\r\n之间隔的是空串
+</code></pre></li>
+
+<li><p>客户端向服务器发送指令使用多行字符串数组，比如一个简单的set指令  set  author  codehole会被序列化为</p></li>
+</ul>
+
+<blockquote>
+<p>下面的字符串</p>
+</blockquote>
+
+<pre><code class="language-bash">*3\r\n$3\r\nset\r\n$6\r\nauthor\r\n$8\r\ncodehole\r\n
+</code></pre>
+
+<ul>
+<li><p>服务端向客户端回复的响应要支持多种数据结构，基本上都是上述5种基本类型的组合</p>
+
+<pre><code class="language-bash">#单行字符串响应
+&gt;set author codehole
+OK  #这里的OK就是单行响应，没有使用引号括起来
+
+#错误响应
+-ERR ........
+
+#整数响应
+&gt;incr books
+(integer) 1
+
+#多行字符串的响应
+&gt;get author
+&quot;codehole&quot;  #使用双引号括起来的字符串就是多行字符串响应
+</code></pre></li>
+</ul>
+
+<h3 id="二-redis协议的缺陷">二、Redis协议的缺陷</h3>
+
+<h4 id="1-连接重连">1.连接重连</h4>
+
+<blockquote>
+<p>RPC协议是建立在TCP协议基础上进行消息传递的，而TCP连接并不总是稳定的，非常容易受到网络的影</p>
+</blockquote>
+
+<p>响而断开。与此同时大部分的服务器也会限制空闲连接的生存期，如果一个TCP连接闲置过久，也会被服务器</p>
+
+<p>主动关闭。当RPC连接断开后，客户端一般都需要实现连接重连，否则客户端无法继续与RPC交互</p>
+
+<h4 id="2-请求重试">2.请求重试</h4>
+
+<blockquote>
+<p>当RPC客户端向服务器发送请求之后，连接突然断开，这个断开可能发生在请求阶段（服务端没有收</p>
+</blockquote>
+
+<p>到消息）；也可能发生在响应阶段（服务器已经处理了消息），这时客户端没有收到回复。所以客户端不</p>
+
+<p>知道服务器是否已经处理了消息还是根本就没有收到。客户端会尝试重连，连接成功后重试之前的请求，</p>
+
+<p>但是客户端确定服务端是否会重复执行请求</p>
+
+<blockquote>
+<p>为了解决请求可能被重试的情况，客户端在构造请求时需要为每一个请求赋予一个唯一ID</p>
+</blockquote>
+
+<pre><code class="language-java">class Request{
+    UUID id;  //每个请求都有一个唯一的ID
+}
+</code></pre>
+
+<blockquote>
+<p>服务端在接收到这个请求后会记录这个ID，和对应的响应关联起来，再次遇到该请求时，会将前面的响应</p>
+</blockquote>
+
+<p>记录下来直接进行回复。但是服务器的内存是有限的，不能记录所有的请求ID和响应，一般只会保留最近一段</p>
+
+<p>时间的请求ID和响应</p>
+
+<pre><code class="language-java">class Server{
+    Set&lt;RequestID&gt; pendingRequests;   //正在处理的请求
+    Cache&lt;RequestId,Response&gt; cachedResponses; //已经处理完毕的请求
+}
+</code></pre>
+
+<h4 id="3-redis客户端的缺陷">3.Redis客户端的缺陷</h4>
+
+<blockquote>
+<p>我们上述提到的唯一请求ID的问题，Redis并没有解决，只是在简单地遇到异常时重试一下</p>
+
+<p>客户端源代码如下：</p>
+</blockquote>
+
+<pre><code class="language-python">def execute_command(self,*args,**options):
+    #执行命令返回解析后的响应
+    poll = self.connection_pool
+    command_name = args[0]
+    connection = pool.get_connection(command_name,**options)
+    try:
+        connection.send_command(*args)  #发送请求
+        return self.parse_response(connection,command_name,**options)  #接收并解析请求
+    except(ConnectionError,TimeoutError) as e:
+        connection.disconnect()  #先关闭异常连接
+        if not connection.retry_on_timeout and isinstance(e,TimeoutError):
+            raise connection.send_command(*args)  #重试
+        return self.parse_response(connection,command_name,**options)
+    finally:
+        pool.release(connection)  #连接被连接池回收
+</code></pre>
+
+<blockquote>
+<p>ConnectionError是在建立连接时就出了错误，或者从连接池中无法获取连接，这是需要重试的</p>
+
+<p>TimeoutError错误的出现可能是在写消息时遇到了超时，或者可能在读消息时出现超时</p>
+
+<p>写超时是指内核为当前套接字开辟的写缓存空间已经满了，主要有三种原因导致：</p>
+</blockquote>
+
+<ul>
+<li><p>写方的消息因为网络原因无法到达读的一方</p></li>
+
+<li><p>读方老师不读消息，没有办法给写方ACK确认</p></li>
+
+<li><p>写方因为网络原因无法收到对方的ACK确认</p></li>
+</ul>
+
+<blockquote>
+<p>在TCP的超时重传策略中必须要求收到读方的ack之后才可以将数据从写缓存中删除，否则会继续留在</p>
+</blockquote>
+
+<p>写缓冲区中以便后续可能的TCP重传</p>
+
+<blockquote>
+<p>读超时是指消息已经写进本地写缓冲区中了，但是另一方调用recv方法时无法收到消息</p>
+
+<p>总结来说就是Redis客户端的代码在进行重试时不能分清楚请求错误或者超时的原因</p>
+</blockquote>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>

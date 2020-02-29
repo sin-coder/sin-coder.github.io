@@ -6,10 +6,35 @@
     <description>Recent content in Posts on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Feb 2020 14:22:56 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 24 Feb 2020 16:59:37 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Reids中的RPC协议结构</title>
+      <link>https://sin-coder.github.io/post/redisrpc/</link>
+      <pubDate>Mon, 24 Feb 2020 16:59:37 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/post/redisrpc/</guid>
+      <description>Reids中的RPC协议结构  Redis的客户端和服务器之间进行RPC通信时，使用的是其开发者专门设计的文本通讯协议RESP。它的
+ 开发者认为数据库系统的性能瓶颈一般不在于网络流量，而是数据库自身内部的逻辑处理上。所以Redis使
+用了浪费流量的文本协议。但是，依然可以取得很高的访问性能
+ 下面主要介绍RESP协议的相关内容
+ 一、RESP协议简介  RESP（Redis Serialization Protocol）,就是Redis的序列化协议，这是一种对人友好的文本协议。它将
+ 传输的结构数据分为5种最下单元的类型，单元结束时统一加上回车换行符\r\n，具体如下
+ 单行字符串以+符号开头
++hello world\r\n  多行字符串以$符号开头，后跟字符串的长度
+$11\r\nhello world\r\n #长度加上字符串  整数值以：符号开头，后跟整数的字符串形式
+:1024\r\n  错误的消息以 - 开头
+-WRONGTYPE Operation against a key holding the wrong kind of value\r\n  数组以*开头，后面跟数组的长度
+*3\r\n:1\r\n:2\r\n:3\r\n #先是数组长度，依次再是每个内容，表示数组[1,2,3]  NULL用多行字符串表示，不过长度要写成-1
+$-1\r\n  空串用多行字符串表示，长度填0
+$0\r\n\r\n #两个\r\n之间隔的是空串  客户端向服务器发送指令使用多行字符串数组，比如一个简单的set指令 set author codehole会被序列化为
+   下面的字符串
+ *3\r\n$3\r\nset\r\n$6\r\nauthor\r\n$8\r\ncodehole\r\n   服务端向客户端回复的响应要支持多种数据结构，基本上都是上述5种基本类型的组合
+#单行字符串响应 &amp;gt;set author codehole OK #这里的OK就是单行响应，没有使用引号括起来 #错误响应 -ERR .</description>
+    </item>
     
     <item>
       <title>RPC框架中的消息传递和协议</title>
