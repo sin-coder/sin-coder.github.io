@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>分布式RPC设计思想 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="分布式RPC设计思想"/>
+<meta name="twitter:description" content="分布式RPC设计思想  分布式所要解决的问题就是当系统中的个别节点发生故障后整个系统依然能够稳定的对外提供服务，对于
+ RPC框架来说同样也是；多线程和多进程解决的都是并发的问题，无论怎样都只能算是单点的设计，要想保证
+系统的高可用性，分布式的设计必不可少。下面就介绍一些RPC框架设计中关于分布式的一些思想
+一、客户端连接池  如果RPC的服务端部署在多个节点上时，客户端得出的是一个服务列表，有多个IP端口对，客户端的
+ 连接池可以随机挑出任意的RPC服务节点进行连接，而且每个服务节点都应该有个权重值，如果所有节点
+的权重值一样时，它们的流量分配就是均匀的，如果每个节点的权值较小，它被客户端选中的概率也会比
+较小。设计示例代码如下：
+class RPCNode{ String addr; //服务端的地址 int weight; //节点权重 } class RPCCluster{ RPCNode[] nodes; //节点的列表 Node random(); //按权重随机挑选节点 }  二、容灾 Failover  如果有一个服务节点挂掉时，客户端需要采取一定的策略避免请求失败，比如可以重试，但是不能进行无
+ 线的重试，要有一定的重试策略
+ 一个可行的方案是当节点挂掉时，将失效的节点摘除，放置的失效的节点列表中；然后每隔一段时间检查
+ 失效的节点是否恢复了，如果恢复了，那就从失效的节点中移出，重新加入有效节点的列表中；当然也不能仅
+依据一次的检测就判断节点是否有效，可以通过检测一个时间段内的出现的错误数量判断，如果错误数量过多
+那就说明了真的失效了，这也是为了避免部分网络问题的原因
+三、降权法  我们可以为每个服务端节点赋一个权值，改变权值就可以改变节点的相对流量了；如果某个节点出现了一次
+ 错误就对该节点进行降权，错误次数越多，降权降得越快，最终可以到达一个最小值，但是无论如何，每个节
+都还有翻身的机会。被降权的节点只要有一次调用成功，权值就会恢复正常
+ 一个非常简单的策略就是当服务端节点错误时进行权重减半，比如从1024开始减半，一直到1，当恢复时
+ 可以进行权重翻倍
+四、服务发现  如果服务端可以支持动态扩容，那么它的稳定性和高可用性就会更高。当系统的负载比较高的时候，我们
+ 可以通过添加节点的方式减轻压力。但是就像前面设计的静态RPC服务地址列表，当节点增加时，必须要修改
+客户端的配置重启才能生效，但是生产环境怎么可能重启配置这时候服务发现的技术就上台了
+ 服务发现技术就是服务裂变变更时，客户端可以快速地收到这些信息，从而调整自己的工作状态，这样无
+ 需进行重启就可以完成服务的扩容和缩容
+ 示例代码如下：
+ class ServiceDiscovery(object): def register_service(self,name,addr): pass def get_services(self,name): pass def on_services_changed(self,name): pass   服务发现技术依赖于服务之间中间节点，它接受服务的注册、提供服务的查找、以及服务列表变更的实时"/>
+
+    <meta property="og:title" content="分布式RPC设计思想" />
+<meta property="og:description" content="分布式RPC设计思想  分布式所要解决的问题就是当系统中的个别节点发生故障后整个系统依然能够稳定的对外提供服务，对于
+ RPC框架来说同样也是；多线程和多进程解决的都是并发的问题，无论怎样都只能算是单点的设计，要想保证
+系统的高可用性，分布式的设计必不可少。下面就介绍一些RPC框架设计中关于分布式的一些思想
+一、客户端连接池  如果RPC的服务端部署在多个节点上时，客户端得出的是一个服务列表，有多个IP端口对，客户端的
+ 连接池可以随机挑出任意的RPC服务节点进行连接，而且每个服务节点都应该有个权重值，如果所有节点
+的权重值一样时，它们的流量分配就是均匀的，如果每个节点的权值较小，它被客户端选中的概率也会比
+较小。设计示例代码如下：
+class RPCNode{ String addr; //服务端的地址 int weight; //节点权重 } class RPCCluster{ RPCNode[] nodes; //节点的列表 Node random(); //按权重随机挑选节点 }  二、容灾 Failover  如果有一个服务节点挂掉时，客户端需要采取一定的策略避免请求失败，比如可以重试，但是不能进行无
+ 线的重试，要有一定的重试策略
+ 一个可行的方案是当节点挂掉时，将失效的节点摘除，放置的失效的节点列表中；然后每隔一段时间检查
+ 失效的节点是否恢复了，如果恢复了，那就从失效的节点中移出，重新加入有效节点的列表中；当然也不能仅
+依据一次的检测就判断节点是否有效，可以通过检测一个时间段内的出现的错误数量判断，如果错误数量过多
+那就说明了真的失效了，这也是为了避免部分网络问题的原因
+三、降权法  我们可以为每个服务端节点赋一个权值，改变权值就可以改变节点的相对流量了；如果某个节点出现了一次
+ 错误就对该节点进行降权，错误次数越多，降权降得越快，最终可以到达一个最小值，但是无论如何，每个节
+都还有翻身的机会。被降权的节点只要有一次调用成功，权值就会恢复正常
+ 一个非常简单的策略就是当服务端节点错误时进行权重减半，比如从1024开始减半，一直到1，当恢复时
+ 可以进行权重翻倍
+四、服务发现  如果服务端可以支持动态扩容，那么它的稳定性和高可用性就会更高。当系统的负载比较高的时候，我们
+ 可以通过添加节点的方式减轻压力。但是就像前面设计的静态RPC服务地址列表，当节点增加时，必须要修改
+客户端的配置重启才能生效，但是生产环境怎么可能重启配置这时候服务发现的技术就上台了
+ 服务发现技术就是服务裂变变更时，客户端可以快速地收到这些信息，从而调整自己的工作状态，这样无
+ 需进行重启就可以完成服务的扩容和缩容
+ 示例代码如下：
+ class ServiceDiscovery(object): def register_service(self,name,addr): pass def get_services(self,name): pass def on_services_changed(self,name): pass   服务发现技术依赖于服务之间中间节点，它接受服务的注册、提供服务的查找、以及服务列表变更的实时" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/ditrirpc/" />
+<meta property="article:published_time" content="2020-02-24T15:59:05+08:00" />
+<meta property="article:modified_time" content="2020-02-24T15:59:05+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">分布式RPC设计思想</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 24, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a><a class="tag" href="https://sin-coder.github.io/tags/rpc/">RPC</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="分布式rpc设计思想">分布式RPC设计思想</h2>
+
+<hr />
+
+<blockquote>
+<p>分布式所要解决的问题就是当系统中的个别节点发生故障后整个系统依然能够稳定的对外提供服务，对于</p>
+</blockquote>
+
+<p>RPC框架来说同样也是；多线程和多进程解决的都是并发的问题，无论怎样都只能算是单点的设计，要想保证</p>
+
+<p>系统的高可用性，分布式的设计必不可少。下面就介绍一些RPC框架设计中关于分布式的一些思想</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/29/3ya4f0.jpg" alt="3ya4f0.jpg" style="zoom: 67%;" /></p>
+
+<h3 id="一-客户端连接池">一、客户端连接池</h3>
+
+<blockquote>
+<p>如果RPC的服务端部署在多个节点上时，客户端得出的是一个服务列表，有多个IP端口对，客户端的</p>
+</blockquote>
+
+<p>连接池可以随机挑出任意的RPC服务节点进行连接，而且每个服务节点都应该有个权重值，如果所有节点</p>
+
+<p>的权重值一样时，它们的流量分配就是均匀的，如果每个节点的权值较小，它被客户端选中的概率也会比</p>
+
+<p>较小。设计示例代码如下：</p>
+
+<pre><code class="language-java">class RPCNode{
+    String addr;   //服务端的地址
+    int weight;    //节点权重
+}
+
+class RPCCluster{
+    RPCNode[] nodes;   //节点的列表
+    Node random();   //按权重随机挑选节点
+}
+</code></pre>
+
+<h3 id="二-容灾-failover">二、容灾 Failover</h3>
+
+<blockquote>
+<p>如果有一个服务节点挂掉时，客户端需要采取一定的策略避免请求失败，比如可以重试，但是不能进行无</p>
+</blockquote>
+
+<p>线的重试，要有一定的重试策略</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/29/3yafkn.jpg" alt="3yafkn.jpg" style="zoom:67%;" /></p>
+
+<blockquote>
+<p>一个可行的方案是当节点挂掉时，将失效的节点摘除，放置的失效的节点列表中；然后每隔一段时间检查</p>
+</blockquote>
+
+<p>失效的节点是否恢复了，如果恢复了，那就从失效的节点中移出，重新加入有效节点的列表中；当然也不能仅</p>
+
+<p>依据一次的检测就判断节点是否有效，可以通过检测一个时间段内的出现的错误数量判断，如果错误数量过多</p>
+
+<p>那就说明了真的失效了，这也是为了避免部分网络问题的原因</p>
+
+<h3 id="三-降权法">三、降权法</h3>
+
+<blockquote>
+<p>我们可以为每个服务端节点赋一个权值，改变权值就可以改变节点的相对流量了；如果某个节点出现了一次</p>
+</blockquote>
+
+<p>错误就对该节点进行降权，错误次数越多，降权降得越快，最终可以到达一个最小值，但是无论如何，每个节</p>
+
+<p>都还有翻身的机会。被降权的节点只要有一次调用成功，权值就会恢复正常</p>
+
+<blockquote>
+<p>一个非常简单的策略就是当服务端节点错误时进行权重减半，比如从1024开始减半，一直到1，当恢复时</p>
+</blockquote>
+
+<p>可以进行权重翻倍</p>
+
+<h3 id="四-服务发现">四、服务发现</h3>
+
+<blockquote>
+<p>如果服务端可以支持动态扩容，那么它的稳定性和高可用性就会更高。当系统的负载比较高的时候，我们</p>
+</blockquote>
+
+<p>可以通过添加节点的方式减轻压力。但是就像前面设计的静态RPC服务地址列表，当节点增加时，必须要修改</p>
+
+<p>客户端的配置重启才能生效，但是生产环境怎么可能重启配置这时候服务发现的技术就上台了</p>
+
+<blockquote>
+<p>服务发现技术就是服务裂变变更时，客户端可以快速地收到这些信息，从而调整自己的工作状态，这样无</p>
+</blockquote>
+
+<p>需进行重启就可以完成服务的扩容和缩容</p>
+
+<p><img src="https://s2.ax1x.com/2020/02/29/3y04fI.jpg" alt="3y04fI.jpg" style="zoom: 50%;" /></p>
+
+<blockquote>
+<p>示例代码如下：</p>
+</blockquote>
+
+<pre><code class="language-python">class ServiceDiscovery(object):
+    def register_service(self,name,addr):
+        pass
+    def get_services(self,name):
+        pass
+    def on_services_changed(self,name):
+        pass
+</code></pre>
+
+<blockquote>
+<p>服务发现技术依赖于服务之间中间节点，它接受服务的注册、提供服务的查找、以及服务列表变更的实时</p>
+</blockquote>
+
+<p>通知功能，一般使用高可用的分布式配置数据库作为解决方案，如zookeeper和etcd,具体功能如下：</p>
+
+<ul>
+<li><p>服务注册：服务端节点在启动时将自己的服务地址注册到中间节点</p></li>
+
+<li><p>服务查找：客户端启动时去中间节点查询服务地址列表</p></li>
+
+<li><p>服务变更通知：客户端在中间节点上订阅依赖服务列表的变更时间，中间节点负责将变更信息实时通知给客户端</p></li>
+</ul>
+
+<hr />
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>
