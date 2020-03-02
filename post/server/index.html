@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>服务器并发模型的总结 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="服务器并发模型的总结"/>
+<meta name="twitter:description" content=" 服务器常用并发模型 1.单线程同步模型  单线程同步模型是最简单的服务器模型，每次只能处理一个客户端的连接，其他连接必须要等到前面的
+ 连接关闭后才能得到服务器的处理，否则发过来的请求会悬挂住，没有任何响应；服务端是串行地处理客
+户端的连接的
+ 一个客户端必须要等到另外一个客户端运行结束后才可以运行，这也太慢了吧
+ 2.多线程同步模型  服务器可以并行地处理多个客户端的连接，没来一个连接就开启一个新的线程单独进行处理，每个线程
+ 都是同步读写客户端的连接的
+3.多进程同步模型  Java使用者很少能够体会多进程的魅力，他们都是使用多线程。但是在Python中并不常见，因为Python
+ 的GIL只能使单个进程占满一个CPU核心，多线程不能利用多核的优势，所以Python服务器可以使用多进程
+模型
+4.PreForking同步模型  进程在操作系统中是非常耗资源的，所以要对服务器开辟的进程数量进行限制，避免系统的负载过重，
+ 这就是多进程PreForking模型。
+ 这种模型预先产生多个子进程，共同对服务器套接字竞争资源，但是最终只能有一个进程获取到。
+ 如果并行的连接数超过了prefork的数量，那么后来的客户端请求将会阻塞。但是这样也可以通过子进程
+的单线程同步模型改成多进程同步模型的方式解决
+5.单进程异步模型  上述的服务器模型都是同步的，而现代的服务器一般都是异步的，效率是比较高的，它是一种非阻塞的
+ 服务器模型，实现了对进程和线程的解放，再加上事件轮询机制的配合使得它的性能比同步高出了许多
+ 像Nignx、Nodejs、Redis都是基于异步模型构建出来的，性能非常高
+ 6.PreForking 异步模型  单进程的IO并发能力有限，虽然使用了事件轮询和异步读写功能，但是还不能应对高并发的需求，所以
+ 需要使用多进程，这样也可以对我们的CPU最大限度的利用
+ 开源的Tornado服务器和Nignx就是采用了多进程PreForking模型达到了超高并发的处理能力
+ "/>
+
+    <meta property="og:title" content="服务器并发模型的总结" />
+<meta property="og:description" content=" 服务器常用并发模型 1.单线程同步模型  单线程同步模型是最简单的服务器模型，每次只能处理一个客户端的连接，其他连接必须要等到前面的
+ 连接关闭后才能得到服务器的处理，否则发过来的请求会悬挂住，没有任何响应；服务端是串行地处理客
+户端的连接的
+ 一个客户端必须要等到另外一个客户端运行结束后才可以运行，这也太慢了吧
+ 2.多线程同步模型  服务器可以并行地处理多个客户端的连接，没来一个连接就开启一个新的线程单独进行处理，每个线程
+ 都是同步读写客户端的连接的
+3.多进程同步模型  Java使用者很少能够体会多进程的魅力，他们都是使用多线程。但是在Python中并不常见，因为Python
+ 的GIL只能使单个进程占满一个CPU核心，多线程不能利用多核的优势，所以Python服务器可以使用多进程
+模型
+4.PreForking同步模型  进程在操作系统中是非常耗资源的，所以要对服务器开辟的进程数量进行限制，避免系统的负载过重，
+ 这就是多进程PreForking模型。
+ 这种模型预先产生多个子进程，共同对服务器套接字竞争资源，但是最终只能有一个进程获取到。
+ 如果并行的连接数超过了prefork的数量，那么后来的客户端请求将会阻塞。但是这样也可以通过子进程
+的单线程同步模型改成多进程同步模型的方式解决
+5.单进程异步模型  上述的服务器模型都是同步的，而现代的服务器一般都是异步的，效率是比较高的，它是一种非阻塞的
+ 服务器模型，实现了对进程和线程的解放，再加上事件轮询机制的配合使得它的性能比同步高出了许多
+ 像Nignx、Nodejs、Redis都是基于异步模型构建出来的，性能非常高
+ 6.PreForking 异步模型  单进程的IO并发能力有限，虽然使用了事件轮询和异步读写功能，但是还不能应对高并发的需求，所以
+ 需要使用多进程，这样也可以对我们的CPU最大限度的利用
+ 开源的Tornado服务器和Nignx就是采用了多进程PreForking模型达到了超高并发的处理能力
+ " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/post/server/" />
+<meta property="article:published_time" content="2020-02-26T15:59:05+08:00" />
+<meta property="article:modified_time" content="2020-02-26T15:59:05+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">服务器并发模型的总结</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 26, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/rpc/">RPC</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="服务器常用并发模型">服务器常用并发模型</h2>
+
+<hr />
+
+<h3 id="1-单线程同步模型">1.单线程同步模型</h3>
+
+<blockquote>
+<p>单线程同步模型是最简单的服务器模型，每次只能处理一个客户端的连接，其他连接必须要等到前面的</p>
+</blockquote>
+
+<p>连接关闭后才能得到服务器的处理，否则发过来的请求会悬挂住，没有任何响应；服务端是串行地处理客</p>
+
+<p>户端的连接的</p>
+
+<blockquote>
+<p>一个客户端必须要等到另外一个客户端运行结束后才可以运行，这也太慢了吧</p>
+</blockquote>
+
+<h3 id="2-多线程同步模型">2.多线程同步模型</h3>
+
+<blockquote>
+<p>服务器可以并行地处理多个客户端的连接，没来一个连接就开启一个新的线程单独进行处理，每个线程</p>
+</blockquote>
+
+<p>都是同步读写客户端的连接的</p>
+
+<h3 id="3-多进程同步模型">3.多进程同步模型</h3>
+
+<blockquote>
+<p>Java使用者很少能够体会多进程的魅力，他们都是使用多线程。但是在Python中并不常见，因为Python</p>
+</blockquote>
+
+<p>的GIL只能使单个进程占满一个CPU核心，多线程不能利用多核的优势，所以Python服务器可以使用多进程</p>
+
+<p>模型</p>
+
+<h3 id="4-preforking同步模型">4.PreForking同步模型</h3>
+
+<blockquote>
+<p>进程在操作系统中是非常耗资源的，所以要对服务器开辟的进程数量进行限制，避免系统的负载过重，</p>
+</blockquote>
+
+<p>这就是多进程PreForking模型。</p>
+
+<blockquote>
+<p>这种模型预先产生多个子进程，共同对服务器套接字竞争资源，但是最终只能有一个进程获取到。</p>
+</blockquote>
+
+<p>如果并行的连接数超过了prefork的数量，那么后来的客户端请求将会阻塞。但是这样也可以通过子进程</p>
+
+<p>的单线程同步模型改成多进程同步模型的方式解决</p>
+
+<h3 id="5-单进程异步模型">5.单进程异步模型</h3>
+
+<blockquote>
+<p>上述的服务器模型都是同步的，而现代的服务器一般都是异步的，效率是比较高的，它是一种非阻塞的</p>
+</blockquote>
+
+<p>服务器模型，实现了对进程和线程的解放，再加上事件轮询机制的配合使得它的性能比同步高出了许多</p>
+
+<blockquote>
+<p>像Nignx、Nodejs、Redis都是基于异步模型构建出来的，性能非常高</p>
+</blockquote>
+
+<h3 id="6-preforking-异步模型">6.PreForking 异步模型</h3>
+
+<blockquote>
+<p>单进程的IO并发能力有限，虽然使用了事件轮询和异步读写功能，但是还不能应对高并发的需求，所以</p>
+</blockquote>
+
+<p>需要使用多进程，这样也可以对我们的CPU最大限度的利用</p>
+
+<blockquote>
+<p>开源的Tornado服务器和Nignx就是采用了多进程PreForking模型达到了超高并发的处理能力</p>
+</blockquote>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>
