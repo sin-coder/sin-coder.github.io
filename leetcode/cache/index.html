@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>从LRU开始学习缓存 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从LRU开始学习缓存"/>
+<meta name="twitter:description" content="从LRU开始学习缓存  缓存相信大家已经不陌生了，用个通俗的比方来说一下就是，如果把你的家比作一个仓库，那么你每天出
+ 门时背的包就是你的缓存，你会把最近经常使用的东西放入到背包中，如果背包中没有你需要的，就只能回家
+去拿了。
+ 这篇文章从一道Leetcode的题目开始引入缓存的设计方式，然后介绍一些常见的缓存策略，最后简单介绍
+ 一些经典的缓存系统和经常遇到的缓存问题
+一、Leetcode 146 LRU缓存机制 1.题目描述  设计一个LRU缓存机制，支持获取数据get和写入数据put，具体含义如下：
+  获取数据get：如果key存在于缓存中，获取key的值value并且将这个数据放到数据结构的最前面，否则返回-1
+ 写入数据put：如果key不存在，写入数据值，并且将新写入的数据放到数据结构的最前面；如果缓存的容量已
+   经达到了上限，应该在写入新数据之前删除最近最少使用的数据值，这也是LRU的核心思想,这里我们可以
+将排在数据结构最后的位置的元素视为最近最少使用的元素
+  get和put操作的时间复杂度要求是O（1）   如果还没有明白，可以看看这个缓存是怎么工作的
+ //假设这个缓存的容量为2 LRUCache cache = new LRUCache(2); //先将cache理解成一个数组，左边是头部，右边是尾部，最近使用的排在对头，最久未使用的排在队尾 cache.put(1,1); //此时缓存中的数据是[(1,1)] cache.put(2,2); //此时缓存中的数据是[(2,2),(1,1)] 新加入的数据应该放在头部 cache.get(1); //查询key为1的值，返回1，最近访问了键1，移动到头部,缓存中的数据是[(1,1),(2,2)] cache.put(3,3) //缓存已满，出去尾部元素(2,2)，[(3,3),(1,1)] cache.get(2) //未找到该元素，返回-1  2.解题思路  要想在O(1)的时间复杂度内完成上述操作，存储缓存的数据结构应该具备这样的特点：查找是O(1)、插入
+ 是O（1）、删除是O（1）、而且元素之间还要有一定的顺序；查找O(1)和删除O(1)这个比较好办，哈希表就
+可以满足了，但是它没有顺序啊，实际在应用的时候需要将数据插入头部和从尾部进行删除，这是哈希表无法
+做到的；这个时候就轮到链表上场了，链表是有顺序的，只需将哈希表和链表结合即可
+ 但是这个时候又有问题了，链表是使用单向链表还是双向链表呢？我们可以从删除操作的执行过程来分析
+ 单向链表要想删除一个节点，必须要知道它的前驱节点，也就是多用一个指针，你可以通过哈希表来找到当前
+节点，但是如何找到前一个节点，但是如何找找到前一个节点呢？所以只能使用双向链表，最终我们将这种数
+剧结构称为哈希链表，话不多说，赶紧上图
+3.缓存使用的数据结构  Python和Java都有内置的哈希链表和类似LRU功能的库函数，比如Java中的LinkedHashMap，关于
+ 关于它在容器数据结构这篇文章中有介绍；Python中可以使用OrderedDict实现LRU，但是推荐使用一个"/>
+
+    <meta property="og:title" content="从LRU开始学习缓存" />
+<meta property="og:description" content="从LRU开始学习缓存  缓存相信大家已经不陌生了，用个通俗的比方来说一下就是，如果把你的家比作一个仓库，那么你每天出
+ 门时背的包就是你的缓存，你会把最近经常使用的东西放入到背包中，如果背包中没有你需要的，就只能回家
+去拿了。
+ 这篇文章从一道Leetcode的题目开始引入缓存的设计方式，然后介绍一些常见的缓存策略，最后简单介绍
+ 一些经典的缓存系统和经常遇到的缓存问题
+一、Leetcode 146 LRU缓存机制 1.题目描述  设计一个LRU缓存机制，支持获取数据get和写入数据put，具体含义如下：
+  获取数据get：如果key存在于缓存中，获取key的值value并且将这个数据放到数据结构的最前面，否则返回-1
+ 写入数据put：如果key不存在，写入数据值，并且将新写入的数据放到数据结构的最前面；如果缓存的容量已
+   经达到了上限，应该在写入新数据之前删除最近最少使用的数据值，这也是LRU的核心思想,这里我们可以
+将排在数据结构最后的位置的元素视为最近最少使用的元素
+  get和put操作的时间复杂度要求是O（1）   如果还没有明白，可以看看这个缓存是怎么工作的
+ //假设这个缓存的容量为2 LRUCache cache = new LRUCache(2); //先将cache理解成一个数组，左边是头部，右边是尾部，最近使用的排在对头，最久未使用的排在队尾 cache.put(1,1); //此时缓存中的数据是[(1,1)] cache.put(2,2); //此时缓存中的数据是[(2,2),(1,1)] 新加入的数据应该放在头部 cache.get(1); //查询key为1的值，返回1，最近访问了键1，移动到头部,缓存中的数据是[(1,1),(2,2)] cache.put(3,3) //缓存已满，出去尾部元素(2,2)，[(3,3),(1,1)] cache.get(2) //未找到该元素，返回-1  2.解题思路  要想在O(1)的时间复杂度内完成上述操作，存储缓存的数据结构应该具备这样的特点：查找是O(1)、插入
+ 是O（1）、删除是O（1）、而且元素之间还要有一定的顺序；查找O(1)和删除O(1)这个比较好办，哈希表就
+可以满足了，但是它没有顺序啊，实际在应用的时候需要将数据插入头部和从尾部进行删除，这是哈希表无法
+做到的；这个时候就轮到链表上场了，链表是有顺序的，只需将哈希表和链表结合即可
+ 但是这个时候又有问题了，链表是使用单向链表还是双向链表呢？我们可以从删除操作的执行过程来分析
+ 单向链表要想删除一个节点，必须要知道它的前驱节点，也就是多用一个指针，你可以通过哈希表来找到当前
+节点，但是如何找到前一个节点，但是如何找找到前一个节点呢？所以只能使用双向链表，最终我们将这种数
+剧结构称为哈希链表，话不多说，赶紧上图
+3.缓存使用的数据结构  Python和Java都有内置的哈希链表和类似LRU功能的库函数，比如Java中的LinkedHashMap，关于
+ 关于它在容器数据结构这篇文章中有介绍；Python中可以使用OrderedDict实现LRU，但是推荐使用一个" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/leetcode/cache/" />
+<meta property="article:published_time" content="2019-12-15T14:01:10+08:00" />
+<meta property="article:modified_time" content="2019-12-15T14:01:10+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">从LRU开始学习缓存</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 15, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><a class="tag" href="https://sin-coder.github.io/tags/leetcode/">leetcode</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="从lru开始学习缓存">从LRU开始学习缓存</h2>
+
+<hr />
+
+<blockquote>
+<p>缓存相信大家已经不陌生了，用个通俗的比方来说一下就是，如果把你的家比作一个仓库，那么你每天出</p>
+</blockquote>
+
+<p>门时背的包就是你的缓存，你会把最近经常使用的东西放入到背包中，如果背包中没有你需要的，就只能回家</p>
+
+<p>去拿了。</p>
+
+<blockquote>
+<p>这篇文章从一道Leetcode的题目开始引入缓存的设计方式，然后介绍一些常见的缓存策略，最后简单介绍</p>
+</blockquote>
+
+<p>一些经典的缓存系统和经常遇到的缓存问题</p>
+
+<h3 id="一-leetcode-146-lru缓存机制">一、Leetcode 146  LRU缓存机制</h3>
+
+<h4 id="1-题目描述">1.题目描述</h4>
+
+<blockquote>
+<p>设计一个LRU缓存机制，支持获取数据get和写入数据put，具体含义如下：</p>
+</blockquote>
+
+<ul>
+<li><p>获取数据get：如果key存在于缓存中，获取key的值value并且将这个数据放到数据结构的最前面，否则返回-1</p></li>
+
+<li><p>写入数据put：如果key不存在，写入数据值，并且将新写入的数据放到数据结构的最前面；如果缓存的容量已</p></li>
+</ul>
+
+<blockquote>
+<p>经达到了上限，应该在写入新数据之前删除最近最少使用的数据值，这也是LRU的核心思想,这里我们可以</p>
+
+<p>将排在数据结构最后的位置的元素视为最近最少使用的元素</p>
+</blockquote>
+
+<ul>
+<li>get和put操作的时间复杂度要求是O（1）</li>
+</ul>
+
+<blockquote>
+<p>如果还没有明白，可以看看这个缓存是怎么工作的</p>
+</blockquote>
+
+<pre><code class="language-java">//假设这个缓存的容量为2
+LRUCache cache = new LRUCache(2);
+//先将cache理解成一个数组，左边是头部，右边是尾部，最近使用的排在对头，最久未使用的排在队尾
+cache.put(1,1);   //此时缓存中的数据是[(1,1)]
+cache.put(2,2);   //此时缓存中的数据是[(2,2),(1,1)]  新加入的数据应该放在头部
+cache.get(1);     //查询key为1的值，返回1，最近访问了键1，移动到头部,缓存中的数据是[(1,1),(2,2)]
+cache.put(3,3)    //缓存已满，出去尾部元素(2,2)，[(3,3),(1,1)]
+cache.get(2)      //未找到该元素，返回-1
+</code></pre>
+
+<h4 id="2-解题思路">2.解题思路</h4>
+
+<blockquote>
+<p>要想在O(1)的时间复杂度内完成上述操作，存储缓存的数据结构应该具备这样的特点：查找是O(1)、插入</p>
+</blockquote>
+
+<p>是O（1）、删除是O（1）、而且元素之间还要有一定的顺序；查找O(1)和删除O(1)这个比较好办，哈希表就</p>
+
+<p>可以满足了，但是它没有顺序啊，实际在应用的时候需要将数据插入头部和从尾部进行删除，这是哈希表无法</p>
+
+<p>做到的；这个时候就轮到链表上场了，链表是有顺序的，只需将哈希表和链表结合即可</p>
+
+<blockquote>
+<p>但是这个时候又有问题了，链表是使用单向链表还是双向链表呢？我们可以从删除操作的执行过程来分析</p>
+</blockquote>
+
+<p>单向链表要想删除一个节点，必须要知道它的前驱节点，也就是多用一个指针，你可以通过哈希表来找到当前</p>
+
+<p>节点，但是如何找到前一个节点，但是如何找找到前一个节点呢？所以只能使用双向链表，最终我们将这种数</p>
+
+<p>剧结构称为哈希链表，话不多说，赶紧上图</p>
+
+<p><img src="https://s2.ax1x.com/2020/03/03/34kjhD.jpg" alt="34kjhD.jpg" style="zoom:67%;" /></p>
+
+<h4 id="3-缓存使用的数据结构">3.缓存使用的数据结构</h4>
+
+<blockquote>
+<p>Python和Java都有内置的哈希链表和类似LRU功能的库函数，比如Java中的LinkedHashMap，关于</p>
+</blockquote>
+
+<p>关于它在<a href="http://csuyzz.com/datastructure/container/">容器数据结构</a>这篇文章中有介绍；Python中可以使用OrderedDict实现LRU，但是推荐使用一个</p>
+
+<p>装饰器functools.lru_cache。但是我们还是自己设计一个框架比较好</p>
+
+<pre><code class="language-java">//双向链表节点类型
+class Node{
+    public int key,val;
+    public Node next,prev;
+    public Node(int k,int v){
+        this.key = k;
+        this.val = v;
+    }
+}
+//双向链表节点的实现
+class DoubleList{
+    //常用的API操作
+    public void addFirst(Node x);  //在链表的头部添加节点  O(1)
+    public void remove(Node x);    //移除链表中的节点   O(1)
+    public Node removeLast();      //删除链表中的最后一个节点 O(1)
+    public int size();             //返回链表的长度      O(1)   
+}
+</code></pre>
+
+<blockquote>
+<p>有了双向链表我们就可以加入HashMap了，这里给出先给出一个伪算法，再写出代码</p>
+</blockquote>
+
+<pre><code class="language-java">HashMap&lt;Integer,Node&gt; map;              //将哈希表中的key映射成双向链表的一个节点
+DoubleList cache;     
+
+//get操作
+int get(int key){
+    if(key 不存在) return -1；
+    else:将键值对移至开头 返回value
+}
+
+//put操作
+void put(int key,int val){
+    Node x = new Node(key,val);
+    if (key已经存在) 将原先的数据删除 再将新节点插入头部
+    else:
+        if (缓存已满) 删除链表中的最后一个数据  删除map中映射到该数据中的键
+        else:将新节点插入开头，同时新建映射
+}
+</code></pre>
+
+<h4 id="4-代码实现">4.代码实现</h4>
+
+<blockquote>
+<p><strong>（1）使用伪算法的代码实现，自己造轮子</strong></p>
+</blockquote>
+
+<pre><code class="language-java">class Node{
+    public int key,val;
+    public Node(int k,int v){
+        this.key = k;
+        this.val = v;
+    }
+}
+
+class LRUCache{
+    private HashMap&lt;Integer,Node&gt; map;
+    private LinkedList&lt;Node&gt; cache;
+    private int cap;   //缓存最大容量
+
+    public LRUCache(int capacity) {
+        this.cap = capacity;
+        map = new HashMap&lt;&gt;();
+        cache = new LinkedList&lt;&gt;();
+    }
+    
+    public int get(int key) {
+        if(!map.containsKey(key)) return -1;
+        int val = map.get(key).val;
+        put(key,val);
+        return val;
+    }
+
+    public void put(int key, int value) {
+        Node node = new Node(key,value);
+        if(map.containsKey(key)){
+            cache.remove(map.get(key));
+            cache.addFirst(node);
+            map.put(key,node);
+        }else{
+            if(cap == cache.size()){
+                Node last = cache.removeLast();
+                map.remove(last.key);
+            }
+            cache.addFirst(node);
+            map.put(key,node);
+        } 
+    }
+}
+</code></pre>
+
+<blockquote>
+<p><strong>（2）使用Java中的LinkedHashMap实现</strong></p>
+
+<p>Java中的LinkedHashMap已经实现了LRU缓存淘汰算法，具体使用请看代码</p>
+</blockquote>
+
+<pre><code class="language-java">class LRUCache extends LinkedHashMap&lt;Integer,Integer&gt;{  //直接继承LinkedHashMap
+    private int capacity;
+    public LRUCache(int capacity) {
+        super(capacity,0.75F,true);                    //true表示按照使用时间排序
+        this.capacity = capacity;
+    }
+    
+    public int get(int key) {
+        return super.getOrDefault(key,-1);        //存在就返回value,否则返回-1
+    }
+    
+    public void put(int key, int value) {
+        super.put(key,value);
+    }
+    //如果map里面的元素个数大于缓存最大容量时，删除链表的顶端元素;需要重写removeEldestEntry方法
+    @Override
+    protected boolean removeEldestEntry(Map.Entry&lt;Integer,Integer&gt; eldest){
+        //参数eldest 在映射中最早插入的条目 
+        return size() &gt; capacity;     //方法返回true时将会删除eldest
+    }
+}
+</code></pre>
+
+<blockquote>
+<p><strong>(3) 使用Python的OrderedDict</strong></p>
+
+<p>有关OrderedDict的常见操作请查看Python高级容器数据结构这篇文章，同时也有介绍lru_cache的使用</p>
+</blockquote>
+
+<pre><code class="language-python">from collections import OrderedDict
+class LRUCache(OrderedDict):     #继承OrderedDict
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+    #这里我们将OrderedDict中尾部元素当做最近使用的,头部元素是最近最少使用的
+    def get(self, key: int) -&gt; int:
+        if key not in self:
+            return -1
+        self.move_to_end(key)  #将指定的键值对移至尾部
+        return self[key]
+        
+    def put(self, key: int, value: int) -&gt; None:
+        if key in self:
+            self.move_to_end(key)   #将指定的键值对移至尾部
+        self[key] = value
+        if len(self) &gt; self.capacity:  #超出容量删除头部元素
+            self.popitem(last = False)
+</code></pre>
+
+<h3 id="二-常见的缓存策略">二、常见的缓存策略</h3>
+
+<blockquote>
+<p>从上面的几道题目就可以看到，缓存的容量是有限的，我们不会将所有的数据都缓存起来，必须依赖一定</p>
+</blockquote>
+
+<p>的规则淘汰掉一部分数据，这个规则就是缓存淘汰策略，常见的缓存淘汰策略有如下几种：</p>
+
+<ul>
+<li>FIFO：First In First Out是最简单的算法，原理是：如果一个数据最先进入缓存中，则应该最早被淘汰掉，把缓</li>
+</ul>
+
+<blockquote>
+<p>存中的数据看成一个队列，最先加入的数据位于队列的头部，最后加入的数据位于队列的尾部；当缓存空间</p>
+
+<p>不足时需要执行缓存淘汰时，从队列的头部开始淘汰</p>
+</blockquote>
+
+<ul>
+<li>LRU  Least Recently Used，最近最少被使用，主要思想如果数据最近被访问过，它在未来也极有可能被访问。</li>
+</ul>
+
+<blockquote>
+<p>把缓存看做一个队列，访问一个数据时，如果缓存中不存在，则插入队列尾部；如果缓存中存在，则把该数</p>
+
+<p>剧移动到队列尾部。当执行淘汰操作时，同样从队列的头部开始淘汰</p>
+</blockquote>
+
+<ul>
+<li>LFU Least Frequently Used ，最不经常使用，主要的思想就是如果一个数据在最近的一段时间内使用的次数</li>
+</ul>
+
+<blockquote>
+<p>最小，那么在未来的一段时间内被使用的可能性也是比较小的，它主要是记录数据访问的次数，当需要进行</p>
+
+<p>淘汰操作时，淘汰掉访问次数最少的数据</p>
+
+<p><strong>其他淘汰算法</strong>：</p>
+</blockquote>
+
+<ul>
+<li>Two Queues：同时采用FIFO和LRU两个队列，首次访问数据时加入到FIFO队列中，如果数据在FIFO队列移除</li>
+</ul>
+
+<blockquote>
+<p>之前被再次访问，数据会被移动到LRU队列中</p>
+</blockquote>
+
+<ul>
+<li>LRU-K：LRU的增强版算法，在LRU维护队列的基础上，再新增一个队列维护数据访问的次数，由原来被访问</li>
+</ul>
+
+<blockquote>
+<p>一次被添加到缓存中改成访问K次才会被加入缓存</p>
+</blockquote>
+
+<ul>
+<li>ARC：自适应缓存替换，这个缓存算法同时跟踪记录LFU和LRU，以及驱逐缓存条目，来获得可用缓存的最佳</li>
+</ul>
+
+<blockquote>
+<p>实践</p>
+</blockquote>
+
+<ul>
+<li>MRU：最近最常使用算法，它最先移除最近最常被使用的条目，比较擅长处理一个条目越久，越容易被访问的</li>
+</ul>
+
+<blockquote>
+<p>在上面的题目中我们对LRU进行了实现，这里我们使用Java中的LinkedHashMap对FIFO进行实现</p>
+</blockquote>
+
+<pre><code class="language-java">//一个固定大小的FIFO替换策略的缓存实现
+class FIFOCache&lt;K,V&gt; extends LinkedHashMap&lt;K,V&gt;{
+    private final int cacheSize;
+    public FIFOCache(int cacheSize){
+        this.cacheSize = cacheSize;
+    } 
+    //重写removeEldestEntry函数，当Entry个数超过cacheSize时，删除最老的Entry
+    @Override
+    protected boolean removeEldestEntry(Map.Entry&lt;K,V&gt; eldest){
+        return size() &gt; cacheSize;
+    }
+}
+</code></pre>
+
+<h3 id="三-典型的缓存系统">三、典型的缓存系统</h3>
+
+<blockquote>
+<p>开源的缓存系统或者框架是比较多的，这里简单介绍几种常用的</p>
+</blockquote>
+
+<ul>
+<li>Redis：一个底层使用C语言编写的key-value存储的数据库，经常被用作缓存系统。访问速度比较快，支持</li>
+</ul>
+
+<blockquote>
+<p>分布式分片集群。它是一个单核的缓存服务，单点的情况下更适合少量用户多次访问的场景</p>
+</blockquote>
+
+<ul>
+<li>Memcached：一种基于内存的key-value存储，用于存储小块的任意数据；它是一个多核的缓存服务，更加</li>
+</ul>
+
+<blockquote>
+<p>适用于多用户并发访问次数比较少的应用场景</p>
+</blockquote>
+
+<ul>
+<li>Ehcache：一个Java实现的开源分布式缓存框架，它可以减轻数据库的负载，让数据保存在不同服务器的</li>
+</ul>
+
+<blockquote>
+<p>内存中，需要的时候可以进行快速存取；支持分级缓存</p>
+
+<p>其他的缓存框架像OSCache、J2Cache、JetCache等，都是各有优点，不一一介绍了</p>
+</blockquote>
+
+<h3 id="四-常见的缓存问题">四、常见的缓存问题</h3>
+
+<h4 id="1-有关缓存的名词">1.有关缓存的名词</h4>
+
+<h4 id="2-缓存的各种问题">2.缓存的各种问题</h4>
+
+<p>缓存雪崩、缓存穿透、缓存预热、缓存更新、缓存降级</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>

@@ -58,6 +58,44 @@
     </item>
     
     <item>
+      <title>浅谈Python中lru_cache的设计</title>
+      <link>https://sin-coder.github.io/program/pycache/</link>
+      <pubDate>Mon, 16 Dec 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/pycache/</guid>
+      <description> 浅谈Python中lru_cache的设计 </description>
+    </item>
+    
+    <item>
+      <title>从LRU开始学习缓存</title>
+      <link>https://sin-coder.github.io/leetcode/cache/</link>
+      <pubDate>Sun, 15 Dec 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/leetcode/cache/</guid>
+      <description>从LRU开始学习缓存  缓存相信大家已经不陌生了，用个通俗的比方来说一下就是，如果把你的家比作一个仓库，那么你每天出
+ 门时背的包就是你的缓存，你会把最近经常使用的东西放入到背包中，如果背包中没有你需要的，就只能回家
+去拿了。
+ 这篇文章从一道Leetcode的题目开始引入缓存的设计方式，然后介绍一些常见的缓存策略，最后简单介绍
+ 一些经典的缓存系统和经常遇到的缓存问题
+一、Leetcode 146 LRU缓存机制 1.题目描述  设计一个LRU缓存机制，支持获取数据get和写入数据put，具体含义如下：
+  获取数据get：如果key存在于缓存中，获取key的值value并且将这个数据放到数据结构的最前面，否则返回-1
+ 写入数据put：如果key不存在，写入数据值，并且将新写入的数据放到数据结构的最前面；如果缓存的容量已
+   经达到了上限，应该在写入新数据之前删除最近最少使用的数据值，这也是LRU的核心思想,这里我们可以
+将排在数据结构最后的位置的元素视为最近最少使用的元素
+  get和put操作的时间复杂度要求是O（1）   如果还没有明白，可以看看这个缓存是怎么工作的
+ //假设这个缓存的容量为2 LRUCache cache = new LRUCache(2); //先将cache理解成一个数组，左边是头部，右边是尾部，最近使用的排在对头，最久未使用的排在队尾 cache.put(1,1); //此时缓存中的数据是[(1,1)] cache.put(2,2); //此时缓存中的数据是[(2,2),(1,1)] 新加入的数据应该放在头部 cache.get(1); //查询key为1的值，返回1，最近访问了键1，移动到头部,缓存中的数据是[(1,1),(2,2)] cache.put(3,3) //缓存已满，出去尾部元素(2,2)，[(3,3),(1,1)] cache.get(2) //未找到该元素，返回-1  2.解题思路  要想在O(1)的时间复杂度内完成上述操作，存储缓存的数据结构应该具备这样的特点：查找是O(1)、插入
+ 是O（1）、删除是O（1）、而且元素之间还要有一定的顺序；查找O(1)和删除O(1)这个比较好办，哈希表就
+可以满足了，但是它没有顺序啊，实际在应用的时候需要将数据插入头部和从尾部进行删除，这是哈希表无法
+做到的；这个时候就轮到链表上场了，链表是有顺序的，只需将哈希表和链表结合即可
+ 但是这个时候又有问题了，链表是使用单向链表还是双向链表呢？我们可以从删除操作的执行过程来分析
+ 单向链表要想删除一个节点，必须要知道它的前驱节点，也就是多用一个指针，你可以通过哈希表来找到当前
+节点，但是如何找到前一个节点，但是如何找找到前一个节点呢？所以只能使用双向链表，最终我们将这种数
+剧结构称为哈希链表，话不多说，赶紧上图
+3.缓存使用的数据结构  Python和Java都有内置的哈希链表和类似LRU功能的库函数，比如Java中的LinkedHashMap，关于
+ 关于它在容器数据结构这篇文章中有介绍；Python中可以使用OrderedDict实现LRU，但是推荐使用一个</description>
+    </item>
+    
+    <item>
       <title>使用堆解决常见TOPK问题</title>
       <link>https://sin-coder.github.io/leetcode/topkheap/</link>
       <pubDate>Wed, 11 Dec 2019 14:01:10 +0800</pubDate>

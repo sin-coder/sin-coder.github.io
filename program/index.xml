@@ -6,7 +6,7 @@
     <description>Recent content in Programs on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Feb 2020 20:44:56 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 01 Feb 2020 16:08:30 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/program/index.xml" rel="self" type="application/rss+xml" />
     
@@ -35,12 +35,13 @@ In the face of ambiguity, refuse the temptation to guess.</description>
     </item>
     
     <item>
-      <title>Pycollect</title>
+      <title>Python高级容器数据结构</title>
       <link>https://sin-coder.github.io/program/pycollect/</link>
-      <pubDate>Tue, 25 Feb 2020 20:44:56 +0800</pubDate>
+      <pubDate>Sat, 28 Dec 2019 20:44:56 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/program/pycollect/</guid>
-      <description></description>
+      <description>Python高级容器数据结构  Python内置了4种数据类型，包括了list、tuple、set、dict，可以满足绝大部分程序使用的需求，但是在
+ 某些场景下使用这些数据结构的效率是比较低的，比如set和dict的无序</description>
     </item>
     
     <item>
@@ -217,6 +218,15 @@ Java文件被编译成class文件时，在子类的所有构造函数中的第�
  Object类是所有类的根父类，可以用于参数的传递，当你不清楚函数需要的参数是什么类型的，可以使
  用Object类来代替，Object可以代替任何类
 三、重写和重载 1.重写（Override）  重写是子类对父类的允许访问的方法的实现过程进行重新编写，返回值和参数都不能变</description>
+    </item>
+    
+    <item>
+      <title>浅谈Python中lru_cache的设计</title>
+      <link>https://sin-coder.github.io/program/pycache/</link>
+      <pubDate>Mon, 16 Dec 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/pycache/</guid>
+      <description> 浅谈Python中lru_cache的设计 </description>
     </item>
     
     <item>

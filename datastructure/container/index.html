@@ -948,7 +948,7 @@ final Entry&lt;K,V&gt; getEntry(Object key){
 
 <p>LinkedHashMap是HashMap的直接子类，前者在后者的基础上采用双向链表的形式将所有entry连接起来，</p>
 
-<p>这样做可以使元素的迭代顺序跟插入顺序相同；此外，迭代LinkedHashMap时不需要像HashMap那样遍历整</p>
+<p>这样做可以使元素的<strong>迭代顺序跟插入顺序</strong>相同；此外，迭代LinkedHashMap时不需要像HashMap那样遍历整</p>
 
 <p>个Table，而只需要遍历header指向的双向链表即可，LinkedHashMap的迭代时间就只跟entry的个数有关，与</p>
 

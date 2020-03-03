@@ -35,6 +35,16 @@ In the face of ambiguity, refuse the temptation to guess.</description>
     </item>
     
     <item>
+      <title>Python高级容器数据结构</title>
+      <link>https://sin-coder.github.io/program/pycollect/</link>
+      <pubDate>Sat, 28 Dec 2019 20:44:56 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/pycollect/</guid>
+      <description>Python高级容器数据结构  Python内置了4种数据类型，包括了list、tuple、set、dict，可以满足绝大部分程序使用的需求，但是在
+ 某些场景下使用这些数据结构的效率是比较低的，比如set和dict的无序</description>
+    </item>
+    
+    <item>
       <title>Python中的魔法方法</title>
       <link>https://sin-coder.github.io/program/magic/</link>
       <pubDate>Tue, 24 Dec 2019 21:14:28 +0800</pubDate>
@@ -90,6 +100,15 @@ Python解释器退出但对象仍然存活的时候，__ del __并不会执行�
  多态：根据对象类型的不同以不同的方式进行处理
   二、类与对象 1.类和对象的创建  Python中类和对象的创建是这样进行的
  class test: classVar = &amp;quot;Test&amp;quot; #类变量 def __init__(self,para1,para2): #理解为构造函数 self.para1 = para1 self.</description>
+    </item>
+    
+    <item>
+      <title>浅谈Python中lru_cache的设计</title>
+      <link>https://sin-coder.github.io/program/pycache/</link>
+      <pubDate>Mon, 16 Dec 2019 14:01:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/pycache/</guid>
+      <description> 浅谈Python中lru_cache的设计 </description>
     </item>
     
     <item>

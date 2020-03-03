@@ -35,6 +35,16 @@ In the face of ambiguity, refuse the temptation to guess.</description>
     </item>
     
     <item>
+      <title>Python高级容器数据结构</title>
+      <link>https://sin-coder.github.io/program/pycollect/</link>
+      <pubDate>Sat, 28 Dec 2019 20:44:56 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/program/pycollect/</guid>
+      <description>Python高级容器数据结构  Python内置了4种数据类型，包括了list、tuple、set、dict，可以满足绝大部分程序使用的需求，但是在
+ 某些场景下使用这些数据结构的效率是比较低的，比如set和dict的无序</description>
+    </item>
+    
+    <item>
       <title>Python中的魔法方法</title>
       <link>https://sin-coder.github.io/program/magic/</link>
       <pubDate>Tue, 24 Dec 2019 21:14:28 +0800</pubDate>
