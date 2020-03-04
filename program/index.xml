@@ -41,7 +41,18 @@ In the face of ambiguity, refuse the temptation to guess.</description>
       
       <guid>https://sin-coder.github.io/program/pycollect/</guid>
       <description>Python高级容器数据结构  Python内置了4种数据类型，包括了list、tuple、set、dict，可以满足绝大部分程序使用的需求，但是在
- 某些场景下使用这些数据结构的效率是比较低的，比如set和dict的无序</description>
+ 某些场景下使用这些数据结构的效率是比较低的，比如set和dict的无序、list的插入和删除操作复杂度较高，
+这时Python内建的collections模块就派上用场了，下面分别介绍几种典型的高级数据结构
+一、orderedDict  在Python3.6之前的字典是无序的，orderedDict解决了这一问题，它是可以记住字典插入的顺序。那么
+ 在3.6版本之后它是不是就没用了呢？不是的，orderedDict仍有它自己独特的一些特性是dict所无法达到的。
+ 经典的dict非常擅长映射操作，而orderedDict比较擅长重新排序操作，适合用于实现LRU算法，下面介
+ 绍其典型的方法
+ popitem（last = True）： 有序字典的popitem（）方法移除并返回一个（key,value）键值对；如果last值为真   则按照后进先出的顺序返回键值对；否则就按照先进先出的顺序返回键值对
+  move_to_end（key，last = True）： 将key移动到有序字典的任一端，如果last值为真，则将元素移至末尾，   否则则将元素移至开头，如果key不存在将会触发keyError
+  具有reversed()的方法，可以返回一个反向的迭代器
+ 注意，orderedDict还有一个特性，如果新条目覆盖现有的条目，则原始插入位置将更改并移至末尾
+   基于这些特性我们可以非常方便的实现一个LRU
+ class LRU(OrderedDict): def __init__(self,maxsize = 128): self.maxsize = maxsize def __getitem__(self,key): if super().__getitem__(key): self.move_to_end(key) return value else: return None def __setitem__(self,key,value): super().__setitem__(key,value) if len(self) &amp;gt; self.maxsize: #获取开头的元素 iter()函数用来生成一个迭代器，next()返回迭代器中的下一项 oldest = next(iter(self)) del self[oldest] #删除开头的对象  二、deque  Python中的list可以用作队列，也可以被用作栈，但是它底层是基于数组实现的，查找容易，但是插入和删</description>
     </item>
     
     <item>
