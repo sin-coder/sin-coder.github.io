@@ -58,15 +58,6 @@
     </item>
     
     <item>
-      <title>浅谈Python中lru_cache的设计</title>
-      <link>https://sin-coder.github.io/program/pycache/</link>
-      <pubDate>Mon, 16 Dec 2019 14:01:10 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/program/pycache/</guid>
-      <description> 浅谈Python中lru_cache的设计 </description>
-    </item>
-    
-    <item>
       <title>从LRU开始学习缓存</title>
       <link>https://sin-coder.github.io/leetcode/cache/</link>
       <pubDate>Sun, 15 Dec 2019 14:01:10 +0800</pubDate>

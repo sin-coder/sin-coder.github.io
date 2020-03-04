@@ -114,15 +114,6 @@ Python解释器退出但对象仍然存活的时候，__ del __并不会执行�
     </item>
     
     <item>
-      <title>浅谈Python中lru_cache的设计</title>
-      <link>https://sin-coder.github.io/program/pycache/</link>
-      <pubDate>Mon, 16 Dec 2019 14:01:10 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/program/pycache/</guid>
-      <description> 浅谈Python中lru_cache的设计 </description>
-    </item>
-    
-    <item>
       <title>Java和Python中如何使用大顶堆</title>
       <link>https://sin-coder.github.io/program/javapqueue/</link>
       <pubDate>Tue, 03 Dec 2019 21:14:28 +0800</pubDate>
