@@ -113,7 +113,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          2 min read
+          3 min read
         </div><div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
   <title>tag</title>
@@ -482,9 +482,87 @@ class FIFOCache&lt;K,V&gt; extends LinkedHashMap&lt;K,V&gt;{
 
 <h4 id="1-有关缓存的名词">1.有关缓存的名词</h4>
 
+<blockquote>
+<p>缓存是一种数据模型，它有自己的一些特征名词</p>
+</blockquote>
+
+<ul>
+<li>命中率：返回的正确的结果数/请求的缓存次数，用来判断缓存有效性的重要指标，命中率越高，缓存的使用率</li>
+</ul>
+
+<blockquote>
+<p>也就越高；缓存出现的出现的主要问题都会导致其命中率大幅降低</p>
+</blockquote>
+
+<ul>
+<li>缓存最大空间：就是缓存的容量，如果缓存中的元素数量超过这个值，便会触发缓存清空策略，合理的缓存清空</li>
+</ul>
+
+<blockquote>
+<p>策略可以在一定程度上提高缓存的命中率</p>
+</blockquote>
+
+<ul>
+<li>缓存清空策略：也就是上面我们介绍的那几种缓存策略，当然除了一些专用算法，还有一些简单的策略：比如</li>
+</ul>
+
+<blockquote>
+<p>根据过期时间清理过期时间最长的元素、清理最近要过期的元素、随机清理、根据元素内容长短清理</p>
+</blockquote>
+
 <h4 id="2-缓存的各种问题">2.缓存的各种问题</h4>
 
-<p>缓存雪崩、缓存穿透、缓存预热、缓存更新、缓存降级</p>
+<blockquote>
+<p><strong>（1）缓存穿透</strong></p>
+
+<p>缓存穿透是指用户查询数据时，数据库中都不存在，缓存中肯定不会存在，也就是查询不到；所以请求就</p>
+</blockquote>
+
+<p>相当于直接到达了数据库，缓存没有起作用。这样的请求较多时，数据库就会直接宕掉</p>
+
+<blockquote>
+<p><strong>解决方法：</strong></p>
+
+<ul>
+<li><p>采用布隆过滤器，虽然它对于元素存在有一定的误判率，但是判断元素不存在是一定正确的</p></li>
+
+<li><p>如果一个数据查询结果为空，仍然将这个结果进行缓存，并且设置较短的过期时间</p></li>
+</ul>
+
+<p><strong>（2）缓存雪崩</strong></p>
+
+<p>缓存雪崩一般会在这样的情况下出现，原有的缓存采用了相同的过期时间，在同一时刻出现大面积的缓存</p>
+</blockquote>
+
+<p>过期，原本访问缓存的请求都会去查询数据库了，可能会造成数据库宕机</p>
+
+<blockquote>
+<p><strong>解决方法：</strong></p>
+
+<ul>
+<li><p>将缓存的失效时间分开，比如在设置缓存时间时可以加上一定范围内的随机值</p></li>
+
+<li><p>采用加锁或者队列的方式保证不会有大量的线程对数据库进行一次性读写</p></li>
+</ul>
+
+<p><strong>（3）缓存的数据一致性问题</strong></p>
+
+<p>数据库中的数据和缓存数据是不可能一致的，使用缓存不能保证数据的强一致性，只能保证数据最终一致</p>
+</blockquote>
+
+<p>性，因为读和写的操作都是并发的，可能会产生冲突</p>
+
+<blockquote>
+<p><strong>解决方法：</strong></p>
+
+<ul>
+<li><p>使用锁，但是会严重影响性能，可以进行优化</p></li>
+
+<li><p>将缓存分成多个分片，每个分片分配一个锁，如果在不同的分片中更新缓存，不会相互等到</p></li>
+
+<li><p>使用提交日志，可以将改动存储到日志中，不立即更新，然后一些后台进程将异步执行所有日志</p></li>
+</ul>
+</blockquote>
 
     </div>
     <div class="post-footer">
