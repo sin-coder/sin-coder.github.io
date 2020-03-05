@@ -1222,6 +1222,26 @@ ArrayList&amp;lt;String&amp;gt; list = new ArrayList&amp;lt;String&amp;gt;(); //
     </item>
     
     <item>
+      <title>布隆过滤器的原理及使用</title>
+      <link>https://sin-coder.github.io/datastructure/bloomfilter/</link>
+      <pubDate>Sun, 24 Nov 2019 17:01:10 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/datastructure/bloomfilter/</guid>
+      <description>布隆过滤器的原理及使用 一、BloomFilter简介  BloomFilter是大数据领域中经常使用到的算法，主要用于在海量的数据中判断一个数据是否已经存在，但
+ 如果不存在，判断结果一定是正确的。如果存在判断结果可能出现错误；这种数据结构的速度是非常快的，内
+存消耗得比较小，使用很方便，在各种编程语言中都有对应实现的类库
+二、Bloom的原理  BloomFilter本身是一个非常长的二进制向量（可以看成一个位数组）和一个映射函数。这个位数组初始情
+ 况下内部全部是0，长度是m；对于每个新增的项，我们使用K种不同的hash算法对他计算hash值，可以得到K
+个hash值，再使用这些hash值对m取模映射到数组范围内，假设取模后的结果是x，便会把x值对应的位置标记
+为1，过程图如下：
+ 但是当插入的数据大幅提升的时候，位数组中大部分的元素就会被置成１。此时如果查询一个元素，通过
+ 哈希函数映射到的位置可能已经被标记了，这时候就会出现误判；但是如果所有映射的位置中出现未被标记的
+位置，那么这个元素一定是不存在的，原理示意图如下：
+ 我们可以使用Python将Bloomfilter实现的原理用代码实现：
+ #插入元素 def BloomFilter(filter,value,hash_functions): m = len(filter) for func in hash_functions: idx = func(value) % m #哈希映射取模 filter[idx] = True #对应的位置进行标记 return filter #判断元素 def MemberInFilter(filter,value,hash_functions): m = len(filter) for func in hash_functions: idx = func(value) % m if not filter[idx]: return False return True   　通过上面的代码实现我们可以看到BloomFilter插入数据和查询数据时的时间复杂度都是O（k）,其中k是哈</description>
+    </item>
+    
+    <item>
       <title>从尾到头打印链表</title>
       <link>https://sin-coder.github.io/leetcode/printlistreverse/</link>
       <pubDate>Fri, 15 Nov 2019 14:01:10 +0800</pubDate>
