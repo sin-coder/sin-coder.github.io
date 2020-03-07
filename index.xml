@@ -1009,6 +1009,31 @@ Java文件被编译成class文件时，在子类的所有构造函数中的第�
     </item>
     
     <item>
+      <title>为什么要用ConcurrentHashMap</title>
+      <link>https://sin-coder.github.io/datastructure/concurrent/</link>
+      <pubDate>Tue, 17 Dec 2019 16:05:44 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/datastructure/concurrent/</guid>
+      <description>为什么要用ConcurrentHashMap 一、HashMap的线程安全问题 1、线程安全  在我刚开始接触并发的时候，对于线程安全这个词语很不理解，线程有什么安全性可言呢！后来慢慢地发
+ 现线程安全实际上指的是线程的内存安全，多个线程在对共享数据进行操作时，可能会出现数据不一致的情况
+ 所以HashMap的线程安全问题，我们可以理解为多个线程在HashMap这种数据结构中的数据进行操作可能
+ 会出现的数据不一致的情况；显然HashMap不是线程安全的，在并发插入元素时，有可能出现环形链表，让下
+一次读操作出现死循环，下面会进行详细的阐述
+2、ReHash的问题  HashMap的容量是有限的，当经过多次元素插入时，HashMap达到一定的饱和度时，Key映射位置发生冲突
+ 的几率会逐渐提高的，这个时候HashMap需要扩展它的长度，也就是Resize，ReHash就是Resize过程中的一个
+步骤，影响Resize的因素主要有两个：
+ Capacity : HashMap的当前长度，HashMap的长度一定是2的幂次方
+ LoadFactor：HashMap的负载因子，默认值为0.75f
+   判断HashMap是否进行Resize的条件如下：HashMap.Size &amp;gt;= Capacity*LoadFactor
+Resize的具体过程：
+  扩容：创建一个新的Entry数组，长度是原数组的2倍
+ ReHash：遍历原数组，将所有的Entry重新Hash到新数组（在长度改变后，Hash规则也随之改变），
+   Hash的具体公式如下： index = HashCode（Key）&amp;amp; （Length - 1）,当原数组长度为8的时候,
+Hash之后的结果是和111B做运算；新数组的长度为16，Hash运算是和1111B做运算，结果不同
+ //ReHash的源码如下 public void transfer(Entry[] newTable,boolean rehash){ int newCapacity = newTable.length; for(Entry&amp;lt;K,V&amp;gt; e:table){ while(e!= null){ Entry&amp;lt;K,V&amp;gt; next = e.next; if(rehash){ e.hash = null == e.</description>
+    </item>
+    
+    <item>
       <title>从LRU开始学习缓存</title>
       <link>https://sin-coder.github.io/leetcode/cache/</link>
       <pubDate>Sun, 15 Dec 2019 14:01:10 +0800</pubDate>

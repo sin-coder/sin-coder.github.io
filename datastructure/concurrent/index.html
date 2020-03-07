@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>为什么要用ConcurrentHashMap // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="为什么要用ConcurrentHashMap"/>
+<meta name="twitter:description" content="为什么要用ConcurrentHashMap 一、HashMap的线程安全问题 1、线程安全  在我刚开始接触并发的时候，对于线程安全这个词语很不理解，线程有什么安全性可言呢！后来慢慢地发
+ 现线程安全实际上指的是线程的内存安全，多个线程在对共享数据进行操作时，可能会出现数据不一致的情况
+ 所以HashMap的线程安全问题，我们可以理解为多个线程在HashMap这种数据结构中的数据进行操作可能
+ 会出现的数据不一致的情况；显然HashMap不是线程安全的，在并发插入元素时，有可能出现环形链表，让下
+一次读操作出现死循环，下面会进行详细的阐述
+2、ReHash的问题  HashMap的容量是有限的，当经过多次元素插入时，HashMap达到一定的饱和度时，Key映射位置发生冲突
+ 的几率会逐渐提高的，这个时候HashMap需要扩展它的长度，也就是Resize，ReHash就是Resize过程中的一个
+步骤，影响Resize的因素主要有两个：
+ Capacity : HashMap的当前长度，HashMap的长度一定是2的幂次方
+ LoadFactor：HashMap的负载因子，默认值为0.75f
+   判断HashMap是否进行Resize的条件如下：HashMap.Size &gt;= Capacity*LoadFactor
+Resize的具体过程：
+  扩容：创建一个新的Entry数组，长度是原数组的2倍
+ ReHash：遍历原数组，将所有的Entry重新Hash到新数组（在长度改变后，Hash规则也随之改变），
+   Hash的具体公式如下： index = HashCode（Key）&amp; （Length - 1）,当原数组长度为8的时候,
+Hash之后的结果是和111B做运算；新数组的长度为16，Hash运算是和1111B做运算，结果不同
+ //ReHash的源码如下 public void transfer(Entry[] newTable,boolean rehash){ int newCapacity = newTable.length; for(Entry&lt;K,V&gt; e:table){ while(e!= null){ Entry&lt;K,V&gt; next = e.next; if(rehash){ e.hash = null == e."/>
+
+    <meta property="og:title" content="为什么要用ConcurrentHashMap" />
+<meta property="og:description" content="为什么要用ConcurrentHashMap 一、HashMap的线程安全问题 1、线程安全  在我刚开始接触并发的时候，对于线程安全这个词语很不理解，线程有什么安全性可言呢！后来慢慢地发
+ 现线程安全实际上指的是线程的内存安全，多个线程在对共享数据进行操作时，可能会出现数据不一致的情况
+ 所以HashMap的线程安全问题，我们可以理解为多个线程在HashMap这种数据结构中的数据进行操作可能
+ 会出现的数据不一致的情况；显然HashMap不是线程安全的，在并发插入元素时，有可能出现环形链表，让下
+一次读操作出现死循环，下面会进行详细的阐述
+2、ReHash的问题  HashMap的容量是有限的，当经过多次元素插入时，HashMap达到一定的饱和度时，Key映射位置发生冲突
+ 的几率会逐渐提高的，这个时候HashMap需要扩展它的长度，也就是Resize，ReHash就是Resize过程中的一个
+步骤，影响Resize的因素主要有两个：
+ Capacity : HashMap的当前长度，HashMap的长度一定是2的幂次方
+ LoadFactor：HashMap的负载因子，默认值为0.75f
+   判断HashMap是否进行Resize的条件如下：HashMap.Size &gt;= Capacity*LoadFactor
+Resize的具体过程：
+  扩容：创建一个新的Entry数组，长度是原数组的2倍
+ ReHash：遍历原数组，将所有的Entry重新Hash到新数组（在长度改变后，Hash规则也随之改变），
+   Hash的具体公式如下： index = HashCode（Key）&amp; （Length - 1）,当原数组长度为8的时候,
+Hash之后的结果是和111B做运算；新数组的长度为16，Hash运算是和1111B做运算，结果不同
+ //ReHash的源码如下 public void transfer(Entry[] newTable,boolean rehash){ int newCapacity = newTable.length; for(Entry&lt;K,V&gt; e:table){ while(e!= null){ Entry&lt;K,V&gt; next = e.next; if(rehash){ e.hash = null == e." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/datastructure/concurrent/" />
+<meta property="article:published_time" content="2019-12-17T16:05:44+08:00" />
+<meta property="article:modified_time" content="2019-12-17T16:05:44+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">为什么要用ConcurrentHashMap</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 17, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="为什么要用concurrenthashmap">为什么要用ConcurrentHashMap</h2>
+
+<hr />
+
+<h3 id="一-hashmap的线程安全问题">一、HashMap的线程安全问题</h3>
+
+<h4 id="1-线程安全">1、线程安全</h4>
+
+<blockquote>
+<p>在我刚开始接触并发的时候，对于线程安全这个词语很不理解，线程有什么安全性可言呢！后来慢慢地发</p>
+</blockquote>
+
+<p>现线程安全实际上指的是线程的内存安全，多个线程在对共享数据进行操作时，可能会出现数据不一致的情况</p>
+
+<blockquote>
+<p>所以HashMap的线程安全问题，我们可以理解为多个线程在HashMap这种数据结构中的数据进行操作可能</p>
+</blockquote>
+
+<p>会出现的数据不一致的情况；显然HashMap不是线程安全的，在并发插入元素时，有可能出现环形链表，让下</p>
+
+<p>一次读操作出现死循环，下面会进行详细的阐述</p>
+
+<h4 id="2-rehash的问题">2、ReHash的问题</h4>
+
+<blockquote>
+<p>HashMap的容量是有限的，当经过多次元素插入时，HashMap达到一定的饱和度时，Key映射位置发生冲突</p>
+</blockquote>
+
+<p>的几率会逐渐提高的，这个时候HashMap需要扩展它的长度，也就是Resize，ReHash就是Resize过程中的一个</p>
+
+<p>步骤，影响Resize的因素主要有两个：</p>
+
+<ul>
+<li><p>Capacity  :   HashMap的当前长度，HashMap的长度一定是2的幂次方</p></li>
+
+<li><p>LoadFactor：HashMap的负载因子，默认值为0.75f</p></li>
+</ul>
+
+<blockquote>
+<p>判断HashMap是否进行Resize的条件如下：HashMap.Size  &gt;= Capacity*LoadFactor</p>
+
+<p>Resize的具体过程：</p>
+</blockquote>
+
+<ol>
+<li><p>扩容：创建一个新的Entry数组，长度是原数组的2倍</p></li>
+
+<li><p>ReHash：遍历原数组，将所有的Entry重新Hash到新数组（在长度改变后，Hash规则也随之改变），</p></li>
+</ol>
+
+<blockquote>
+<p>Hash的具体公式如下：  index = HashCode（Key）&amp; （Length - 1）,当原数组长度为8的时候,</p>
+
+<p>Hash之后的结果是和111B做运算；新数组的长度为16，Hash运算是和1111B做运算，结果不同</p>
+</blockquote>
+
+<pre><code class="language-java">   //ReHash的源码如下
+   public void transfer(Entry[] newTable,boolean rehash){
+       int newCapacity = newTable.length;
+       for(Entry&lt;K,V&gt; e:table){
+           while(e!= null){
+               Entry&lt;K,V&gt; next = e.next;
+               if(rehash){
+                   e.hash = null == e.key? 0:hash(e.key);
+               }
+               int i = indexFor(e.hash,newCapacity);
+               e.next = newTable[i];
+               newTable[i] = e;
+               e = next;
+           }
+       }
+   }
+</code></pre>
+
+<ol>
+<li>至于ReHash形成环的过程实在是太复杂了，这里我就不说了，形成的效果图如下：</li>
+</ol>
+
+<p><img src="https://s2.ax1x.com/2020/03/07/3XvAsg.jpg" alt="3XvAsg.jpg" /></p>
+
+<blockquote>
+<p>如果说调用Get查找一个不存在的Key时，而这个Key的Hash结果恰好等于3的时候，由于位置3带有环形</p>
+</blockquote>
+
+<p>链表，所以程序将会进入死循环。这就是高并发环境下HashMap的线程安全问题</p>
+
+<h4 id="3-解决方案">（3）解决方案</h4>
+
+<blockquote>
+<p>对于HashMap的线程安全问题可以使用HashTable和Collections.synchronizedMap来解决，但是这两种方案</p>
+</blockquote>
+
+<p>在性能方面比较低下，无论是读操作还是写操作，它们都会给整个的集合加锁，导致同一时间其他的操作被阻塞</p>
+
+<p>此时，兼具线程安全和运行效率的ConcurrentHashMap就应运而生了</p>
+
+<h3 id="二-concurrenthashmap原理-jdk-1-7">二、ConcurrentHashMap原理 JDK 1.7</h3>
+
+<h4 id="1-concurrenthashmap的结构">1.ConcurrentHashMap的结构</h4>
+
+<p><img src="https://s2.ax1x.com/2020/03/07/3Xz2xf.jpg" alt="3Xz2xf.jpg" style="zoom:80%;" /></p>
+
+<blockquote>
+<p>ConcurrentHashMap相比HashMap其实就是多了一个锁分段技术（Segment），Segment本身就是</p>
+</blockquote>
+
+<p>HashMap对象，同HashMap一样，Segment包含一个HashEntry数组，数组的每一个HashEntry既是一个</p>
+
+<p>键值对，也是一个链表的头节点；在ConcurrentHashMap集合中一共有2的N次方个，共同保存在一个名为</p>
+
+<p>segments的数组中</p>
+
+<blockquote>
+<p>从ConcurrentHashMap的结构图中可以看出它是一个二级哈希表，在一个总的哈希表下面，有若干个子</p>
+</blockquote>
+
+<p>哈希表，这跟数据库的水平拆分非常相似；每一个Segment就像一个自治区，读写是高度自治的，Segment</p>
+
+<p>之间是互不影响的，这就是我们说的锁分段技术</p>
+
+<h4 id="2-典型场景下的工作方式">2.典型场景下的工作方式</h4>
+
+<ul>
+<li><p>不同Segment的写入是可以并发执行的</p></li>
+
+<li><p>同一Segment的写和读是可以并发执行的</p></li>
+
+<li><p>同一个Segment的写入是需要上锁的，线程会出现阻塞状态</p></li>
+</ul>
+
+<blockquote>
+<p>由此可见，ConcurrentHashMap当中每个Segment各自持有一把锁，在保证线程安全的同时降低了</p>
+</blockquote>
+
+<p>锁的粒度，让并发操作的效率更高</p>
+
+<h4 id="3-concurrenthashmap的读写过程">3.ConcurrentHashMap的读写过程</h4>
+
+<blockquote>
+<p><strong>（1）读过程(Get方法)</strong></p>
+</blockquote>
+
+<ul>
+<li><p>为输入的Key做Hash运算，得到Hash值</p></li>
+
+<li><p>通过Hash值，定位到对应的Segment对象</p></li>
+
+<li><p>再次通过hash值，定位到Segment当中数组的具体位置</p></li>
+</ul>
+
+<blockquote>
+<p><strong>（2）写过程 (Put方法)</strong></p>
+</blockquote>
+
+<ul>
+<li><p>为输入的Key做Hash运算，得到hash值</p></li>
+
+<li><p>通过hash值，定位到对应的Segment对象</p></li>
+
+<li><p>获取可重入锁</p></li>
+
+<li><p>再次通过hash值，定位到Segment当中数组的具体位置</p></li>
+
+<li><p>插入或者覆盖HashEntry对象</p></li>
+
+<li><p>释放锁</p></li>
+</ul>
+
+<blockquote>
+<p>从读写的步骤中可以看出，ConcurrentHashMap在读写时都需要二次定位，首先定位到Segment，之后定位</p>
+</blockquote>
+
+<p>到Segment内的具体数组下标</p>
+
+<h4 id="4-size-方法如何解决一致性的问题">4.size()方法如何解决一致性的问题</h4>
+
+<blockquote>
+<p>size（）方法的目的是统计ConcurrentHashMap的总元素数量，自然需要把每个Segment内部的元素数量</p>
+</blockquote>
+
+<p>汇总起来，但是如果在统计Segment元素数量的过程中，已经统计过的Segment瞬间插入新的元素，会不出现</p>
+
+<p>不一致的情况呢？size()方法的执行过程是这样的</p>
+
+<ul>
+<li><p>遍历所有的Segment</p></li>
+
+<li><p>把Segment的元素数量累加起来</p></li>
+
+<li><p>把Segment的修改次数累加起来</p></li>
+
+<li><p>判断Segment的总修改次数是否大于上一次的总修改次数；如果大于，说明统计过程中有修改，重新统计</p></li>
+</ul>
+
+<blockquote>
+<p>尝试次数加1；如果不是，说明没有修改，统计结束</p>
+</blockquote>
+
+<ul>
+<li><p>如果尝试次数超过阈值，则对每一个Segment加锁，再重新统计</p></li>
+
+<li><p>再次判断所有Segment的总修改次数是否大于上一次的总修改次数。由于已经加锁，次数一定和上次相等</p></li>
+
+<li><p>释放锁，统计结束</p></li>
+</ul>
+
+<blockquote>
+<p>这样设计是因为尽量不锁住所有Segment，首先假设Size过程中不会有修改，当尝试一定次数时，才会转化</p>
+</blockquote>
+
+<p>成悲观锁，锁住所有的Segment保证强一致性</p>
+
+<h3 id="三-concurrenthashmap原理-jdk-1-8">三、ConcurrentHashMap原理 JDK 1.8</h3>
+
+<h4 id="1-jdk-1-8相较于1-7有哪些改进">1.JDK 1.8相较于1.7有哪些改进</h4>
+
+<blockquote>
+<p>JDK 1.7已经解决了并发的问题，并且能支持N个Segment这么多次数的并发，但是查询遍历链表的效率太低</p>
+</blockquote>
+
+<p>所以在JDK 1.8中采用了红黑树，保证了查询的效率是O（logn）；而且抛弃了原有的Segment分段锁，而采用了</p>
+
+<p>CAS  +  synchronized来保证并发的安全性</p>
+
+<h4 id="2-jdk-1-8的结构图">2.JDK 1.8的结构图</h4>
+
+<p><img src="https://s2.ax1x.com/2020/03/07/3jwaqI.jpg" alt="3jwaqI.jpg" style="zoom:80%;" /></p>
+
+<h4 id="3-源码解析">3.源码解析</h4>
+
+<blockquote>
+<p>JDK 1.8中使用Node代替HashEntry，但所用是相同的</p>
+</blockquote>
+
+<pre><code class="language-java">    static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; {
+        final int hash;                //哈希值
+        final K key;
+        volatile V val;
+        volatile Node&lt;K,V&gt; next;       //下一个节点
+
+        Node(int hash, K key, V val, Node&lt;K,V&gt; next) {
+            this.hash = hash;
+            this.key = key;
+            this.val = val;
+            this.next = next;
+        }
+
+        public final K getKey()       { return key; }
+        public final V getValue()     { return val; }
+        public final int hashCode()   { return key.hashCode() ^ val.hashCode(); }
+        public final String toString(){ return key + &quot;=&quot; + val; }
+        public final V setValue(V value) {
+            throw new UnsupportedOperationException();
+        }
+</code></pre>
+
+<blockquote>
+<p>put（）方法的过程，由于put（）方法源码较多，我们只看关键步骤即可</p>
+</blockquote>
+
+<ul>
+<li><p>根据key计算出hashcode</p></li>
+
+<li><p>判断是否需要进行初始化</p></li>
+
+<li><p>f即为当前key定位出的Node,如果为空表示当前位置可以写入数据，利用CAS尝试写入，失败则自旋保证成功</p></li>
+
+<li><p>如果当前位置的hashcode == MOVED == -1，则需要进行扩容</p></li>
+
+<li><p>如果都不满足，则利用synchronized 锁写入数据</p></li>
+
+<li><p>如果数量大于TREEIFY_THRESHOLD（默认为8），则要转换成红黑树</p></li>
+</ul>
+
+<blockquote>
+<p>get（）方法的过程</p>
+</blockquote>
+
+<ul>
+<li><p>根据计算出的hashcode 寻址，如果在桶上直接返回值</p></li>
+
+<li><p>如果是红黑树，那就按照树的方式获取值</p></li>
+
+<li><p>如果都不满足那就按照链表的方式遍历获取值</p></li>
+</ul>
+
+<hr />
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>
