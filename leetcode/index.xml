@@ -63,6 +63,19 @@
     </item>
     
     <item>
+      <title>滑动窗口解题总结</title>
+      <link>https://sin-coder.github.io/leetcode/slidingwind/</link>
+      <pubDate>Mon, 09 Dec 2019 15:50:27 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/leetcode/slidingwind/</guid>
+      <description>滑动窗口解题总结 一、算法简介  滑动窗口是一种高级双指针技巧的算法框架，代码模板可以按照如下表示
+ int left = 0,right = 0; //1.初始化双指针，建立一个索引闭区间，也就是窗口 //2.定义求解目标的初始值 while(right &amp;lt; s.length()){ window.add(s[right]); //3.通过增加right指针不断地扩大窗口 （找到可行解） //并同时更新求解的目标值 right++; while(valid){ //4.判断当前窗口是否满足要求 window.remove(s[left]); //5.停止增加right指针，转而增加left指针，直至窗口中的数据不符合要求 // 并同时更新求解的目标值 left++; //6.继续循环 } }   其中的window的数据类型一般为哈希表，当然在存储英文字母时也可以使用数组；代码的关键点如何判断
+ 滑动窗口是有效的
+二、典型例题 1.Leetcode 3  给定一个字符串，找出其中不含有重复字符的最长子串的长度
+ class Solution { private Map&amp;lt;Character,Integer&amp;gt; window = new HashMap&amp;lt;&amp;gt;(); //定义存储元素出现次数的哈希表 public int lengthOfLongestSubstring(String s) { if(s.length() == 0) return 0; int left = 0,right = 0; //初始化左右指针 int maxLen = 0; //初始化最大长度 while(right &amp;lt; s.</description>
+    </item>
+    
+    <item>
       <title>回溯算法解题总结</title>
       <link>https://sin-coder.github.io/leetcode/backtrack/</link>
       <pubDate>Thu, 05 Dec 2019 22:26:15 +0800</pubDate>

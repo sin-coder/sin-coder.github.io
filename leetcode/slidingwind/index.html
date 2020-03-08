@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>滑动窗口解题总结 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="滑动窗口解题总结"/>
+<meta name="twitter:description" content="滑动窗口解题总结 一、算法简介  滑动窗口是一种高级双指针技巧的算法框架，代码模板可以按照如下表示
+ int left = 0,right = 0; //1.初始化双指针，建立一个索引闭区间，也就是窗口 //2.定义求解目标的初始值 while(right &lt; s.length()){ window.add(s[right]); //3.通过增加right指针不断地扩大窗口 （找到可行解） //并同时更新求解的目标值 right&#43;&#43;; while(valid){ //4.判断当前窗口是否满足要求 window.remove(s[left]); //5.停止增加right指针，转而增加left指针，直至窗口中的数据不符合要求 // 并同时更新求解的目标值 left&#43;&#43;; //6.继续循环 } }   其中的window的数据类型一般为哈希表，当然在存储英文字母时也可以使用数组；代码的关键点如何判断
+ 滑动窗口是有效的
+二、典型例题 1.Leetcode 3  给定一个字符串，找出其中不含有重复字符的最长子串的长度
+ class Solution { private Map&lt;Character,Integer&gt; window = new HashMap&lt;&gt;(); //定义存储元素出现次数的哈希表 public int lengthOfLongestSubstring(String s) { if(s.length() == 0) return 0; int left = 0,right = 0; //初始化左右指针 int maxLen = 0; //初始化最大长度 while(right &lt; s."/>
+
+    <meta property="og:title" content="滑动窗口解题总结" />
+<meta property="og:description" content="滑动窗口解题总结 一、算法简介  滑动窗口是一种高级双指针技巧的算法框架，代码模板可以按照如下表示
+ int left = 0,right = 0; //1.初始化双指针，建立一个索引闭区间，也就是窗口 //2.定义求解目标的初始值 while(right &lt; s.length()){ window.add(s[right]); //3.通过增加right指针不断地扩大窗口 （找到可行解） //并同时更新求解的目标值 right&#43;&#43;; while(valid){ //4.判断当前窗口是否满足要求 window.remove(s[left]); //5.停止增加right指针，转而增加left指针，直至窗口中的数据不符合要求 // 并同时更新求解的目标值 left&#43;&#43;; //6.继续循环 } }   其中的window的数据类型一般为哈希表，当然在存储英文字母时也可以使用数组；代码的关键点如何判断
+ 滑动窗口是有效的
+二、典型例题 1.Leetcode 3  给定一个字符串，找出其中不含有重复字符的最长子串的长度
+ class Solution { private Map&lt;Character,Integer&gt; window = new HashMap&lt;&gt;(); //定义存储元素出现次数的哈希表 public int lengthOfLongestSubstring(String s) { if(s.length() == 0) return 0; int left = 0,right = 0; //初始化左右指针 int maxLen = 0; //初始化最大长度 while(right &lt; s." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/leetcode/slidingwind/" />
+<meta property="article:published_time" content="2019-12-09T15:50:27+08:00" />
+<meta property="article:modified_time" content="2019-12-09T15:50:27+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">滑动窗口解题总结</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 9, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><a class="tag" href="https://sin-coder.github.io/tags/leetcode/">leetcode</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="滑动窗口解题总结">滑动窗口解题总结</h2>
+
+<hr />
+
+<h3 id="一-算法简介">一、算法简介</h3>
+
+<blockquote>
+<p>滑动窗口是一种高级双指针技巧的算法框架，代码模板可以按照如下表示</p>
+</blockquote>
+
+<pre><code class="language-java">int left = 0,right = 0;      //1.初始化双指针，建立一个索引闭区间，也就是窗口
+						   //2.定义求解目标的初始值
+while(right &lt; s.length()){   
+    window.add(s[right]);    //3.通过增加right指针不断地扩大窗口  （找到可行解）
+                             //并同时更新求解的目标值
+    right++;
+    while(valid){               //4.判断当前窗口是否满足要求
+        window.remove(s[left]); //5.停止增加right指针，转而增加left指针，直至窗口中的数据不符合要求
+                                //  并同时更新求解的目标值
+        left++;                 //6.继续循环
+    }
+}
+</code></pre>
+
+<blockquote>
+<p>其中的window的数据类型一般为哈希表，当然在存储英文字母时也可以使用数组；代码的关键点如何判断</p>
+</blockquote>
+
+<p>滑动窗口是有效的</p>
+
+<h3 id="二-典型例题">二、典型例题</h3>
+
+<h4 id="1-leetcode-3-https-leetcode-cn-com-problems-longest-substring-without-repeating-characters">1.<a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">Leetcode 3</a></h4>
+
+<blockquote>
+<p>给定一个字符串，找出其中不含有重复字符的最长子串的长度</p>
+</blockquote>
+
+<pre><code class="language-java">class Solution {
+    private Map&lt;Character,Integer&gt; window = new HashMap&lt;&gt;();  //定义存储元素出现次数的哈希表
+    public int lengthOfLongestSubstring(String s) {
+        if(s.length() == 0) return 0;
+        int left = 0,right = 0;                               //初始化左右指针
+        int maxLen = 0;                                       //初始化最大长度
+        while(right &lt; s.length()){
+            if(!window.containsKey(s.charAt(right))){         //判断当前元素是否已经存在
+                window.put(s.charAt(right),1);                //不存在就存入哈希表
+                maxLen = Math.max(maxLen,right - left + 1);   //更新最大长度
+                right++;                                      //向右扩大窗口
+            }else{
+                while(window.containsKey(s.charAt(right))){   //如果已经包含那就从左边删除元素直至不包含
+                    window.remove(s.charAt(left));
+                    left++;                                   //从左边缩小窗口
+                }
+            }
+        }
+        return maxLen;
+    }
+}
+</code></pre>
+
+<blockquote>
+<p>题目的框架都是相似的，不同的是如何判断当前窗口的有效性</p>
+</blockquote>
+
+<h4 id="2-leetcode-438-https-leetcode-cn-com-problems-find-all-anagrams-in-a-string">2.<a href="https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/">Leetcode 438</a></h4>
+
+<blockquote>
+<p>给定一个字符串 <strong>s</strong> 和一个非空字符串 <strong>p</strong>，找到 <strong>s</strong> 中所有是 <strong>p</strong> 的字母异位词的子串，子串起始索引</p>
+</blockquote>
+
+<pre><code class="language-java">class Solution {
+    private List&lt;Integer&gt; res = new ArrayList&lt;&gt;();                //存储结果的列表
+    private Map&lt;Character,Integer&gt; need = new HashMap&lt;&gt;();        //子串哈希表
+    private Map&lt;Character,Integer&gt; window = new HashMap&lt;&gt;();      //滑动窗口哈希表
+    public List&lt;Integer&gt; findAnagrams(String s, String p) {
+        if(s.length() == 0) return res;
+        int left = 0,right = 0;                                   //初始化左右指针
+        int match = 0;                                            //记录字符串匹配个数
+        
+        for(char c : p.toCharArray()){                            //构造子串哈希表
+            need.put(c,need.getOrDefault(c,0) + 1);
+        }
+        
+        while(right &lt; s.length()){
+            char c1 = s.charAt(right);
+            if(need.containsKey(c1)){
+                window.put(c1,window.getOrDefault(c1,0) + 1);
+                if(window.get(c1).equals(need.get(c1))) match++;    //更新匹配的字符数目
+                //整型对象的比较不能用“==”
+            }
+            right++;
+            while(match == need.size()){                            //判断当前窗口是否满足要求    
+                if(right - left == p.length()){                     //发现字母异位词
+                    res.add(left);                                  //添加到返回结果中
+                }
+                char c2 = s.charAt(left);				
+                if(need.containsKey(c2)){                           //从左边删除的元素在子串中出现
+                    window.put(c2,window.get(c2)-1);                //在窗口哈希表中删除
+                    if(window.get(c2) &lt; need.get(c2)) match--;      //减少匹配的字符数 
+                }
+                left++;                                             //缩小滑动窗口
+            }
+        }
+        return res;
+    }
+}
+</code></pre>
+
+<blockquote>
+<p>框架是一致的，不同的就是对窗口值有效性的判断</p>
+</blockquote>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>
