@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>编辑距离 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="编辑距离"/>
+<meta name="twitter:description" content="从编辑距离问题学字符串的动态规划  解决两个字符串的动态规划问题，一般都是使用两个指针分别指向两个字符串的最后，然后一步一步地
+ 向前走，不断地缩小问题的规模，进而找出最优解，下面先看题吧：
+一、问题描述  Leetcode 72 编辑距离 ，题目简述如下
+两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数步数，你可以对一个单
+ 词进行如下三种操作：
+ 插入一个字符
+ 删除一个字符
+ 替换一个字符
+   我想大部分人看到这个问题后，思考的方式和我是一样的，就是如何在word1中找到尽可能多的出现在
+ word2中的字符，并尽可能保留住；但实际上单是找到重复的字符还是不够的，我们还必须关注它们出现的
+顺序，顺序不一样该删就删，毫不留情。实际上我们所关注的只是步数，删除、插入和替换都是一样的
+ 其实这个问题已经露出了动态规划的马脚了，因为它给了我们三个选择，就是在比较两个字符串的字母
+ 时如何选择策略，那当然是哪种策略的转化步数最小就是哪种了，这不就是在寻找最优子问题嘛
+二、算法思想的描述  1.初始化两个指针分别指向两个字符串的末尾
+2.比较两个指针所指字符，如果字符相同，说明这个位置对编辑距离的结果不会造成影响
+如果不相同，那么就选择3种策略中，所需转化步数最小的那种
+3.还会出现两种基本的情况：
+  指针已经遍历完word1时，word2还没有被遍历完，只能不断地向word1中插入元素了
+ 指针已经遍历完word2时，word1还没有被遍历完，只能不断地删除word1中的元素了
+    三、代码实现  我们假设 i , j指针分别指向word1和word2中的最后一个字符，代码可以这样写的
+ public int minDistance(String word1,String word2){ //分别初始化指向最后一个索引 return dp(word1.length() - 1,word2."/>
+
+    <meta property="og:title" content="编辑距离" />
+<meta property="og:description" content="从编辑距离问题学字符串的动态规划  解决两个字符串的动态规划问题，一般都是使用两个指针分别指向两个字符串的最后，然后一步一步地
+ 向前走，不断地缩小问题的规模，进而找出最优解，下面先看题吧：
+一、问题描述  Leetcode 72 编辑距离 ，题目简述如下
+两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数步数，你可以对一个单
+ 词进行如下三种操作：
+ 插入一个字符
+ 删除一个字符
+ 替换一个字符
+   我想大部分人看到这个问题后，思考的方式和我是一样的，就是如何在word1中找到尽可能多的出现在
+ word2中的字符，并尽可能保留住；但实际上单是找到重复的字符还是不够的，我们还必须关注它们出现的
+顺序，顺序不一样该删就删，毫不留情。实际上我们所关注的只是步数，删除、插入和替换都是一样的
+ 其实这个问题已经露出了动态规划的马脚了，因为它给了我们三个选择，就是在比较两个字符串的字母
+ 时如何选择策略，那当然是哪种策略的转化步数最小就是哪种了，这不就是在寻找最优子问题嘛
+二、算法思想的描述  1.初始化两个指针分别指向两个字符串的末尾
+2.比较两个指针所指字符，如果字符相同，说明这个位置对编辑距离的结果不会造成影响
+如果不相同，那么就选择3种策略中，所需转化步数最小的那种
+3.还会出现两种基本的情况：
+  指针已经遍历完word1时，word2还没有被遍历完，只能不断地向word1中插入元素了
+ 指针已经遍历完word2时，word1还没有被遍历完，只能不断地删除word1中的元素了
+    三、代码实现  我们假设 i , j指针分别指向word1和word2中的最后一个字符，代码可以这样写的
+ public int minDistance(String word1,String word2){ //分别初始化指向最后一个索引 return dp(word1.length() - 1,word2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/leetcode/distance/" />
+<meta property="article:published_time" content="2019-12-23T22:26:15+08:00" />
+<meta property="article:modified_time" content="2019-12-23T22:26:15+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">编辑距离</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 23, 2019
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><a class="tag" href="https://sin-coder.github.io/tags/leetcode/">leetcode</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="从编辑距离问题学字符串的动态规划">从编辑距离问题学字符串的动态规划</h2>
+
+<hr />
+
+<blockquote>
+<p>解决两个字符串的动态规划问题，一般都是使用两个指针分别指向两个字符串的最后，然后一步一步地</p>
+</blockquote>
+
+<p>向前走，不断地缩小问题的规模，进而找出最优解，下面先看题吧：</p>
+
+<h3 id="一-问题描述">一、问题描述</h3>
+
+<blockquote>
+<p><a href="https://leetcode-cn.com/problems/edit-distance/">Leetcode 72 编辑距离</a>   ，题目简述如下</p>
+
+<p>两个单词 word1 和 word2，计算出将 word1 转换成 word2 所使用的最少操作数步数，你可以对一个单</p>
+</blockquote>
+
+<p>词进行如下三种操作：</p>
+
+<ul>
+<li><p>插入一个字符</p></li>
+
+<li><p>删除一个字符</p></li>
+
+<li><p>替换一个字符</p></li>
+</ul>
+
+<blockquote>
+<p>我想大部分人看到这个问题后，思考的方式和我是一样的，就是如何在word1中找到尽可能多的出现在</p>
+</blockquote>
+
+<p>word2中的字符，并尽可能保留住；但实际上单是找到重复的字符还是不够的，我们还必须关注它们出现的</p>
+
+<p>顺序，顺序不一样该删就删，毫不留情。实际上我们所关注的只是步数，删除、插入和替换都是一样的</p>
+
+<blockquote>
+<p>其实这个问题已经露出了动态规划的马脚了，因为它给了我们三个选择，就是在比较两个字符串的字母</p>
+</blockquote>
+
+<p>时如何选择策略，那当然是哪种策略的转化步数最小就是哪种了，这不就是在寻找最优子问题嘛</p>
+
+<h3 id="二-算法思想的描述">二、算法思想的描述</h3>
+
+<blockquote>
+<p><strong>1</strong>.初始化两个指针分别指向两个字符串的末尾</p>
+
+<p><strong>2</strong>.比较两个指针所指字符，如果字符相同，说明这个位置对编辑距离的结果不会造成影响</p>
+
+<p>如果不相同，那么就选择3种策略中，所需转化步数最小的那种</p>
+
+<p><strong>3</strong>.还会出现两种基本的情况：</p>
+
+<blockquote>
+<ul>
+<li><p>指针已经遍历完word1时，word2还没有被遍历完，只能不断地向word1中插入元素了</p></li>
+
+<li><p>指针已经遍历完word2时，word1还没有被遍历完，只能不断地删除word1中的元素了</p></li>
+</ul>
+</blockquote>
+</blockquote>
+
+<h3 id="三-代码实现">三、代码实现</h3>
+
+<blockquote>
+<p>我们假设 i , j指针分别指向word1和word2中的最后一个字符，代码可以这样写的</p>
+</blockquote>
+
+<pre><code class="language-java">public int minDistance(String word1,String word2){
+    //分别初始化指向最后一个索引
+    return dp(word1.length() - 1,word2.length() - 1);
+}
+
+public int dp(int i,int j){
+    if(i == -1) return j + 1;   //word1遍历完，需要插入word2中剩余的所有元素，步数就是word2剩余的长度
+    if(j == -1) return i + 1;   //word2遍历完，需要删除word1中剩余的所有元素，步数就是word1剩余的长度
+    if(word1.charAt(i) == word2.charAt(j)) return dp[i-1][j-1]; //元素相同对编辑距离的结果不影响
+    //否则取三种选择中转换步数最少的那个
+    else: return Math.min(dp(i,j-1)+1,Math.min(dp(i-1,j)+1,dp(i-1,j-1)+1));
+    //dp(i-1,j)表示将word1中的元素进行删除，直接把s[i]中这个元素删除了，直接前移i
+    //dp(i,j-1)表示对word1进行插入操作,需要将word2中的指针前移
+    //dp(i-1,j-1) 表示将word1对应位置的字符替换成word2中的字符，i,j都需要向前移动
+}
+</code></pre>
+
+<blockquote>
+<p>对于上述解法显然是存在重叠子问题的，优化的方式就是备忘录和DP Table了</p>
+</blockquote>
+
+<pre><code class="language-python">#备忘录的算法实现
+def minDistance(s1,s2) -&gt; int:
+    memo = dict()     #可以使用字典来存储每一个dp(i,j)的转化步数
+    def dp(i,j):
+        if (i,j) in memo:
+            return memo[(i,j)]
+        if(s1[i] == s2[j]):
+            memo[(i,j)] = 选择最优的转化步数
+        else:
+            memo[(i,j)] = 选择最优的转化步数
+        return memo[(i,j)]
+    return dp(len(s1) - 1,len(s2) - 1)
+</code></pre>
+
+<blockquote>
+<p>dp数组的解法：定义状态  dp[i] [j]  表示word1[0....i-1] 和 word2[0.....j-1]的最小编辑距离</p>
+</blockquote>
+
+<pre><code class="language-java">class Solution {
+    public int minDistance(String word1, String word2) {
+        int m = word1.length(),n = word2.length();
+        int[][] dp = new int[m+1][n+1];
+        //数组的索引最小为0
+        //如果word2为空串需要将word1中的每个元素都删除
+        for(int i = 1;i &lt;= m;i++){
+            dp[i][0] = i;
+        }
+        //如果word1为空串需要将不断插入word2中的元素
+        for(int j = 1;j &lt;= n;j++){
+            dp[0][j] = j;
+        }
+
+        for(int i = 1;i &lt;= m;i++){
+            for(int j = 1;j &lt;= n;j++){
+                if(word1.charAt(i-1) == word2.charAt(j-1)){
+                    dp[i][j] = dp[i-1][j-1];
+                }else{
+                    dp[i][j] = Math.min(dp[i-1][j]+1,Math.min(dp[i][j-1]+1,dp[i-1][j-1]+1));
+                }
+            }
+        }
+        //返回word1[0.....m-1]和word2[0....n-1]的最小编辑距离
+        return dp[m][n];
+    }
+}
+</code></pre>
+
+<blockquote>
+<p>如果想要知道如何操作只需在做最优选择时将当前结果记录下来即可</p>
+</blockquote>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>
