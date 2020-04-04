@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://sin-coder.github.io/datastructure/sort/</loc>
+    <lastmod>2020-04-04T23:04:00+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://sin-coder.github.io/post/server/</loc>
     <lastmod>2020-02-26T15:59:05+08:00</lastmod>
   </url>
@@ -114,11 +119,6 @@
   
   <url>
     <loc>https://sin-coder.github.io/tags/</loc>
-    <lastmod>2020-04-04T23:04:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://sin-coder.github.io/datastructure/sort/</loc>
     <lastmod>2020-04-04T23:04:00+08:00</lastmod>
   </url>
   
