@@ -204,7 +204,7 @@ def detectCycle(self, head):
       if fast == slow: #第一个相遇节点
         break
       fast = head      #将快指针初始化初始节点
-      while fast != slow:
+   while fast != slow:
         fast, slow = fast.next, slow.next   #快慢指针再次相遇的节点就是环的入口节点
    return fast
 #时间复杂度O（n）、空间复杂度O（1）

@@ -1,0 +1,1143 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>常见的排序算法总结 // sin-coder</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.59.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="csuyzz" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://sin-coder.github.io/css/main.min.f90f5edd436ec7b74ad05479a05705770306911f721193e7845948fb07fe1335.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="常见的排序算法总结"/>
+<meta name="twitter:description" content="经典排序算法的总结  之前总是听一些大牛说学会了排序就相等于学会了算法，能手写个快速排序基本就能通过面试了，这一
+ 点我是很不理解的；后来慢慢地发现这是有道理的，常见的几种排序算法中蕴含了许多经典的算法思想，
+比如说递归、分治、迭代、双指针、空间换时间等，算法的问题很多，但是计算机处理问题的方式却只
+有那一种。所以要归根溯源，从简单的排序算法中去学习算法思想也是一种很有效的方法
+一、算法描述  对一个无序的数组进行排序 (从小到大或者从大到小)
+ 二、算法分类标准  划分排序算法的主要标准有稳定性、内外排序、时空复杂度、是否比较排序等
+1.稳定性 如果数组中有两个元素是相等的，在经过某个排序算法之后，原来前面的那个元素仍然在另一个元素的
+ 前面，那这个排序算法就是稳定的；相反如果在原来两个相等元素中前面的一个元素被移到了后面，那就
+是不稳定的
+ 2.内外排序 内排序是所有的排序操作都在内存中完成；
+外排序是由于数据太大，因此把数据放入磁盘中，排序需要经过磁盘和内存的数据传输才能进行
+3.是否比较排序 比较排序： 一个算法在排序的过程中使用比较操作来判断两个元素的大小关系，那么这个算法
+ 就是比较排序，常见的排序算法都是比较排序算法，比如冒泡排序、插入排序、堆排序，这些排序
+算法的平均时间复杂度最快也只能是O(nlogn)
+ 非比较排序比较典型的算法有计数排序、桶排序和基数排序，这类排序的时间复杂度可以达到
+ O(n)的级别
+ 4.时空复杂度 就是时间复杂度和空间的复杂度了
+ 三、常见的排序算法  1.冒泡排序(Bubble Sort)  （1）算法描述：冒泡排序是将相邻元素进行比较,大数慢慢地沉底，小数放置到前面
+（2）算法特点：
+ 内排序，所有操作在原来的数组中就可以完成了，不需要额外的空间
+ 时间复杂度是O(n^2),空间的复杂度是O(1)
+ 稳定排序: 如果两个元素的位置相同，他们的位置是不会进行交换的
+  （3）代码实现
+#冒泡排序 Python的版本 def bubble_sort(nums): n = len(nums) for i in range(n): for j in range(1,n-i): if nums[j] &lt; nums[j-1]: nums[j-1],nums[j] = nums[j],nums[j-1] return nums  //冒泡排序 Java版本 private void swap(int[] nums,int i,int j){ int temp = nums[i]; nums[i] = nums[j]; nums[j] = temp; } public void bubbleSort(int[] nums){ for(int i = nums."/>
+
+    <meta property="og:title" content="常见的排序算法总结" />
+<meta property="og:description" content="经典排序算法的总结  之前总是听一些大牛说学会了排序就相等于学会了算法，能手写个快速排序基本就能通过面试了，这一
+ 点我是很不理解的；后来慢慢地发现这是有道理的，常见的几种排序算法中蕴含了许多经典的算法思想，
+比如说递归、分治、迭代、双指针、空间换时间等，算法的问题很多，但是计算机处理问题的方式却只
+有那一种。所以要归根溯源，从简单的排序算法中去学习算法思想也是一种很有效的方法
+一、算法描述  对一个无序的数组进行排序 (从小到大或者从大到小)
+ 二、算法分类标准  划分排序算法的主要标准有稳定性、内外排序、时空复杂度、是否比较排序等
+1.稳定性 如果数组中有两个元素是相等的，在经过某个排序算法之后，原来前面的那个元素仍然在另一个元素的
+ 前面，那这个排序算法就是稳定的；相反如果在原来两个相等元素中前面的一个元素被移到了后面，那就
+是不稳定的
+ 2.内外排序 内排序是所有的排序操作都在内存中完成；
+外排序是由于数据太大，因此把数据放入磁盘中，排序需要经过磁盘和内存的数据传输才能进行
+3.是否比较排序 比较排序： 一个算法在排序的过程中使用比较操作来判断两个元素的大小关系，那么这个算法
+ 就是比较排序，常见的排序算法都是比较排序算法，比如冒泡排序、插入排序、堆排序，这些排序
+算法的平均时间复杂度最快也只能是O(nlogn)
+ 非比较排序比较典型的算法有计数排序、桶排序和基数排序，这类排序的时间复杂度可以达到
+ O(n)的级别
+ 4.时空复杂度 就是时间复杂度和空间的复杂度了
+ 三、常见的排序算法  1.冒泡排序(Bubble Sort)  （1）算法描述：冒泡排序是将相邻元素进行比较,大数慢慢地沉底，小数放置到前面
+（2）算法特点：
+ 内排序，所有操作在原来的数组中就可以完成了，不需要额外的空间
+ 时间复杂度是O(n^2),空间的复杂度是O(1)
+ 稳定排序: 如果两个元素的位置相同，他们的位置是不会进行交换的
+  （3）代码实现
+#冒泡排序 Python的版本 def bubble_sort(nums): n = len(nums) for i in range(n): for j in range(1,n-i): if nums[j] &lt; nums[j-1]: nums[j-1],nums[j] = nums[j],nums[j-1] return nums  //冒泡排序 Java版本 private void swap(int[] nums,int i,int j){ int temp = nums[i]; nums[i] = nums[j]; nums[j] = temp; } public void bubbleSort(int[] nums){ for(int i = nums." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sin-coder.github.io/datastructure/sort/" />
+<meta property="article:published_time" content="2020-04-04T23:04:00+08:00" />
+<meta property="article:modified_time" content="2020-04-04T23:04:00+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://sin-coder.github.io"><img class="app-header-avatar" src="/cat.jpg" alt="csuyzz" /></a>
+      <h1>sin-coder</h1>
+      <p>I always remember that &#39;Talk is cheap,show me the code&#39;</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/sin-coder" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+          <a target="_blank" href="mailto:csuyzz@foxmail.com" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-mail">
+  <title>mail</title>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+</svg></a>
+        
+          <a target="_blank" href="https://cn.linkedin.com/in/csuyzz" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+          <a target="_blank" href="https://twitter.com/csuyzz1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg></a>
+        
+      </div>
+      <h3><a href="/" title="首页">首页</a></h3>
+      <h3><a href="/category/content/" title="首页">分类目录</a></h3>
+      <h3><a href="/personal/introduce/" title="首页">个人简介</a></h3>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">常见的排序算法总结</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Apr 4, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          8 min read
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://sin-coder.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><a class="tag" href="https://sin-coder.github.io/tags/leetcode/">leetcode</a></div></div>
+    </header>
+    <div class="post-content">
+      
+
+<h2 id="经典排序算法的总结">经典排序算法的总结</h2>
+
+<hr />
+
+<blockquote>
+<p>之前总是听一些大牛说学会了排序就相等于学会了算法，能手写个快速排序基本就能通过面试了，这一</p>
+</blockquote>
+
+<p>点我是很不理解的；后来慢慢地发现这是有道理的，常见的几种排序算法中蕴含了许多经典的算法思想，</p>
+
+<p>比如说递归、分治、迭代、双指针、空间换时间等，算法的问题很多，但是计算机处理问题的方式却只</p>
+
+<p>有那一种。所以要归根溯源，从简单的排序算法中去学习算法思想也是一种很有效的方法</p>
+
+<h3 id="一-算法描述">一、算法描述</h3>
+
+<blockquote>
+<p>对一个无序的数组进行排序 (从小到大或者从大到小)</p>
+</blockquote>
+
+<h3 id="二-算法分类标准">二、算法分类标准</h3>
+
+<blockquote>
+<p>划分排序算法的主要标准有稳定性、内外排序、时空复杂度、是否比较排序等</p>
+
+<h4 id="1-稳定性">1.稳定性</h4>
+
+<p>如果数组中有两个元素是相等的，在经过某个排序算法之后，原来前面的那个元素仍然在另一个元素的</p>
+</blockquote>
+
+<p>前面，那这个排序算法就是稳定的；相反如果在原来两个相等元素中前面的一个元素被移到了后面，那就</p>
+
+<p>是不稳定的</p>
+
+<blockquote>
+<h4 id="2-内外排序">2.内外排序</h4>
+
+<p>内排序是所有的排序操作都在内存中完成；</p>
+
+<p>外排序是由于数据太大，因此把数据放入磁盘中，排序需要经过磁盘和内存的数据传输才能进行</p>
+
+<h4 id="3-是否比较排序">3.是否比较排序</h4>
+
+<p>比较排序： 一个算法在排序的过程中使用比较操作来判断两个元素的大小关系，那么这个算法</p>
+</blockquote>
+
+<p>就是比较排序，常见的排序算法都是比较排序算法，比如冒泡排序、插入排序、堆排序，这些排序</p>
+
+<p>算法的平均时间复杂度最快也只能是O(nlogn)</p>
+
+<blockquote>
+<p>非比较排序比较典型的算法有计数排序、桶排序和基数排序，这类排序的时间复杂度可以达到</p>
+</blockquote>
+
+<p>O(n)的级别</p>
+
+<blockquote>
+<h4 id="4-时空复杂度">4.时空复杂度</h4>
+
+<p>就是时间复杂度和空间的复杂度了</p>
+</blockquote>
+
+<h3 id="三-常见的排序算法">三、常见的排序算法</h3>
+
+<blockquote>
+<h4 id="1-冒泡排序-bubble-sort">1.冒泡排序(Bubble Sort)</h4>
+</blockquote>
+
+<p><strong>（1）算法描述</strong>：冒泡排序是将相邻元素进行比较,大数慢慢地沉底，小数放置到前面</p>
+
+<p><strong>（2）算法特点</strong>：</p>
+
+<ul>
+<li><p>内排序，所有操作在原来的数组中就可以完成了，不需要额外的空间</p></li>
+
+<li><p>时间复杂度是O(n^2),空间的复杂度是O(1)</p></li>
+
+<li><p>稳定排序: 如果两个元素的位置相同，他们的位置是不会进行交换的</p></li>
+</ul>
+
+<p><strong>（3）代码实现</strong></p>
+
+<pre><code class="language-python">#冒泡排序 Python的版本
+def bubble_sort(nums):
+	n = len(nums)
+	for i in range(n):
+		for j in range(1,n-i):
+			if nums[j] &lt; nums[j-1]:
+				nums[j-1],nums[j] = nums[j],nums[j-1]
+	return nums
+</code></pre>
+
+<pre><code class="language-java">//冒泡排序  Java版本
+private void swap(int[] nums,int i,int j){
+    int temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
+}
+
+public void bubbleSort(int[] nums){
+    for(int i = nums.length - 1; i &gt;= 1;i--){
+        for(int j = 1;j &lt;= i;j++){
+            if(nums[j-1] &gt; nums[j]){
+                swap(nums,j,j-1);    //交换最大值
+            }
+        }
+    }
+}
+</code></pre>
+
+<blockquote>
+<h4 id="2-选择排序-select-sort">2.选择排序(Select Sort)</h4>
+</blockquote>
+
+<p><strong>（1）算法描述</strong></p>
+
+<blockquote>
+<p>选择排序的思路是先找到前n个元素中最大的值，然后和最后一个元素进行交换，以此来保证最后一个</p>
+</blockquote>
+
+<p>元素一定是最大的；然后找到前n-1个元素中的最大值，和第n-1个元素进行比较，依次类推找到前两个元</p>
+
+<p>素中最大的元素和第二个元素进行交换；最后就得到了排序数组</p>
+
+<blockquote>
+<p>和冒泡排序的思路相似，都是要把最大的元素放到最后，但是冒泡排序在每一轮比较中交换多次</p>
+</blockquote>
+
+<p>而选择排序只需要在每一轮交换依次</p>
+
+<p><strong>（2）算法特点</strong>：</p>
+
+<ul>
+<li><p>内排序，所有操作在原来的数组中就可以完成了，不需占用额外的磁盘空间</p></li>
+
+<li><p>时间复杂度是O(n^2),空间的复杂度是O(1)，原地算法</p></li>
+
+<li><p>是否稳定排序取决于使用数组还是链表存储数据，使用数组是不稳定的，但是链表是稳定的</p></li>
+</ul>
+
+<p><strong>（3）代码实现</strong></p>
+
+<pre><code class="language-python">#选择排序 Python的版本
+def selectSort(nums):
+    n = len(nums)
+	for i in range(1,n):
+        maxIndex = 0
+        for j in range(0,n-i+1):
+            if nums[maxIndex] &lt; nums[j]:
+                maxIndex = j
+        #将最大的元素和最后一个元素进行交换
+	    nums[maxIndex],nums[n-i] = nums[n-i],nums[maxIndex]
+	return nums
+</code></pre>
+
+<pre><code class="language-java">//选择排序  Java版本
+private void swap(int[] nums,int i,int j){
+    int temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
+}
+public void selectionSort(int[] nums){
+    for(int i = nums.length - 1;i &gt; 0;i--){
+        int maxIndex = 0;   //每轮循环开始都要记录一个最大元素的位置
+        for(int j = 0;j &lt;= i;j++){
+            if(nums[maxIndex] &lt; nums[j]){
+                maxIndex = j;
+            }
+        }
+    }
+    swap(nums,maxIndex,i);   //把这个最大的元素移到最后
+}
+</code></pre>
+
+<blockquote>
+<h4 id="3-插入排序-insertsort">3.插入排序(InsertSort)</h4>
+</blockquote>
+
+<p><strong>（1）算法描述</strong></p>
+
+<blockquote>
+<p>插入排序的思想是遍历整个数组，保持当前元素的左侧始终是排序后的数组，然后将当前元素插入到</p>
+</blockquote>
+
+<p>前面排序完成的数组的对应的位置，使其保持排序的状态，类似于动态规划，先将前i - 1个元素排序完成</p>
+
+<p>再去插入第i个元素，构成i个元素的有序数组</p>
+
+<p><strong>（2）算法特点</strong>：</p>
+
+<ul>
+<li><p>内排序，所有操作在原来的数组中就可以完成了，不需要额外的空间</p></li>
+
+<li><p>时间复杂度：如果是已经排序的数组，复杂度就是O(n)，在其他情况下都是O(n^2)</p></li>
+
+<li><p>稳定排序: 插入排序是相邻元素之间的交换，而不是跳跃式的交换，所以是稳定的</p></li>
+</ul>
+
+<p><strong>（3）代码实现</strong></p>
+
+<pre><code class="language-python">#冒泡排序 Python的版本
+def insert_sort(nums):
+	n = len(nums)
+	for i in range(1,n):   #要从第二个元素开始遍历
+        j = i
+	    while j &gt; 0 &amp;&amp; nums[j] &lt; nums[j-1]:
+            nums[j-1],nums[j] = nums[j],nums[j-1]
+		   j--	
+	return nums
+</code></pre>
+
+<pre><code class="language-java">//插入排序  Java版本
+private void swap(int[] nums,int i,int j){
+    int temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
+}
+
+public void insertSort(int[] nums){
+    for(int i = 1; i &lt; nums.length;i++){  //默认第一个元素是排好序的，从第二个元素开始排
+        int j = i;
+        while(j &gt; 0 &amp;&amp; nums[j] &lt; nums[j-1]){
+            swap(nums,j,j-1);
+            j--;
+        }
+    }
+}
+</code></pre>
+
+<blockquote>
+<h4 id="4-希尔排序-shellsort">4.希尔排序(ShellSort)</h4>
+</blockquote>
+
+<p><strong>（1）算法描述</strong></p>
+
+<blockquote>
+<p>希尔排序可以看作是冒泡排序或者插入排序的升级，这种排序算法在每次排序的时候都把数组拆分</p>
+</blockquote>
+
+<p>成若干个序列，一个序列的相邻元素的索引间隔为固定的距离，每一轮对这些序列进行冒泡或者插入，</p>
+
+<p>然后在缩小索引间隔得到新的序列，直到间隔为0</p>
+
+<p><strong>（2）算法特点</strong></p>
+
+<ul>
+<li><p>内排序，所有操作在原来的数组中就可以完成了，不需要额外的空间</p></li>
+
+<li><p>时间复杂度：不同的增量序列会有不同的时间复杂度，一般介于O(n^1.5)到 O(n^2)，空间复杂度是O(1)</p></li>
+
+<li><p>稳定性: 这个算法是不稳定的，里面有很多不相邻元素的交换操作</p></li>
+</ul>
+
+<p><strong>（3）代码实现</strong></p>
+
+<pre><code class="language-python">#希尔排序 Python的版本
+def shell_sort(nums):
+	n = len(nums)
+    gap = n // 2
+	while gap:
+        for i in range(gap,n):
+            while i - gap &gt;= 0 and nums[i-gap] &gt; nums[i]:   #插入排序
+                nums[i-gap],nums[i] = nums[i],nums[i-gap]
+                i -= gap
+        gap &gt;&gt;= 1
+	return nums
+</code></pre>
+
+<pre><code class="language-java">//希尔排序  Java版本
+private void swap(int[] nums,int i,int j){
+    int temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
+}
+
+public void shellSort(int[] nums){
+    int gap = nums.length &gt;&gt; 1;
+    while(gap &gt; 0){
+        for(int i = 0;i &lt; gap;i++){   //对每个子序列进行排序
+            for(int j = i+gap;j &lt; nums.length;j+=gap){   //插入排序
+                int temp = j;
+                while(temp &gt; i &amp;&amp; nums[temp] &lt; nums[temp - gap]){
+                    swap(nums,temp,temp-gap);
+                    temp -= gap;
+                }
+            }
+        }
+        gap &gt;&gt;= 1;
+    }
+}
+</code></pre>
+
+<blockquote>
+<h4 id="5-快速排序-quicksort">5.快速排序(QuickSort)</h4>
+</blockquote>
+
+<p><strong>（1）算法描述</strong></p>
+
+<blockquote>
+<p>快速排序的核心思想就是取一个元素(可以是第一个或者最后一个)作为分界点，将整个数组分成左右</p>
+</blockquote>
+
+<p>两侧，左边的元素小于或者等于分界点元素，而右边的元素大于分界点的元素；再对左右子数组进行递归</p>
+
+<p>即可，当子数组只有一个元素或者没有元素的时候就结束这个递归的过程</p>
+
+<p><strong>（2）算法特点</strong>：</p>
+
+<ul>
+<li><p>内排序，所有操作在原来的数组中就可以完成了，不需要额外的空间</p></li>
+
+<li><p>复杂度分析：时间复杂度最佳是O(nlogn)，但是如果分界点元素选择不正确会恶化到O(n^2)，这种情况是</p></li>
+</ul>
+
+<blockquote>
+<p>数组完全逆序时的表现。如果随机选择分界点时间复杂度能够稳定在O(nlogn)。此外，如果相同元素</p>
+
+<p>数量比较多的情况下，也会降低排序的性能；空间复杂度为O(logn)，属于堆栈调用，最坏情况下的</p>
+
+<p>空间复杂度还是O(n)，只有平均情况是O(nlogn)</p>
+</blockquote>
+
+<ul>
+<li>稳定性: 是不稳定的排序，因为包含跳跃式的交换元素
+
+<br /></li>
+</ul>
+
+<p><strong>（3）代码实现</strong></p>
+
+<pre><code class="language-python">#快速排序 Python的版本 (写法一) 
+def quick_sort(data):
+	if len(data) &gt;= 2:
+		mid = data[len(data) - 1]  #选取一个基准值，这里选取的是最后一个元素
+		left,right = [],[]   #定义基准值左右两侧的列表
+		data.remove(mid)     #先从原数组中将当前元素移除
+		for num in data:
+			if num &gt;= mid:
+				right.append(num)   #大于基准值的放在右边
+			else:
+				left.append(num)    #小于基准值的放在左边
+		return quick_sort(left) + [mid] + quick_sort(right)
+	else:
+		return data           #如果只有一个元素时直接返回
+#毫无疑问这种写法很简洁，但是非常地浪费空间
+
+#快速排序 Python的版本 (写法二) 在原数组中操作
+def quick_sort(nums):
+    n = len(nums)
+    
+    def quick(left,right):
+        if left &gt;= right:
+            return nums
+        pivot = left
+        i = left
+        j = right
+        while i &lt; j:
+ 			while i &lt; j and nums[j] &gt; nums[pivot]:
+                j -= 1
+             while i &lt; j and nums[i] &lt;= nums[pivot]:
+                i += 1
+             nums[i],nums[j] = nums[j],nums[i]
+        nums[pivot],nums[j] = nums[j],nums[pivot]
+        quick(left,j-1)
+        quick(j+1,right)
+        return nums
+</code></pre>
+
+<pre><code class="language-java">//快速排序  Java版本 (写法一)
+private void swap(int[] nums,int i,int j){
+    int temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
+}
+
+public void QuickSort(int[] nums,int left,int right){
+    if(left &gt;= right) return;
+    int lo = left + 1;   //小于分界点元素最右侧的指针
+    int hi = right;      //大于分界点元素最左侧的指针
+    while(lo &lt;= hi){
+        if(nums[lo] &gt; nums[left]){  //左侧指针指向的元素小于分界点元素
+            swap(nums,lo,hi);
+            hi--;
+        }else{
+            lo++;
+        } 
+    }
+    lo--;    //回到小于分界点元素的最右侧
+    swap(nums,left,lo);  //将分界点元素移到左侧数组的最右侧
+    QuickSort(nums,left,lo-1);
+    QuickSort(nums,lo+1,right);
+}
+
+//快速排序  Java版本 (写法二)
+/*不用hi来标记分界点元素的最右侧,而是只有一个lo来标记最左侧
+在遍历整个数组的过程中，如果发现了一个小于等于分界点元素的元素，就和lo+1位置的元素进行交换
+然后lo自增,这样可以保证lo左侧一定都是小于等于分界点元素的，遍历到最后lo的位置就是新的分界点的位置
+和最开始的分界点元素位置互换
+*/
+
+public void QuickSort(int[] nums,int left,int right){
+    if(left &gt;= right) return;
+    int cur = left + 1;    //从左侧第二个元素 开始
+    int lo = left;         //最左侧的元素作为基准值
+    while(cur &lt;= right){
+        if(nums[cur] &lt;= nums[left]){   //交换位置保证lo的左侧都是小于nums[left]的
+            swap(nums,lo+1,cur);
+            lo++;
+        }
+        cur++;
+    }
+    swap(nums,left,lo);
+    QuickSort(nums,left,lo-1);
+    QuickSort(nums,lo+1,right);
+}
+</code></pre>
+
+<blockquote>
+<h4 id="6-归并排序-quicksort">6.归并排序(QuickSort)</h4>
+</blockquote>
+
+<p><strong>（1）算法描述</strong></p>
+
+<blockquote>
+<p>归并排序的核心思想就是分治法，先将数组分成子序列，再让子序列间有序，合并成有序数组</p>
+
+<p>主要的步骤如下：</p>
+</blockquote>
+
+<ul>
+<li><p>将长度为n的输入序列分成长度为n/2的子序列</p></li>
+
+<li><p>对两个子序列进行归并排序</p></li>
+
+<li><p>合并所有的子序列</p></li>
+</ul>
+
+<p><strong>（2）算法特点</strong>：</p>
+
+<ul>
+<li><p>内排序，所有操作在原来的数组中就可以完成了，不需要额外的空间</p></li>
+
+<li><p>复杂度分析：每个元素都要经过logn次的排序，所以时间复杂度是O(nlogn)；排序的过程中要使用临</p></li>
+</ul>
+
+<blockquote>
+<p>时数组来存放临时排序结果，空间复杂度为O(n)</p>
+</blockquote>
+
+<ul>
+<li>稳定性: 稳定排序，保证原来相同的元素能够在相同的位置
+
+<br /></li>
+</ul>
+
+<p><strong>（3）代码实现</strong></p>
+
+<pre><code class="language-python">#归并排序  Python版本  实现
+def MergeSort(lists):
+    if len(lists) &lt;= 1:
+        num = len(lists)//2
+        left = MergeSort(lists[:num])
+        right = MergeSort(lists[num:])
+        return Merge(left,right)
+def Merge(left,right):
+    r,l = 0,0
+    result = []
+    while l &lt; len(left) and r &lt; len(right):
+		if left[l] &lt; right[r]:
+			result.append(left[l])
+			l+=1
+		else:
+			result.append(right[r])
+			r+=1
+	result+=list(left[l:])
+	result+=list(right[r:])
+	return result
+</code></pre>
+
+<pre><code class="language-java">//归并排序  Java版本  具体实现
+public void mergeSort(int[] nums,int left,int right){
+    if (left &gt;= right) return;
+    int mid = (left+right) / 2;
+    
+    mergeSort(nums,left,mid);     //先对左右子数组进行排序
+    mergeSort(nums,mid+1,right);
+    
+    int[] temp = new int[right-left+1];               //临时数组存放合并的结果
+    int i = left,j = mid + 1;
+    int cur = 0;
+    while(i &lt;= mid &amp;&amp; j &lt;= right){
+        if(nums[i] &lt;= nums[j]) temp[cur++] = nums[i++];
+        else temp[cur++] = nums[j++]
+    }
+    while(i &lt;= mid){
+        temp[cur++] = nums[i++];
+    }
+    
+    while(j &lt;= right){
+        temp[cur++] = nums[j++];
+    }
+    
+    //合并数组完成，拷贝到原来的数组  左边界是从left开始排序的
+    for(int k = 0;k &lt; temp.length;k++){
+        nums[left+k] = temp[k];
+    }
+}
+</code></pre>
+
+<blockquote>
+<h4 id="7-堆排序-heapsort">7.堆排序(HeapSort)</h4>
+</blockquote>
+
+<p><strong>（1）算法描述</strong></p>
+
+<blockquote>
+<p>首先把整个数组变成一个大顶堆，然后每次从堆顶取出最大的元素。这样依次取出的最大元素就形成</p>
+</blockquote>
+
+<p>了一个排序的数组；堆排序的主要操作就是新建堆和调整堆</p>
+
+<blockquote>
+<p>堆的底层数据结构数组，实际上堆可以看成一个完全二叉树，除了最后一层之外其他的每一层都被</p>
+</blockquote>
+
+<p>完全填充了；对于下标为 i 的元素，它的子节点是2 * i + 1，2 * i + 2(不能超出边界)，这样就可以明确</p>
+
+<p>父节点和子节点之间的关系了</p>
+
+<blockquote>
+<p>在新建堆的时候从左向右开始遍历，当遍历到一个元素的时候，重新排列从这个元素节点到根节点的</p>
+</blockquote>
+
+<p>所有元素，保证满足最大堆的要求；遍历完成，堆也就建好了</p>
+
+<blockquote>
+<p>在弹出根节点后，将树的最底层最右侧的元素转移到堆顶来，此时堆被破坏，需要重建。从根节点</p>
+</blockquote>
+
+<p>开始和两个子节点比较，如果父节点比所有的子节点小，需要互换父节点和最大的子节点，然后把互换</p>
+
+<p>后在子节点的位置当作新的父节点，和它的子节点比较，如此往复直到最后一层，重建完成</p>
+
+<p><strong>（2）算法特点</strong>：</p>
+
+<ul>
+<li><p>内排序，所有操作在原来的数组中就可以完成了，不需要额外的空间</p></li>
+
+<li><p>复杂度分析：时间复杂度稳定在O(nlogn)，因为在构建堆的时候对于每个元素需要进行O(logn)次比较</p></li>
+</ul>
+
+<blockquote>
+<p>时间复杂度是O(nlogn)；弹出每个元素重建堆也是需要调整O(logn)次，时间复杂度是O(nlogn)</p>
+
+<p>所以整体的时间复杂度是O(nlogn) 。 空间复杂度是O(1)，在原数组内进行所有操作即可</p>
+</blockquote>
+
+<ul>
+<li>稳定性: 不稳定的排序，新建堆和调整堆的过程都会打乱元素的相对位置
+
+<br /></li>
+</ul>
+
+<p><strong>（3）代码实现</strong></p>
+
+<pre><code class="language-python">#堆排序 Python版本
+def heap_sort(nums):
+    #调整堆
+    def adjust_heap(nums,startpos,endpos):
+        pos = startpos              #父节点
+        maxchildpos = pos * 2 + 1   #最大子节点,初始化成左子节点
+        if maxchildpos &lt; endpos:
+            rightpos = maxchildpos + 1
+            if rightpos &lt; endpos and nums[rightpos] &gt; nums[childpos]:
+                maxchildpos = rightpos   #右子节点比左子节点大
+            if nums[maxchildpos] &gt; nums[pos]:
+                nums[pos],nums[maxchildpos] = nums[maxchildpos],nums[pos]
+            	adjust_heap(nums,pos,endpos)
+ 
+    n = len(nums)
+    #建堆
+    for i in reversed(range(n//2)):
+        adjust_heap(nums,i,n)
+    #调整堆
+    for i in range(n-1,-1,-1):
+        nums[0],nums[i] = nums[i],nums[0]
+        adjust_heap(nums,0,i)
+    return nums
+</code></pre>
+
+<pre><code class="language-java">//堆排序  Java版本  
+public void heapSort(int[] nums){
+    heapify(nums);        //新建一个大顶堆
+    
+    for(int i = nums.length - 1;i &gt;= 1;i--){
+        swap(nums,0,i);   //弹出最大的堆顶放在最后  因为要从小到大地进行排序
+        rebuildHeap(nums,0,i-1);  //重新调整最大堆
+    }
+}
+
+//将一个数组堆化
+public void heapify(int[] nums){
+    for(int i = 1;i &lt; nums.length;i++){
+        int par = (i-1)&gt;&gt;1;    //找到父节点
+        int child = i;         //定义子节点
+        while(child &gt; 0 &amp;&amp; nums[par] &lt; nums[child]){  //从子节点到父节点构建最大堆
+            swap(nums,par,child);
+            child = par;
+            par = (par-1) &gt;&gt; 1;    //把父节点当成子节点去寻找新的父节点
+        }
+    }
+}
+
+//重建堆
+public void rebuildHeap(int[] nums,int par,int last){
+    int left = 2*par + 1;   //左子节点
+    int right = 2*par + 2;  //右子节点
+    int maxIndex = left;
+    
+    if(right &lt;= last &amp;&amp; nums[right] &gt; nums[left]){
+        maxIndex = right;             //maxIndex是最大子节点下标的索引
+    }
+    
+    if(left &lt;= last &amp;&amp; nums[par] &lt; nums[maxIndex]){ //和最大的子节点进行比较
+        swap(nums,par,maxIndex);                    //互换到最大子节点
+        rebuildHeap(nums,maxIndex,last);            //重建最大子节点代表的子树
+    }
+}
+</code></pre>
+
+<blockquote>
+<h4 id="8-计数排序-countingsort">8.计数排序(CountingSort)</h4>
+</blockquote>
+
+<p><strong>（1）算法描述</strong></p>
+
+<blockquote>
+<p>计数排序是典型的空间换时间的算法，开辟额外数据空间存储元素索引和元素值出现的个数</p>
+
+<p>具体的过程如下：</p>
+</blockquote>
+
+<ul>
+<li><p>创建一个长度为数组中最小和最大元素之差的数组，分别对应数组中的每个元素</p></li>
+
+<li><p>使用新创建的数组来统计每个元素出现的频率，然后遍历新的数组，根据每个元素出现的频率</p></li>
+</ul>
+
+<blockquote>
+<p>将元素放回到老的数组中，得到已经排序好的数组</p>
+</blockquote>
+
+<p><strong>（2）算法特点</strong>：</p>
+
+<ul>
+<li><p>外排序，对于数据范围很大的数组，需要大量的时间和内存</p></li>
+
+<li><p>复杂度分析：时间复杂度为O(n + r) 其中r为数组元素变化的范围，随着数组范围的变大，计数排序</p></li>
+</ul>
+
+<blockquote>
+<p>的性能逐渐地在降低；空间复杂度为O(n + r)，随着数组元素范围的增大，空间复杂度也会</p>
+
+<p>增大</p>
+</blockquote>
+
+<ul>
+<li>稳定性: 计数排序是稳定的，原先排在前面的元素仍然是排在前面
+
+<br /></li>
+</ul>
+
+<p><strong>（3）代码实现</strong></p>
+
+<pre><code class="language-python">#计数排序  Python版本
+def counting_sort(nums):
+    if not nums: return []
+    n = len(nums)
+    minValue = min(nums)
+    maxValue = max(nums)
+    tempArr = [0] * (maxValue - minValue + 1)
+    
+    for num in nums:
+        tempArr[num - minValue] += 1
+    j = 0
+    for i in range(n):
+        while tempArr[j] == 0:
+            j += 1
+        nums[i] = j + minValue
+        tempArr[j] -= 1
+     return nums
+</code></pre>
+
+<pre><code class="language-java">//计数排序 Java版本
+public void countSort(int[] nums){
+    int min = Integer.MAX_VALUE;
+    int max = Integer.MIN_VALUE;
+    for(int num : nums){           //找到最大值和最小值
+        min = Math.min(min,num);
+        max = Math.max(max,num);
+    }
+    
+    int[] count = new int[max-min+1];  //建立新数组
+    for(int num : nums){               //统计每个元素出现的次数
+        count[num-min]++;
+    }
+    int cur = 0;              //用来表示原数组的指针
+    for(int i = 0;i &lt; count.length;i++){   //根据出现的频率将数组中的元素放回到旧数组中
+        while(count[i] &gt; 0){
+            nums[cur++] = i + min;
+            count[i]--;s
+        }   
+    }
+}
+</code></pre>
+
+<blockquote>
+<h4 id="9-基数排序-countingsort">9.基数排序(CountingSort)</h4>
+</blockquote>
+
+<p><strong>（1）算法描述</strong></p>
+
+<blockquote>
+<p>基数排序的思想就是对数字中的每一位进行排序，从最低位开始</p>
+
+<p>具体的过程如下：</p>
+</blockquote>
+
+<ul>
+<li><p>找到数组中的最大值，先得到最大的位数</p></li>
+
+<li><p>从最低位开始去每个位组成radix数组</p></li>
+
+<li><p>对radix进行计数排序(计数排序比较适合小范围内的排序)</p></li>
+</ul>
+
+<p><strong>（2）算法特点</strong>：</p>
+
+<ul>
+<li><p>外排序，因为需要使用辅助的数组来临时存储元素</p></li>
+
+<li><p>复杂度分析：时间复杂度为O(k*n)，其中k为绝对值最大元素的位数；空间复杂度也是线性的</p></li>
+
+<li><p>稳定性: 基数排序是稳定的，在排序添加元素的过程中没有改变相同元素的位置关系</p></li>
+</ul>
+
+<p><strong>（3）代码实现</strong></p>
+
+<pre><code class="language-python">#基数排序  Python版本
+def Radix_sort(nums):
+    if not nums: return []
+    maxValue = max(nums)   #找到最大值
+    maxDigit = len(str(maxValue))  #最大的位数
+    bucketList = [[] for _ in range(10)]   #存放每一位相同的元素列表 二维列表
+    
+    #要从最低位开始排序
+    div,mod = 1,10
+    for i in range(maxDigit):
+        for num in nums:
+            bucketList[num % mod // div].append(num)
+        div *= 10        
+        mod *= 10
+        
+        idx = 0       #原来数组下标的索引
+        #每一轮排序完将桶内的元素放回原数组中
+        for j in range(10):                 #每位数字只能是0-9,总共有10个
+            for item in bucketList[j]:      
+                nums[idx] = item
+                idx += 1
+            bucketList[j] = []              #将桶内的元素取出后,清空该桶
+    return nums
+</code></pre>
+
+<pre><code class="language-java">//基数排序 Java版本
+//考虑到数组中还有负数的情况 可以把桶的大小扩大到19个  -9 - 9
+
+public Radix_Sort(int[] nums){
+    int max = Integer.MIN_VALUE;
+    int min = Integer.MAX_VALUE;
+    for(int num : nums){   //计算最大值和最小值
+         max = Math.max(max,num);
+         min = Math.min(min,num);
+    }
+    
+    max = Math.max(max,-min);    //求得绝对值的最大值
+    int digits = 0;
+    while(max &gt; 0){              //计算最大值的位数               
+        max /= 10;
+        digits++;
+    }
+    
+    List&lt;Integer&gt;[] buckets = new List[19];    //创建一个包含一个所有位数的数组
+    for(int i = 0;i &lt; buckets.length;i++){
+        buckets[i] = new ArrayList&lt;&gt;();       //实际上相当于是二维列表
+    }
+    
+    int pos;
+    int cur;
+    for(int i = 0,mod = 1;i &lt; digits;i++,mod *= 10){   //对10进制的每一位进行基数排序
+        for(int num : nums){              //扫描数组将值放入对应的桶中
+            pos = (num / mod) % 10;       // -9对应的索引为0
+            buckets[pos+9].add(num);
+        }
+        cur = 0;   //指向原数组的索引
+        for(List&lt;Integer&gt; bucket : buckets){   //将桶内的元素放回到原来的数组中
+            if(bucket != null){
+                for(Integer item : bucket){
+                    nums[cur++] = item;
+                }
+                bucket.clear();                //将桶清空,已备下次使用
+            }   
+        } 
+    }
+}
+</code></pre>
+
+<blockquote>
+<h4 id="10-桶排序-bucketsort">10.桶排序(BucketSort)</h4>
+</blockquote>
+
+<p><strong>（1）算法描述</strong></p>
+
+<blockquote>
+<p>桶排序就是将所有的元素分布到一系列的桶中，然后对每个桶里面的所有元素分别进行排序</p>
+
+<p>具体的过程如下：</p>
+</blockquote>
+
+<ul>
+<li><p>新建一个桶的数组，提前制定好桶的规则，比如元素0-9在一个桶，10-19为一个桶</p></li>
+
+<li><p>遍历待排序的数组，将元素分别分配到对应的桶中</p></li>
+
+<li><p>对每个桶中的元素进行排序</p></li>
+
+<li><p>最后将所有的桶中的元素还原到原数组中得到最后的排序数组</p></li>
+</ul>
+
+<p><strong>（2）算法特点</strong>：</p>
+
+<ul>
+<li><p>外排序，因为需要使用辅助的数组来临时存储元素</p></li>
+
+<li><p>复杂度分析：时间复杂度是O(n+r)，随着元素范围的扩大，时间的消耗也在不断增大，其中r为数组元素变</p></li>
+</ul>
+
+<blockquote>
+<p>化的范围；空间复杂度也是O(n+r)，需要额外的空间来保存所有的桶和桶中的元素</p>
+</blockquote>
+
+<ul>
+<li>稳定性: 桶排序是稳定的，与计数排序是类似的
+
+<br /></li>
+</ul>
+
+<p><strong>（3）代码实现</strong></p>
+
+<pre><code class="language-python">  def bucketSort(nums,bucketSize):
+      if len(nums) &lt; 2:   #递归终止的条件
+          return nums
+      minValue = min(nums)
+      maxValue = max(nums)
+      
+      #需要的桶个数
+      bucketNum = (maxValue - minValue)//bucketSize + 1;   #向下取整的 要加1
+      buckets = [[] for _ in range(bucketNum)]
+      
+      for num in nums:
+          #放入对应的桶中
+          buckets[(num - minValue) // bucketSize].append(num)
+      res = []
+      for bucket in buckets:
+          if not bucket: continue
+          if bucketSize == 1:
+              res.extend(bucket)
+          else:
+              #都装在一个桶里
+              if bucketNum == 1:
+                  bucketSize -= 1
+              res.extend(bucketSort(bucket,bucketSize))
+      return res
+</code></pre>
+
+<pre><code class="language-java">public void bucketSort(int[] nums){
+    int INTERVAL = 100;     //定义桶的大小
+    int min = Integer.MAX_VALUE;
+    int max = Integer.MIN_VALUE;
+    for(int num : nums){   //找出最大值和最小值
+        min = Math.min(min,num);
+        max = Math.max(max,num);
+    }
+    
+    int count = (max - min + 1);    //数据范围
+    int bucketSize = (count % INTERVAL == 0)? (count / INTERVAL) : (count / INTERVAL + 1);
+    
+    List&lt;Integer&gt;[] buckets = new List[bucketSize];
+    
+    for(int num : nums){   //将所有的元素都放入对应的桶里面
+        int pos = (num - min)/INTERVAL;
+        if(buckets[pos] == null) buckets[pos] = new ArrayList&lt;&gt;();
+        buckets[pos].add(num);
+    }
+    
+    int cur = 0;
+    for(List&lt;Integer&gt; bucket:buckets){
+        if(bucket != null){
+            bucket.sort(null);     //对每个桶进行排序
+            for(Integer item : bucket){
+                nums[cur++] = item;
+            }
+        }
+    }
+}
+</code></pre>
+
+<blockquote>
+<h4 id="11-二叉搜索树排序-binary-treesort">11.二叉搜索树排序(Binary-TreeSort)</h4>
+</blockquote>
+
+<p><strong>（1）算法描述</strong></p>
+
+<blockquote>
+<p>二叉搜索树排序使用数组中内的所有元素构建一颗二叉搜索树，然后用中序遍历将所有的元素填充</p>
+</blockquote>
+
+<p>回原来的数组中。搜索二叉树不能用数组表示，所以必须使用额外的数据结构来构建二叉树</p>
+
+<p><strong>（2）算法特点</strong>：</p>
+
+<ul>
+<li><p>外排序，因为需要使用辅助的数组来临时存储元素</p></li>
+
+<li><p>复杂度分析：最差情况下整个数组是排好序的，时间复杂度是O(n^2)，二叉树会变成一个链表结构；但是</p></li>
+</ul>
+
+<blockquote>
+<p>在最优和平均情况下时间复杂度在O(nlogn)的水平；空间复杂度为O(n)，因为要构建一个包含n个</p>
+
+<p>元素的二叉搜索树</p>
+</blockquote>
+
+<ul>
+<li>稳定性: 这个排序是稳定的，构建二叉树的过程中能够保证元素的一致性
+
+<br /></li>
+</ul>
+
+<p><strong>（3）代码实现</strong></p>
+
+<pre><code class="language-java">class TreeNode{
+    int val;        //树节点的数据结构
+    TreeNode left;
+    TreeNode right;
+    
+    public TreeNode(int val){
+        this.val = val;
+    }
+}
+
+public int[] BSTSort(int[] nums){
+    TreeNode root = new TreeNode(nums[0]);    //构建一个根节点
+    for(int i = 1;i &lt; nums.length;i++){       //将所有的元素插入到二叉搜索树中
+        buildTree(root,nums[i]);
+    }
+    midTraverse(root,nums,new int[1]);      //中序遍历获取二叉树中的所有节点
+    return nums;
+}
+
+//中序遍历二叉树
+public void midTraverse(TreeNode node,int[] nums,int[] pos){
+    if(node == null) return;
+    midTraverse(node.left,nums,pos);
+    nums[pos[0]++] = node.val;
+    midTraverse(node.right,nums,pos);
+}
+//构建一颗二叉搜索树
+public void buildTree(TreeNode node,int num){
+    if(node == null) return;
+    if(num &gt;= node.val){    //大于要插入到右子树
+        if(node.right == null){
+            node.right == new TreeNode(num);
+        }else{
+            buildTree(node.right,num);
+        }
+    }else{    //小于的话插入到左子树
+        if(node.left == null){
+            node.left = new TreeNode(num);
+        }else{
+            buildTree(node.left,num);
+        }
+    }
+}
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+<script src="https://utteranc.es/client.js"
+        repo="sin-coder/hugocomments"
+        issue-term="pathname"
+        theme="github-dark"  
+        crossorigin="anonymous"
+        async>
+</script>
+
+    </main>
+  </body>
+</html>

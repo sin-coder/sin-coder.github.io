@@ -6,10 +6,19 @@
     <description>Recent content in Leetcodes on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Dec 2019 22:26:15 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 10 Mar 2020 19:19:05 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/leetcode/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Subseq</title>
+      <link>https://sin-coder.github.io/leetcode/subseq/</link>
+      <pubDate>Tue, 10 Mar 2020 19:19:05 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/leetcode/subseq/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>编辑距离</title>
