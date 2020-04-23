@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Linux中文本处理命令总结</title>
+      <link>https://sin-coder.github.io/linux/textcommand/</link>
+      <pubDate>Fri, 24 Apr 2020 00:08:20 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/linux/textcommand/</guid>
+      <description> Linux中文本处理命令总结 </description>
+    </item>
+    
+    <item>
       <title>常见的排序算法总结</title>
       <link>https://sin-coder.github.io/datastructure/sort/</link>
       <pubDate>Sat, 04 Apr 2020 23:04:00 +0800</pubDate>
@@ -652,15 +661,6 @@ MapReduce(离线处理)-----》Spark(高性能批处理技术)------》Storm(流
 下载时可能由于网络问题失败，附上Hugo、Git、主题m10c的下载包链接: 下载链接
   注册Github官网（已有账号请忽略）  2.生成个人站点 （1）在终端执行命令 C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog   出现以下提示信息表示创建成功：
  C:\Users\Administrator&amp;gt;hugo new site E:\hugo\Sites\myblog Congratulations! Your new Hugo site is created in E:\hugo\Sites\myblog.</description>
-    </item>
-    
-    <item>
-      <title>Linux中文本处理命令总结</title>
-      <link>https://sin-coder.github.io/linux/textcommand/</link>
-      <pubDate>Fri, 24 Apr 2020 00:08:20 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/linux/textcommand/</guid>
-      <description> Linux中文本处理命令总结 </description>
     </item>
     
     <item>
