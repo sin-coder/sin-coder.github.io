@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on sin-coder</title>
+    <link>https://sin-coder.github.io/tags/linux/</link>
+    <description>Recent content in Linux on sin-coder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 24 Apr 2020 00:08:20 +0800</lastBuildDate>
+    
+	<atom:link href="https://sin-coder.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linux中文本处理命令总结</title>
+      <link>https://sin-coder.github.io/linux/textcommand/</link>
+      <pubDate>Fri, 24 Apr 2020 00:08:20 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/linux/textcommand/</guid>
+      <description> Linux中文本处理命令总结 </description>
+    </item>
+    
+  </channel>
+</rss>
