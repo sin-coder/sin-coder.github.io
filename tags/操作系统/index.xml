@@ -6,10 +6,19 @@
     <description>Recent content in 操作系统 on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 02 Nov 2019 21:50:12 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2020 00:45:56 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>初始Linux文件系统</title>
+      <link>https://sin-coder.github.io/linux/filesys/</link>
+      <pubDate>Fri, 24 Apr 2020 00:45:56 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/linux/filesys/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>什么是死锁？</title>

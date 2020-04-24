@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Databases on sin-coder</title>
+    <link>https://sin-coder.github.io/database/</link>
+    <description>Recent content in Databases on sin-coder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 24 Apr 2020 00:53:48 +0800</lastBuildDate>
+    
+	<atom:link href="https://sin-coder.github.io/database/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>TiDB-调度原理简介</title>
+      <link>https://sin-coder.github.io/database/tidbschedu/</link>
+      <pubDate>Fri, 24 Apr 2020 00:53:48 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/database/tidbschedu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TiDB-存储原理简介</title>
+      <link>https://sin-coder.github.io/database/tidbstorage/</link>
+      <pubDate>Fri, 24 Apr 2020 00:53:20 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/database/tidbstorage/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TiDB-计算原理</title>
+      <link>https://sin-coder.github.io/database/tidbcompute/</link>
+      <pubDate>Fri, 24 Apr 2020 00:53:05 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/database/tidbcompute/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TiDB架构原理简介</title>
+      <link>https://sin-coder.github.io/database/tidbinfr/</link>
+      <pubDate>Fri, 24 Apr 2020 00:52:37 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/database/tidbinfr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TiDB数据库简介</title>
+      <link>https://sin-coder.github.io/database/tidbintro/</link>
+      <pubDate>Fri, 24 Apr 2020 00:51:14 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/database/tidbintro/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
