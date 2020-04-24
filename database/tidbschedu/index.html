@@ -148,23 +148,23 @@
 
 <h3 id="二-关键问题">二、关键问题</h3>
 
-<ol>
+<ul>
 <li>如何保证同一个Region的多个Replica分布在不同的节点上？一台机器上启动多个TiKV</li>
-</ol>
+</ul>
 
 <blockquote>
 <p>的实例存在的问题？</p>
 </blockquote>
 
-<ol>
+<ul>
 <li>TiKV集群进行跨机房部署用于容灾的时候，如果一个机房掉线，如何保证不会丢失Raft</li>
-</ol>
+</ul>
 
 <blockquote>
 <p>Group的多个Replica?</p>
 </blockquote>
 
-<ol>
+<ul>
 <li><p>添加一个节点进入TiKV集群之后，如何将其他节点的数据搬过来？</p></li>
 
 <li><p>如果一个节点短暂掉线时如何处理，如果节点长时间掉线，如何处理？</p></li>
@@ -174,7 +174,7 @@
 <li><p>并不是所有的Region都被经常访问，可能热点数据只在少数的几个Region上</p></li>
 
 <li><p>集群在做负载均衡的时候，需要搬迁数据，这种数据的迁移能否不占用大量的网络带</p></li>
-</ol>
+</ul>
 
 <blockquote>
 <p>宽、磁盘IO和CPU</p>
