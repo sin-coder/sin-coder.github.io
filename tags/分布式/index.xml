@@ -113,25 +113,27 @@ Value存储的是序列化后的元信息。除此之外，还有一个专门的
       <guid>https://sin-coder.github.io/database/tidbinfr/</guid>
       <description>一、TiDB主要特性  TiDB是一个开源分布式关系型数据库，它主要用来应用在全部的OLTP的场景和大部
  分的OLAP场景。TiDB作为一个开源的分布式数据库主要有以下特点：
-1、高度兼容MySQL  MySQL迁移到TiDB是非常容易的，无论是单机迁移还是集群的迁移
- 2、支持无限的水平弹性扩展  新增节点实现TiDB的水平扩展，轻松地应对高并发、海量数据的场景
- 3、强一致性和高可用  基于Raft的多数派选举协议可以提供100%的数据强一致性，可以实现故障的自动恢复
- 4、分布式事务  支持ACID事务
+ 1、高度兼容MySQL MySQL迁移到TiDB是非常容易的，无论是单机迁移还是集群的迁移
+2、支持无限的水平弹性扩展 新增节点实现TiDB的水平扩展，轻松地应对高并发、海量数据的场景
+3、强一致性和高可用 基于Raft的多数派选举协议可以提供100%的数据强一致性，可以实现故障的自动恢复
+4、分布式事务 支持ACID事务
 TiDB这些特性使它成为业界认可的优秀数据库产品，但是我们要想深入理解这些特性，
  还要从架构原理的角度学习
 二、TiDB的架构原理简介  TiDB集群主要包括三个核心组件：TiDB Server,PD Server,TiKV Server
 具体的架构原理图如下所示：
- 1、TiDB Server  TiDB Server 负责接收SQL请求，处理SQL相关的逻辑，并通过PD找到存储计算所需
+  1、TiDB Server TiDB Server 负责接收SQL请求，处理SQL相关的逻辑，并通过PD找到存储计算所需
  数据的TiKV地址，与TiKV交互数据，最终返回结果。
  TiDB Server 是无状态的，其本身并不存储数据，只负责计算，可以无限水平扩展，
  可通过负载均衡的组件(LVS、HAProxy或者F5)对外提供统一的接入地址
-2、PD Server(Placement Driver)  PD是整个集群的管理模块，具体的工作职能是：
+ 2、PD Server(Placement Driver) PD是整个集群的管理模块，具体的工作职能是：
   存储这个集群的原信息(某个Key具体存储在哪个TiKV的节点)
  对TiKV集群进行调度和负载均衡(数据迁移、Raft Group leader)
  分配全局唯一且递增的事物ID
    PD通过Raft协议保证数据的安全性,Raft的leader Server负责处理所有操作，其余的PD
  Server仅用于保证高可用性。一般情况下建议部署奇数个节点
-3、TiKV Server  TiKV Server是TiDB中的数据存储引擎，存储的数据的基本单位是Region</description>
+ 3、TiKV Server TiKV Server是TiDB中的数据存储引擎，存储的数据的基本单位是Region
+TiKV使用Raft做协议复制，保证数据的一致性和容灾。副本以Region为单位进行管理，
+ 不同节点上的多个Region构成一个Raft Group，互为副本</description>
     </item>
     
     <item>
