@@ -12,10 +12,18 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="TiDB-存储原理简介"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="一、数据库最根本的功能就是把数据存下来，保存数据的方法有很多：
+ 最简单的就是在内存中直接构建一个数据结构（比如可以使用一个数组），保存用户发来的数据 这个方案非常简单，性能也是非常好的 但是存在很大的缺点：数据完全在内存中，一旦停机或者服务重启，数据就永远丢失 2.为了解决数据丢失的问题，可以将数据存储在非易失性的介质中，比如硬盘 这时我们可以在磁盘上创建一个文件，收到一条数据就在文件中Append一行，这样持久化存储数据 3.但是磁盘会出现坏道，我们可以做RAID,单机冗余存储； 4.但是如果机器挂了呢？我们还可以将存储改为网络存储，或者是通过硬件或者软件进行存储复制，数据安全了， 5.但是复制过程中如何保证数据的一致性呢？也就是在保证数据不丢失的情况下还要保证数据不会出现错误  所以保证数据不丢不错是最基本的要求，但是还有其他的问题：
+ 跨数据中心的容灾 写入速度如何提高 3.数据保存下来后是否方便读取 4.保存的数据如何修改，如何支持并发的修改？ 5.原子性地修改多条记录 二、TiKV的设计思想 1、TiKV的数据存储模型，是Key-Value的模型，并且提供有序遍历的方法，TiKV的主要特点就是 （1）.TiKV可以看做一个巨大的Map （2）.这个Map中的Key-Value是按照Key的二进制顺序有序排列的，我们可以找到某一个Key的位置 然后不断的调用Next方法以递增的顺序获取比这个Key大的Key-Value 这里的存储模型和SQL中的Table无关，TiKV是一个巨大的分布式Map  2、TiKV数据的持久化机制 TiKV没有选择直接向磁盘上写数据，而是将数据保存在RocksDB中，具体的数据落地由RocksDB完成 RocksDB是一个非常优秀的开源的单机存储引擎 至此TiKV已经有了一个高效可靠的本地存储方案 但是如何保证单机失效的情况下，数据不会丢失和出错，所以我们需要将数据复制到多台机器上，这样一台机器挂了，在其他机器上还有副本，，所以还需要一个可靠，高效且能处理副本失效的情况 3.TiKV的一致性设计思想，优化的Raft算法 Raft的主要就是一个一致性的协议，主要的功能是Leader选举、成员变更、日志复制 TiKv利用Raft来做数据复制，每条数据变更都会落地为一条Raft日志，通过Raft的日志复制功能， 将数据安全可靠地同步到Group的多数节点中 总结下TiKV的设计思想： （1）单机的RocksDB,将数据快速地存储到磁盘上 （2）通过Raft协议，将数据复制到多台机器上，防止单机失效 数据的写入是通过Raft这一层的接口写入，而不是直接写入RocksDB 通过Raft可以实现一个分布式的KV 4、Region 对于一个KV系统，将数据分散在多台机器上一般有两种方案： （1）一种是按照Key做hash,根据hash值选择对应的存储节点 （2）分Range，某一段连续的Key都保存在一个存储节点上 （TiKV解决方案） TiKV将每一个Key-Value空间分成很多段，每一段是一系列连续的Key,我们把每一段成为一个Region 每一个Region会有最大值，目前默认64Mb，每一个Region都可以用StartKey到EndKey这样一个 左开右闭的区间来描述 （3）将数据划分成Region，水平扩展和复制都是以Region为单位的 a、以Region为单位，将数据分散存储在集群的所有节点上，并且尽量保证每个节点上的服务的Region的数量差不多 数据按照Key切分成很多的Region，每个Region的数据只会保存在一个节点上面，系统会有一个组件来负责将Region 尽可能的散布在集群中的所有的节点，一方面实现了存储容量的水平扩展，同时也实现了负载均衡（不会出现某个节点有很多数据 但是其他节点机会没有数据的情况） 系统中会有一个字组件记录Region在节点上面的分布情况，即通过Key可以查到这个Key所处的Region,以及这个Region 目前实在哪个节点上 以Region为单位做Raft的复制和成员的管理 每个Region的数据会保存多个副本，每个副本可称为Replica，Replica之间是通过Raft来保持数据的一致性 一个Region的多个Replica会保存在不同的节点上，构成一个Raft Group，其中一个Replica会作为这个Group 的Leader,其他的Replica作为作为Follower。所有的读和写都会通过Leader进行，再由Leader复制给Follower 总结：以Region为单位做数据的分散和复制，一个具备分布式容灾能力的KeyValue系统就出现雏形了
+4、MVCC TiKV的多版本控制 两个Client同时去修改一个Key的Value，如果没有MVCC，就需要对数据上锁，在分布式场景下，可能会导致死锁 TiKV的MVCC实现是通过在Key后面添加Version来实现的， 有了MVCC之后，TiKV的Key排列是这样的，对于同一个Key的多个版本，我们把版本号较大的放在前面，版本号较小的 放在后面，当用户通过一个Key&#43;Version来获取Value时，可以将Key和Version构造出MVCC的Key,也就是Key-Version 然后可以直接Seek（Key-Version），定位到第一个大于等于这个Key-Version的位置 5、TiKV的事务采取的是乐观锁，事务的知行不过程中不会检测写冲突，只有在提交的过程中，才会做冲突检测，冲突的双方 中比较早完成提交的会写入成功，另一方会重新尝试执行整个事务
+如何理解分布式事务？ 首先应该看看事务是如何定义的： 事务提供一种机制将一个活动所涉及的所有操作纳入到一个不可分割的执行单元，组成事务的所有操作 只有在所有操作能正常执行的情况下方能提交，只要其中任一操作执行失败，都将导致整个事务的回滚 简单的说事务就是要么什么都不做，要么做全套，All OR Nothing"/>
 
     <meta property="og:title" content="TiDB-存储原理简介" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="一、数据库最根本的功能就是把数据存下来，保存数据的方法有很多：
+ 最简单的就是在内存中直接构建一个数据结构（比如可以使用一个数组），保存用户发来的数据 这个方案非常简单，性能也是非常好的 但是存在很大的缺点：数据完全在内存中，一旦停机或者服务重启，数据就永远丢失 2.为了解决数据丢失的问题，可以将数据存储在非易失性的介质中，比如硬盘 这时我们可以在磁盘上创建一个文件，收到一条数据就在文件中Append一行，这样持久化存储数据 3.但是磁盘会出现坏道，我们可以做RAID,单机冗余存储； 4.但是如果机器挂了呢？我们还可以将存储改为网络存储，或者是通过硬件或者软件进行存储复制，数据安全了， 5.但是复制过程中如何保证数据的一致性呢？也就是在保证数据不丢失的情况下还要保证数据不会出现错误  所以保证数据不丢不错是最基本的要求，但是还有其他的问题：
+ 跨数据中心的容灾 写入速度如何提高 3.数据保存下来后是否方便读取 4.保存的数据如何修改，如何支持并发的修改？ 5.原子性地修改多条记录 二、TiKV的设计思想 1、TiKV的数据存储模型，是Key-Value的模型，并且提供有序遍历的方法，TiKV的主要特点就是 （1）.TiKV可以看做一个巨大的Map （2）.这个Map中的Key-Value是按照Key的二进制顺序有序排列的，我们可以找到某一个Key的位置 然后不断的调用Next方法以递增的顺序获取比这个Key大的Key-Value 这里的存储模型和SQL中的Table无关，TiKV是一个巨大的分布式Map  2、TiKV数据的持久化机制 TiKV没有选择直接向磁盘上写数据，而是将数据保存在RocksDB中，具体的数据落地由RocksDB完成 RocksDB是一个非常优秀的开源的单机存储引擎 至此TiKV已经有了一个高效可靠的本地存储方案 但是如何保证单机失效的情况下，数据不会丢失和出错，所以我们需要将数据复制到多台机器上，这样一台机器挂了，在其他机器上还有副本，，所以还需要一个可靠，高效且能处理副本失效的情况 3.TiKV的一致性设计思想，优化的Raft算法 Raft的主要就是一个一致性的协议，主要的功能是Leader选举、成员变更、日志复制 TiKv利用Raft来做数据复制，每条数据变更都会落地为一条Raft日志，通过Raft的日志复制功能， 将数据安全可靠地同步到Group的多数节点中 总结下TiKV的设计思想： （1）单机的RocksDB,将数据快速地存储到磁盘上 （2）通过Raft协议，将数据复制到多台机器上，防止单机失效 数据的写入是通过Raft这一层的接口写入，而不是直接写入RocksDB 通过Raft可以实现一个分布式的KV 4、Region 对于一个KV系统，将数据分散在多台机器上一般有两种方案： （1）一种是按照Key做hash,根据hash值选择对应的存储节点 （2）分Range，某一段连续的Key都保存在一个存储节点上 （TiKV解决方案） TiKV将每一个Key-Value空间分成很多段，每一段是一系列连续的Key,我们把每一段成为一个Region 每一个Region会有最大值，目前默认64Mb，每一个Region都可以用StartKey到EndKey这样一个 左开右闭的区间来描述 （3）将数据划分成Region，水平扩展和复制都是以Region为单位的 a、以Region为单位，将数据分散存储在集群的所有节点上，并且尽量保证每个节点上的服务的Region的数量差不多 数据按照Key切分成很多的Region，每个Region的数据只会保存在一个节点上面，系统会有一个组件来负责将Region 尽可能的散布在集群中的所有的节点，一方面实现了存储容量的水平扩展，同时也实现了负载均衡（不会出现某个节点有很多数据 但是其他节点机会没有数据的情况） 系统中会有一个字组件记录Region在节点上面的分布情况，即通过Key可以查到这个Key所处的Region,以及这个Region 目前实在哪个节点上 以Region为单位做Raft的复制和成员的管理 每个Region的数据会保存多个副本，每个副本可称为Replica，Replica之间是通过Raft来保持数据的一致性 一个Region的多个Replica会保存在不同的节点上，构成一个Raft Group，其中一个Replica会作为这个Group 的Leader,其他的Replica作为作为Follower。所有的读和写都会通过Leader进行，再由Leader复制给Follower 总结：以Region为单位做数据的分散和复制，一个具备分布式容灾能力的KeyValue系统就出现雏形了
+4、MVCC TiKV的多版本控制 两个Client同时去修改一个Key的Value，如果没有MVCC，就需要对数据上锁，在分布式场景下，可能会导致死锁 TiKV的MVCC实现是通过在Key后面添加Version来实现的， 有了MVCC之后，TiKV的Key排列是这样的，对于同一个Key的多个版本，我们把版本号较大的放在前面，版本号较小的 放在后面，当用户通过一个Key&#43;Version来获取Value时，可以将Key和Version构造出MVCC的Key,也就是Key-Version 然后可以直接Seek（Key-Version），定位到第一个大于等于这个Key-Version的位置 5、TiKV的事务采取的是乐观锁，事务的知行不过程中不会检测写冲突，只有在提交的过程中，才会做冲突检测，冲突的双方 中比较早完成提交的会写入成功，另一方会重新尝试执行整个事务
+如何理解分布式事务？ 首先应该看看事务是如何定义的： 事务提供一种机制将一个活动所涉及的所有操作纳入到一个不可分割的执行单元，组成事务的所有操作 只有在所有操作能正常执行的情况下方能提交，只要其中任一操作执行失败，都将导致整个事务的回滚 简单的说事务就是要么什么都不做，要么做全套，All OR Nothing" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sin-coder.github.io/database/tidbstorage/" />
 <meta property="article:published_time" content="2020-04-24T00:53:20+08:00" />
@@ -73,7 +81,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          0 min read
+          1 min read
         </div><div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
   <title>tag</title>
@@ -82,7 +90,92 @@
           <a class="tag" href="https://sin-coder.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><a class="tag" href="https://sin-coder.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a></div></div>
     </header>
     <div class="post-content">
-      
+      <hr />
+
+<p>一、数据库最根本的功能就是把数据存下来，保存数据的方法有很多：</p>
+
+<ol>
+<li>最简单的就是在内存中直接构建一个数据结构（比如可以使用一个数组），保存用户发来的数据
+这个方案非常简单，性能也是非常好的
+但是存在很大的缺点：数据完全在内存中，一旦停机或者服务重启，数据就永远丢失
+2.为了解决数据丢失的问题，可以将数据存储在非易失性的介质中，比如硬盘
+这时我们可以在磁盘上创建一个文件，收到一条数据就在文件中Append一行，这样持久化存储数据
+3.但是磁盘会出现坏道，我们可以做RAID,单机冗余存储；
+4.但是如果机器挂了呢？我们还可以将存储改为网络存储，或者是通过硬件或者软件进行存储复制，数据安全了，
+5.但是复制过程中如何保证数据的一致性呢？也就是在保证数据不丢失的情况下还要保证数据不会出现错误</li>
+</ol>
+
+<p>所以保证数据不丢不错是最基本的要求，但是还有其他的问题：</p>
+
+<ol>
+<li>跨数据中心的容灾</li>
+<li>写入速度如何提高
+3.数据保存下来后是否方便读取
+4.保存的数据如何修改，如何支持并发的修改？
+5.原子性地修改多条记录
+二、TiKV的设计思想
+1、TiKV的数据存储模型，是Key-Value的模型，并且提供有序遍历的方法，TiKV的主要特点就是
+（1）.TiKV可以看做一个巨大的Map
+（2）.这个Map中的Key-Value是按照Key的二进制顺序有序排列的，我们可以找到某一个Key的位置
+然后不断的调用Next方法以递增的顺序获取比这个Key大的Key-Value
+这里的存储模型和SQL中的Table无关，TiKV是一个巨大的分布式Map</li>
+</ol>
+
+<p>2、TiKV数据的持久化机制
+TiKV没有选择直接向磁盘上写数据，而是将数据保存在RocksDB中，具体的数据落地由RocksDB完成
+RocksDB是一个非常优秀的开源的单机存储引擎
+至此TiKV已经有了一个高效可靠的本地存储方案
+但是如何保证单机失效的情况下，数据不会丢失和出错，所以我们需要将数据复制到多台机器上，这样一台机器挂了，在其他机器上还有副本，，所以还需要一个可靠，高效且能处理副本失效的情况
+3.TiKV的一致性设计思想，优化的Raft算法
+  Raft的主要就是一个一致性的协议，主要的功能是Leader选举、成员变更、日志复制
+  TiKv利用Raft来做数据复制，每条数据变更都会落地为一条Raft日志，通过Raft的日志复制功能，
+  将数据安全可靠地同步到Group的多数节点中
+<img src="https://yunpan.oa.tencent.com/note/api/file/getImage?fileId=5e9c618c6f0b9316e255f3ed" alt="title" /></p>
+
+<p>总结下TiKV的设计思想：
+   （1）单机的RocksDB,将数据快速地存储到磁盘上
+   （2）通过Raft协议，将数据复制到多台机器上，防止单机失效
+        数据的写入是通过Raft这一层的接口写入，而不是直接写入RocksDB
+        通过Raft可以实现一个分布式的KV
+4、Region
+   对于一个KV系统，将数据分散在多台机器上一般有两种方案：
+   （1）一种是按照Key做hash,根据hash值选择对应的存储节点
+   （2）分Range，某一段连续的Key都保存在一个存储节点上 （TiKV解决方案）
+        TiKV将每一个Key-Value空间分成很多段，每一段是一系列连续的Key,我们把每一段成为一个Region
+        每一个Region会有最大值，目前默认64Mb，每一个Region都可以用StartKey到EndKey这样一个
+        左开右闭的区间来描述
+<img src="https://yunpan.oa.tencent.com/note/api/file/getImage?fileId=5e9c65f36f0b9316e255f3f6" alt="title" /></p>
+
+<p>（3）将数据划分成Region，水平扩展和复制都是以Region为单位的
+      a、以Region为单位，将数据分散存储在集群的所有节点上，并且尽量保证每个节点上的服务的Region的数量差不多
+        数据按照Key切分成很多的Region，每个Region的数据只会保存在一个节点上面，系统会有一个组件来负责将Region
+        尽可能的散布在集群中的所有的节点，一方面实现了存储容量的水平扩展，同时也实现了负载均衡（不会出现某个节点有很多数据
+        但是其他节点机会没有数据的情况）
+        系统中会有一个字组件记录Region在节点上面的分布情况，即通过Key可以查到这个Key所处的Region,以及这个Region
+        目前实在哪个节点上
+      以Region为单位做Raft的复制和成员的管理
+         每个Region的数据会保存多个副本，每个副本可称为Replica，Replica之间是通过Raft来保持数据的一致性
+         一个Region的多个Replica会保存在不同的节点上，构成一个Raft Group，其中一个Replica会作为这个Group
+         的Leader,其他的Replica作为作为Follower。所有的读和写都会通过Leader进行，再由Leader复制给Follower
+     <img src="https://yunpan.oa.tencent.com/note/api/file/getImage?fileId=5e9c7c916f0b9316e255f403" alt="title" />
+   总结：以Region为单位做数据的分散和复制，一个具备分布式容灾能力的KeyValue系统就出现雏形了</p>
+
+<p>4、MVCC  TiKV的多版本控制
+   两个Client同时去修改一个Key的Value，如果没有MVCC，就需要对数据上锁，在分布式场景下，可能会导致死锁
+   TiKV的MVCC实现是通过在Key后面添加Version来实现的，
+<img src="https://yunpan.oa.tencent.com/note/api/file/getImage?fileId=5e9db7516f0b9316e25618bd" alt="title" />
+   有了MVCC之后，TiKV的Key排列是这样的，对于同一个Key的多个版本，我们把版本号较大的放在前面，版本号较小的
+   放在后面，当用户通过一个Key+Version来获取Value时，可以将Key和Version构造出MVCC的Key,也就是Key-Version
+   然后可以直接Seek（Key-Version），定位到第一个大于等于这个Key-Version的位置
+5、TiKV的事务采取的是乐观锁，事务的知行不过程中不会检测写冲突，只有在提交的过程中，才会做冲突检测，冲突的双方
+   中比较早完成提交的会写入成功，另一方会重新尝试执行整个事务</p>
+
+<p><strong>如何理解分布式事务？</strong>
+首先应该看看事务是如何定义的：
+事务提供一种机制将一个活动所涉及的所有操作纳入到一个不可分割的执行单元，组成事务的所有操作
+只有在所有操作能正常执行的情况下方能提交，只要其中任一操作执行失败，都将导致整个事务的回滚
+简单的说事务就是要么什么都不做，要么做全套，All OR Nothing</p>
+
     </div>
     <div class="post-footer">
       

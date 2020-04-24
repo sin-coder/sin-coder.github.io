@@ -52,16 +52,56 @@ mount [-参数] [设备名称] [挂载点] 对应的解挂命令就是umonut
       <pubDate>Fri, 24 Apr 2020 00:43:15 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/linux/perfcommand/</guid>
-      <description></description>
+      <description>一、概述  操作系统的资源主要包括以下几种：CPU、内存、硬盘IO、网络IO，熟练地对这些资
+ 源的使用进行分析可以帮助我们排查一些服务器使用过程中遇到的问题
+二、CPU使用分析 1、CPU性能指标简介  CPU使用时间主要分为用户态时间、系统态时间和空闲态时间，分别表示CPU处于用
+ 户态执行的时间、系统内核执行的时间和空闲系统进程执行的时间，三者之和就是CPU的
+总时间。
+ 当用户没有用户进程和系统进程需要执行的时候，CPU就执行系统缺省的空闲进程,
+ CPU的利用率就是指非空闲进程占用时间的比例，即CPU执行非空闲进程 / CPU总的执行
+时间
+ CPU方面的主要性能指标如下几项：
+  CPU的使用率
+ 上下文切换
+ 运行队列长度
+   下面分别介绍几个CPU的性能指标
+ 1、CPU_IDLE  CPU_IDLE就是基于/proc/stat计算出来的，运行cat /proc/stat后的结果如下：
+  可以看出cpu的核数，比如cpu0-cpu7便是表是系统有8个核，截取cpu0的参数
+ 如下：cpu0 32736 0 51047 48473626 33879 0 142 0 0 0，这些参数含义分别为：
+ user(32736) 系统从启动开始累计到当前时刻，用户态的CPU时间，不包含nice值为负   的进程
+  nice(0) : 系统从启动开始累计到当前时刻，nice值为负的进程所占用的CPU时间
+ sysytem(51047) 系统启动开始累计到当前时刻，内核时间
+ IDLE(48473626) 从系统启动开始累计到当前时刻，除IO等待时间以外其它等待时间</description>
     </item>
     
     <item>
-      <title>Linux中文本处理命令总结</title>
+      <title>Linux文本处理命令总结</title>
       <link>https://sin-coder.github.io/linux/textcommand/</link>
       <pubDate>Fri, 24 Apr 2020 00:08:20 +0800</pubDate>
       
       <guid>https://sin-coder.github.io/linux/textcommand/</guid>
-      <description></description>
+      <description>一、概述  Linux中的有关文本处理和分析的命令有很多，本节主要介绍几个使用比较频繁的命令：
+ grep、sed、find、awk。其中每个命令的使用方式都是比较灵活的，命令的参数很多，选
+项也很多，但我们只需记住些常用的即可
+二、grep 1、用途简介  grep用于查找文件中符合条件的字符串，比较多地用于日志行为分析
+ 2、命令格式  grep match_pattern file
+ 3、常用参数  -o:只输出匹配的文本行
+ -v:只输出没有匹配的文本行
+ -c:统计文件中包含文本的行数
+ -n:打印匹配的行号
+ -i:搜索时忽略大小写
+ -l:只打印文件名
+ -e:指定字符串作为查找文件内容的样式
+ -r:递归的搜索
+  4、使用示例  （1）匹配多个字符串模式
+ grep -e &amp;quot;mode1&amp;quot; -e &amp;quot;mode2&amp;quot; filename
+ （2）在多级目录中对文本递归搜索
+ grep &amp;quot;mode&amp;quot; . -r -n
+ （3）在当前目录下查找以file为后缀的文件名并且包含test字符串的文件
+ grep test file
+ （4）在日志文件夹中查找包含docker字符串的日志
+ grep -n docker /var/log/log
+  三、sed 1、用途简介  sed命令主要是利用脚本来处理文本文件，主要用来自动编辑一个或多个文件、简化</description>
     </item>
     
   </channel>

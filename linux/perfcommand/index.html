@@ -12,10 +12,48 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Linux系统性能分析命令总结"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="一、概述  操作系统的资源主要包括以下几种：CPU、内存、硬盘IO、网络IO，熟练地对这些资
+ 源的使用进行分析可以帮助我们排查一些服务器使用过程中遇到的问题
+二、CPU使用分析 1、CPU性能指标简介  CPU使用时间主要分为用户态时间、系统态时间和空闲态时间，分别表示CPU处于用
+ 户态执行的时间、系统内核执行的时间和空闲系统进程执行的时间，三者之和就是CPU的
+总时间。
+ 当用户没有用户进程和系统进程需要执行的时候，CPU就执行系统缺省的空闲进程,
+ CPU的利用率就是指非空闲进程占用时间的比例，即CPU执行非空闲进程 / CPU总的执行
+时间
+ CPU方面的主要性能指标如下几项：
+  CPU的使用率
+ 上下文切换
+ 运行队列长度
+   下面分别介绍几个CPU的性能指标
+ 1、CPU_IDLE  CPU_IDLE就是基于/proc/stat计算出来的，运行cat /proc/stat后的结果如下：
+  可以看出cpu的核数，比如cpu0-cpu7便是表是系统有8个核，截取cpu0的参数
+ 如下：cpu0 32736 0 51047 48473626 33879 0 142 0 0 0，这些参数含义分别为：
+ user(32736) 系统从启动开始累计到当前时刻，用户态的CPU时间，不包含nice值为负   的进程
+  nice(0) : 系统从启动开始累计到当前时刻，nice值为负的进程所占用的CPU时间
+ sysytem(51047) 系统启动开始累计到当前时刻，内核时间
+ IDLE(48473626) 从系统启动开始累计到当前时刻，除IO等待时间以外其它等待时间"/>
 
     <meta property="og:title" content="Linux系统性能分析命令总结" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="一、概述  操作系统的资源主要包括以下几种：CPU、内存、硬盘IO、网络IO，熟练地对这些资
+ 源的使用进行分析可以帮助我们排查一些服务器使用过程中遇到的问题
+二、CPU使用分析 1、CPU性能指标简介  CPU使用时间主要分为用户态时间、系统态时间和空闲态时间，分别表示CPU处于用
+ 户态执行的时间、系统内核执行的时间和空闲系统进程执行的时间，三者之和就是CPU的
+总时间。
+ 当用户没有用户进程和系统进程需要执行的时候，CPU就执行系统缺省的空闲进程,
+ CPU的利用率就是指非空闲进程占用时间的比例，即CPU执行非空闲进程 / CPU总的执行
+时间
+ CPU方面的主要性能指标如下几项：
+  CPU的使用率
+ 上下文切换
+ 运行队列长度
+   下面分别介绍几个CPU的性能指标
+ 1、CPU_IDLE  CPU_IDLE就是基于/proc/stat计算出来的，运行cat /proc/stat后的结果如下：
+  可以看出cpu的核数，比如cpu0-cpu7便是表是系统有8个核，截取cpu0的参数
+ 如下：cpu0 32736 0 51047 48473626 33879 0 142 0 0 0，这些参数含义分别为：
+ user(32736) 系统从启动开始累计到当前时刻，用户态的CPU时间，不包含nice值为负   的进程
+  nice(0) : 系统从启动开始累计到当前时刻，nice值为负的进程所占用的CPU时间
+ sysytem(51047) 系统启动开始累计到当前时刻，内核时间
+ IDLE(48473626) 从系统启动开始累计到当前时刻，除IO等待时间以外其它等待时间" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sin-coder.github.io/linux/perfcommand/" />
 <meta property="article:published_time" content="2020-04-24T00:43:15+08:00" />
@@ -73,7 +111,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          0 min read
+          5 min read
         </div><div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
   <title>tag</title>
@@ -82,7 +120,756 @@
           <a class="tag" href="https://sin-coder.github.io/tags/linux/">Linux</a></div></div>
     </header>
     <div class="post-content">
-      <hr />
+      
+
+<hr />
+
+<h3 id="一-概述">一、概述</h3>
+
+<blockquote>
+<p>操作系统的资源主要包括以下几种：CPU、内存、硬盘IO、网络IO，熟练地对这些资</p>
+</blockquote>
+
+<p>源的使用进行分析可以帮助我们排查一些服务器使用过程中遇到的问题</p>
+
+<h3 id="二-cpu使用分析">二、CPU使用分析</h3>
+
+<h4 id="1-cpu性能指标简介">1、CPU性能指标简介</h4>
+
+<blockquote>
+<p>CPU使用时间主要分为用户态时间、系统态时间和空闲态时间，分别表示CPU处于用</p>
+</blockquote>
+
+<p>户态执行的时间、系统内核执行的时间和空闲系统进程执行的时间，三者之和就是CPU的</p>
+
+<p>总时间。</p>
+
+<blockquote>
+<p>当用户没有用户进程和系统进程需要执行的时候，CPU就执行系统缺省的空闲进程,</p>
+</blockquote>
+
+<p>CPU的利用率就是指非空闲进程占用时间的比例，即CPU执行非空闲进程 / CPU总的执行</p>
+
+<p>时间</p>
+
+<blockquote>
+<p>CPU方面的主要性能指标如下几项：</p>
+</blockquote>
+
+<ul>
+<li><p>CPU的使用率</p></li>
+
+<li><p>上下文切换</p></li>
+
+<li><p>运行队列长度</p></li>
+</ul>
+
+<blockquote>
+<p>下面分别介绍几个CPU的性能指标</p>
+</blockquote>
+
+<h4 id="1-cpu-idle">1、CPU_IDLE</h4>
+
+<blockquote>
+<p>CPU_IDLE就是基于/proc/stat计算出来的，运行cat /proc/stat后的结果如下：</p>
+</blockquote>
+
+<p><img src="https://s1.ax1x.com/2020/04/24/JBzaLT.png" alt="JBzaLT.png" style="zoom: 50%;" /></p>
+
+<blockquote>
+<p>可以看出cpu的核数，比如cpu0-cpu7便是表是系统有8个核，截取cpu0的参数</p>
+</blockquote>
+
+<p>如下：cpu0 32736 0 51047 48473626 33879 0 142 0 0 0，这些参数含义分别为：</p>
+
+<ul>
+<li>user(32736)  系统从启动开始累计到当前时刻，用户态的CPU时间，不包含nice值为负</li>
+</ul>
+
+<blockquote>
+<p>的进程</p>
+</blockquote>
+
+<ul>
+<li><p>nice(0)   : 系统从启动开始累计到当前时刻，nice值为负的进程所占用的CPU时间</p></li>
+
+<li><p>sysytem(51047) 系统启动开始累计到当前时刻，内核时间</p></li>
+
+<li><p>IDLE(48473626)   从系统启动开始累计到当前时刻，除IO等待时间以外其它等待时间</p></li>
+
+<li><p>iowait(33879)   系统启动开始累计到当前时刻，IO等待时间</p></li>
+
+<li><p>irp(0)         从系统启动开始累计到当前时刻，硬中断时间</p></li>
+
+<li><p>softirp(142)   从系统启动开始累计到当前时刻,软中断时间</p></li>
+
+<li><p>stealstolen(0) 当一台物理机有多个虚拟机时，该CPU在其他虚拟机运行时间</p></li>
+
+<li><p>guest(0)  在cpu内核控制下，提供给在其上面运行的虚拟机占用的时间</p></li>
+</ul>
+
+<blockquote>
+<p>其他参数的主要含义：</p>
+</blockquote>
+
+<ul>
+<li><p>ctxt 419730186   CPU上下文切换的次数</p></li>
+
+<li><p>btime 1587041854  系统从启动到当前的时间</p></li>
+
+<li><p>processes 1305938  自启动以来创建的任务个数</p></li>
+
+<li><p>procs_running 1    当前运行的任务个数</p></li>
+
+<li><p>procs_blocked 0    阻塞的任务个数</p></li>
+</ul>
+
+<blockquote>
+<p>CPU即使利用率的计算公式：</p>
+</blockquote>
+
+<ul>
+<li><p>CPU在t1到t2时间段总的使用时间 = t2时刻cpu之和-t1时刻CPU使用之和</p></li>
+
+<li><p>CPU在t1到t2时间段空闲使用时间  = idle2 - idle1</p></li>
+
+<li><p>CPU在t1到t2时间段及时利用率  = 1 - CPU空闲使用时间/Cpu总的使用时间</p></li>
+
+<li><p>CPU的平均利用率的计算公式  =  1-  (当前时间对应的cpu.idle值)/(当前时间对用的</p></li>
+</ul>
+
+<blockquote>
+<p>cpu.total值)，cpu.total就是cpu那一行所有项之和</p>
+
+<p>每一个进程在/proc下都对应一个以进程号为目录名的目录/proc/pid，它们都是读取进程</p>
+</blockquote>
+
+<p>信息的窗口；此外，/proc/pid目录中有一个task目录，/proc/pid/task 目录中也有一些以该</p>
+
+<p>进程所拥有的线程的线程号命名的目录，/proc/pid/task/tid，这是读取线程信息的窗口，</p>
+
+<p>Linux中轻量级进程lwp即为线程，对应tid</p>
+
+<blockquote>
+<p>计算某一个进程和某一个线程的CPU利用率类似，读取/proc/pid/stat或者读取</p>
+</blockquote>
+
+<p>/proc/pid/task/stat中的参数来进行计算即可</p>
+
+<h4 id="2-cpu的负载">2、CPU的负载</h4>
+
+<blockquote>
+<p>系统平均负载定义为在特定时间间隔内运行队列中的平均进程数，如果一个进程满足</p>
+</blockquote>
+
+<p>以下条件则其就位于等待队列中</p>
+
+<ul>
+<li><p>该进程没有在等待IO操作的结果</p></li>
+
+<li><p>该进程没有主动进入等待状态</p></li>
+
+<li><p>没有被停止</p></li>
+</ul>
+
+<blockquote>
+<p>Linux中进程可分为三种状态，一种是阻塞进程、一种是可运行的进程、另外就是正</p>
+</blockquote>
+
+<p>在运行的进程。进程可运行状态时，它处在一个运行队列中，与其他可运行进程争夺CPU</p>
+
+<p>时间，系统的load是指正在运行和准备好运行进程的总数，比如现在系统有2个正在运行</p>
+
+<p>的进程，3个可运行的进程，那么系统的load就是5</p>
+
+<blockquote>
+<p>cpu.load是基于/proc/loadavg来计算的，cat /proc/loadavg命令后的结果如下：</p>
+</blockquote>
+
+<p>0.00 0.02 0.07 1/326 7192，前三个分别指1、5、15分钟内的平均进程数，后面两个表示</p>
+
+<p>正在运行的进程数 / 进程总数 和 最近运行的PID号。此外通过load average还可以了解到</p>
+
+<p>当前服务器的负载的变化趋势：</p>
+
+<blockquote>
+<p>如果1分钟的CPU负载 &gt; 5分钟的CPU负载  &gt; 15分钟的负载说明目前CPU处在负载</p>
+</blockquote>
+
+<p>的高峰期，反之说明CPU的负载高峰期已经过去了，理想情况下，CPU不空闲，此时</p>
+
+<p>cpu.load/cores = 1,负载过大表示有部分线程正在等待CPU资源，过小则表示CpuZ资源</p>
+
+<p>比较空闲cpu.load/cores 为1是最理想的状态</p>
+
+<h4 id="3-cpu性能分析常用命令">3、CPU性能分析常用命令</h4>
+
+<blockquote>
+<p>top、sar、vmstat、mpstat、ps、uptime、tload</p>
+</blockquote>
+
+<h3 id="三-内存使用分析">三、内存使用分析</h3>
+
+<h4 id="1-性能指标简介">1、性能指标简介</h4>
+
+<ul>
+<li><p>活动虚拟内存总量，等于实际内存和交换空间的大小之和</p></li>
+
+<li><p>调页率：反映了采用了调页内存技术对内存进行操作的程度</p></li>
+
+<li><p>交换率：反映了交换技术对内存进行操作的程度</p></li>
+</ul>
+
+<h4 id="2-常用分析命令">2、常用分析命令</h4>
+
+<blockquote>
+<p>内存分析主要可以利用：free、vmstat、swspon</p>
+</blockquote>
+
+<h4 id="3-内存分析命令总结">3、内存分析命令总结</h4>
+
+<ul>
+<li><p>系统内存的使用情况：/proc/meminfo</p></li>
+
+<li><p>进程的内存使用情况：/proc/pid/status</p></li>
+
+<li><p>查询内存的总使用率 : free</p></li>
+
+<li><p>查询进程的内存使用占比 : top</p></li>
+
+<li><p>虚拟内存的统计 :  vmstat</p></li>
+
+<li><p>进程消耗内存占比和排序： ps aux -sort -rss</p></li>
+
+<li><p>释放系统内存缓存：/proc/sys/vm/drop_caches</p></li>
+</ul>
+
+<h3 id="四-磁盘io">四、磁盘IO</h3>
+
+<h4 id="1-磁盘主要性能指标">1、磁盘主要性能指标</h4>
+
+<blockquote>
+<p>磁盘IO主要的性能指标有：IOPS、数据吞吐量、平均IO数据尺寸、磁盘活动时间</p>
+</blockquote>
+
+<p>百分比、服务时间、IO等待队列长度、等待时间等</p>
+
+<ul>
+<li><p>IOPS：Input/Output Per Second即是每秒的输入输出量或者读写次数</p></li>
+
+<li><p>数据吞吐量(Throughput)：单位时间内可以成功传输的数据数量</p></li>
+
+<li><p>平均IO数据尺寸：平均IO数据尺寸等于吞吐量除以IO数目，如果平均IO数据尺寸小于32K，</p></li>
+</ul>
+
+<blockquote>
+<p>可以磁盘使用模式以随机存取为主；如果平均每次IO数据尺寸大于32K，可认</p>
+
+<p>为磁盘使用模式以顺序存储为主</p>
+</blockquote>
+
+<ul>
+<li>磁盘活动时间百分比，及磁盘利用率(Utilization) %util：磁盘在数据传输和处理命令</li>
+</ul>
+
+<blockquote>
+<p>(如寻道)处于活动状态</p>
+</blockquote>
+
+<ul>
+<li>服务时间(Service Time) svctm ： 指磁盘读或者写操作执行的时间，包括寻道、旋转时</li>
+</ul>
+
+<blockquote>
+<p>延和数据传输的时间。大小一般和磁盘的性能有关，CPU/内存的负荷也会对</p>
+
+<p>其有影响，请求过多也会导致服务时间的增加如果改值超过20ms，一般可能</p>
+
+<p>对上层应用产生影响</p>
+</blockquote>
+
+<ul>
+<li>IO等待队列的长度(Queue Length)：指待处理的IO请求的数目，如果IO请求压力持续超出</li>
+</ul>
+
+<blockquote>
+<p>磁盘处理的能力，改值会增加</p>
+</blockquote>
+
+<ul>
+<li>等待时间(Wait time)：指磁盘读或者写操作等待执行的时间，即在队列中排队的时间。</li>
+</ul>
+
+<blockquote>
+<p>如果IO请求持续超过磁盘处理能力，即意味着IO请求不得不在队列中等到较长的</p>
+
+<p>时间</p>
+</blockquote>
+
+<h4 id="2-常见的命令">2、常见的命令</h4>
+
+<blockquote>
+<p>经常使用的命令是vmstat、iostat、sar、fdisk等</p>
+</blockquote>
+
+<h3 id="五-网络io">五、网络IO</h3>
+
+<blockquote>
+<p>网路IO方面的主要性能指标有：网络延时、网络带宽</p>
+
+<p>常用命令：ping、tracert、 netstat、iptables等​</p>
+</blockquote>
+
+<h3 id="六-常用分析命令简介">六、常用分析命令简介</h3>
+
+<blockquote>
+<p>了解一些系统资源的常见指标之后，就可以使用基本的命令进行分析了，在这里主要</p>
+</blockquote>
+
+<p>简述了自己之前不太熟悉的命令，像ps、top、netstat、iostat经常使用的命令并没有写，</p>
+
+<p>重点记录了vmstat、mpstat、sar等命令</p>
+
+<h4 id="1-vmstat">1、vmstat</h4>
+
+<blockquote>
+<p>Virtual Memory Statistics(虚拟内存统计) ，vmstat主要反映了进程、内存、调度、</p>
+</blockquote>
+
+<p>IO阻塞以及CPU活动的信息</p>
+
+<blockquote>
+<p>语法格式为：vmstat [-V] [-n] [delay[count]]</p>
+
+<p>常用参数如下：</p>
+</blockquote>
+
+<ul>
+<li><p>-V 表示打印出版本信息</p></li>
+
+<li><p>-n表示在周期性循环输出时，输出的头部信息仅显示一次</p></li>
+
+<li><p>delay 是两次输出之间的延迟时间</p></li>
+
+<li><p>count 是按照这个时间间隔统计的次数</p></li>
+</ul>
+
+<blockquote>
+<p>执行vmstat运行的结果如下：</p>
+</blockquote>
+
+<p><img src="https://s1.ax1x.com/2020/04/24/JDAgl4.png" alt="JDAgl4.png" /></p>
+
+<blockquote>
+<p>图中包含的信息主要有如下几项：</p>
+</blockquote>
+
+<h5 id="1-进程信息">(1)进程信息</h5>
+
+<ul>
+<li><p>r:运行队列中进程的数量(running)</p></li>
+
+<li><p>b:等待IO的进程数量(Blocked)</p></li>
+</ul>
+
+<h5 id="2-memoey-内存">(2)Memoey(内存)</h5>
+
+<ul>
+<li><p>swpd:使用的虚拟内存大小（KB）</p></li>
+
+<li><p>free:可用内存大小（KB）</p></li>
+
+<li><p>buff:用作缓冲的内存大小（KB）</p></li>
+
+<li><p>cache:用作缓存的大小</p></li>
+</ul>
+
+<h5 id="3-交换分区">(3)交换分区</h5>
+
+<ul>
+<li><p>si:每秒从交换区写到内存的大小</p></li>
+
+<li><p>so:每秒写入交换区的大小</p></li>
+</ul>
+
+<h5 id="4-io">(4)IO</h5>
+
+<ul>
+<li><p>bi:每秒读取的块数</p></li>
+
+<li><p>bo:每秒写入的块数</p></li>
+</ul>
+
+<h5 id="5-system">(5)system</h5>
+
+<ul>
+<li><p>in:每秒中断数，包括时钟中断</p></li>
+
+<li><p>cs:每秒上下文切换数</p></li>
+</ul>
+
+<h5 id="6-cpu-百分比">(6)CPU(百分比)</h5>
+
+<ul>
+<li><p>us:用户进程执行时间</p></li>
+
+<li><p>sy:系统进程执行时间</p></li>
+
+<li><p>id:空闲时间(包括IO等待时间)</p></li>
+
+<li><p>wa:等待IO时间</p></li>
+</ul>
+
+<h4 id="2-mpstat">2、mpstat</h4>
+
+<h5 id="1-用途简介">（1）用途简介</h5>
+
+<blockquote>
+<p>mpstat的全称是Multiprocessor Statistics，实时系统监控工具，反映了CPU的相关统计</p>
+</blockquote>
+
+<p>信息，这些信息都存放在/proc/stat文件中</p>
+
+<h5 id="2-命令格式">(2) 命令格式</h5>
+
+<blockquote>
+<p>常用的命令格式是：mpstat [-P {cpu | ALL}] [ -V ] [interval[count]]</p>
+
+<p>​    参数含义：</p>
+</blockquote>
+
+<ul>
+<li><p>-P 后跟参数表示将要统计的cpu信息 参数为特定的cpu编号和ALL</p></li>
+
+<li><p>-V 表示该软件的版本</p></li>
+
+<li><p>interval为统计的时间段，count统计次数</p></li>
+</ul>
+
+<h5 id="3-使用示例">(3) 使用示例</h5>
+
+<blockquote>
+<p>​    在命令行中执行命令之后会出现以下结果：</p>
+</blockquote>
+
+<p><img src="https://s1.ax1x.com/2020/04/24/JDmCan.png" alt="JDmCan.png" /></p>
+
+<blockquote>
+<p>参数信息如下：</p>
+</blockquote>
+
+<ol>
+<li><p>CPU :处理器ID</p></li>
+
+<li><p>User：用户态CPU的时间，不包含nice值为负的进程</p></li>
+
+<li><p>nice：nice值为负进程的CPU时间  ，比较nice值(NI值)和PRI值的区别：</p></li>
+</ol>
+
+<blockquote>
+<p>PRI是进程的优先级，PRI越小，优先级越高，nice表示进程可被执行的优先级的</p>
+</blockquote>
+
+<p>修正数值，也即nice不是进程的优先级，但是会影响进程优先级的变化；真正的</p>
+
+<p>PRI(NEW) = PRI(old) + nice,所以nice为负值的时候，该程序的PRI变小，优先级</p>
+
+<p>越高</p>
+
+<ol>
+<li><p>sys: 系统内核进程时间</p></li>
+
+<li><p>iowait：硬盘IO等待时间</p></li>
+
+<li><p>irp：硬中断的时间</p></li>
+
+<li><p>soft：软中断的时间</p></li>
+
+<li><p>steal:该CPU在其他虚拟机运行时间</p></li>
+
+<li><p>guest：虚拟机占用的时间</p></li>
+
+<li><p>idle:CPU的空闲时间</p></li>
+</ol>
+
+<h4 id="3-sar">3、sar</h4>
+
+<h5 id="1-用途简介-1">（1）用途简介</h5>
+
+<blockquote>
+<p>Sar的全称是：System Activity Repoter。sar工具连续对系统进行取样，获取大量</p>
+</blockquote>
+
+<p>的取样数据，它可以追溯过去的数据，也可以周期性的查看当前数据。这个性能工具</p>
+
+<p>可以从文件的读写情况、系统的使用情况、串口、CPU效率、内存使状况、进程活动</p>
+
+<blockquote>
+<p>sar工具可以追溯过去的数据也可以周期性地查看当前的数据</p>
+</blockquote>
+
+<h5 id="2-常用示例">（2）常用示例</h5>
+
+<ul>
+<li><p>sar -u：查看CPU的使用率信息</p></li>
+
+<li><p>sar -q：查看平均负载，参数含义如下：</p></li>
+</ul>
+
+<blockquote>
+<p>runq-sz:运行队列的长度</p>
+
+<p>plist-sz:进程列表中进程和线程的数量</p>
+
+<p>ldavg-1/5/15 过去15分钟的平均负载</p>
+</blockquote>
+
+<ul>
+<li>sar -r:查看内存的使用状况，参数含义如下:</li>
+</ul>
+
+<blockquote>
+<p>kbmemfree:剩余空间  类似于free中的free</p>
+
+<p>kbmemused:已用空间  类似于free中的used值</p>
+
+<p>%memused:物理内存使用率， = kbmemused/内存总量</p>
+
+<p>kbbuffers:free中的buffer</p>
+
+<p>kbcache:buffer中的cache</p>
+
+<p>kbcommit:保证当前系统所需要的内存，为了确保不溢出而需要的内存(RAM+SWAP)</p>
+
+<p>%commit:这个值是kbcommit与内存总量的百分比</p>
+</blockquote>
+
+<ul>
+<li>sar -W：查看页面交换发生的情况，参数含义如下:</li>
+</ul>
+
+<blockquote>
+<p>pswpin/s：每秒系统换入的交换界面数量</p>
+
+<p>pswpout/s:每秒系统换出的交换界面数量</p>
+
+<p>当页面发生交换时，服务器的吞吐量会大幅下降；服务器状况不良的时候，如果</p>
+</blockquote>
+
+<p>怀疑因为内存不足而导致了页面交换的发生，可以使用这个命令来确定是否发生了大</p>
+
+<p>量的交换</p>
+
+<h4 id="4-free">4、free</h4>
+
+<blockquote>
+<p>free用来查看内存的使用情况</p>
+
+<p>命令格式为：free [-b | -k | -m] [-o]  [-s delay] [-t] [-V]</p>
+
+<p>free输出的信息如下：</p>
+</blockquote>
+
+<p><img src="https://s1.ax1x.com/2020/04/24/JDV5RO.png" alt="JDV5RO.png" /></p>
+
+<blockquote>
+<p>free输出的信息是一个表格：横向指标为： 总量、使用量、剩余量、共享量、缓</p>
+</blockquote>
+
+<p>冲/缓存 可用内存；纵向指标信息为：Mem内存  Swap交换分区  Total合计</p>
+
+<h4 id="5-strace">5、strace</h4>
+
+<h5 id="1-用途简介-2">（1）用途简介</h5>
+
+<blockquote>
+<p>strace经常被用来对应用的系统调用过程和信号传递的跟踪结果进行分析，可以帮助</p>
+</blockquote>
+
+<p>我们去了解系统应用的工作过程。这个命令最简单的用法就是执行一个指定命令，命令结</p>
+
+<p>束后自动退出，在命令执行的过程中，strace会记录和解析命令进程的所有系统调用以及</p>
+
+<p>这个进程所接收到的所有的信号值</p>
+
+<h5 id="2-命令格式-1">（2）命令格式</h5>
+
+<blockquote>
+<p>strace [-cfopTs] [-expr] [command] [arg.....]</p>
+</blockquote>
+
+<h5 id="3-常用参数">(3)   常用参数</h5>
+
+<ul>
+<li><p>-c:统计每一次系统调用所执行的时间，次数和出错的次数</p></li>
+
+<li><p>-f:跟踪由fork调用所产生的子进程</p></li>
+
+<li><p>-o:将strace的结果输出到文件中</p></li>
+
+<li><p>-p:跟踪一个特定的进程</p></li>
+
+<li><p>-T：将每个系统调用所花费的时间打印出来</p></li>
+
+<li><p>-t:在输出的每一行之前加上时间信息，精确到秒级</p></li>
+
+<li><p>-tt:在输出的每一行之前加上时间信息，精确到微妙级</p></li>
+
+<li><p>-ttt:在输出的每一行之前加上时间信息，时间表示为UNIX时间戳</p></li>
+
+<li><p>-s:指定trace结果的每一行输出的字符串的长度</p></li>
+</ul>
+
+<blockquote>
+<p>-e expr 指定一个表达式，用来控制如何跟踪，例如</p>
+</blockquote>
+
+<ul>
+<li><p>-e trace=set : 只跟踪指定的系统调用</p></li>
+
+<li><p>-e trace=file: 只跟踪有关文件操作写系统调用</p></li>
+
+<li><p>-e trace=process 只跟踪有关进程控制的系统调用</p></li>
+
+<li><p>-e trace=network 只跟踪有关网络的系统调用</p></li>
+
+<li><p>-e trace=signal  跟踪与系统信号有关的系统调用</p></li>
+
+<li><p>-e trace=ipc : 跟踪进程通讯有关的系统调用</p></li>
+</ul>
+
+<h5 id="4-使用示例">（4）使用示例</h5>
+
+<blockquote>
+<p>测试前提：在Linux下创建一个test.c的文件，程序如下：</p>
+</blockquote>
+
+<pre><code class="language-c">int main(){
+ 	int a;
+	scanf(&quot;%d&quot;,&amp;a);
+	printf(&quot;%09d\n&quot;,a);
+	return 0;
+}
+</code></pre>
+
+<blockquote>
+<p>编译：gcc -o test test.c</p>
+</blockquote>
+
+<p><strong>a、跟踪系统调用</strong></p>
+
+<blockquote>
+<p>运行：strace ./test，会出现如下结果：</p>
+</blockquote>
+
+<pre><code class="language-bash">execve(&quot;./test&quot;, [&quot;./test&quot;], [/* 28 vars */]) = 0    #开始执行
+brk(0) = 0xacd000 #程序的初始化操作
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffa0992c000
+access(&quot;/etc/ld.so.preload&quot;, R_OK)      = 0
+open(&quot;/etc/ld.so.preload&quot;, O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=18, ...}) = 0
+mmap(NULL, 18, PROT_READ|PROT_WRITE, MAP_PRIVATE, 3, 0) = 0x7ffa0992b000
+close(3)                                = 0
+readlink(&quot;/proc/self/exe&quot;, &quot;/home/test&quot;, 4096) = 10
+open(&quot;/lib64/libonion.so&quot;, O_RDONLY|O_CLOEXEC) = 3
+read(3, &quot;\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0&gt;\0\1\0\0\0`\20\0\0\0\0\0\0&quot;..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=42880, ...}) = 0
+mmap(NULL, 1072448, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7ffa09825000
+mprotect(0x7ffa09828000, 1048576, PROT_NONE) = 0
+mmap(0x7ffa09928000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x7ffa09928000
+mmap(0x7ffa09929000, 7488, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7ffa09929000
+close(3)                                = 0
+munmap(0x7ffa0992b000, 18)              = 0
+open(&quot;/etc/ld.so.cache&quot;, O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=72821, ...}) = 0
+mmap(NULL, 72821, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7ffa09813000
+close(3)                                = 0
+open(&quot;/lib64/libc.so.6&quot;, O_RDONLY|O_CLOEXEC) = 3
+read(3, &quot;\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0&gt;\0\1\0\0\0\20\35\2\0\0\0\0\0&quot;..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=2122016, ...}) = 0
+mmap(NULL, 3944896, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7ffa09348000
+mprotect(0x7ffa09502000, 2093056, PROT_NONE) = 0
+mmap(0x7ffa09701000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1b9000) = 0x7ffa09701000
+mmap(0x7ffa09707000, 16832, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7ffa09707000
+    close(3)                                = 0
+open(&quot;/lib64/libdl.so.2&quot;, O_RDONLY|O_CLOEXEC) = 3
+read(3, &quot;\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0&gt;\0\1\0\0\0`\16\0\0\0\0\0\0&quot;..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=19344, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffa0992b000
+mmap(NULL, 2109744, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7ffa09144000
+mprotect(0x7ffa09146000, 2097152, PROT_NONE) = 0
+mmap(0x7ffa09346000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7ffa09346000
+    close(3)                                = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffa09811000
+arch_prctl(ARCH_SET_FS, 0x7ffa09811740) = 0
+mprotect(0x7ffa09701000, 16384, PROT_READ) = 0
+mprotect(0x7ffa09346000, 4096, PROT_READ) = 0
+mprotect(0x600000, 4096, PROT_READ)     = 0
+mprotect(0x7ffa0992d000, 4096, PROT_READ) = 0
+munmap(0x7ffa09813000, 72821)           = 0
+fstat(0, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffa09824000
+read(0, 99&quot;99\n&quot;, 1024) = 3#程序停顿，从控制台读取数据
+fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffa09823000
+write(1, &quot;000000099\n&quot;, 10000000099)= 10
+#系统调用write函数将格式化后的数字显示至屏幕
+exit_group(0)= ?  #exit_group退出执行
++++ exited with 0 +++
+</code></pre>
+
+<p><strong>b、跟踪信号传递</strong></p>
+
+<blockquote>
+<p>在当前程序运行至读入数据时，另外开一个窗口输入命令： killall test 原窗口会出</p>
+</blockquote>
+
+<p>现如下结果</p>
+
+<pre><code class="language-bash">fstat(0, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f42f8fe9000
+read(0, 0x7f42f8fe9000, 1024)= ? ERESTARTSYS (To be restarted if SA_RESTART is set)
+--- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=22809, si_uid=0} ---
++++ killed by SIGTERM +++  #进程被终止
+</code></pre>
+
+<p><strong>c、系统调用统计</strong></p>
+
+<blockquote>
+<p>执行命令 strace -c ./test,输出如下结果</p>
+</blockquote>
+
+<pre><code class="language-bash">[root@Sinyang /home]# strace -c ./test
+000012217% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+0.00    0.000000           0         3           read
+0.00    0.000000           0         1           write
+0.00    0.000000           0         5           open
+0.00    0.000000           0         5           close
+0.00    0.000000           0         6           fstat
+0.00    0.000000           0        14           mmap
+0.00    0.000000           0         7           mprotect
+0.00    0.000000           0         2           munmap
+0.00    0.000000           0         1           brk
+0.00    0.000000           0         1           access
+0.00    0.000000           0         1           execve
+0.00    0.000000           0         1           readlink
+0.00    0.000000           0         1           arch_prctl
+------ ----------- ----------- --------- --------- ---------------
+100.00    0.000000                    48           total
+</code></pre>
+
+<blockquote>
+<p>这里就比较清楚的说明了调用了哪些系统函数，调用次数多少，消耗了多长时间</p>
+</blockquote>
+
+<p><strong>d、使用strace追踪现有的进程</strong></p>
+
+<blockquote>
+<p>​     strace -p pid</p>
+</blockquote>
+
+<hr />
 
     </div>
     <div class="post-footer">
