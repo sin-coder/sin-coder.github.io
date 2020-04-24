@@ -6,10 +6,40 @@
     <description>Recent content on sin-coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2020 14:25:08 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2020 19:55:33 +0800</lastBuildDate>
     
 	<atom:link href="https://sin-coder.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Text</title>
+      <link>https://sin-coder.github.io/linux/text/</link>
+      <pubDate>Fri, 24 Apr 2020 19:55:33 +0800</pubDate>
+      
+      <guid>https://sin-coder.github.io/linux/text/</guid>
+      <description>一、概述  Linux中的有关文本处理和分析的命令有很多，本节主要介绍几个使用比较频繁的命令：
+ grep、sed、find、awk。其中每个命令的使用方式都是比较灵活的，命令的参数很多，选
+项也很多，但我们只需记住些常用的即可
+二、grep 1、用途简介  grep用于查找文件中符合条件的字符串，比较多地用于日志行为分析
+ 2、命令格式  grep match_pattern file
+ 3、常用参数  -o:只输出匹配的文本行
+ -v:只输出没有匹配的文本行
+ -c:统计文件中包含文本的行数
+ -n:打印匹配的行号
+ -i:搜索时忽略大小写
+ -l:只打印文件名
+ -e:指定字符串作为查找文件内容的样式
+ -r:递归的搜索
+  4、使用示例  （1）匹配多个字符串模式
+ grep -e &amp;quot;mode1&amp;quot; -e &amp;quot;mode2&amp;quot; filename
+ （2）在多级目录中对文本递归搜索
+ grep &amp;quot;mode&amp;quot; . -r -n
+ （3）在当前目录下查找以file为后缀的文件名并且包含test字符串的文件
+ grep test file
+ （4）在日志文件夹中查找包含docker字符串的日志
+ grep -n docker /var/log/log
+  三、sed 1、用途简介  sed命令主要是利用脚本来处理文本文件，主要用来自动编辑一个或多个文件、简化</description>
+    </item>
     
     <item>
       <title>名字服务简介</title>
@@ -228,36 +258,6 @@ mount [-参数] [设备名称] [挂载点] 对应的解挂命令就是umonut
   nice(0) : 系统从启动开始累计到当前时刻，nice值为负的进程所占用的CPU时间
  sysytem(51047) 系统启动开始累计到当前时刻，内核时间
  IDLE(48473626) 从系统启动开始累计到当前时刻，除IO等待时间以外其它等待时间</description>
-    </item>
-    
-    <item>
-      <title>Linux文本处理命令总结</title>
-      <link>https://sin-coder.github.io/linux/textcommand/</link>
-      <pubDate>Fri, 24 Apr 2020 00:08:20 +0800</pubDate>
-      
-      <guid>https://sin-coder.github.io/linux/textcommand/</guid>
-      <description>一、概述  Linux中的有关文本处理和分析的命令有很多，本节主要介绍几个使用比较频繁的命令：
- grep、sed、find、awk。其中每个命令的使用方式都是比较灵活的，命令的参数很多，选
-项也很多，但我们只需记住些常用的即可
-二、grep 1、用途简介  grep用于查找文件中符合条件的字符串，比较多地用于日志行为分析
- 2、命令格式  grep match_pattern file
- 3、常用参数  -o:只输出匹配的文本行
- -v:只输出没有匹配的文本行
- -c:统计文件中包含文本的行数
- -n:打印匹配的行号
- -i:搜索时忽略大小写
- -l:只打印文件名
- -e:指定字符串作为查找文件内容的样式
- -r:递归的搜索
-  4、使用示例  （1）匹配多个字符串模式
- grep -e &amp;quot;mode1&amp;quot; -e &amp;quot;mode2&amp;quot; filename
- （2）在多级目录中对文本递归搜索
- grep &amp;quot;mode&amp;quot; . -r -n
- （3）在当前目录下查找以file为后缀的文件名并且包含test字符串的文件
- grep test file
- （4）在日志文件夹中查找包含docker字符串的日志
- grep -n docker /var/log/log
-  三、sed 1、用途简介  sed命令主要是利用脚本来处理文本文件，主要用来自动编辑一个或多个文件、简化</description>
     </item>
     
     <item>
