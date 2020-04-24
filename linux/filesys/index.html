@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>初始Linux文件系统 // sin-coder</title>
+    <title>Linux文件系统目录结构 // sin-coder</title>
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.59.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,11 +11,63 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="初始Linux文件系统"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="Linux文件系统目录结构"/>
+<meta name="twitter:description" content="一、Linux文件系统目录概述  Linux下的文件系统为树形结构，入口为 / (根目录)。树形结构下的文件目录，具体如
+ 下图所示，不同的Linux发行版有较大差异，但是主体的目录都是比较相似的
+二、具体目录功能简介 1、 / (根目录)  这是文件系统的统一入口，是最高一级的目录
+ 2、/bin和/sbin  这些目录下存放着可执行文件的链接，基础系统所需的命令位于此目录，如cp、chmod、
+ ls等命令；对于/bin下的命令任何用户均可执行或者配置，但是/sbin下的命令，普通用户无
+权限执行该目录下的命令
+3、/boot  这里存放Linux内核以及系统引导程序，你可以看到grub文件夹(常见的开机引导程序)，
+ 千万不懂乱动这些文件
+4、/dev  dev即是device，这里存放着所有的设备文件，Linux中所有的东西都是以文件的形式
+ 存在的，也包括硬件设备，比如说硬盘、U盘、鼠标等设备
+5、/etc  存放系统程序或者一般工具的配置文件
+ 6、/lib  系统程序所需要的所有共享库文件、类似于Windows平台下的共享库DLL文件
+ 7、/lost&#43;found  系统以外崩溃或者机器意外关机时，在该目录下产生一些文件碎片；在系统启动时，
+ 文件系统会检查这里，尝试修复破损的文件系统
+8、/media  即插即用型存储设备的挂载点自动在这个目录下创建，比如USB盘系统自动挂载后
+ 或者CDROM自动挂载后便会在这个目录中创建一个目录
+9、/mnt  media文件夹是系统自动挂载设备的地方，而这个目录是用户手动挂载设备的地方
+ 比如可以将dev文件夹中的设备通过命令挂载到mnt的目录进行操作的
+ 挂载是由操作系统使一个存储设备上的计算机文件和目录可供用户通过计算机的文件
+ 系统访问的一个过程。Windows系统中的挂载通常指给磁盘分区分配一个盘符，想当于打开
+一个文件系统的入口；Linux系统的挂载是指将一个设备，挂接到一个已存在的目录上，Linux
+操作系统将所有的设备都看作文件，它将整个计算机的资源整合成一个大的文件目录，要想
+访问存储设备中的文件，必须将文件所在的分区挂载到一个已经存在的目录上了，然后通过
+这个目录来访问存储设备
+ 常用的命令就是：
+mount [-参数] [设备名称] [挂载点] 对应的解挂命令就是umonut
+ 10、/opt  options可选择，有些软件的安装包也会被安装在这里，比如Chrome浏览器等软件包"/>
 
-    <meta property="og:title" content="初始Linux文件系统" />
-<meta property="og:description" content="" />
+    <meta property="og:title" content="Linux文件系统目录结构" />
+<meta property="og:description" content="一、Linux文件系统目录概述  Linux下的文件系统为树形结构，入口为 / (根目录)。树形结构下的文件目录，具体如
+ 下图所示，不同的Linux发行版有较大差异，但是主体的目录都是比较相似的
+二、具体目录功能简介 1、 / (根目录)  这是文件系统的统一入口，是最高一级的目录
+ 2、/bin和/sbin  这些目录下存放着可执行文件的链接，基础系统所需的命令位于此目录，如cp、chmod、
+ ls等命令；对于/bin下的命令任何用户均可执行或者配置，但是/sbin下的命令，普通用户无
+权限执行该目录下的命令
+3、/boot  这里存放Linux内核以及系统引导程序，你可以看到grub文件夹(常见的开机引导程序)，
+ 千万不懂乱动这些文件
+4、/dev  dev即是device，这里存放着所有的设备文件，Linux中所有的东西都是以文件的形式
+ 存在的，也包括硬件设备，比如说硬盘、U盘、鼠标等设备
+5、/etc  存放系统程序或者一般工具的配置文件
+ 6、/lib  系统程序所需要的所有共享库文件、类似于Windows平台下的共享库DLL文件
+ 7、/lost&#43;found  系统以外崩溃或者机器意外关机时，在该目录下产生一些文件碎片；在系统启动时，
+ 文件系统会检查这里，尝试修复破损的文件系统
+8、/media  即插即用型存储设备的挂载点自动在这个目录下创建，比如USB盘系统自动挂载后
+ 或者CDROM自动挂载后便会在这个目录中创建一个目录
+9、/mnt  media文件夹是系统自动挂载设备的地方，而这个目录是用户手动挂载设备的地方
+ 比如可以将dev文件夹中的设备通过命令挂载到mnt的目录进行操作的
+ 挂载是由操作系统使一个存储设备上的计算机文件和目录可供用户通过计算机的文件
+ 系统访问的一个过程。Windows系统中的挂载通常指给磁盘分区分配一个盘符，想当于打开
+一个文件系统的入口；Linux系统的挂载是指将一个设备，挂接到一个已存在的目录上，Linux
+操作系统将所有的设备都看作文件，它将整个计算机的资源整合成一个大的文件目录，要想
+访问存储设备中的文件，必须将文件所在的分区挂载到一个已经存在的目录上了，然后通过
+这个目录来访问存储设备
+ 常用的命令就是：
+mount [-参数] [设备名称] [挂载点] 对应的解挂命令就是umonut
+ 10、/opt  options可选择，有些软件的安装包也会被安装在这里，比如Chrome浏览器等软件包" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sin-coder.github.io/linux/filesys/" />
 <meta property="article:published_time" content="2020-04-24T00:45:56+08:00" />
@@ -59,7 +111,7 @@
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">初始Linux文件系统</h1>
+      <h1 class ="post-title">Linux文件系统目录结构</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
@@ -73,7 +125,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          0 min read
+          1 min read
         </div><div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
   <title>tag</title>
@@ -82,7 +134,221 @@
           <a class="tag" href="https://sin-coder.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><a class="tag" href="https://sin-coder.github.io/tags/linux/">Linux</a></div></div>
     </header>
     <div class="post-content">
-      <hr />
+      
+
+<hr />
+
+<h3 id="一-linux文件系统目录概述">一、Linux文件系统目录概述</h3>
+
+<blockquote>
+<p>Linux下的文件系统为树形结构，入口为 / (根目录)。树形结构下的文件目录，具体如</p>
+</blockquote>
+
+<p>下图所示，不同的Linux发行版有较大差异，但是主体的目录都是比较相似的</p>
+
+<p><img src="https://s1.ax1x.com/2020/04/24/JBdB1e.png" alt="JBdB1e.png"  /></p>
+
+<h3 id="二-具体目录功能简介">二、具体目录功能简介</h3>
+
+<h4 id="1-根目录">1、 / (根目录)</h4>
+
+<blockquote>
+<p>这是文件系统的统一入口，是最高一级的目录</p>
+</blockquote>
+
+<h4 id="2-bin和-sbin">2、/bin和/sbin</h4>
+
+<blockquote>
+<p>这些目录下存放着可执行文件的链接，基础系统所需的命令位于此目录，如cp、chmod、</p>
+</blockquote>
+
+<p>ls等命令；对于/bin下的命令任何用户均可执行或者配置，但是/sbin下的命令，普通用户无</p>
+
+<p>权限执行该目录下的命令</p>
+
+<h4 id="3-boot">3、/boot</h4>
+
+<blockquote>
+<p>这里存放Linux内核以及系统引导程序，你可以看到grub文件夹(常见的开机引导程序)，</p>
+</blockquote>
+
+<p>千万不懂乱动这些文件</p>
+
+<h4 id="4-dev">4、/dev</h4>
+
+<blockquote>
+<p>dev即是device，这里存放着所有的设备文件，Linux中所有的东西都是以文件的形式</p>
+</blockquote>
+
+<p>存在的，也包括硬件设备，比如说硬盘、U盘、鼠标等设备</p>
+
+<h4 id="5-etc">5、/etc</h4>
+
+<blockquote>
+<p>存放系统程序或者一般工具的配置文件</p>
+</blockquote>
+
+<h4 id="6-lib">6、/lib</h4>
+
+<blockquote>
+<p>系统程序所需要的所有共享库文件、类似于Windows平台下的共享库DLL文件</p>
+</blockquote>
+
+<h4 id="7-lost-found">7、/lost+found</h4>
+
+<blockquote>
+<p>系统以外崩溃或者机器意外关机时，在该目录下产生一些文件碎片；在系统启动时，</p>
+</blockquote>
+
+<p>文件系统会检查这里，尝试修复破损的文件系统</p>
+
+<h4 id="8-media">8、/media</h4>
+
+<blockquote>
+<p>即插即用型存储设备的挂载点自动在这个目录下创建，比如USB盘系统自动挂载后</p>
+</blockquote>
+
+<p>或者CDROM自动挂载后便会在这个目录中创建一个目录</p>
+
+<h4 id="9-mnt">9、/mnt</h4>
+
+<blockquote>
+<p>media文件夹是系统自动挂载设备的地方，而这个目录是用户手动挂载设备的地方</p>
+</blockquote>
+
+<p>比如可以将dev文件夹中的设备通过命令挂载到mnt的目录进行操作的</p>
+
+<blockquote>
+<p>挂载是由操作系统使一个存储设备上的计算机文件和目录可供用户通过计算机的文件</p>
+</blockquote>
+
+<p>系统访问的一个过程。Windows系统中的挂载通常指给磁盘分区分配一个盘符，想当于打开</p>
+
+<p>一个文件系统的入口；Linux系统的挂载是指将一个设备，挂接到一个已存在的目录上，Linux</p>
+
+<p>操作系统将所有的设备都看作文件，它将整个计算机的资源整合成一个大的文件目录，要想</p>
+
+<p>访问存储设备中的文件，必须将文件所在的分区挂载到一个已经存在的目录上了，然后通过</p>
+
+<p>这个目录来访问存储设备</p>
+
+<blockquote>
+<p>常用的命令就是：</p>
+
+<p><strong>mount [-参数] [设备名称] [挂载点]</strong>   对应的解挂命令就是<strong>umonut</strong></p>
+</blockquote>
+
+<h4 id="10-opt">10、/opt</h4>
+
+<blockquote>
+<p>options可选择，有些软件的安装包也会被安装在这里，比如Chrome浏览器等软件包</p>
+</blockquote>
+
+<h4 id="11-proc">11、/proc</h4>
+
+<blockquote>
+<p>这个目录是伪装的文件系统proc的挂载目录，并不是真正的文件系统，存放操作系统</p>
+</blockquote>
+
+<p>在运行时的进程信息和一些CPU、内存、硬盘分区的信息，所以它不存在于任何分区，</p>
+
+<p>只是一个实时的，驻留在内存中的文件系统</p>
+
+<h4 id="12-root">12、/root</h4>
+
+<blockquote>
+<p>超级用户的家目录，以root用户登录Linux系统时，默认的工作目录</p>
+</blockquote>
+
+<h4 id="13-tmp">13、/tmp</h4>
+
+<blockquote>
+<p>临时文件目录，运行程序时产生的临时文件，这个和/var/tmp目录相似，有些系统会在</p>
+</blockquote>
+
+<p>启动或者关机时清空此目录</p>
+
+<h4 id="14-home">14、/home</h4>
+
+<blockquote>
+<p>这里是普通用户的家目录，每一个用户都应该在这里建立一个属于自己的目录，存放一</p>
+</blockquote>
+
+<p>些自己可执行的命令</p>
+
+<h4 id="15-var">15、/var</h4>
+
+<blockquote>
+<p>该目录的主要作用是存储日志(log)信息，比如服务器崩溃、防火墙的异常信息都会在</p>
+</blockquote>
+
+<p>这里记录，日志文件不会自动清除，它们占用的系统磁盘空间会越来越大，但是有时也需</p>
+
+<p>要适时清理</p>
+
+<h4 id="16-usr">16、/usr</h4>
+
+<blockquote>
+<p>Universal System Resource，非系统必须的资源，比如用户安装的应用程序，改目录下</p>
+</blockquote>
+
+<p>常见的子目录如下</p>
+
+<ul>
+<li><p>/usr/src:非系统必须的内核源码目录</p></li>
+
+<li><p>/usr/share:系统共用资源存放</p></li>
+
+<li><p>/usr/bin:是库文件的存储目录</p></li>
+
+<li><p>/usr/share/man  系统帮助目录</p></li>
+
+<li><p>/usr/bin和usr/local/bin 用户可执行文件的目录</p></li>
+</ul>
+
+<h3 id="三-内容总结">三、内容总结</h3>
+
+<h4 id="1-配置文件">1、配置文件</h4>
+
+<blockquote>
+<p>一般修改系统配置时都会到 /etc 目录下寻找，修改用户程序配置都会到用户的家目录</p>
+</blockquote>
+
+<p>中去寻找</p>
+
+<h4 id="2-可执行命令或脚本的存放位置">2、可执行命令或脚本的存放位置</h4>
+
+<blockquote>
+<p>直接可以在命令行中输入执行的命令一般在以下几个位置；如果自己开发的脚本程序，</p>
+</blockquote>
+
+<p>想要直接在命令行中执行，需要将他们添加到上述目录中的一个</p>
+
+<ul>
+<li><p>/bin</p></li>
+
+<li><p>/sbin</p></li>
+
+<li><p>/usr/bin</p></li>
+
+<li><p>/usr/sbin</p></li>
+
+<li><p>/usr/local/bin</p></li>
+
+<li><p>/usr/local/sbin</p></li>
+
+<li><p>/home/USER/.local/bin</p></li>
+
+<li><p>/home/USER/.local/sbin</p></li>
+</ul>
+
+<p>####     3、设备的挂载问题</p>
+
+<blockquote>
+<p>设备文件一般都在/dev目录，但是一般来说系统都会自动挂载像U盘之类的设备，</p>
+</blockquote>
+
+<p>可以直接到/media文件夹访问设备内容</p>
 
     </div>
     <div class="post-footer">
